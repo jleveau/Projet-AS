@@ -3,7 +3,12 @@
 #include <math.h>
 #include <string.h>
 
-//mieux de ne pas utiliser deftype parce que ca arrete la vérification de type et certains erreurs peut être ignorés??
+//mieux vaut ne pas utiliser deftype parce que ca arrete la vérification de type et certains erreurs peut être ignorés??
+
+struct balise{
+   struct attribut* attrib;
+   char* nom;
+}
 
 struct attribut{
   char* nom;

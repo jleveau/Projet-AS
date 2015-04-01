@@ -1,3 +1,13 @@
+%{
+
+#include "html.h"
+
+//mieux vaut ne pas utiliser deftype parce que ca arrete la vérification de type et certains erreurs peut être ignorés??
+
+
+
+%}
+
 %token	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
 %token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
 %token	AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
@@ -227,22 +237,22 @@ storage_class_specifier
 	;
 
 type_specifier
-	: VOID
-	| CHAR
-	| SHORT
-	| INT
-	| LONG
-	| FLOAT
-	| DOUBLE
-	| SIGNED
-	| UNSIGNED
-	| BOOL
-	| COMPLEX
-	| IMAGINARY	  	/* non-mandated extension */
-	| atomic_type_specifier
-	| struct_or_union_specifier
-	| enum_specifier
-	| TYPEDEF_NAME		/* after it has been defined as such */
+: VOID {print_balise_type_specifier($1);} 
+	| CHAR {print_balise_type_specifier($1);} 
+	| SHORT {print_balise_type_specifier($1);} 
+	| INT {print_balise_type_specifier($1);} 
+	| LONG {print_balise_type_specifier($1);} 
+	| FLOAT {print_balise_type_specifier($1);} 
+	| DOUBLE {print_balise_type_specifier($1);} 
+	| SIGNED {print_balise_type_specifier($1);} 
+	| UNSIGNED {print_balise_type_specifier($1);} 
+	| BOOL {print_balise_type_specifier($1);} 
+	| COMPLEX {print_balise_type_specifier($1);} 
+	| IMAGINARY	 {print_balise_type_specifier($1);}   	/* non-mandated extension */
+	| atomic_type_specifier {print_balise_type_specifier($1);} 
+	| struct_or_union_specifier {print_balise_type_specifier($1);} 
+	| enum_specifier {print_balise_type_specifier($1);} 
+	| TYPEDEF_NAME	 {print_balise_type_specifier($1);} 	/* after it has been defined as such */
 	;
 
 struct_or_union_specifier
@@ -527,6 +537,10 @@ declaration_list
 %%
 #include <stdio.h>
 
+
+
+
+    
 void yyerror(const char *s)
 {
 	fflush(stdout);
