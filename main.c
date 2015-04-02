@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+//Include pour utiliser open 
+#include <fcntl.h>
+//pour utiliser des asserts
+#include <assert.h>
 #include "parse.tab.h"
 
 
@@ -57,6 +61,5 @@ int main(int argc,char** argv){
     perror("fermeture du html");
     exit(EXIT_FAILURE);
   }
-
   return 0;
-}
+  }

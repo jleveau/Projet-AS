@@ -1,6 +1,8 @@
 
 
-
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "html.h"
 
 
@@ -24,7 +26,7 @@ void print_fin_balise(struct balise* b){
     attribut a=b->attributs;
     while (a){
 		free(a->nom);
-		free(a->val);
+		free(a->valeur);
 		attribut tmp=a;
 		a=tmp->next;
 		free(tmp);
@@ -34,12 +36,19 @@ void print_fin_balise(struct balise* b){
 }
 
 void print_attributs(struct attribut * attrib){
-  if(attribut==NULL) return;
-  printf("%s=\"%s\" ", attribut->nom, attribut->valeur);
-  print_attributs(attribut->next);
+  if(attrib==NULL) return;
+  printf("%s=\"%s\" ", attrib->nom, attrib->valeur);
+  print_attributs(attrib->next);
   return;
 }
 
+balise creer_balise(char* nom,char* class){
+	balise b=malloc(sizeof(*b));
+	b->nom=nom;
+	b->attributs=NULL;
+	b->class=class;
+	return b;
+}
 
 /* chaque balise a une classe
  */
@@ -62,19 +71,15 @@ void print_fin_debut_balise(){
 	printf(">");
 }
 
-balise creer_balise(char* nom,char* class){
-	balise b=malloc(sizeof(*b));
-	b->nom=nom;
-	b->attributs=NULL;
-	b->class=class;
-	return b;
-}
+
 
 void ajouter_attribut(balise b,char* nom, char* val){
 	attribut a=malloc(sizeof(*a));
 	a->next=b->attributs;
 	b->attributs=a;
-	printf(" %s=\"%s\ " ", attribut->nom, attribut->valeur);
+    
+    printf("%s=\"%s ",b->attributs->nom,b->attributs->valeur);
+    
 }
 
 void print_balise_type_specifier(char* param){

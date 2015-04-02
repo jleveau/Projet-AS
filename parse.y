@@ -5,9 +5,9 @@
 //mieux vaut ne pas utiliser deftype parce que ca arrete la vérification de type et certains erreurs peut être ignorés??
 
 
-
-%}
-
+%}                        
+//Creation des token juste pour lever les erreurs lors de la compilation, à modifier par la suite
+%token KEYWORD TYPE
 %token	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
 %token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
 %token	AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
@@ -237,7 +237,7 @@ storage_class_specifier
 	;
 
 type_specifier
-: VOID {print_balise_type_specifier($1);} 
+: VOID {print_balise_type_specifier((char *)$1);} 
 	| CHAR {print_balise_type_specifier($1);} 
 	| SHORT {print_balise_type_specifier($1);} 
 	| INT {print_balise_type_specifier($1);} 

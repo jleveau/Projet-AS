@@ -1,4 +1,7 @@
-
+%{
+#include "parse.tab.h"
+%}
+%option noyywrap
 %%
 
 "auto"					{ return(KEYWORD); }
@@ -18,7 +21,7 @@
 "goto"					{ return(KEYWORD); }
 "if"					{ return(KEYWORD); }
 "inline"				{ return(KEYWORD); }
-"int"					{ return(TYPE); }
+"int"					{ return(INT); }
 "long"					{ return(TYPE); }
 "register"				{ return(KEYWORD); }
 "restrict"				{ return(KEYWORD); }
