@@ -1,9 +1,12 @@
 #ifndef HTML_H
 #define HTML_H
+#include <stdio.h>
 
 
 typedef struct attribut* attribut;
 typedef struct balise* balise;
+
+FILE* f_output;
 
 
 void print_fin_balise(struct balise* b);

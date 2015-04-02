@@ -1,24 +1,32 @@
 %{
 
 #include "html.h"
+#include "tools.h"
 
 //mieux vaut ne pas utiliser deftype parce que ca arrete la vérification de type et certains erreurs peut être ignorés??
 
 
-%}                        
+
+
+%}
+                                               
 //Creation des token juste pour lever les erreurs lors de la compilation, à modifier par la suite
-%token KEYWORD TYPE
+%token  KEYWORD TYPE
+%union{
+ char* nom;
+ }
+%type<nom> type_specifier atomic_type_specifier struct_or_union_specifier enum_specifier
 %token	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
 %token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
 %token	AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
 %token	SUB_ASSIGN LEFT_ASSIGN RIGHT_ASSIGN AND_ASSIGN
 %token	XOR_ASSIGN OR_ASSIGN
-%token	TYPEDEF_NAME ENUMERATION_CONSTANT
+%token<nom> TYPEDEF_NAME ENUMERATION_CONSTANT
 
 %token	TYPEDEF EXTERN STATIC AUTO REGISTER INLINE
 %token	CONST RESTRICT VOLATILE
-%token	BOOL CHAR SHORT INT LONG SIGNED UNSIGNED FLOAT DOUBLE VOID
-%token	COMPLEX IMAGINARY 
+%token<nom> BOOL CHAR SHORT INT LONG SIGNED UNSIGNED FLOAT DOUBLE VOID
+%token<nom> COMPLEX IMAGINARY 
 %token	STRUCT UNION ENUM ELLIPSIS
 
 %token	CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
@@ -237,8 +245,8 @@ storage_class_specifier
 	;
 
 type_specifier
-: VOID {print_balise_type_specifier((char *)$1);} 
-	| CHAR {print_balise_type_specifier($1);} 
+    :       VOID {print_balise_type_specifier($1);} 
+	| CHAR {print_balise_type_specifier($1);}
 	| SHORT {print_balise_type_specifier($1);} 
 	| INT {print_balise_type_specifier($1);} 
 	| LONG {print_balise_type_specifier($1);} 
@@ -249,9 +257,9 @@ type_specifier
 	| BOOL {print_balise_type_specifier($1);} 
 	| COMPLEX {print_balise_type_specifier($1);} 
 	| IMAGINARY	 {print_balise_type_specifier($1);}   	/* non-mandated extension */
-	| atomic_type_specifier {print_balise_type_specifier($1);} 
-	| struct_or_union_specifier {print_balise_type_specifier($1);} 
-	| enum_specifier {print_balise_type_specifier($1);} 
+	| atomic_type_specifier
+	| struct_or_union_specifier 
+	| enum_specifier
 	| TYPEDEF_NAME	 {print_balise_type_specifier($1);} 	/* after it has been defined as such */
 	;
 
@@ -325,7 +333,7 @@ type_qualifier
 	;
 
 function_specifier
-	: INLINE
+	: INLINE 
 	| NORETURN
 	;
 
@@ -340,7 +348,7 @@ declarator
 	;
 
 direct_declarator
-	: IDENTIFIER
+    :     IDENTIFIER 
 	| '(' declarator ')'
 	| direct_declarator '[' ']'
 	| direct_declarator '[' '*' ']'
@@ -535,14 +543,7 @@ declaration_list
 	;
 
 %%
-#include <stdio.h>
 
-
-
-
-    
-void yyerror(const char *s)
-{
-	fflush(stdout);
-	fprintf(stderr, "*** %s\n", s);
-}
+void yyerror (char const *s) {
+   fprintf (stderr, "%s\n", s);
+ } 

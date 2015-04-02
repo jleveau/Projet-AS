@@ -1,41 +1,69 @@
+L   [a-zA-Z_]
+A   [a-zA-Z_0-9]
+
 %{
 #include "parse.tab.h"
+#include "html.h"
+
+    
+extern void yyerror(const char *);  /* prints grammar violation message */
+
+extern int sym_type(const char *);  /* returns type from symbol table */
+
+#define sym_type(identifier) IDENTIFIER /* with no symbol table, fake it */
+
+static void comment(void);
+static int check_type(void);
+
+    //"return"				{yylval.nom=strdup(yytext); return(RETURN); }
+    
 %}
 %option noyywrap
 %%
 
-"auto"					{ return(KEYWORD); }
-"break"					{ return(KEYWORD); }
-"case"					{ return(KEYWORD); }
-"char"					{ return(TYPE); }
-"const"					{ return(TYPE); }
-"continue"				{ return(KEYWORD); }
-"default"				{ return(KEYWORD); }
-"do"					{ return(KEYWORD); }
-"double"				{ return(TYPE); }
-"else"					{ return(KEYWORD); }
-"enum"					{ return(KEYWORD); }
-"extern"				{ return(KEYWORD); }
-"float"					{ return(TYPE); }
-"for"					{ return(KEYWORD); }
-"goto"					{ return(KEYWORD); }
-"if"					{ return(KEYWORD); }
-"inline"				{ return(KEYWORD); }
-"int"					{ return(INT); }
-"long"					{ return(TYPE); }
-"register"				{ return(KEYWORD); }
-"restrict"				{ return(KEYWORD); }
-"return"				{ return(KEYWORD); }
-"short"					{ return(TYPE); }
-"signed"				{ return(TYPE); }
-"sizeof"				{ return(KEYWORD); }
-"static"				{ return(KEYWORD); }
-"struct"				{ return(KEYWORD); }
-"switch"				{ return(KEYWORD); }
-"typedef"				{ return(KEYWORD); }
-"union"					{ return(KEYWORD); }
-"unsigned"				{ return(TYPE); }
-"void"					{ return(TYPE); }
-"volatile"				{ return(KEYWORD); }
-"while"					{ return(KEYWORD); }
+
+"char"					{yylval.nom=strdup(yytext); return(CHAR); }
+
+
+
+"double"				{yylval.nom=strdup(yytext); return(DOUBLE); }
+
+
+"float"					{yylval.nom=strdup(yytext); return(FLOAT); }
+
+"int"					{yylval.nom=strdup(yytext); return(INT); }
+"long"					{yylval.nom=strdup(yytext); return(LONG); }
+
+
+"short"					{yylval.nom=strdup(yytext); return(SHORT); }
+
+"unsigned"				{yylval.nom=strdup(yytext); return(UNSIGNED); }
+"void"					{yylval.nom=strdup(yytext); return(VOID); }
+
+
+
+\n {fprintf(f_output,"<br \\>\n");}
+. {fprintf(f_output,"%c",yytext[0]);}
+
+
+%%
+  /*
+    Si un mot n'est ni un typedef ou enum
+    alors c'est un identifier */
+static int check_type(void)
+{
+    switch (sym_type(yytext))
+    {
+    case TYPEDEF_NAME:                /* previously defined */
+        return TYPEDEF_NAME;
+    case ENUMERATION_CONSTANT:        /* previously defined */
+        return ENUMERATION_CONSTANT;
+    default:                          /* includes undefined */
+        return IDENTIFIER;
+    }
+}
+
+
+
+
 
