@@ -1,6 +1,8 @@
 body
 {
 font-family: Verdana, sans-serif;
+margin: 20;
+    padding: 20;
 }
 
 .type_specifier

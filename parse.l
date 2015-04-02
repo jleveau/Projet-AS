@@ -16,7 +16,11 @@ static void comment(void);
 static int check_type(void);
 
     //"return"				{yylval.nom=strdup(yytext); return(RETURN); }
-    
+
+
+/*
+L'ajout du ^ devant int est juste une solution temporaire pour que ca ne colorie pas les "printf" 
+*/    
 %}
 %option noyywrap
 %%
@@ -24,16 +28,15 @@ static int check_type(void);
 
 "char"					{yylval.nom=strdup(yytext); return(CHAR); }
 
-
-
+"continue"                              {yylval.nom=strdup(yytext); return(CONTINUE);}
+"break"                                 {yylval.nom=strdup(yytext); return(BREAK);}
 "double"				{yylval.nom=strdup(yytext); return(DOUBLE); }
-
-
+"switch"                                {yylval.nom=strdup(yytext); return(SWITCH); }
 "float"					{yylval.nom=strdup(yytext); return(FLOAT); }
-
-"int"					{yylval.nom=strdup(yytext); return(INT); }
+"case"                                  {yylval.nom=strdup(yytext); return(CASE); }
+^"int"					{yylval.nom=strdup(yytext); return(INT); }
 "long"					{yylval.nom=strdup(yytext); return(LONG); }
-
+"else"                                  {yylval.nom=strdup(yytext); return(ELSE); }
 
 "short"					{yylval.nom=strdup(yytext); return(SHORT); }
 

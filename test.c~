@@ -15,10 +15,6 @@ int yyparse(Rationnel **rationnel, yyscan_t scanner);
 
 Rationnel *rationnel(Noeud etiquette, char lettre, int position_min, int position_max, void *data, Rationnel *gauche, Rationnel *droit, Rationnel *pere)
 {
-
-if(){
-
-}
    Rationnel *rat;
    rat = (Rationnel *) malloc(sizeof(Rationnel));
 

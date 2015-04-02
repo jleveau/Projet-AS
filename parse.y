@@ -5,7 +5,7 @@
 
 //mieux vaut ne pas utiliser deftype parce que ca arrete la vérification de type et certains erreurs peut être ignorés??
 
-
+// CHANGEMENT APPORTE : selection_statement and jump_statement, unary_operator . A corriger.
 
 
 %}
@@ -15,8 +15,8 @@
 %union{
  char* nom;
  }
-%type<nom> type_specifier atomic_type_specifier struct_or_union_specifier enum_specifier
-%token	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
+%type<nom> selection_statement jump_statement type_specifier atomic_type_specifier struct_or_union_specifier enum_specifier
+%token<nom>	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
 %token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
 %token	AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
 %token	SUB_ASSIGN LEFT_ASSIGN RIGHT_ASSIGN AND_ASSIGN
@@ -29,8 +29,8 @@
 %token<nom> COMPLEX IMAGINARY 
 %token	STRUCT UNION ENUM ELLIPSIS
 
-%token	CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
-
+%token<nom> CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO
+%token<nom> RETURN BREAK CONTINUE
 %token	ALIGNAS ALIGNOF ATOMIC GENERIC NORETURN STATIC_ASSERT THREAD_LOCAL
 
 %start translation_unit
@@ -102,7 +102,7 @@ unary_expression
 	;
 
 unary_operator
-	: '&'
+: '&'
 	| '*'
 	| '+'
 	| '-'
@@ -500,9 +500,9 @@ expression_statement
 	;
 
 selection_statement
-	: IF '(' expression ')' statement ELSE statement
-	| IF '(' expression ')' statement
-	| SWITCH '(' expression ')' statement
+: IF '(' expression ')' statement ELSE statement {print_balise_jump_statement($1);}
+| IF '(' expression ')' statement {print_balise_jump_statement($1);}
+| SWITCH '(' expression ')' statement {print_balise_jump_statement($1);}
 	;
 
 iteration_statement
@@ -516,10 +516,10 @@ iteration_statement
 
 jump_statement
 	: GOTO IDENTIFIER ';'
-	| CONTINUE ';'
+	| CONTINUE  ';'
 	| BREAK ';'
 	| RETURN ';'
-	| RETURN expression ';'
+| RETURN expression ';'
 	;
 
 translation_unit

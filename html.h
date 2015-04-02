@@ -17,5 +17,6 @@ void print_fin_debut_balise();
 balise creer_balise(char *nom, char* classe);
 
 void print_balise_type_specifier(char* param);
+void print_balise_jump_statement(char*);
 
 #endif

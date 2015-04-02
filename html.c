@@ -87,3 +87,9 @@ void print_balise_type_specifier(char* param){
 	print_fin_debut_balise();fprintf(f_output, "%s",param); 
 	print_fin_balise(b);
 }
+
+void print_balise_jump_statement(char* param){
+  balise b =print_debut_balise("span","jump_statement");
+  print_fin_debut_balise();fprintf(f_output,"%s",param);
+  print_fin_balise(b);
+}
