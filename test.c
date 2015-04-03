@@ -7,21 +7,31 @@
 #include "outils.h"
 
 #include <stdbool.h>
-#include <stdlib.h>
+#include < stdlib.h >
 #include <assert.h>
 #include <stdio.h>
 
-int yyparse(Rationnel **rationnel, yyscan_t scanner);
+struct coucou{
+char x;
+int y;
+};
 
+
+int yyparse(Rationnel **rationnel, yyscan_t scanner);
+int coucou();
+void fonctiondelamort()
+{
+const int x=2;
+x=1+2;
+x=0;
+}
 Rationnel *rationnel(Noeud etiquette, char lettre, int position_min, int position_max, void *data, Rationnel *gauche, Rationnel *droit, Rationnel *pere)
 {
-
-if(){
-
-}
-   Rationnel *rat;
-   rat = (Rationnel *) malloc(sizeof(Rationnel));
-
+int x=2;
+int y=3;
+int z=4;
+int w=5;
+   Rationnel *rat;	
    rat->etiquette = etiquette;
    rat->lettre = lettre;
    rat->position_min = position_min;
@@ -30,8 +40,8 @@ if(){
    rat->gauche = gauche;
    rat->droit = droit;
    rat->pere = pere;
-   return;
-}
+   return; 
+	}
 
 Rationnel *Epsilon()
 {

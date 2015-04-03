@@ -27,11 +27,18 @@ FILE* create_html(char* titre){
 
 	//body
 	fprintf(f_output, "<body>");
+	fprintf(f_output,"<div class=\"header\"> ");
+	fprintf(f_output,"<h1>Projet d'analyse syntaxique, licence 3 2014-2015</h1>");
+	fprintf(f_output,"</div>");
+	fprintf(f_output,"<div class=\"Code\"> ");
+	
+ 
 	
 	return f_output;
 }
 
 int fermer_html(FILE* fd){
+	fprintf(fd,"</div>");
   fprintf(fd, "</body>");
   fprintf(fd, "</html>");
   return(fclose(fd)); //close avec flush

@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr"><head>   <meta charset="utf-8">   <title>test</title>   <!doctype html><link rel="stylesheet" type="text/css" href="index.css"></head><body><br \>
+<!doctype html><html lang="fr"><head>   <meta charset="utf-8">   <title>test</title>   <!doctype html><link rel="stylesheet" type="text/css" href="index.css"></head><body><div class="header"> <h1>Projet d'analyse syntaxique, licence 3 2014-2015</h1></div><div class="Code"> <br \>
 #include "rationnel.h"<br \>
 #include "ensemble.h"<br \>
 #include "automate.h"<br \>
@@ -7,21 +7,31 @@
 #include "outils.h"<br \>
 <br \>
 #include <stdbool.h><br \>
-#include <stdlib.h><br \>
+#include < stdlib.h ><br \>
 #include <assert.h><br \>
 #include <stdio.h><br \>
 <br \>
+struct coucou{<br \>
+<span class="type_specifier " >char</span> x;<br \>
+<span class="type_specifier " >int</span> y;<br \>
+};<br \>
+<br \>
+<br \>
 <span class="type_specifier " >int</span> yyparse(Rationnel **rationnel, yyscan_t scanner);<br \>
-<br \>
-Rationnel *rationnel(Noeud etiquette, <span class="type_specifier " >char</span> lettre, int position_min, int position_max, <span class="type_specifier " >void</span> *data, Rationnel *gauche, Rationnel *droit, Rationnel *pere)<br \>
+<span class="type_specifier " >int</span> coucou();<br \>
+<span class="type_specifier " >void</span> fonctiondelamort()<br \>
 {<br \>
-<br \>
-if(){<br \>
-<br \>
+<span class="type_specifier " >const</span> <span class="type_specifier " >int</span> x=2;<br \>
+x=1+2;<br \>
+x=0;<br \>
 }<br \>
-   Rationnel *rat;<br \>
-   rat = (Rationnel *) malloc(sizeof(Rationnel));<br \>
-<br \>
+Rationnel *rationnel(Noeud etiquette, <span class="type_specifier " >char</span> lettre, <span class="type_specifier " >int</span> position_min, <span class="type_specifier " >int</span> position_max, <span class="type_specifier " >void</span> *data, Rationnel *gauche, Rationnel *droit, Rationnel *pere)<br \>
+{<br \>
+<span class="type_specifier " >int</span> x=2;<br \>
+<span class="type_specifier " >int</span> y=3;<br \>
+<span class="type_specifier " >int</span> z=4;<br \>
+<span class="type_specifier " >int</span> w=5;<br \>
+   Rationnel *rat;	<br \>
    rat->etiquette = etiquette;<br \>
    rat->lettre = lettre;<br \>
    rat->position_min = position_min;<br \>
@@ -30,8 +40,8 @@ if(){<br \>
    rat->gauche = gauche;<br \>
    rat->droit = droit;<br \>
    rat->pere = pere;<br \>
-   return;<br \>
-}<br \>
+   return; <br \>
+	}<br \>
 <br \>
 Rationnel *Epsilon()<br \>
 {<br \>
@@ -103,14 +113,14 @@ Noeud get_etiquette(Rationnel* rat)<br \>
    return rat->position_max;<br \>
 }<br \>
 <br \>
-<span class="type_specifier " >void</span> set_position_min(Rationnel* rat, int valeur)<br \>
+<span class="type_specifier " >void</span> set_position_min(Rationnel* rat, <span class="type_specifier " >int</span> valeur)<br \>
 {<br \>
   // assert (get_etiquette(rat) == LETTRE);<br \>
    rat->position_min = valeur;<br \>
    return;<br \>
 }<br \>
 <br \>
-<span class="type_specifier " >void</span> set_position_max(Rationnel* rat, int valeur)<br \>
+<span class="type_specifier " >void</span> set_position_max(Rationnel* rat, <span class="type_specifier " >int</span> valeur)<br \>
 {<br \>
   // assert (get_etiquette(rat) == LETTRE);<br \>
   <br \>
@@ -142,12 +152,400 @@ Rationnel *pere(Rationnel* rat)<br \>
    return rat->pere;<br \>
 }<br \>
 <br \>
-<span class="type_specifier " >void</span> print_rationnel(Rationnel* rat)<br \>
+<span class="type_specifier " >void</span> pr<span class="type_specifier " >int</span>_rationnel(Rationnel* rat)<br \>
 {<br \>
    if (rat == NULL)<br \>
    {<br \>
-      printf("∅");<br \>
+      pr<span class="type_specifier " >int</span>f("∅");<br \>
       return;<br \>
    }<br \>
    <br \>
-   </body></html>
+   switch(get_etiquette(rat))<br \>
+   {<br \>
+      case EPSILON:<br \>
+         pr<span class="type_specifier " >int</span>f("ε");         <br \>
+         break;<br \>
+         <br \>
+      case LETTRE:<br \>
+         pr<span class="type_specifier " >int</span>f("%c", get_lettre(rat));<br \>
+         break;<br \>
+<br \>
+      case UNION:<br \>
+         pr<span class="type_specifier " >int</span>f("(");<br \>
+         pr<span class="type_specifier " >int</span>_rationnel(fils_gauche(rat));<br \>
+         pr<span class="type_specifier " >int</span>f(" + ");<br \>
+         pr<span class="type_specifier " >int</span>_rationnel(fils_droit(rat));<br \>
+         pr<span class="type_specifier " >int</span>f(")");         <br \>
+         break;<br \>
+<br \>
+      case CONCAT:<br \>
+         pr<span class="type_specifier " >int</span>f("[");<br \>
+         pr<span class="type_specifier " >int</span>_rationnel(fils_gauche(rat));<br \>
+         pr<span class="type_specifier " >int</span>f(" . ");<br \>
+         pr<span class="type_specifier " >int</span>_rationnel(fils_droit(rat));<br \>
+         pr<span class="type_specifier " >int</span>f("]");         <br \>
+         break;<br \>
+<br \>
+      case STAR:<br \>
+         pr<span class="type_specifier " >int</span>f("{");<br \>
+         pr<span class="type_specifier " >int</span>_rationnel(fils(rat));<br \>
+         pr<span class="type_specifier " >int</span>f("}*");         <br \>
+         break;<br \>
+<br \>
+      default:<br \>
+         assert(false);<br \>
+         break;<br \>
+   }<br \>
+}<br \>
+<br \>
+Rationnel *expression_to_rationnel(<span class="type_specifier " >const</span> <span class="type_specifier " >char</span> *expr)<br \>
+{<br \>
+    Rationnel *rat;<br \>
+    yyscan_t scanner;<br \>
+    YY_BUFFER_STATE state;<br \>
+<br \>
+    // Initialisation du scanner<br \>
+    if (yylex_init(&scanner))<br \>
+        return NULL;<br \>
+ <br \>
+    state = yy_scan_string(expr, scanner);<br \>
+<br \>
+    // Test si parsing ok.<br \>
+    if (yyparse(&rat, scanner)) <br \>
+        return NULL;<br \>
+    <br \>
+    // Libération mémoire<br \>
+    yy_delete_buffer(state, scanner);<br \>
+ <br \>
+    yylex_destroy(scanner);<br \>
+ <br \>
+    return rat;<br \>
+}<br \>
+<br \>
+<span class="type_specifier " >void</span> rationnel_to_dot(Rationnel *rat, <span class="type_specifier " >char</span>* nom_fichier)<br \>
+{<br \>
+   FILE *fp = fopen(nom_fichier, "w+");<br \>
+   rationnel_to_dot_aux(rat, fp, -1, 1);<br \>
+}<br \>
+<br \>
+<span class="type_specifier " >int</span> rationnel_to_dot_aux(Rationnel *rat, FILE *output, <span class="type_specifier " >int</span> pere, <span class="type_specifier " >int</span> noeud_courant)<br \>
+{   <br \>
+   <span class="type_specifier " >int</span> saved_pere = noeud_courant;<br \>
+<br \>
+   if (pere >= 1)<br \>
+      fpr<span class="type_specifier " >int</span>f(output, "\tnode%d -> node%d;\n", pere, noeud_courant);<br \>
+   else<br \>
+      fpr<span class="type_specifier " >int</span>f(output, "digraph G{\n");<br \>
+   <br \>
+   switch(get_etiquette(rat))<br \>
+   {<br \>
+      case LETTRE:<br \>
+         fpr<span class="type_specifier " >int</span>f(output, "\tnode%d [label = \"%c-%d\"];\n", noeud_courant, get_lettre(rat), rat->position_min);<br \>
+         noeud_courant++;<br \>
+         break;<br \>
+<br \>
+      case EPSILON:<br \>
+         fpr<span class="type_specifier " >int</span>f(output, "\tnode%d [label = \"ε-%d\"];\n", noeud_courant, rat->position_min);<br \>
+         noeud_courant++;<br \>
+         break;<br \>
+<br \>
+      case UNION:<br \>
+         fpr<span class="type_specifier " >int</span>f(output, "\tnode%d [label = \"+ (%d/%d)\"];\n", noeud_courant, rat->position_min, rat->position_max);<br \>
+         noeud_courant = rationnel_to_dot_aux(fils_gauche(rat), output, noeud_courant, noeud_courant+1);<br \>
+         noeud_courant = rationnel_to_dot_aux(fils_droit(rat), output, saved_pere, noeud_courant+1);<br \>
+         break;<br \>
+<br \>
+      case CONCAT:<br \>
+         fpr<span class="type_specifier " >int</span>f(output, "\tnode%d [label = \". (%d/%d)\"];\n", noeud_courant, rat->position_min, rat->position_max);<br \>
+         noeud_courant = rationnel_to_dot_aux(fils_gauche(rat), output, noeud_courant, noeud_courant+1);<br \>
+         noeud_courant = rationnel_to_dot_aux(fils_droit(rat), output, saved_pere, noeud_courant+1);<br \>
+         break;<br \>
+<br \>
+      case STAR:<br \>
+         fpr<span class="type_specifier " >int</span>f(output, "\tnode%d [label = \"* (%d/%d)\"];\n", noeud_courant, rat->position_min, rat->position_max);<br \>
+         noeud_courant = rationnel_to_dot_aux(fils(rat), output, noeud_courant, noeud_courant+1);<br \>
+         break;<br \>
+         <br \>
+      default:<br \>
+         assert(false);<br \>
+         break;<br \>
+   }<br \>
+   if (pere < 0)<br \>
+      fpr<span class="type_specifier " >int</span>f(output, "}\n");<br \>
+   return noeud_courant;<br \>
+}<br \>
+<br \>
+<span class="type_specifier " >int</span> rec_numeroter_rationnel(Rationnel* rat){<br \>
+	<span class="type_specifier " >int</span> max;<br \>
+	switch (get_etiquette(rat)){<br \>
+		case EPSILON :<br \>
+			set_position_max(rat,get_position_min(rat));<br \>
+			break;<br \>
+		case LETTRE :<br \>
+			set_position_max(rat,get_position_min(rat));<br \>
+			break;<br \>
+		case STAR :<br \>
+			set_position_min(fils(rat),get_position_min(rat));<br \>
+			set_position_max(rat,rec_numeroter_rationnel(fils(rat)));<br \>
+			break;<br \>
+		case UNION :<br \>
+			set_position_min(fils_gauche(rat),get_position_min(rat));<br \>
+			max=rec_numeroter_rationnel(fils_gauche(rat));<br \>
+			set_position_min(fils_droit(rat),max+1);<br \>
+			set_position_max(rat,rec_numeroter_rationnel(fils_droit(rat)));<br \>
+			break;<br \>
+		case CONCAT :<br \>
+			set_position_min(fils_gauche(rat),get_position_min(rat));<br \>
+			max=rec_numeroter_rationnel(fils_gauche(rat));<br \>
+			set_position_min(fils_droit(rat),max+1);<br \>
+			set_position_max(rat,rec_numeroter_rationnel(fils_droit(rat)));<br \>
+			break;<br \>
+	}<br \>
+	return get_position_max(rat);<br \>
+}<br \>
+<br \>
+<span class="type_specifier " >void</span> numeroter_rationnel(Rationnel *rat)<br \>
+{<br \>
+	set_position_min(rat,1);<br \>
+	rec_numeroter_rationnel(rat);<br \>
+	return;<br \>
+}<br \>
+<br \>
+<br \>
+bool contient_mot_vide(Rationnel *rat)<br \>
+{<br \>
+	bool vide;<br \>
+	switch (get_etiquette(rat)){<br \>
+		case EPSILON :<br \>
+			vide= true;<br \>
+			break;<br \>
+		case LETTRE :<br \>
+			vide= false;<br \>
+			break;<br \>
+		case STAR :<br \>
+			vide= true;<br \>
+			break;<br \>
+		case UNION :<br \>
+			vide= contient_mot_vide(fils_gauche(rat)) || contient_mot_vide(fils_droit(rat));<br \>
+			break;<br \>
+		case CONCAT :<br \>
+			vide= contient_mot_vide(fils_gauche(rat)) && contient_mot_vide(fils_droit(rat));<br \>
+			break;<br \>
+	}<br \>
+	return vide;<br \>
+}<br \>
+<br \>
+Ensemble* premier_rec(Rationnel* rat, Ensemble* ens){<br \>
+		switch (get_etiquette(rat)){<br \>
+		case EPSILON :<br \>
+			break;<br \>
+		case LETTRE :<br \>
+			ajouter_element(ens,get_position_min(rat));<br \>
+			break;<br \>
+		case STAR :<br \>
+			ajouter_elements(ens,premier_rec(fils(rat),ens));<br \>
+			break;<br \>
+		case UNION :<br \>
+			ajouter_elements(ens,premier_rec(fils_gauche(rat),ens));<br \>
+			ajouter_elements(ens,premier_rec(fils_droit(rat),ens));<br \>
+			break;<br \>
+		case CONCAT :<br \>
+			ajouter_elements(ens,premier_rec(fils_gauche(rat),ens));<br \>
+			if (contient_mot_vide(fils_gauche(rat)))<br \>
+				ajouter_elements(ens,premier_rec(fils_droit(rat),ens));<br \>
+			break;<br \>
+	}<br \>
+	return ens;<br \>
+}<br \>
+<br \>
+Ensemble *premier(Rationnel *rat)<br \>
+{<br \>
+   Ensemble* ens = creer_ensemble(NULL,NULL,NULL);<br \>
+   premier_rec(rat,ens);<br \>
+   return ens;<br \>
+}<br \>
+<br \>
+Ensemble* dernier_rec(Rationnel* rat, Ensemble* ens){<br \>
+		switch (get_etiquette(rat)){<br \>
+		case EPSILON :<br \>
+			break;<br \>
+		case LETTRE :<br \>
+			ajouter_element(ens,get_position_min(rat));<br \>
+			break;<br \>
+		case STAR :<br \>
+			ajouter_elements(ens,dernier_rec(fils(rat),ens));<br \>
+			break;<br \>
+		case UNION :<br \>
+			ajouter_elements(ens,dernier_rec(fils_gauche(rat),ens));<br \>
+			ajouter_elements(ens,dernier_rec(fils_droit(rat),ens));<br \>
+			break;<br \>
+		case CONCAT :<br \>
+			ajouter_elements(ens,dernier_rec(fils_droit(rat),ens));<br \>
+			if (contient_mot_vide(fils_droit(rat)))<br \>
+				ajouter_elements(ens,dernier_rec(fils_gauche(rat),ens));		<br \>
+			break;<br \>
+	}<br \>
+	return ens;<br \>
+}<br \>
+<br \>
+Ensemble *dernier(Rationnel *rat)<br \>
+{<br \>
+   Ensemble* ens = creer_ensemble(NULL,NULL,NULL);<br \>
+   dernier_rec(rat,ens);<br \>
+   return ens;<br \>
+}<br \>
+<br \>
+Ensemble* suivant_rec(Rationnel* rat, Ensemble* ens,<span class="type_specifier " >int</span> pos){<br \>
+	switch (get_etiquette(rat)){<br \>
+		case EPSILON :<br \>
+		case LETTRE :<br \>
+			break;<br \>
+		case STAR :<br \>
+			if (est_dans_l_ensemble(dernier(rat),pos))<br \>
+				ajouter_elements(ens,premier(rat));<br \>
+			ajouter_elements(ens,suivant_rec(fils(rat),ens,pos));<br \>
+			break;<br \>
+		case UNION :<br \>
+			ajouter_elements(ens,suivant_rec(fils_gauche(rat),ens,pos));<br \>
+			ajouter_elements(ens,suivant_rec(fils_droit(rat),ens,pos));<br \>
+			break;<br \>
+		case CONCAT :<br \>
+			if (est_dans_l_ensemble(dernier(fils_gauche(rat)),pos))<br \>
+				ajouter_elements(ens,premier(fils_droit(rat)));			<br \>
+			ajouter_elements(ens,suivant_rec(fils_droit(rat),ens,pos));<br \>
+			ajouter_elements(ens,suivant_rec(fils_gauche(rat),ens,pos));		<br \>
+			break;<br \>
+	}<br \>
+	return ens;<br \>
+}<br \>
+<br \>
+Ensemble *suivant(Rationnel *rat, <span class="type_specifier " >int</span> position)<br \>
+{<br \>
+   Ensemble* ens = creer_ensemble(NULL,NULL,NULL);<br \>
+   suivant_rec(rat,ens,position);<br \>
+   return ens;<br \>
+}<br \>
+<br \>
+<span class="type_specifier " >void</span> rec_pos_to_<span class="type_specifier " >char</span>(Rationnel* rat,<span class="type_specifier " >char</span>* tab){<br \>
+	switch (get_etiquette(rat)){<br \>
+		case EPSILON :<br \>
+		case LETTRE :<br \>
+			tab[get_position_min(rat)]=get_lettre(rat);<br \>
+			return;<br \>
+			break;<br \>
+		case STAR :<br \>
+			rec_pos_to_<span class="type_specifier " >char</span>(fils(rat),tab);<br \>
+			return;<br \>
+			break;<br \>
+		case UNION :<br \>
+			rec_pos_to_<span class="type_specifier " >char</span>(fils_gauche(rat),tab);<br \>
+			rec_pos_to_<span class="type_specifier " >char</span>(fils_droit(rat),tab);<br \>
+			return;<br \>
+			break;<br \>
+		case CONCAT :<br \>
+			rec_pos_to_<span class="type_specifier " >char</span>(fils_gauche(rat),tab);<br \>
+			rec_pos_to_<span class="type_specifier " >char</span>(fils_droit(rat),tab);<br \>
+			return;<br \>
+			break;<br \>
+	}<br \>
+	return;<br \>
+}<br \>
+<br \>
+<span class="type_specifier " >char</span>* pos_to_<span class="type_specifier " >char</span>(Rationnel* rat){<br \>
+<br \>
+	<span class="type_specifier " >char</span>* tab=malloc(get_position_max(rat)*sizeof(<span class="type_specifier " >char</span>));<br \>
+	rec_pos_to_<span class="type_specifier " >char</span>(rat,tab);<br \>
+	return tab;<br \>
+}<br \>
+<br \>
+Automate *Glushkov(Rationnel *rat)<br \>
+{<br \>
+<br \>
+   Automate* aut=creer_automate();<br \>
+<br \>
+   <span class="type_specifier " >char</span> c;<br \>
+   <span class="type_specifier " >int</span> dest;<br \>
+   <span class="type_specifier " >char</span>* lettres=pos_to_<span class="type_specifier " >char</span>(rat);<br \>
+<br \>
+   ajouter_etat_initial(aut,0);  //On crée un état initial 0 (epsilon)<br \>
+   if (contient_mot_vide(rat)){<br \>
+		ajouter_etat_final(aut,0);<br \>
+   }<br \>
+   <br \>
+   Ensemble_iterateur it_premier=premier_iterateur_ensemble(premier(rat)); //On crée des transition entre l'état 0 et les premiers.<br \>
+   while (!iterateur_ensemble_est_vide(it_premier)){<br \>
+	    c=lettres[get_element(it_premier)];  //On recupere la lettre associée a l'état<br \>
+	    dest=get_element(it_premier);     //On va chercher la destination de la transition (le sommet de premier)<br \>
+		ajouter_transition(aut,0,c,dest);     // On crée la transition entre l'état 0 et le sommet actuel dans premier<br \>
+		it_premier=iterateur_suivant_ensemble(it_premier);<br \>
+   }<br \>
+   <br \>
+   <br \>
+   Ensemble_iterateur it_dernier=premier_iterateur_ensemble(dernier(rat));  // les elements de dernier sont les etats finaux<br \>
+   while (!iterateur_ensemble_est_vide(it_dernier)){<br \>
+		ajouter_etat_final(aut,get_element(it_dernier));<br \>
+		it_dernier=iterateur_suivant_ensemble(it_dernier);<br \>
+   }<br \>
+   <br \>
+   for (<span class="type_specifier " >int</span> i=1;i<=get_position_max(rat);i++){ //On crée toutes les autres transitions<br \>
+	    Ensemble_iterateur it_transition=premier_iterateur_ensemble(suivant(rat,i)); //On parcours l'ensemble des transitions<br \>
+	    while (!iterateur_ensemble_est_vide(it_transition)){<br \>
+			c=lettres[get_element(it_transition)]; //La lettre de la destionation<br \>
+			dest=get_element(it_transition);  // position de fin<br \>
+			ajouter_transition(aut,i,c,dest); // crée la transition<br \>
+			it_transition=iterateur_suivant_ensemble(it_transition);<br \>
+		}<br \>
+	}<br \>
+	return aut;<br \>
+}<br \>
+<br \>
+bool meme_langage (<span class="type_specifier " >const</span> <span class="type_specifier " >char</span> *expr1, <span class="type_specifier " >const</span> <span class="type_specifier " >char</span>* expr2)<br \>
+{<br \>
+   A_FAIRE_RETURN(true);<br \>
+}<br \>
+<br \>
+Systeme systeme(Automate *automate)<br \>
+{<br \>
+   A_FAIRE_RETURN(NULL);<br \>
+}<br \>
+<br \>
+<span class="type_specifier " >void</span> pr<span class="type_specifier " >int</span>_ligne(Rationnel **ligne, <span class="type_specifier " >int</span> n)<br \>
+{<br \>
+   for (<span class="type_specifier " >int</span> j = 0; j <=n; j++)<br \>
+      {<br \>
+         pr<span class="type_specifier " >int</span>_rationnel(ligne[j]);<br \>
+         if (j<n)<br \>
+            pr<span class="type_specifier " >int</span>f("X%d\t+\t", j);<br \>
+      }<br \>
+   pr<span class="type_specifier " >int</span>f("\n");<br \>
+}<br \>
+<br \>
+<span class="type_specifier " >void</span> pr<span class="type_specifier " >int</span>_systeme(Systeme systeme, <span class="type_specifier " >int</span> n)<br \>
+{<br \>
+   for (<span class="type_specifier " >int</span> i = 0; i <= n-1; i++)<br \>
+   {<br \>
+      pr<span class="type_specifier " >int</span>f("X%d\t= ", i);<br \>
+      pr<span class="type_specifier " >int</span>_ligne(systeme[i], n);<br \>
+   }<br \>
+}<br \>
+<br \>
+Rationnel **resoudre_variable_arden(Rationnel **ligne, <span class="type_specifier " >int</span> numero_variable, <span class="type_specifier " >int</span> n)<br \>
+{<br \>
+   A_FAIRE_RETURN(NULL);<br \>
+}<br \>
+<br \>
+Rationnel **substituer_variable(Rationnel **ligne, <span class="type_specifier " >int</span> numero_variable, Rationnel **valeur_variable, <span class="type_specifier " >int</span> n)<br \>
+{<br \>
+   A_FAIRE_RETURN(NULL);<br \>
+}<br \>
+<br \>
+Systeme resoudre_systeme(Systeme systeme, <span class="type_specifier " >int</span> n)<br \>
+{<br \>
+   A_FAIRE_RETURN(NULL);<br \>
+}<br \>
+<br \>
+Rationnel *Arden(Automate *automate)<br \>
+{<br \>
+   A_FAIRE_RETURN(NULL);<br \>
+}<br \>
+</div></body></html>

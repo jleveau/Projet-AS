@@ -500,7 +500,7 @@ Makefile,76
 CC=gccCC1,0
 CPPFLAGS=-g -ggdb -O0 -std=c11 -Wall -Werror -I.CPPFLAGS2,7
 
-html.c,1000
+html.c,1083
 struct attribut{attribut9,81
   char* nom;nom10,98
   char* nom;attribut::nom10,98
@@ -522,6 +522,7 @@ balise print_debut_balise(char* nom,char* class){print_debut_balise54,793
 void print_fin_debut_balise(){print_fin_debut_balise68,1163
 void ajouter_attribut(balise b,char* nom, char* val){ajouter_attribut74,1224
 void print_balise_type_specifier(char* param){print_balise_type_specifier85,1456
+void print_balise_jump_statement(char* param){print_balise_jump_statement91,1641
 
 branches/Lisa/grammar/C-grammar.l,0
 
@@ -582,266 +583,272 @@ parse.tab.c,9743
 #define YYPURE YYPURE53,2188
 #define YYPUSH YYPUSH56,2227
 #define YYPULL YYPULL59,2266
-#   define YY_NULLPTR YY_NULLPTR81,2655
-#   define YY_NULLPTR YY_NULLPTR83,2693
-# undef YYERROR_VERBOSEYYERROR_VERBOSE89,2798
-# define YYERROR_VERBOSE YYERROR_VERBOSE90,2822
-# define YYERROR_VERBOSE YYERROR_VERBOSE92,2855
-# define YY_YY_PARSE_TAB_H_INCLUDEDYY_YY_PARSE_TAB_H_INCLUDED98,3022
-# define YYDEBUG YYDEBUG101,3095
-# define YYTOKENTYPEYYTOKENTYPE109,3200
-  enum yytokentypeyytokentype110,3221
-    KEYWORD = 258,KEYWORD112,3244
-    TYPE = 259,TYPE113,3263
-    IDENTIFIER = 260,IDENTIFIER114,3279
-    I_CONSTANT = 261,I_CONSTANT115,3301
-    F_CONSTANT = 262,F_CONSTANT116,3323
-    STRING_LITERAL = 263,STRING_LITERAL117,3345
-    FUNC_NAME = 264,FUNC_NAME118,3371
-    SIZEOF = 265,SIZEOF119,3392
-    PTR_OP = 266,PTR_OP120,3410
-    INC_OP = 267,INC_OP121,3428
-    DEC_OP = 268,DEC_OP122,3446
-    LEFT_OP = 269,LEFT_OP123,3464
-    RIGHT_OP = 270,RIGHT_OP124,3483
-    LE_OP = 271,LE_OP125,3503
-    GE_OP = 272,GE_OP126,3520
-    EQ_OP = 273,EQ_OP127,3537
-    NE_OP = 274,NE_OP128,3554
-    AND_OP = 275,AND_OP129,3571
-    OR_OP = 276,OR_OP130,3589
-    MUL_ASSIGN = 277,MUL_ASSIGN131,3606
-    DIV_ASSIGN = 278,DIV_ASSIGN132,3628
-    MOD_ASSIGN = 279,MOD_ASSIGN133,3650
-    ADD_ASSIGN = 280,ADD_ASSIGN134,3672
-    SUB_ASSIGN = 281,SUB_ASSIGN135,3694
-    LEFT_ASSIGN = 282,LEFT_ASSIGN136,3716
-    RIGHT_ASSIGN = 283,RIGHT_ASSIGN137,3739
-    AND_ASSIGN = 284,AND_ASSIGN138,3763
-    XOR_ASSIGN = 285,XOR_ASSIGN139,3785
-    OR_ASSIGN = 286,OR_ASSIGN140,3807
-    TYPEDEF_NAME = 287,TYPEDEF_NAME141,3828
-    ENUMERATION_CONSTANT = 288,ENUMERATION_CONSTANT142,3852
-    TYPEDEF = 289,TYPEDEF143,3884
-    EXTERN = 290,EXTERN144,3903
-    STATIC = 291,STATIC145,3921
-    AUTO = 292,AUTO146,3939
-    REGISTER = 293,REGISTER147,3955
-    INLINE = 294,INLINE148,3975
-    CONST = 295,CONST149,3993
-    RESTRICT = 296,RESTRICT150,4010
-    VOLATILE = 297,VOLATILE151,4030
-    BOOL = 298,BOOL152,4050
-    CHAR = 299,CHAR153,4066
-    SHORT = 300,SHORT154,4082
-    INT = 301,INT155,4099
-    LONG = 302,LONG156,4114
-    SIGNED = 303,SIGNED157,4130
-    UNSIGNED = 304,UNSIGNED158,4148
-    FLOAT = 305,FLOAT159,4168
-    DOUBLE = 306,DOUBLE160,4185
-    VOID = 307,VOID161,4203
-    COMPLEX = 308,COMPLEX162,4219
-    IMAGINARY = 309,IMAGINARY163,4238
-    STRUCT = 310,STRUCT164,4259
-    UNION = 311,UNION165,4277
-    ENUM = 312,ENUM166,4294
-    ELLIPSIS = 313,ELLIPSIS167,4310
-    CASE = 314,CASE168,4330
-    DEFAULT = 315,DEFAULT169,4346
-    IF = 316,IF170,4365
-    ELSE = 317,ELSE171,4379
-    SWITCH = 318,SWITCH172,4395
-    WHILE = 319,WHILE173,4413
-    DO = 320,DO174,4430
-    FOR = 321,FOR175,4444
-    GOTO = 322,GOTO176,4459
-    CONTINUE = 323,CONTINUE177,4475
-    BREAK = 324,BREAK178,4495
-    RETURN = 325,RETURN179,4512
-    ALIGNAS = 326,ALIGNAS180,4530
-    ALIGNOF = 327,ALIGNOF181,4549
-    ATOMIC = 328,ATOMIC182,4568
-    GENERIC = 329,GENERIC183,4586
-    NORETURN = 330,NORETURN184,4605
-    STATIC_ASSERT = 331,STATIC_ASSERT185,4625
-    THREAD_LOCAL = 332THREAD_LOCAL186,4650
-typedef union YYSTYPE YYSTYPE;YYSTYPE192,4760
-union YYSTYPEYYSTYPE193,4791
- char* nom;nom197,4845
- char* nom;YYSTYPE::nom197,4845
-# define YYSTYPE_IS_TRIVIAL YYSTYPE_IS_TRIVIAL202,4905
-# define YYSTYPE_IS_DECLARED YYSTYPE_IS_DECLARED203,4935
-# undef shortshort218,5170
-typedef YYTYPE_UINT8 yytype_uint8;yytype_uint8222,5212
-typedef unsigned char yytype_uint8;yytype_uint8224,5253
-typedef YYTYPE_INT8 yytype_int8;yytype_int8228,5316
-typedef signed char yytype_int8;yytype_int8230,5355
-typedef YYTYPE_UINT16 yytype_uint16;yytype_uint16234,5417
-typedef unsigned short int yytype_uint16;yytype_uint16236,5460
-typedef YYTYPE_INT16 yytype_int16;yytype_int16240,5530
-typedef short int yytype_int16;yytype_int16242,5571
-#  define YYSIZE_T YYSIZE_T247,5650
-#  define YYSIZE_T YYSIZE_T249,5705
-#  define YYSIZE_T YYSIZE_T252,5814
-#  define YYSIZE_T YYSIZE_T254,5847
-#define YYSIZE_MAXIMUM YYSIZE_MAXIMUM258,5895
-#   define YY_(YY_264,6065
-#  define YY_(YY_268,6151
-#  define YY_ATTRIBUTE(YY_ATTRIBUTE276,6408
-#  define YY_ATTRIBUTE(YY_ATTRIBUTE278,6464
-# define YY_ATTRIBUTE_PURE YY_ATTRIBUTE_PURE283,6547
-# define YY_ATTRIBUTE_UNUSED YY_ATTRIBUTE_UNUSED287,6638
-#  define _Noreturn _Noreturn293,6835
-#  define _Noreturn _Noreturn295,6884
-# define YYUSE(YYUSE301,7044
-# define YYUSE(YYUSE303,7081
-# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN308,7256
-# define YY_IGNORE_MAYBE_UNINITIALIZED_END YY_IGNORE_MAYBE_UNINITIALIZED_END312,7466
-# define YY_INITIAL_VALUE(YY_INITIAL_VALUE315,7552
-# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGINYY_IGNORE_MAYBE_UNINITIALIZED_BEGIN318,7642
-# define YY_IGNORE_MAYBE_UNINITIALIZED_ENDYY_IGNORE_MAYBE_UNINITIALIZED_END319,7687
-# define YY_INITIAL_VALUE(YY_INITIAL_VALUE322,7762
-#    define YYSTACK_ALLOC YYSTACK_ALLOC333,8010
-#    define YYSTACK_ALLOC YYSTACK_ALLOC337,8173
-#    define alloca alloca340,8293
-#    define YYSTACK_ALLOC YYSTACK_ALLOC342,8329
-#      define EXIT_SUCCESS EXIT_SUCCESS347,8559
-#  define YYSTACK_FREE(YYSTACK_FREE356,8709
-#   define YYSTACK_ALLOC_MAXIMUM YYSTACK_ALLOC_MAXIMUM362,9099
-#  define YYSTACK_ALLOC YYSTACK_ALLOC365,9181
-#  define YYSTACK_FREE YYSTACK_FREE366,9214
-#   define YYSTACK_ALLOC_MAXIMUM YYSTACK_ALLOC_MAXIMUM368,9276
-#    define EXIT_SUCCESS EXIT_SUCCESS375,9573
-#   define YYMALLOC YYMALLOC379,9638
-#   define YYFREE YYFREE385,9811
-union yyallocyyalloc399,10207
-  yytype_int16 yyss_alloc;yyss_alloc401,10223
-  yytype_int16 yyss_alloc;yyalloc::yyss_alloc401,10223
-  YYSTYPE yyvs_alloc;yyvs_alloc402,10250
-  YYSTYPE yyvs_alloc;yyalloc::yyvs_alloc402,10250
-# define YYSTACK_GAP_MAXIMUM YYSTACK_GAP_MAXIMUM406,10351
-# define YYSTACK_BYTES(YYSTACK_BYTES410,10499
-# define YYCOPY_NEEDED YYCOPY_NEEDED414,10614
-# define YYSTACK_RELOCATE(YYSTACK_RELOCATE421,10923
-#   define YYCOPY(YYCOPY439,11802
-#   define YYCOPY(YYCOPY442,11908
-#define YYFINAL YYFINAL455,12377
-#define YYLAST YYLAST457,12437
-#define YYNTOKENS YYNTOKENS460,12501
-#define YYNNTS YYNNTS462,12565
-#define YYNRULES YYNRULES464,12620
-#define YYNSTATES YYNSTATES466,12680
-#define YYUNDEFTOK YYUNDEFTOK470,12820
-#define YYMAXUTOK YYMAXUTOK471,12842
-#define YYTRANSLATE(YYTRANSLATE473,12867
-static const yytype_uint8 yytranslate[] =yytranslate478,13143
-static const yytype_uint16 yyrline[] =yyrline518,15707
-static const char *const yytname[] =yytname554,17946
-static const yytype_uint16 yytoknum[] =yytoknum603,20910
-#define YYPACT_NINF YYPACT_NINF619,21710
-#define yypact_value_is_default(yypact_value_is_default621,21736
-#define YYTABLE_NINF YYTABLE_NINF624,21808
-#define yytable_value_is_error(yytable_value_is_error626,21833
-static const yytype_int16 yypact[] =yypact631,21975
-static const yytype_uint16 yydefact[] =yydefact686,25707
-static const yytype_int16 yypgoto[] =yypgoto739,29285
-static const yytype_int16 yydefgoto[] =yydefgoto752,29929
-static const yytype_uint16 yytable[] =yytable767,30748
-static const yytype_int16 yycheck[] =yycheck1022,49052
-static const yytype_uint8 yystos[] =yystos1279,67456
-static const yytype_uint8 yyr1[] =yyr11332,71071
-static const yytype_uint8 yyr2[] =yyr21365,73203
-#define yyerrok yyerrok1398,75260
-#define yyclearin yyclearin1399,75302
-#define YYEMPTY YYEMPTY1400,75345
-#define YYEOF YYEOF1401,75374
-#define YYACCEPT YYACCEPT1403,75401
-#define YYABORT YYABORT1404,75442
-#define YYERROR YYERROR1405,75482
-#define YYRECOVERING(YYRECOVERING1408,75524
-#define YYBACKUP(YYBACKUP1410,75565
-#define YYTERROR YYTERROR1428,76580
-#define YYERRCODE YYERRCODE1429,76606
-#  define YYFPRINTF YYFPRINTF1438,76763
-# define YYDPRINTF(YYDPRINTF1441,76800
-# define YY_LOCATION_PRINT(YY_LOCATION_PRINT1449,77096
-# define YY_SYMBOL_PRINT(YY_SYMBOL_PRINT1453,77154
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)yy_symbol_value_print1470,77955
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)yy_symbol_print1489,78354
-yy_stack_print (yytype_int16 *yybottom, yytype_int16 *yytop)yy_stack_print1504,78918
-# define YY_STACK_PRINT(YY_STACK_PRINT1515,79168
-yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int yyrule)yy_reduce_print1527,79615
-# define YY_REDUCE_PRINT(YY_REDUCE_PRINT1546,80223
-int yydebug;yydebug1554,80513
-# define YYDPRINTF(YYDPRINTF1556,80547
-# define YY_SYMBOL_PRINT(YY_SYMBOL_PRINT1557,80572
-# define YY_STACK_PRINT(YY_STACK_PRINT1558,80627
-# define YY_REDUCE_PRINT(YY_REDUCE_PRINT1559,80664
-# define YYINITDEPTH YYINITDEPTH1565,80798
-# define YYMAXDEPTH YYMAXDEPTH1576,81154
-#   define yystrlen yystrlen1584,81273
-yystrlen (const char *yystr)yystrlen1588,81359
-#   define yystpcpy yystpcpy1600,81585
-yystpcpy (char *yydest, const char *yysrc)yystpcpy1605,81723
-yytnamerr (char *yyres, const char *yystr)yytnamerr1627,82371
-yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,yysyntax_error1675,83533
-# define YYCASE_(YYCASE_1751,86919
-# undef YYCASE_YYCASE_1761,87470
-yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep)yydestruct1807,88594
-int yychar;yychar1823,88902
-YYSTYPE yylval;yylval1826,88966
-int yynerrs;yynerrs1828,89021
-yyparse (void)yyparse1836,89083
-#define YYPOPSTACK(YYPOPSTACK1876,90093
-void yyerror (char const *s) {yyerror2380,104035
+#   define YY_NULLPTR YY_NULLPTR81,2706
+#   define YY_NULLPTR YY_NULLPTR83,2744
+# undef YYERROR_VERBOSEYYERROR_VERBOSE89,2849
+# define YYERROR_VERBOSE YYERROR_VERBOSE90,2873
+# define YYERROR_VERBOSE YYERROR_VERBOSE92,2906
+# define YY_YY_PARSE_TAB_H_INCLUDEDYY_YY_PARSE_TAB_H_INCLUDED98,3073
+# define YYDEBUG YYDEBUG101,3146
+# define YYTOKENTYPEYYTOKENTYPE109,3251
+  enum yytokentypeyytokentype110,3272
+    KEYWORD = 258,KEYWORD112,3295
+    TYPE = 259,TYPE113,3314
+    IDENTIFIER = 260,IDENTIFIER114,3330
+    I_CONSTANT = 261,I_CONSTANT115,3352
+    F_CONSTANT = 262,F_CONSTANT116,3374
+    STRING_LITERAL = 263,STRING_LITERAL117,3396
+    FUNC_NAME = 264,FUNC_NAME118,3422
+    SIZEOF = 265,SIZEOF119,3443
+    PTR_OP = 266,PTR_OP120,3461
+    INC_OP = 267,INC_OP121,3479
+    DEC_OP = 268,DEC_OP122,3497
+    LEFT_OP = 269,LEFT_OP123,3515
+    RIGHT_OP = 270,RIGHT_OP124,3534
+    LE_OP = 271,LE_OP125,3554
+    GE_OP = 272,GE_OP126,3571
+    EQ_OP = 273,EQ_OP127,3588
+    NE_OP = 274,NE_OP128,3605
+    AND_OP = 275,AND_OP129,3622
+    OR_OP = 276,OR_OP130,3640
+    MUL_ASSIGN = 277,MUL_ASSIGN131,3657
+    DIV_ASSIGN = 278,DIV_ASSIGN132,3679
+    MOD_ASSIGN = 279,MOD_ASSIGN133,3701
+    ADD_ASSIGN = 280,ADD_ASSIGN134,3723
+    SUB_ASSIGN = 281,SUB_ASSIGN135,3745
+    LEFT_ASSIGN = 282,LEFT_ASSIGN136,3767
+    RIGHT_ASSIGN = 283,RIGHT_ASSIGN137,3790
+    AND_ASSIGN = 284,AND_ASSIGN138,3814
+    XOR_ASSIGN = 285,XOR_ASSIGN139,3836
+    OR_ASSIGN = 286,OR_ASSIGN140,3858
+    TYPEDEF_NAME = 287,TYPEDEF_NAME141,3879
+    ENUMERATION_CONSTANT = 288,ENUMERATION_CONSTANT142,3903
+    TYPEDEF = 289,TYPEDEF143,3935
+    EXTERN = 290,EXTERN144,3954
+    STATIC = 291,STATIC145,3972
+    AUTO = 292,AUTO146,3990
+    REGISTER = 293,REGISTER147,4006
+    INLINE = 294,INLINE148,4026
+    CONST = 295,CONST149,4044
+    RESTRICT = 296,RESTRICT150,4061
+    VOLATILE = 297,VOLATILE151,4081
+    ATOMIC = 298,ATOMIC152,4101
+    BOOL = 299,BOOL153,4119
+    CHAR = 300,CHAR154,4135
+    SHORT = 301,SHORT155,4151
+    INT = 302,INT156,4168
+    LONG = 303,LONG157,4183
+    SIGNED = 304,SIGNED158,4199
+    UNSIGNED = 305,UNSIGNED159,4217
+    FLOAT = 306,FLOAT160,4237
+    DOUBLE = 307,DOUBLE161,4254
+    VOID = 308,VOID162,4272
+    COMPLEX = 309,COMPLEX163,4288
+    IMAGINARY = 310,IMAGINARY164,4307
+    STRUCT = 311,STRUCT165,4328
+    UNION = 312,UNION166,4346
+    ENUM = 313,ENUM167,4363
+    ELLIPSIS = 314,ELLIPSIS168,4379
+    CASE = 315,CASE169,4399
+    DEFAULT = 316,DEFAULT170,4415
+    IF = 317,IF171,4434
+    ELSE = 318,ELSE172,4448
+    SWITCH = 319,SWITCH173,4464
+    WHILE = 320,WHILE174,4482
+    DO = 321,DO175,4499
+    FOR = 322,FOR176,4513
+    GOTO = 323,GOTO177,4528
+    RETURN = 324,RETURN178,4544
+    BREAK = 325,BREAK179,4562
+    CONTINUE = 326,CONTINUE180,4579
+    ALIGNAS = 327,ALIGNAS181,4599
+    ALIGNOF = 328,ALIGNOF182,4618
+    GENERIC = 329,GENERIC183,4637
+    NORETURN = 330,NORETURN184,4656
+    STATIC_ASSERT = 331,STATIC_ASSERT185,4676
+    THREAD_LOCAL = 332THREAD_LOCAL186,4701
+typedef union YYSTYPE YYSTYPE;YYSTYPE192,4811
+union YYSTYPEYYSTYPE193,4842
+ char* nom;nom197,4896
+ char* nom;YYSTYPE::nom197,4896
+# define YYSTYPE_IS_TRIVIAL YYSTYPE_IS_TRIVIAL202,4956
+# define YYSTYPE_IS_DECLARED YYSTYPE_IS_DECLARED203,4986
+# undef shortshort218,5221
+typedef YYTYPE_UINT8 yytype_uint8;yytype_uint8222,5263
+typedef unsigned char yytype_uint8;yytype_uint8224,5304
+typedef YYTYPE_INT8 yytype_int8;yytype_int8228,5367
+typedef signed char yytype_int8;yytype_int8230,5406
+typedef YYTYPE_UINT16 yytype_uint16;yytype_uint16234,5468
+typedef unsigned short int yytype_uint16;yytype_uint16236,5511
+typedef YYTYPE_INT16 yytype_int16;yytype_int16240,5581
+typedef short int yytype_int16;yytype_int16242,5622
+#  define YYSIZE_T YYSIZE_T247,5701
+#  define YYSIZE_T YYSIZE_T249,5756
+#  define YYSIZE_T YYSIZE_T252,5865
+#  define YYSIZE_T YYSIZE_T254,5898
+#define YYSIZE_MAXIMUM YYSIZE_MAXIMUM258,5946
+#   define YY_(YY_264,6116
+#  define YY_(YY_268,6202
+#  define YY_ATTRIBUTE(YY_ATTRIBUTE276,6459
+#  define YY_ATTRIBUTE(YY_ATTRIBUTE278,6515
+# define YY_ATTRIBUTE_PURE YY_ATTRIBUTE_PURE283,6598
+# define YY_ATTRIBUTE_UNUSED YY_ATTRIBUTE_UNUSED287,6689
+#  define _Noreturn _Noreturn293,6886
+#  define _Noreturn _Noreturn295,6935
+# define YYUSE(YYUSE301,7095
+# define YYUSE(YYUSE303,7132
+# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN308,7307
+# define YY_IGNORE_MAYBE_UNINITIALIZED_END YY_IGNORE_MAYBE_UNINITIALIZED_END312,7517
+# define YY_INITIAL_VALUE(YY_INITIAL_VALUE315,7603
+# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGINYY_IGNORE_MAYBE_UNINITIALIZED_BEGIN318,7693
+# define YY_IGNORE_MAYBE_UNINITIALIZED_ENDYY_IGNORE_MAYBE_UNINITIALIZED_END319,7738
+# define YY_INITIAL_VALUE(YY_INITIAL_VALUE322,7813
+#    define YYSTACK_ALLOC YYSTACK_ALLOC333,8061
+#    define YYSTACK_ALLOC YYSTACK_ALLOC337,8224
+#    define alloca alloca340,8344
+#    define YYSTACK_ALLOC YYSTACK_ALLOC342,8380
+#      define EXIT_SUCCESS EXIT_SUCCESS347,8610
+#  define YYSTACK_FREE(YYSTACK_FREE356,8760
+#   define YYSTACK_ALLOC_MAXIMUM YYSTACK_ALLOC_MAXIMUM362,9150
+#  define YYSTACK_ALLOC YYSTACK_ALLOC365,9232
+#  define YYSTACK_FREE YYSTACK_FREE366,9265
+#   define YYSTACK_ALLOC_MAXIMUM YYSTACK_ALLOC_MAXIMUM368,9327
+#    define EXIT_SUCCESS EXIT_SUCCESS375,9624
+#   define YYMALLOC YYMALLOC379,9689
+#   define YYFREE YYFREE385,9862
+union yyallocyyalloc399,10258
+  yytype_int16 yyss_alloc;yyss_alloc401,10274
+  yytype_int16 yyss_alloc;yyalloc::yyss_alloc401,10274
+  YYSTYPE yyvs_alloc;yyvs_alloc402,10301
+  YYSTYPE yyvs_alloc;yyalloc::yyvs_alloc402,10301
+# define YYSTACK_GAP_MAXIMUM YYSTACK_GAP_MAXIMUM406,10402
+# define YYSTACK_BYTES(YYSTACK_BYTES410,10550
+# define YYCOPY_NEEDED YYCOPY_NEEDED414,10665
+# define YYSTACK_RELOCATE(YYSTACK_RELOCATE421,10974
+#   define YYCOPY(YYCOPY439,11853
+#   define YYCOPY(YYCOPY442,11959
+#define YYFINAL YYFINAL455,12428
+#define YYLAST YYLAST457,12488
+#define YYNTOKENS YYNTOKENS460,12552
+#define YYNNTS YYNNTS462,12616
+#define YYNRULES YYNRULES464,12671
+#define YYNSTATES YYNSTATES466,12731
+#define YYUNDEFTOK YYUNDEFTOK470,12871
+#define YYMAXUTOK YYMAXUTOK471,12893
+#define YYTRANSLATE(YYTRANSLATE473,12918
+static const yytype_uint8 yytranslate[] =yytranslate478,13194
+static const yytype_uint16 yyrline[] =yyrline518,15758
+static const char *const yytname[] =yytname554,17997
+static const yytype_uint16 yytoknum[] =yytoknum603,20961
+#define YYPACT_NINF YYPACT_NINF619,21761
+#define yypact_value_is_default(yypact_value_is_default621,21787
+#define YYTABLE_NINF YYTABLE_NINF624,21859
+#define yytable_value_is_error(yytable_value_is_error626,21884
+static const yytype_int16 yypact[] =yypact631,22026
+static const yytype_uint16 yydefact[] =yydefact686,25758
+static const yytype_int16 yypgoto[] =yypgoto739,29336
+static const yytype_int16 yydefgoto[] =yydefgoto752,29980
+static const yytype_uint16 yytable[] =yytable767,30799
+static const yytype_int16 yycheck[] =yycheck1018,48860
+static const yytype_uint8 yystos[] =yystos1271,67021
+static const yytype_uint8 yyr1[] =yyr11324,70636
+static const yytype_uint8 yyr2[] =yyr21357,72768
+#define yyerrok yyerrok1390,74825
+#define yyclearin yyclearin1391,74867
+#define YYEMPTY YYEMPTY1392,74910
+#define YYEOF YYEOF1393,74939
+#define YYACCEPT YYACCEPT1395,74966
+#define YYABORT YYABORT1396,75007
+#define YYERROR YYERROR1397,75047
+#define YYRECOVERING(YYRECOVERING1400,75089
+#define YYBACKUP(YYBACKUP1402,75130
+#define YYTERROR YYTERROR1420,76145
+#define YYERRCODE YYERRCODE1421,76171
+#  define YYFPRINTF YYFPRINTF1430,76328
+# define YYDPRINTF(YYDPRINTF1433,76365
+# define YY_LOCATION_PRINT(YY_LOCATION_PRINT1441,76661
+# define YY_SYMBOL_PRINT(YY_SYMBOL_PRINT1445,76719
+yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)yy_symbol_value_print1462,77520
+yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)yy_symbol_print1481,77919
+yy_stack_print (yytype_int16 *yybottom, yytype_int16 *yytop)yy_stack_print1496,78483
+# define YY_STACK_PRINT(YY_STACK_PRINT1507,78733
+yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int yyrule)yy_reduce_print1519,79180
+# define YY_REDUCE_PRINT(YY_REDUCE_PRINT1538,79788
+int yydebug;yydebug1546,80078
+# define YYDPRINTF(YYDPRINTF1548,80112
+# define YY_SYMBOL_PRINT(YY_SYMBOL_PRINT1549,80137
+# define YY_STACK_PRINT(YY_STACK_PRINT1550,80192
+# define YY_REDUCE_PRINT(YY_REDUCE_PRINT1551,80229
+# define YYINITDEPTH YYINITDEPTH1557,80363
+# define YYMAXDEPTH YYMAXDEPTH1568,80719
+#   define yystrlen yystrlen1576,80838
+yystrlen (const char *yystr)yystrlen1580,80924
+#   define yystpcpy yystpcpy1592,81150
+yystpcpy (char *yydest, const char *yysrc)yystpcpy1597,81288
+yytnamerr (char *yyres, const char *yystr)yytnamerr1619,81936
+yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,yysyntax_error1667,83098
+# define YYCASE_(YYCASE_1743,86484
+# undef YYCASE_YYCASE_1753,87035
+yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep)yydestruct1799,88159
+int yychar;yychar1815,88467
+YYSTYPE yylval;yylval1818,88531
+int yynerrs;yynerrs1820,88586
+yyparse (void)yyparse1828,88648
+#define YYPOPSTACK(YYPOPSTACK1868,89658
+void yyerror (char const *s) {yyerror2396,104232
 
 parse.l,0
 
 parse.y,0
 
-test.c,2861
-Rationnel *rationnel(Noeud etiquette, char lettre, int position_min, int position_max, void *data, Rationnel *gauche, Rationnel *droit, Rationnel *pere)rationnel16,262
-Rationnel *Epsilon()Epsilon32,725
-Rationnel *Lettre(char l)Lettre37,814
-Rationnel *Union(Rationnel* rat1, Rationnel* rat2)Union42,907
-Rationnel *Concat(Rationnel* rat1, Rationnel* rat2)Concat55,1175
-Rationnel *Star(Rationnel* rat)Star69,1458
-bool est_racine(Rationnel* rat)est_racine74,1554
-Noeud get_etiquette(Rationnel* rat)get_etiquette79,1622
-char get_lettre(Rationnel* rat)get_lettre84,1689
-int get_position_min(Rationnel* rat)get_position_min90,1791
-int get_position_max(Rationnel* rat)get_position_max96,1906
-void set_position_min(Rationnel* rat, int valeur)set_position_min102,2021
-void set_position_max(Rationnel* rat, int valeur)set_position_max109,2162
-Rationnel *fils_gauche(Rationnel* rat)fils_gauche117,2303
-Rationnel *fils_droit(Rationnel* rat)fils_droit123,2446
-Rationnel *fils(Rationnel* rat)fils129,2587
-Rationnel *pere(Rationnel* rat)pere135,2686
-void print_rationnel(Rationnel* rat)print_rationnel141,2773
-Rationnel *expression_to_rationnel(const char *expr)expression_to_rationnel187,3657
-void rationnel_to_dot(Rationnel *rat, char* nom_fichier)rationnel_to_dot211,4115
-int rationnel_to_dot_aux(Rationnel *rat, FILE *output, int pere, int noeud_courant)rationnel_to_dot_aux217,4258
-int rec_numeroter_rationnel(Rationnel* rat){rec_numeroter_rationnel264,6001
-void numeroter_rationnel(Rationnel *rat)numeroter_rationnel293,6906
-bool contient_mot_vide(Rationnel *rat)contient_mot_vide301,7019
-Ensemble* premier_rec(Rationnel* rat, Ensemble* ens){premier_rec324,7464
-Ensemble *premier(Rationnel *rat)premier347,8079
-Ensemble* dernier_rec(Rationnel* rat, Ensemble* ens){dernier_rec354,8209
-Ensemble *dernier(Rationnel *rat)dernier377,8825
-Ensemble* suivant_rec(Rationnel* rat, Ensemble* ens,int pos){suivant_rec384,8955
-Ensemble *suivant(Rationnel *rat, int position)suivant408,9697
-void rec_pos_to_char(Rationnel* rat,char* tab){rec_pos_to_char415,9850
-char* pos_to_char(Rationnel* rat){pos_to_char440,10353
-Automate *Glushkov(Rationnel *rat)Glushkov447,10487
-bool meme_langage (const char *expr1, const char* expr2)meme_langage488,12161
-Systeme systeme(Automate *automate)systeme493,12248
-void print_ligne(Rationnel **ligne, int n)print_ligne498,12314
-void print_systeme(Systeme systeme, int n)print_systeme509,12515
-Rationnel **resoudre_variable_arden(Rationnel **ligne, int numero_variable, int n)resoudre_variable_arden518,12669
-Rationnel **substituer_variable(Rationnel **ligne, int numero_variable, Rationnel **valeur_variable, int n)substituer_variable523,12782
-Systeme resoudre_systeme(Systeme systeme, int n)resoudre_systeme528,12920
-Rationnel *Arden(Automate *automate)Arden533,12999
+test.c,3022
+struct coucou{coucou14,209
+char x;x15,224
+char x;coucou::x15,224
+int y;y16,232
+int y;coucou::y16,232
+void fonctiondelamort()fonctiondelamort21,311
+Rationnel *rationnel(Noeud etiquette, char lettre, int position_min, int position_max, void *data, Rationnel *gauche, Rationnel *droit, Rationnel *pere)rationnel27,366
+Rationnel *Epsilon()Epsilon45,813
+Rationnel *Lettre(char l)Lettre50,902
+Rationnel *Union(Rationnel* rat1, Rationnel* rat2)Union55,995
+Rationnel *Concat(Rationnel* rat1, Rationnel* rat2)Concat68,1263
+Rationnel *Star(Rationnel* rat)Star82,1546
+bool est_racine(Rationnel* rat)est_racine87,1642
+Noeud get_etiquette(Rationnel* rat)get_etiquette92,1710
+char get_lettre(Rationnel* rat)get_lettre97,1777
+int get_position_min(Rationnel* rat)get_position_min103,1879
+int get_position_max(Rationnel* rat)get_position_max109,1994
+void set_position_min(Rationnel* rat, int valeur)set_position_min115,2109
+void set_position_max(Rationnel* rat, int valeur)set_position_max122,2250
+Rationnel *fils_gauche(Rationnel* rat)fils_gauche130,2391
+Rationnel *fils_droit(Rationnel* rat)fils_droit136,2534
+Rationnel *fils(Rationnel* rat)fils142,2675
+Rationnel *pere(Rationnel* rat)pere148,2774
+void print_rationnel(Rationnel* rat)print_rationnel154,2861
+Rationnel *expression_to_rationnel(const char *expr)expression_to_rationnel200,3745
+void rationnel_to_dot(Rationnel *rat, char* nom_fichier)rationnel_to_dot224,4203
+int rationnel_to_dot_aux(Rationnel *rat, FILE *output, int pere, int noeud_courant)rationnel_to_dot_aux230,4346
+int rec_numeroter_rationnel(Rationnel* rat){rec_numeroter_rationnel277,6089
+void numeroter_rationnel(Rationnel *rat)numeroter_rationnel306,6994
+bool contient_mot_vide(Rationnel *rat)contient_mot_vide314,7107
+Ensemble* premier_rec(Rationnel* rat, Ensemble* ens){premier_rec337,7552
+Ensemble *premier(Rationnel *rat)premier360,8167
+Ensemble* dernier_rec(Rationnel* rat, Ensemble* ens){dernier_rec367,8297
+Ensemble *dernier(Rationnel *rat)dernier390,8913
+Ensemble* suivant_rec(Rationnel* rat, Ensemble* ens,int pos){suivant_rec397,9043
+Ensemble *suivant(Rationnel *rat, int position)suivant421,9785
+void rec_pos_to_char(Rationnel* rat,char* tab){rec_pos_to_char428,9938
+char* pos_to_char(Rationnel* rat){pos_to_char453,10441
+Automate *Glushkov(Rationnel *rat)Glushkov460,10575
+bool meme_langage (const char *expr1, const char* expr2)meme_langage501,12249
+Systeme systeme(Automate *automate)systeme506,12336
+void print_ligne(Rationnel **ligne, int n)print_ligne511,12402
+void print_systeme(Systeme systeme, int n)print_systeme522,12603
+Rationnel **resoudre_variable_arden(Rationnel **ligne, int numero_variable, int n)resoudre_variable_arden531,12757
+Rationnel **substituer_variable(Rationnel **ligne, int numero_variable, Rationnel **valeur_variable, int n)substituer_variable536,12870
+Systeme resoudre_systeme(Systeme systeme, int n)resoudre_systeme541,13008
+Rationnel *Arden(Automate *automate)Arden546,13087
 
 parse.tab.h,3096
 # define YY_YY_PARSE_TAB_H_INCLUDEDYY_YY_PARSE_TAB_H_INCLUDED34,1549
@@ -888,37 +895,37 @@ parse.tab.h,3096
     CONST = 295,CONST85,2520
     RESTRICT = 296,RESTRICT86,2537
     VOLATILE = 297,VOLATILE87,2557
-    BOOL = 298,BOOL88,2577
-    CHAR = 299,CHAR89,2593
-    SHORT = 300,SHORT90,2609
-    INT = 301,INT91,2626
-    LONG = 302,LONG92,2641
-    SIGNED = 303,SIGNED93,2657
-    UNSIGNED = 304,UNSIGNED94,2675
-    FLOAT = 305,FLOAT95,2695
-    DOUBLE = 306,DOUBLE96,2712
-    VOID = 307,VOID97,2730
-    COMPLEX = 308,COMPLEX98,2746
-    IMAGINARY = 309,IMAGINARY99,2765
-    STRUCT = 310,STRUCT100,2786
-    UNION = 311,UNION101,2804
-    ENUM = 312,ENUM102,2821
-    ELLIPSIS = 313,ELLIPSIS103,2837
-    CASE = 314,CASE104,2857
-    DEFAULT = 315,DEFAULT105,2873
-    IF = 316,IF106,2892
-    ELSE = 317,ELSE107,2906
-    SWITCH = 318,SWITCH108,2922
-    WHILE = 319,WHILE109,2940
-    DO = 320,DO110,2957
-    FOR = 321,FOR111,2971
-    GOTO = 322,GOTO112,2986
-    CONTINUE = 323,CONTINUE113,3002
-    BREAK = 324,BREAK114,3022
-    RETURN = 325,RETURN115,3039
-    ALIGNAS = 326,ALIGNAS116,3057
-    ALIGNOF = 327,ALIGNOF117,3076
-    ATOMIC = 328,ATOMIC118,3095
+    ATOMIC = 298,ATOMIC88,2577
+    BOOL = 299,BOOL89,2595
+    CHAR = 300,CHAR90,2611
+    SHORT = 301,SHORT91,2627
+    INT = 302,INT92,2644
+    LONG = 303,LONG93,2659
+    SIGNED = 304,SIGNED94,2675
+    UNSIGNED = 305,UNSIGNED95,2693
+    FLOAT = 306,FLOAT96,2713
+    DOUBLE = 307,DOUBLE97,2730
+    VOID = 308,VOID98,2748
+    COMPLEX = 309,COMPLEX99,2764
+    IMAGINARY = 310,IMAGINARY100,2783
+    STRUCT = 311,STRUCT101,2804
+    UNION = 312,UNION102,2822
+    ENUM = 313,ENUM103,2839
+    ELLIPSIS = 314,ELLIPSIS104,2855
+    CASE = 315,CASE105,2875
+    DEFAULT = 316,DEFAULT106,2891
+    IF = 317,IF107,2910
+    ELSE = 318,ELSE108,2924
+    SWITCH = 319,SWITCH109,2940
+    WHILE = 320,WHILE110,2958
+    DO = 321,DO111,2975
+    FOR = 322,FOR112,2989
+    GOTO = 323,GOTO113,3004
+    RETURN = 324,RETURN114,3020
+    BREAK = 325,BREAK115,3038
+    CONTINUE = 326,CONTINUE116,3055
+    ALIGNAS = 327,ALIGNAS117,3075
+    ALIGNOF = 328,ALIGNOF118,3094
     GENERIC = 329,GENERIC119,3113
     NORETURN = 330,NORETURN120,3132
     STATIC_ASSERT = 331,STATIC_ASSERT121,3152
@@ -930,7 +937,7 @@ union YYSTYPEYYSTYPE129,3318
 # define YYSTYPE_IS_TRIVIAL YYSTYPE_IS_TRIVIAL138,3434
 # define YYSTYPE_IS_DECLARED YYSTYPE_IS_DECLARED139,3464
 
-lex.yy.c,10375
+lex.yy.c,10376
 #define  YY_INT_ALIGNED YY_INT_ALIGNED4,21
 #define FLEX_SCANNERFLEX_SCANNER8,99
 #define YY_FLEX_MAJOR_VERSION YY_FLEX_MAJOR_VERSION9,120
@@ -1048,77 +1055,77 @@ struct yy_trans_infoyy_trans_info379,10275
 	flex_int32_t yy_verify;yy_trans_info::yy_verify381,10299
 	flex_int32_t yy_nxt;yy_nxt382,10324
 	flex_int32_t yy_nxt;yy_trans_info::yy_nxt382,10324
-static yyconst flex_int16_t yy_accept[48] =yy_accept384,10350
-static yyconst flex_int32_t yy_ec[256] =yy_ec393,10720
-static yyconst flex_int32_t yy_meta[22] =yy_meta425,12442
-static yyconst flex_int16_t yy_base[49] =yy_base432,12644
-static yyconst flex_int16_t yy_def[49] =yy_def441,13018
-static yyconst flex_int16_t yy_nxt[77] =yy_nxt450,13391
-static yyconst flex_int16_t yy_chk[77] =yy_chk462,13947
-static yy_state_type yy_last_accepting_state;yy_last_accepting_state474,14503
-static char *yy_last_accepting_cpos;yy_last_accepting_cpos475,14549
-int yy_flex_debug = 0;yy_flex_debug478,14613
-#define REJECT REJECT483,14739
-#define yymore(yymore484,14783
-#define YY_MORE_ADJ YY_MORE_ADJ485,14829
-#define YY_RESTORE_YY_MORE_OFFSETYY_RESTORE_YY_MORE_OFFSET486,14851
-char *yytext;yytext487,14885
-#define sym_type(sym_type498,15132
-#define INITIAL INITIAL507,15357
-#define YY_EXTRA_TYPE YY_EXTRA_TYPE518,15659
-#define YY_READ_BUF_SIZE YY_READ_BUF_SIZE588,16944
-#define YY_READ_BUF_SIZE YY_READ_BUF_SIZE590,16981
-#define ECHO ECHO599,17221
-#define YY_INPUT(YY_INPUT606,17431
-#define yyterminate(yyterminate643,18345
-#define YY_START_STACK_INCR YY_START_STACK_INCR648,18480
-#define YY_FATAL_ERROR(YY_FATAL_ERROR653,18570
-#define YY_DECL_IS_OURS YY_DECL_IS_OURS662,18803
-#define YY_DECL YY_DECL666,18856
-#define YY_USER_ACTIONYY_USER_ACTION673,19032
-#define YY_BREAK YY_BREAK678,19125
-#define YY_RULE_SETUP YY_RULE_SETUP681,19157
-static int yy_get_next_buffer (void)yy_get_next_buffer982,26232
-    static yy_state_type yy_get_previous_state (void)yy_get_previous_state1116,29831
-    static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state )yy_try_NUL_trans1148,30732
-    static void yyunput (int c, register char * yy_bp )yyunput1171,31403
-    static int yyinput (void)yyinput1210,32469
-    void yyrestart  (FILE * input_file )yyrestart1287,34236
-    void yy_switch_to_buffer  (YY_BUFFER_STATE  new_buffer )yy_switch_to_buffer1304,34597
-static void yy_load_buffer_state  (void)yy_load_buffer_state1335,35440
-    YY_BUFFER_STATE yy_create_buffer  (FILE * file, int  size )yy_create_buffer1349,35913
-    void yy_delete_buffer (YY_BUFFER_STATE  b )yy_delete_buffer1377,36604
-    static void yy_init_buffer  (YY_BUFFER_STATE  b, FILE * file )yy_init_buffer1396,37053
-    void yy_flush_buffer (YY_BUFFER_STATE  b )yy_flush_buffer1424,37786
-void yypush_buffer_state (YY_BUFFER_STATE new_buffer )yypush_buffer_state1453,38472
-void yypop_buffer_state (void)yypop_buffer_state1483,39237
-static void yyensure_buffer_stack (void)yyensure_buffer_stack1502,39632
-YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )yy_scan_buffer1551,41254
-YY_BUFFER_STATE yy_scan_string (yyconst char * yystr )yy_scan_string1588,42327
-YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len )yy_scan_bytes1601,42744
-#define YY_EXIT_FAILURE YY_EXIT_FAILURE1632,43479
-static void yy_fatal_error (yyconst char* msg )yy_fatal_error1635,43513
-#undef yylessyyless1643,43692
-#define yyless(yyless1644,43706
-int yyget_lineno  (void)yyget_lineno1663,44165
-FILE *yyget_in  (void)yyget_in1672,44259
-FILE *yyget_out  (void)yyget_out1680,44343
-yy_size_t yyget_leng  (void)yyget_leng1688,44443
-char *yyget_text  (void)yyget_text1697,44536
-void yyset_lineno (int  line_number )yyset_lineno1706,44652
-void yyset_in (FILE *  in_str )yyset_in1718,44877
-void yyset_out (FILE *  out_str )yyset_out1723,44938
-int yyget_debug  (void)yyget_debug1728,45003
-void yyset_debug (int  bdebug )yyset_debug1733,45062
-static int yy_init_globals (void)yy_init_globals1738,45132
-int yylex_destroy  (void)yylex_destroy1767,45814
-static void yy_flex_strncpy (char* s1, yyconst char * s2, int n )yy_flex_strncpy1793,46368
-static int yy_flex_strlen (yyconst char * s )yy_flex_strlen1802,46529
-void *yyalloc (yy_size_t  size )yyalloc1812,46646
-void *yyrealloc  (void * ptr, yy_size_t  size )yyrealloc1817,46717
-void yyfree (void * ptr )yyfree1829,47173
-#define YYTABLES_NAME YYTABLES_NAME1834,47267
-static int check_type(void)check_type1842,47402
+static yyconst flex_int16_t yy_accept[64] =yy_accept384,10350
+static yyconst flex_int32_t yy_ec[256] =yy_ec395,10826
+static yyconst flex_int32_t yy_meta[20] =yy_meta427,12548
+static yyconst flex_int16_t yy_base[64] =yy_base433,12733
+static yyconst flex_int16_t yy_def[64] =yy_def444,13207
+static yyconst flex_int16_t yy_nxt[89] =yy_nxt455,13680
+static yyconst flex_int16_t yy_chk[89] =yy_chk468,14313
+static yy_state_type yy_last_accepting_state;yy_last_accepting_state481,14946
+static char *yy_last_accepting_cpos;yy_last_accepting_cpos482,14992
+int yy_flex_debug = 0;yy_flex_debug485,15056
+#define REJECT REJECT490,15182
+#define yymore(yymore491,15226
+#define YY_MORE_ADJ YY_MORE_ADJ492,15272
+#define YY_RESTORE_YY_MORE_OFFSETYY_RESTORE_YY_MORE_OFFSET493,15294
+char *yytext;yytext494,15328
+#define sym_type(sym_type505,15575
+#define INITIAL INITIAL528,16488
+#define YY_EXTRA_TYPE YY_EXTRA_TYPE539,16790
+#define YY_READ_BUF_SIZE YY_READ_BUF_SIZE609,18075
+#define YY_READ_BUF_SIZE YY_READ_BUF_SIZE611,18112
+#define ECHO ECHO620,18352
+#define YY_INPUT(YY_INPUT627,18562
+#define yyterminate(yyterminate664,19476
+#define YY_START_STACK_INCR YY_START_STACK_INCR669,19611
+#define YY_FATAL_ERROR(YY_FATAL_ERROR674,19701
+#define YY_DECL_IS_OURS YY_DECL_IS_OURS683,19934
+#define YY_DECL YY_DECL687,19987
+#define YY_USER_ACTIONYY_USER_ACTION694,20163
+#define YY_BREAK YY_BREAK699,20256
+#define YY_RULE_SETUP YY_RULE_SETUP702,20288
+static int yy_get_next_buffer (void)yy_get_next_buffer1013,27577
+    static yy_state_type yy_get_previous_state (void)yy_get_previous_state1147,31176
+    static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state )yy_try_NUL_trans1179,32077
+    static void yyunput (int c, register char * yy_bp )yyunput1202,32748
+    static int yyinput (void)yyinput1241,33814
+    void yyrestart  (FILE * input_file )yyrestart1318,35581
+    void yy_switch_to_buffer  (YY_BUFFER_STATE  new_buffer )yy_switch_to_buffer1335,35942
+static void yy_load_buffer_state  (void)yy_load_buffer_state1366,36785
+    YY_BUFFER_STATE yy_create_buffer  (FILE * file, int  size )yy_create_buffer1380,37258
+    void yy_delete_buffer (YY_BUFFER_STATE  b )yy_delete_buffer1408,37949
+    static void yy_init_buffer  (YY_BUFFER_STATE  b, FILE * file )yy_init_buffer1427,38398
+    void yy_flush_buffer (YY_BUFFER_STATE  b )yy_flush_buffer1455,39131
+void yypush_buffer_state (YY_BUFFER_STATE new_buffer )yypush_buffer_state1484,39817
+void yypop_buffer_state (void)yypop_buffer_state1514,40582
+static void yyensure_buffer_stack (void)yyensure_buffer_stack1533,40977
+YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )yy_scan_buffer1582,42599
+YY_BUFFER_STATE yy_scan_string (yyconst char * yystr )yy_scan_string1619,43672
+YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len )yy_scan_bytes1632,44089
+#define YY_EXIT_FAILURE YY_EXIT_FAILURE1663,44824
+static void yy_fatal_error (yyconst char* msg )yy_fatal_error1666,44858
+#undef yylessyyless1674,45037
+#define yyless(yyless1675,45051
+int yyget_lineno  (void)yyget_lineno1694,45510
+FILE *yyget_in  (void)yyget_in1703,45604
+FILE *yyget_out  (void)yyget_out1711,45688
+yy_size_t yyget_leng  (void)yyget_leng1719,45788
+char *yyget_text  (void)yyget_text1728,45881
+void yyset_lineno (int  line_number )yyset_lineno1737,45997
+void yyset_in (FILE *  in_str )yyset_in1749,46222
+void yyset_out (FILE *  out_str )yyset_out1754,46283
+int yyget_debug  (void)yyget_debug1759,46348
+void yyset_debug (int  bdebug )yyset_debug1764,46407
+static int yy_init_globals (void)yy_init_globals1769,46477
+int yylex_destroy  (void)yylex_destroy1798,47159
+static void yy_flex_strncpy (char* s1, yyconst char * s2, int n )yy_flex_strncpy1824,47713
+static int yy_flex_strlen (yyconst char * s )yy_flex_strlen1833,47874
+void *yyalloc (yy_size_t  size )yyalloc1843,47991
+void *yyrealloc  (void * ptr, yy_size_t  size )yyrealloc1848,48062
+void yyfree (void * ptr )yyfree1860,48518
+#define YYTABLES_NAME YYTABLES_NAME1865,48612
+static int check_type(void)check_type1873,48747
 
 make.sh,0
 

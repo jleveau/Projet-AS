@@ -16,34 +16,38 @@ static void comment(void);
 static int check_type(void);
 
     //"return"				{yylval.nom=strdup(yytext); return(RETURN); }
-
+//";"					{yylval.nom=strdup(yytext); return ';'; }
 
 /*
-L'ajout du ^ devant int est juste une solution temporaire pour que ca ne colorie pas les "printf" 
+  "continue"              {yylval.nom=strdup(yytext); return(CONTINUE);}
+"break"                 {yylval.nom=strdup(yytext); return(BREAK);}
+"return"                {yylval.nom=strdup(yytext); return(RETURN);}
+("{"|"<%")				{ return '{'; }
+("}"|"%>")				{ return '}'; }
+
+*/
+
+/*
+ Avec ';' , Ca fonctionne lorsque l'on fait une declaration de variable ( etc int x=3;) ou que l'on fait une declaration de fonction ( ex : int coucou();) mais pas quand on écrit un ';' après une expression.
+ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' mais il faut aussi implémenter ceux qui dependent de '}' ... 
 */    
 %}
+
 %option noyywrap
 %%
 
 
 "char"					{yylval.nom=strdup(yytext); return(CHAR); }
-
-"continue"                              {yylval.nom=strdup(yytext); return(CONTINUE);}
-"break"                                 {yylval.nom=strdup(yytext); return(BREAK);}
 "double"				{yylval.nom=strdup(yytext); return(DOUBLE); }
-"switch"                                {yylval.nom=strdup(yytext); return(SWITCH); }
 "float"					{yylval.nom=strdup(yytext); return(FLOAT); }
-"case"                                  {yylval.nom=strdup(yytext); return(CASE); }
-^"int"					{yylval.nom=strdup(yytext); return(INT); }
+"int"					{yylval.nom=strdup(yytext); return(INT); }
 "long"					{yylval.nom=strdup(yytext); return(LONG); }
-"else"                                  {yylval.nom=strdup(yytext); return(ELSE); }
-
 "short"					{yylval.nom=strdup(yytext); return(SHORT); }
-
 "unsigned"				{yylval.nom=strdup(yytext); return(UNSIGNED); }
 "void"					{yylval.nom=strdup(yytext); return(VOID); }
-
-
+"const"                 {yylval.nom=strdup(yytext);return(CONST);}
+"restrict"                 {yylval.nom=strdup(yytext);return(RESTRICT);}
+"volatile"                 {yylval.nom=strdup(yytext);return(VOLATILE);}
 
 \n {fprintf(f_output,"<br \\>\n");}
 . {fprintf(f_output,"%c",yytext[0]);}
@@ -65,8 +69,3 @@ static int check_type(void)
         return IDENTIFIER;
     }
 }
-
-
-
-
-
