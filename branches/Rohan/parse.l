@@ -2,7 +2,7 @@ L   [a-zA-Z_]
 A   [a-zA-Z_0-9]
 
 %{
-#include "parse.tab.h"
+#include "parser2.tab.h"
 #include "html.h"
 
     
@@ -50,6 +50,38 @@ static int check_type(void);
 "volatile"                 {yylval.nom=strdup(yytext);return(VOLATILE);}
 
 "if"                     {yylval.nom=strdup(yytext);return(IF);}
+
+";"					{yylval.nom=strdup(yytext); return(POINT_VIRGULE); }
+("{"|"<%")				{yylval.nom=strdup(yytext); return(ACCO_OUV); }
+("}"|"%>")				{yylval.nom=strdup(yytext); return(ACCO_FER); }
+","					{yylval.nom=strdup(yytext); return(VIRGULE); }
+":"					{yylval.nom=strdup(yytext); return(DEUXPOINTS); }
+"="					{yylval.nom=strdup(yytext); return(EGAL); }
+"("					{yylval.nom=strdup(yytext); return(PAR_OUV); }
+")"					{yylval.nom=strdup(yytext); return(PAR_FER); }
+("["|"<:")				{yylval.nom=strdup(yytext); return(CRO_OUV); }
+("]"|":>")				{yylval.nom=strdup(yytext); return(CRO_FER); }
+"."					{yylval.nom=strdup(yytext); return(POINT); }
+"&"					{yylval.nom=strdup(yytext); return(ECOMMERCIAL); }
+"!"					{yylval.nom=strdup(yytext); return(POINT_EXCLA); }
+"~"					{yylval.nom=strdup(yytext); return(EQUIVALENT); }
+"-"					{yylval.nom=strdup(yytext); return(MOINS); }
+"+"					{yylval.nom=strdup(yytext); return(PLUS); }
+"*"					{yylval.nom=strdup(yytext); return(FOIS); }
+"/"					{yylval.nom=strdup(yytext); return(DIVISE); }
+"%"					{yylval.nom=strdup(yytext); return(POURCENT); }
+"<"					{yylval.nom=strdup(yytext); return(INFERIEUR); }
+">"					{yylval.nom=strdup(yytext); return(SUPERIEUR); }
+"^"					{yylval.nom=strdup(yytext); return(PUISSANCE); }
+"|"					{yylval.nom=strdup(yytext); return(TILT); }
+"?"					{yylval.nom=strdup(yytext); return(POINT_INTERRO); }
+
+
+
+
+
+
+
 \n {fprintf(f_output,"<br \\>\n");}
 . {fprintf(f_output,"%c",yytext[0]);}
 

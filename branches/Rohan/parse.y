@@ -110,7 +110,7 @@ unary_operator
 	| '-'
 	| '~'
 	| '!'
-	;
+ 	;
 
 cast_expression
 	: unary_expression
@@ -255,7 +255,7 @@ type_specifier
 	| FLOAT {print_balise_span("type_specifier",$1);} 
 	| DOUBLE {print_balise_span("type_specifier",$1);} 
 	| SIGNED {print_balise_span("type_specifier",$1);} 
-	| UNSIGNED {print_balise_span("type_specifier",$1);} 
+ s	| UNSIGNED {print_balise_span("type_specifier",$1);} 
 	| BOOL {print_balise_span("type_specifier",$1);}
 	| COMPLEX {print_balise_span("type_specifier",$1);} 
 	| IMAGINARY	 {print_balise_span("type_specifier",$1);}   	/* non-mandated extension */

@@ -2166,14 +2166,8 @@ yyreduce:
 #line 2167 "parse.tab.c" /* yacc.c:1646  */
     break;
 
-  case 255:
-#line 506 "parse.y" /* yacc.c:1646  */
-    {print_balise_span("type_specifier",(yyvsp[-4].nom));}
-#line 2173 "parse.tab.c" /* yacc.c:1646  */
-    break;
 
-
-#line 2177 "parse.tab.c" /* yacc.c:1646  */
+#line 2171 "parse.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
