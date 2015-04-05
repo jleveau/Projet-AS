@@ -30,7 +30,6 @@ FILE* create_html(char* titre){
 	fprintf(f_output,"<div class=\"header\"> ");
 	fprintf(f_output,"<h1>Projet d'analyse syntaxique, licence 3 2014-2015</h1>");
 	fprintf(f_output,"</div>");
-	fprintf(f_output,"<div class=\"bordure\"> ");
 	fprintf(f_output,"<div class=\"Code\"> ");
 	
  
@@ -39,7 +38,6 @@ FILE* create_html(char* titre){
 }
 
 int fermer_html(FILE* fd){
-	fprintf(fd,"</div>");
 	fprintf(fd,"</div>");
   fprintf(fd, "</body>");
   fprintf(fd, "</html>");

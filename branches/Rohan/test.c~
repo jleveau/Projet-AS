@@ -4,7 +4,7 @@ char x ;
 int y ;
 };
 
-/* Bonjour Bonjour ! */
+
 else
 
 int yyparse(Rationnel **rationnel, yyscan_t scanner);

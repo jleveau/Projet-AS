@@ -1,2 +1,541 @@
-<!doctype html><html lang="fr"><head>   <meta charset="utf-8">   <title>test</title>   <!doctype html><link rel="stylesheet" type="text/css" href="index.css"></head><body><div class="header"> <h1>Projet d'analyse syntaxique, licence 3 2014-2015</h1></div><div class="Code"> <br \>
-#include "rationnel</div></body></html>
+<!doctype html><html lang="fr"><head>   <meta charset="utf-8">   <title>test</title>   <!doctype html><link rel="stylesheet" type="text/css" href="index.css"></head><body><div class="header"> <h1>Projet d'analyse syntaxique, licence 3 2014-2015</h1></div><div class="bordure"> <div class="Code"> <br \>
+<span class="jump_statement " >struct</span> coucou<span class="vert " >{</span><br \>
+<span class="type_specifier " >char</span> x <span class="vert " >;</span><br \>
+<span class="type_specifier " >int</span> y <span class="vert " >;</span><br \>
+<span class="vert " >}</span><span class="vert " >;</span><br \>
+<br \>
+<span class="comment">/* Bonjour Bonjour ! */</span><br \>
+<span class="type_specifier " >else</span><br \>
+<br \>
+<span class="type_specifier " >int</span> yyparse(Rationnel **rationnel, yyscan_t scanner)<span class="vert " >;</span><br \>
+<span class="type_specifier " >int</span> coucou()<span class="vert " >;</span><br \>
+<span class="type_specifier " >void</span> fonctiondelamort()<br \>
+<span class="vert " >{</span><br \>
+<span class="type_specifier " >const</span> <span class="type_specifier " >int</span> x=2<span class="vert " >;</span><br \>
+x=1+2<span class="vert " >;</span><br \>
+x=0<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+Rationnel *rationnel(Noeud etiquette, <span class="type_specifier " >char</span> lettre, <span class="type_specifier " >int</span> position_min, <span class="type_specifier " >int</span> position_max, <span class="type_specifier " >void</span> *data, Rationnel *gauche, Rationnel *droit, Rationnel *pere)<br \>
+<span class="vert " >{</span><br \>
+<span class="type_specifier " >int</span> x=2<span class="vert " >;</span><br \>
+<span class="type_specifier " >int</span> y=3<span class="vert " >;</span><br \>
+<span class="type_specifier " >int</span> z=4<span class="vert " >;</span><br \>
+<span class="type_specifier " >int</span> w=5<span class="vert " >;</span><br \>
+   Rationnel *rat<span class="vert " >;</span>	<br \>
+   rat->etiquette = etiquette<span class="vert " >;</span><br \>
+   rat->lettre = lettre<span class="vert " >;</span><br \>
+   rat->position_min = position_min<span class="vert " >;</span><br \>
+   rat->position_max = position_max<span class="vert " >;</span><br \>
+   rat->data = data<span class="vert " >;</span><br \>
+   rat->gauche = gauche<span class="vert " >;</span><br \>
+   rat->droit = droit<span class="vert " >;</span><br \>
+   rat->pere = pere<span class="vert " >;</span><br \>
+   <span class="jaune " >break</span><span class="vert " >;</span> <br \>
+	<span class="vert " >}</span><br \>
+<br \>
+Rationnel *Epsilon()<br \>
+<span class="vert " >{</span><br \>
+   <span class="jaune " >break</span> rationnel(EPSILON, 0, 0, 0, NULL, NULL, NULL, NULL)<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Rationnel *Lettre(<span class="type_specifier " >char</span> l)<br \>
+<span class="vert " >{</span><br \>
+   <span class="jaune " >break</span> rationnel(LETTRE, l, 0, 0, NULL, NULL, NULL, NULL)<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Rationnel *Union(Rationnel* rat1, Rationnel* rat2)<br \>
+<span class="vert " >{</span><br \>
+   // Cas particulier où rat1 est vide<br \>
+   <span class="jaune " >if</span> (!rat1)<br \>
+      <span class="jaune " >break</span> rat2<span class="vert " >;</span><br \>
+<br \>
+   // Cas particulier où rat2 est vide<br \>
+   <span class="jaune " >if</span> (!rat2)<br \>
+      <span class="jaune " >break</span> rat1<span class="vert " >;</span><br \>
+   <br \>
+   <span class="jaune " >break</span> rationnel(UNION, 0, 0, 0, NULL, rat1, rat2, NULL)<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Rationnel *Concat(Rationnel* rat1, Rationnel* rat2)<br \>
+<span class="vert " >{</span><br \>
+   <span class="jaune " >if</span> (!rat1 || !rat2)<br \>
+      <span class="jaune " >break</span> NULL<span class="vert " >;</span><br \>
+<br \>
+   <span class="jaune " >if</span> (get_etiquette(rat1) == EPSILON)<br \>
+      <span class="jaune " >break</span> rat2<span class="vert " >;</span><br \>
+<br \>
+   <span class="jaune " >if</span> (get_etiquette(rat2) == EPSILON)<br \>
+      <span class="jaune " >break</span> rat1<span class="vert " >;</span><br \>
+   <br \>
+   <span class="jaune " >break</span> rationnel(CONCAT, 0, 0, 0, NULL, rat1, rat2, NULL)<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Rationnel *Star(Rationnel* rat)<br \>
+<span class="vert " >{</span><br \>
+   <span class="jaune " >break</span> rationnel(STAR, 0, 0, 0, NULL, rat, NULL, NULL)<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+bool est_racine(Rationnel* rat)<br \>
+<span class="vert " >{</span><br \>
+   <span class="jaune " >break</span> (rat->pere == NULL)<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Noeud get_etiquette(Rationnel* rat)<br \>
+<span class="vert " >{</span><br \>
+   <span class="jaune " >break</span> rat->etiquette<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+<span class="type_specifier " >char</span> get_lettre(Rationnel* rat)<br \>
+<span class="vert " >{</span><br \>
+   assert (get_etiquette(rat) == LETTRE)<span class="vert " >;</span><br \>
+   <span class="jaune " >break</span> rat->lettre<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+<span class="type_specifier " >int</span> get_position_min(Rationnel* rat)<br \>
+<span class="vert " >{</span><br \>
+  // assert (get_etiquette(rat) == LETTRE)<span class="vert " >;</span><br \>
+   <span class="jaune " >break</span> rat->position_min<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+<span class="type_specifier " >int</span> get_position_max(Rationnel* rat)<br \>
+<span class="vert " >{</span><br \>
+   //assert (get_etiquette(rat) == LETTRE)<span class="vert " >;</span><br \>
+   <span class="jaune " >break</span> rat->position_max<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+<span class="type_specifier " >void</span> set_position_min(Rationnel* rat, <span class="type_specifier " >int</span> valeur)<br \>
+<span class="vert " >{</span><br \>
+  // assert (get_etiquette(rat) == LETTRE)<span class="vert " >;</span><br \>
+   rat->position_min = valeur<span class="vert " >;</span><br \>
+   <span class="jaune " >break</span><span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+<span class="type_specifier " >void</span> set_position_max(Rationnel* rat, <span class="type_specifier " >int</span> valeur)<br \>
+<span class="vert " >{</span><br \>
+  // assert (get_etiquette(rat) == LETTRE)<span class="vert " >;</span><br \>
+  <br \>
+rat->position_max = valeur<span class="vert " >;</span><br \>
+   <span class="jaune " >break</span><span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Rationnel *fils_gauche(Rationnel* rat)<br \>
+<span class="vert " >{</span><br \>
+   assert((get_etiquette(rat) == CONCAT) || (get_etiquette(rat) == UNION))<span class="vert " >;</span><br \>
+   <span class="jaune " >break</span> rat->gauche<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Rationnel *fils_droit(Rationnel* rat)<br \>
+<span class="vert " >{</span><br \>
+   assert((get_etiquette(rat) == CONCAT) || (get_etiquette(rat) == UNION))<span class="vert " >;</span><br \>
+   <span class="jaune " >break</span> rat->droit<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Rationnel *fils(Rationnel* rat)<br \>
+<span class="vert " >{</span><br \>
+   assert(get_etiquette(rat) == STAR)<span class="vert " >;</span><br \>
+   <span class="jaune " >break</span> rat->gauche<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Rationnel *pere(Rationnel* rat)<br \>
+<span class="vert " >{</span><br \>
+   assert(!est_racine(rat))<span class="vert " >;</span><br \>
+   <span class="jaune " >break</span> rat->pere<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+<span class="type_specifier " >void</span> pr<span class="type_specifier " >int</span>_rationnel(Rationnel* rat)<br \>
+<span class="vert " >{</span><br \>
+   <span class="jaune " >if</span> (rat == NULL)<br \>
+   <span class="vert " >{</span><br \>
+      pr<span class="type_specifier " >int</span>f("∅")<span class="vert " >;</span><br \>
+      <span class="jaune " >break</span><span class="vert " >;</span><br \>
+   <span class="vert " >}</span><br \>
+   <br \>
+   <span class="jump_statement " >switch</span>(get_etiquette(rat))<br \>
+   <span class="vert " >{</span><br \>
+      <span class="type_specifier " >case</span> EPSILON:<br \>
+         pr<span class="type_specifier " >int</span>f("ε")<span class="vert " >;</span>         <br \>
+         break<span class="vert " >;</span><br \>
+         <br \>
+      <span class="type_specifier " >case</span> LETTRE:<br \>
+         pr<span class="type_specifier " >int</span>f("%c", get_lettre(rat))<span class="vert " >;</span><br \>
+         break<span class="vert " >;</span><br \>
+<br \>
+      <span class="type_specifier " >case</span> UNION:<br \>
+         pr<span class="type_specifier " >int</span>f("(")<span class="vert " >;</span><br \>
+         pr<span class="type_specifier " >int</span>_rationnel(fils_gauche(rat))<span class="vert " >;</span><br \>
+         pr<span class="type_specifier " >int</span>f(" + ")<span class="vert " >;</span><br \>
+         pr<span class="type_specifier " >int</span>_rationnel(fils_droit(rat))<span class="vert " >;</span><br \>
+         pr<span class="type_specifier " >int</span>f(")")<span class="vert " >;</span>         <br \>
+         break<span class="vert " >;</span><br \>
+<br \>
+      <span class="type_specifier " >case</span> CONCAT:<br \>
+         pr<span class="type_specifier " >int</span>f("[")<span class="vert " >;</span><br \>
+         pr<span class="type_specifier " >int</span>_rationnel(fils_gauche(rat))<span class="vert " >;</span><br \>
+         pr<span class="type_specifier " >int</span>f(" . ")<span class="vert " >;</span><br \>
+         pr<span class="type_specifier " >int</span>_rationnel(fils_droit(rat))<span class="vert " >;</span><br \>
+         pr<span class="type_specifier " >int</span>f("]")<span class="vert " >;</span>         <br \>
+         break<span class="vert " >;</span><br \>
+<br \>
+      <span class="type_specifier " >case</span> STAR:<br \>
+         pr<span class="type_specifier " >int</span>f("<span class="vert " >{</span>")<span class="vert " >;</span><br \>
+         pr<span class="type_specifier " >int</span>_rationnel(fils(rat))<span class="vert " >;</span><br \>
+         pr<span class="type_specifier " >int</span>f("<span class="vert " >}</span>*")<span class="vert " >;</span>         <br \>
+         break<span class="vert " >;</span><br \>
+<br \>
+      <span class="type_specifier " >default</span>:<br \>
+         assert(false)<span class="vert " >;</span><br \>
+         break<span class="vert " >;</span><br \>
+   <span class="vert " >}</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Rationnel *expression_to_rationnel(<span class="type_specifier " >const</span> <span class="type_specifier " >char</span> *expr)<br \>
+<span class="vert " >{</span><br \>
+    Rationnel *rat<span class="vert " >;</span><br \>
+    yyscan_t scanner<span class="vert " >;</span><br \>
+    YY_BUFFER_STATE state<span class="vert " >;</span><br \>
+<br \>
+    // Initialisation du scanner<br \>
+    <span class="jaune " >if</span> (yylex_init(&scanner))<br \>
+        <span class="jaune " >break</span> NULL<span class="vert " >;</span><br \>
+ <br \>
+    state = yy_scan_string(expr, scanner)<span class="vert " >;</span><br \>
+<br \>
+    // Test si parsing ok.<br \>
+    <span class="jaune " >if</span> (yyparse(&rat, scanner)) <br \>
+        <span class="jaune " >break</span> NULL<span class="vert " >;</span><br \>
+    <br \>
+    // Libération mémoire<br \>
+    yy_delete_buffer(state, scanner)<span class="vert " >;</span><br \>
+ <br \>
+    yylex_destroy(scanner)<span class="vert " >;</span><br \>
+ <br \>
+    <span class="jaune " >break</span> rat<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+<span class="type_specifier " >void</span> rationnel_to_<span class="jump_statement " >do</span>t(Rationnel *rat, <span class="type_specifier " >char</span>* nom_fichier)<br \>
+<span class="vert " >{</span><br \>
+   FILE *fp = fopen(nom_fichier, "w+")<span class="vert " >;</span><br \>
+   rationnel_to_<span class="jump_statement " >do</span>t_aux(rat, fp, -1, 1)<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+<span class="type_specifier " >int</span> rationnel_to_<span class="jump_statement " >do</span>t_aux(Rationnel *rat, FILE *output, <span class="type_specifier " >int</span> pere, <span class="type_specifier " >int</span> noeud_courant)<br \>
+<span class="vert " >{</span>   <br \>
+   <span class="type_specifier " >int</span> saved_pere = noeud_courant<span class="vert " >;</span><br \>
+<br \>
+   <span class="jaune " >if</span> (pere >= 1)<br \>
+      fpr<span class="type_specifier " >int</span>f(output, "\tnode%d -> node%d<span class="vert " >;</span>\n", pere, noeud_courant)<span class="vert " >;</span><br \>
+   <span class="type_specifier " >else</span><br \>
+      fpr<span class="type_specifier " >int</span>f(output, "digraph G<span class="vert " >{</span>\n")<span class="vert " >;</span><br \>
+   <br \>
+   <span class="jump_statement " >switch</span>(get_etiquette(rat))<br \>
+   <span class="vert " >{</span><br \>
+      <span class="type_specifier " >case</span> LETTRE:<br \>
+         fpr<span class="type_specifier " >int</span>f(output, "\tnode%d [label = \"%c-%d\"]<span class="vert " >;</span>\n", noeud_courant, get_lettre(rat), rat->position_min)<span class="vert " >;</span><br \>
+         noeud_courant++<span class="vert " >;</span><br \>
+         break<span class="vert " >;</span><br \>
+<br \>
+      <span class="type_specifier " >case</span> EPSILON:<br \>
+         fpr<span class="type_specifier " >int</span>f(output, "\tnode%d [label = \"ε-%d\"]<span class="vert " >;</span>\n", noeud_courant, rat->position_min)<span class="vert " >;</span><br \>
+         noeud_courant++<span class="vert " >;</span><br \>
+         break<span class="vert " >;</span><br \>
+<br \>
+      <span class="type_specifier " >case</span> UNION:<br \>
+         fpr<span class="type_specifier " >int</span>f(output, "\tnode%d [label = \"+ (%d/%d)\"]<span class="vert " >;</span>\n", noeud_courant, rat->position_min, rat->position_max)<span class="vert " >;</span><br \>
+         noeud_courant = rationnel_to_<span class="jump_statement " >do</span>t_aux(fils_gauche(rat), output, noeud_courant, noeud_courant+1)<span class="vert " >;</span><br \>
+         noeud_courant = rationnel_to_<span class="jump_statement " >do</span>t_aux(fils_droit(rat), output, saved_pere, noeud_courant+1)<span class="vert " >;</span><br \>
+         break<span class="vert " >;</span><br \>
+<br \>
+      <span class="type_specifier " >case</span> CONCAT:<br \>
+         fpr<span class="type_specifier " >int</span>f(output, "\tnode%d [label = \". (%d/%d)\"]<span class="vert " >;</span>\n", noeud_courant, rat->position_min, rat->position_max)<span class="vert " >;</span><br \>
+         noeud_courant = rationnel_to_<span class="jump_statement " >do</span>t_aux(fils_gauche(rat), output, noeud_courant, noeud_courant+1)<span class="vert " >;</span><br \>
+         noeud_courant = rationnel_to_<span class="jump_statement " >do</span>t_aux(fils_droit(rat), output, saved_pere, noeud_courant+1)<span class="vert " >;</span><br \>
+         break<span class="vert " >;</span><br \>
+<br \>
+      <span class="type_specifier " >case</span> STAR:<br \>
+         fpr<span class="type_specifier " >int</span>f(output, "\tnode%d [label = \"* (%d/%d)\"]<span class="vert " >;</span>\n", noeud_courant, rat->position_min, rat->position_max)<span class="vert " >;</span><br \>
+         noeud_courant = rationnel_to_<span class="jump_statement " >do</span>t_aux(fils(rat), output, noeud_courant, noeud_courant+1)<span class="vert " >;</span><br \>
+         break<span class="vert " >;</span><br \>
+         <br \>
+      <span class="type_specifier " >default</span>:<br \>
+         assert(false)<span class="vert " >;</span><br \>
+         break<span class="vert " >;</span><br \>
+   <span class="vert " >}</span><br \>
+   <span class="jaune " >if</span> (pere < 0)<br \>
+      fpr<span class="type_specifier " >int</span>f(output, "<span class="vert " >}</span>\n")<span class="vert " >;</span><br \>
+   <span class="jaune " >break</span> noeud_courant<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+<span class="type_specifier " >int</span> rec_numeroter_rationnel(Rationnel* rat)<span class="vert " >{</span><br \>
+	<span class="type_specifier " >int</span> max<span class="vert " >;</span><br \>
+	<span class="jump_statement " >switch</span> (get_etiquette(rat))<span class="vert " >{</span><br \>
+		<span class="type_specifier " >case</span> EPSILON :<br \>
+			set_position_max(rat,get_position_min(rat))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> LETTRE :<br \>
+			set_position_max(rat,get_position_min(rat))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> STAR :<br \>
+			set_position_min(fils(rat),get_position_min(rat))<span class="vert " >;</span><br \>
+			set_position_max(rat,rec_numeroter_rationnel(fils(rat)))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> UNION :<br \>
+			set_position_min(fils_gauche(rat),get_position_min(rat))<span class="vert " >;</span><br \>
+			max=rec_numeroter_rationnel(fils_gauche(rat))<span class="vert " >;</span><br \>
+			set_position_min(fils_droit(rat),max+1)<span class="vert " >;</span><br \>
+			set_position_max(rat,rec_numeroter_rationnel(fils_droit(rat)))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> CONCAT :<br \>
+			set_position_min(fils_gauche(rat),get_position_min(rat))<span class="vert " >;</span><br \>
+			max=rec_numeroter_rationnel(fils_gauche(rat))<span class="vert " >;</span><br \>
+			set_position_min(fils_droit(rat),max+1)<span class="vert " >;</span><br \>
+			set_position_max(rat,rec_numeroter_rationnel(fils_droit(rat)))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+	<span class="vert " >}</span><br \>
+	<span class="jaune " >break</span> get_position_max(rat)<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+<span class="type_specifier " >void</span> numeroter_rationnel(Rationnel *rat)<br \>
+<span class="vert " >{</span><br \>
+	set_position_min(rat,1)<span class="vert " >;</span><br \>
+	rec_numeroter_rationnel(rat)<span class="vert " >;</span><br \>
+	<span class="jaune " >break</span><span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+<br \>
+bool contient_mot_vide(Rationnel *rat)<br \>
+<span class="vert " >{</span><br \>
+	bool vide<span class="vert " >;</span><br \>
+	<span class="jump_statement " >switch</span> (get_etiquette(rat))<span class="vert " >{</span><br \>
+		<span class="type_specifier " >case</span> EPSILON :<br \>
+			vide= true<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> LETTRE :<br \>
+			vide= false<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> STAR :<br \>
+			vide= true<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> UNION :<br \>
+			vide= contient_mot_vide(fils_gauche(rat)) || contient_mot_vide(fils_droit(rat))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> CONCAT :<br \>
+			vide= contient_mot_vide(fils_gauche(rat)) && contient_mot_vide(fils_droit(rat))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+	<span class="vert " >}</span><br \>
+	<span class="jaune " >break</span> vide<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Ensemble* premier_rec(Rationnel* rat, Ensemble* ens)<span class="vert " >{</span><br \>
+		<span class="jump_statement " >switch</span> (get_etiquette(rat))<span class="vert " >{</span><br \>
+		<span class="type_specifier " >case</span> EPSILON :<br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> LETTRE :<br \>
+			ajouter_element(ens,get_position_min(rat))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> STAR :<br \>
+			ajouter_elements(ens,premier_rec(fils(rat),ens))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> UNION :<br \>
+			ajouter_elements(ens,premier_rec(fils_gauche(rat),ens))<span class="vert " >;</span><br \>
+			ajouter_elements(ens,premier_rec(fils_droit(rat),ens))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> CONCAT :<br \>
+			ajouter_elements(ens,premier_rec(fils_gauche(rat),ens))<span class="vert " >;</span><br \>
+			<span class="jaune " >if</span> (contient_mot_vide(fils_gauche(rat)))<br \>
+				ajouter_elements(ens,premier_rec(fils_droit(rat),ens))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+	<span class="vert " >}</span><br \>
+	<span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Ensemble *premier(Rationnel *rat)<br \>
+<span class="vert " >{</span><br \>
+   Ensemble* ens = creer_ensemble(NULL,NULL,NULL)<span class="vert " >;</span><br \>
+   premier_rec(rat,ens)<span class="vert " >;</span><br \>
+   <span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Ensemble* dernier_rec(Rationnel* rat, Ensemble* ens)<span class="vert " >{</span><br \>
+		<span class="jump_statement " >switch</span> (get_etiquette(rat))<span class="vert " >{</span><br \>
+		<span class="type_specifier " >case</span> EPSILON :<br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> LETTRE :<br \>
+			ajouter_element(ens,get_position_min(rat))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> STAR :<br \>
+			ajouter_elements(ens,dernier_rec(fils(rat),ens))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> UNION :<br \>
+			ajouter_elements(ens,dernier_rec(fils_gauche(rat),ens))<span class="vert " >;</span><br \>
+			ajouter_elements(ens,dernier_rec(fils_droit(rat),ens))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> CONCAT :<br \>
+			ajouter_elements(ens,dernier_rec(fils_droit(rat),ens))<span class="vert " >;</span><br \>
+			<span class="jaune " >if</span> (contient_mot_vide(fils_droit(rat)))<br \>
+				ajouter_elements(ens,dernier_rec(fils_gauche(rat),ens))<span class="vert " >;</span>		<br \>
+			break<span class="vert " >;</span><br \>
+	<span class="vert " >}</span><br \>
+	<span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Ensemble *dernier(Rationnel *rat)<br \>
+<span class="vert " >{</span><br \>
+   Ensemble* ens = creer_ensemble(NULL,NULL,NULL)<span class="vert " >;</span><br \>
+   dernier_rec(rat,ens)<span class="vert " >;</span><br \>
+   <span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Ensemble* suivant_rec(Rationnel* rat, Ensemble* ens,<span class="type_specifier " >int</span> pos)<span class="vert " >{</span><br \>
+	<span class="jump_statement " >switch</span> (get_etiquette(rat))<span class="vert " >{</span><br \>
+		<span class="type_specifier " >case</span> EPSILON :<br \>
+		<span class="type_specifier " >case</span> LETTRE :<br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> STAR :<br \>
+			<span class="jaune " >if</span> (est_dans_l_ensemble(dernier(rat),pos))<br \>
+				ajouter_elements(ens,premier(rat))<span class="vert " >;</span><br \>
+			ajouter_elements(ens,suivant_rec(fils(rat),ens,pos))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> UNION :<br \>
+			ajouter_elements(ens,suivant_rec(fils_gauche(rat),ens,pos))<span class="vert " >;</span><br \>
+			ajouter_elements(ens,suivant_rec(fils_droit(rat),ens,pos))<span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> CONCAT :<br \>
+			<span class="jaune " >if</span> (est_dans_l_ensemble(dernier(fils_gauche(rat)),pos))<br \>
+				ajouter_elements(ens,premier(fils_droit(rat)))<span class="vert " >;</span>			<br \>
+			ajouter_elements(ens,suivant_rec(fils_droit(rat),ens,pos))<span class="vert " >;</span><br \>
+			ajouter_elements(ens,suivant_rec(fils_gauche(rat),ens,pos))<span class="vert " >;</span>		<br \>
+			break<span class="vert " >;</span><br \>
+	<span class="vert " >}</span><br \>
+	<span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Ensemble *suivant(Rationnel *rat, <span class="type_specifier " >int</span> position)<br \>
+<span class="vert " >{</span><br \>
+   Ensemble* ens = creer_ensemble(NULL,NULL,NULL)<span class="vert " >;</span><br \>
+   suivant_rec(rat,ens,position)<span class="vert " >;</span><br \>
+   <span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+<span class="type_specifier " >void</span> rec_pos_to_<span class="type_specifier " >char</span>(Rationnel* rat,<span class="type_specifier " >char</span>* tab)<span class="vert " >{</span><br \>
+	<span class="jump_statement " >switch</span> (get_etiquette(rat))<span class="vert " >{</span><br \>
+		<span class="type_specifier " >case</span> EPSILON :<br \>
+		<span class="type_specifier " >case</span> LETTRE :<br \>
+			tab[get_position_min(rat)]=get_lettre(rat)<span class="vert " >;</span><br \>
+			<span class="jaune " >break</span><span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> STAR :<br \>
+			rec_pos_to_<span class="type_specifier " >char</span>(fils(rat),tab)<span class="vert " >;</span><br \>
+			<span class="jaune " >break</span><span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> UNION :<br \>
+			rec_pos_to_<span class="type_specifier " >char</span>(fils_gauche(rat),tab)<span class="vert " >;</span><br \>
+			rec_pos_to_<span class="type_specifier " >char</span>(fils_droit(rat),tab)<span class="vert " >;</span><br \>
+			<span class="jaune " >break</span><span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+		<span class="type_specifier " >case</span> CONCAT :<br \>
+			rec_pos_to_<span class="type_specifier " >char</span>(fils_gauche(rat),tab)<span class="vert " >;</span><br \>
+			rec_pos_to_<span class="type_specifier " >char</span>(fils_droit(rat),tab)<span class="vert " >;</span><br \>
+			<span class="jaune " >break</span><span class="vert " >;</span><br \>
+			break<span class="vert " >;</span><br \>
+	<span class="vert " >}</span><br \>
+	<span class="jaune " >break</span><span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+<span class="type_specifier " >char</span>* pos_to_<span class="type_specifier " >char</span>(Rationnel* rat)<span class="vert " >{</span><br \>
+<br \>
+	<span class="type_specifier " >char</span>* tab=malloc(get_position_max(rat)*<span class="jump_statement " >sizeof</span>(<span class="type_specifier " >char</span>))<span class="vert " >;</span><br \>
+	rec_pos_to_<span class="type_specifier " >char</span>(rat,tab)<span class="vert " >;</span><br \>
+	<span class="jaune " >break</span> tab<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Automate *Glushkov(Rationnel *rat)<br \>
+<span class="vert " >{</span><br \>
+<br \>
+   Automate* aut=creer_<span class="type_specifier " >auto</span>mate()<span class="vert " >;</span><br \>
+<br \>
+   <span class="type_specifier " >char</span> c<span class="vert " >;</span><br \>
+   <span class="type_specifier " >int</span> dest<span class="vert " >;</span><br \>
+   <span class="type_specifier " >char</span>* lettres=pos_to_<span class="type_specifier " >char</span>(rat)<span class="vert " >;</span><br \>
+<br \>
+   ajouter_etat_initial(aut,0)<span class="vert " >;</span>  //On crée un état initial 0 (epsilon)<br \>
+   <span class="jaune " >if</span> (contient_mot_vide(rat))<span class="vert " >{</span><br \>
+		ajouter_etat_final(aut,0)<span class="vert " >;</span><br \>
+   <span class="vert " >}</span><br \>
+   <br \>
+   Ensemble_iterateur it_premier=premier_iterateur_ensemble(premier(rat))<span class="vert " >;</span> //On crée des transition entre l'état 0 et les premiers.<br \>
+   <span class="type_specifier " >while</span> (!iterateur_ensemble_est_vide(it_premier))<span class="vert " >{</span><br \>
+	    c=lettres[get_element(it_premier)]<span class="vert " >;</span>  //On recupere la lettre associée a l'état<br \>
+	    dest=get_element(it_premier)<span class="vert " >;</span>     //On va chercher la destination de la transition (le sommet de premier)<br \>
+		ajouter_transition(aut,0,c,dest)<span class="vert " >;</span>     // On crée la transition entre l'état 0 et le sommet actuel dans premier<br \>
+		it_premier=iterateur_suivant_ensemble(it_premier)<span class="vert " >;</span><br \>
+   <span class="vert " >}</span><br \>
+   <br \>
+   <br \>
+   Ensemble_iterateur it_dernier=premier_iterateur_ensemble(dernier(rat))<span class="vert " >;</span>  // les elements de dernier sont les etats finaux<br \>
+   <span class="type_specifier " >while</span> (!iterateur_ensemble_est_vide(it_dernier))<span class="vert " >{</span><br \>
+		ajouter_etat_final(aut,get_element(it_dernier))<span class="vert " >;</span><br \>
+		it_dernier=iterateur_suivant_ensemble(it_dernier)<span class="vert " >;</span><br \>
+   <span class="vert " >}</span><br \>
+   <br \>
+   <span class="jaune " >for</span> (<span class="type_specifier " >int</span> i=1<span class="vert " >;</span>i<=get_position_max(rat)<span class="vert " >;</span>i++)<span class="vert " >{</span> //On crée toutes les autres transitions<br \>
+	    Ensemble_iterateur it_transition=premier_iterateur_ensemble(suivant(rat,i))<span class="vert " >;</span> //On parcours l'ensemble des transitions<br \>
+	    <span class="type_specifier " >while</span> (!iterateur_ensemble_est_vide(it_transition))<span class="vert " >{</span><br \>
+			c=lettres[get_element(it_transition)]<span class="vert " >;</span> //La lettre de la destionation<br \>
+			dest=get_element(it_transition)<span class="vert " >;</span>  // position de fin<br \>
+			ajouter_transition(aut,i,c,dest)<span class="vert " >;</span> // crée la transition<br \>
+			it_transition=iterateur_suivant_ensemble(it_transition)<span class="vert " >;</span><br \>
+		<span class="vert " >}</span><br \>
+	<span class="vert " >}</span><br \>
+	<span class="jaune " >break</span> aut<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+bool meme_langage (<span class="type_specifier " >const</span> <span class="type_specifier " >char</span> *expr1, <span class="type_specifier " >const</span> <span class="type_specifier " >char</span>* expr2)<br \>
+<span class="vert " >{</span><br \>
+   A_FAIRE_RETURN(true)<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Systeme systeme(Automate *<span class="type_specifier " >auto</span>mate)<br \>
+<span class="vert " >{</span><br \>
+   A_FAIRE_RETURN(NULL)<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+<span class="type_specifier " >void</span> pr<span class="type_specifier " >int</span>_ligne(Rationnel **ligne, <span class="type_specifier " >int</span> n)<br \>
+<span class="vert " >{</span><br \>
+   <span class="jaune " >for</span> (<span class="type_specifier " >int</span> j = 0<span class="vert " >;</span> j <=n<span class="vert " >;</span> j++)<br \>
+      <span class="vert " >{</span><br \>
+         pr<span class="type_specifier " >int</span>_rationnel(ligne[j])<span class="vert " >;</span><br \>
+         <span class="jaune " >if</span> (j<n)<br \>
+            pr<span class="type_specifier " >int</span>f("X%d\t+\t", j)<span class="vert " >;</span><br \>
+      <span class="vert " >}</span><br \>
+   pr<span class="type_specifier " >int</span>f("\n")<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+<span class="type_specifier " >void</span> pr<span class="type_specifier " >int</span>_systeme(Systeme systeme, <span class="type_specifier " >int</span> n)<br \>
+<span class="vert " >{</span><br \>
+   <span class="jaune " >for</span> (<span class="type_specifier " >int</span> i = 0<span class="vert " >;</span> i <= n-1<span class="vert " >;</span> i++)<br \>
+   <span class="vert " >{</span><br \>
+      pr<span class="type_specifier " >int</span>f("X%d\t= ", i)<span class="vert " >;</span><br \>
+      pr<span class="type_specifier " >int</span>_ligne(systeme[i], n)<span class="vert " >;</span><br \>
+   <span class="vert " >}</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Rationnel **resoudre_variable_arden(Rationnel **ligne, <span class="type_specifier " >int</span> numero_variable, <span class="type_specifier " >int</span> n)<br \>
+<span class="vert " >{</span><br \>
+   A_FAIRE_RETURN(NULL)<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Rationnel **substituer_variable(Rationnel **ligne, <span class="type_specifier " >int</span> numero_variable, Rationnel **valeur_variable, <span class="type_specifier " >int</span> n)<br \>
+<span class="vert " >{</span><br \>
+   A_FAIRE_RETURN(NULL)<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Systeme resoudre_systeme(Systeme systeme, <span class="type_specifier " >int</span> n)<br \>
+<span class="vert " >{</span><br \>
+   A_FAIRE_RETURN(NULL)<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+<br \>
+Rationnel *Arden(Automate *<span class="type_specifier " >auto</span>mate)<br \>
+<span class="vert " >{</span><br \>
+   A_FAIRE_RETURN(NULL)<span class="vert " >;</span><br \>
+<span class="vert " >}</span><br \>
+</div></div></body></html>

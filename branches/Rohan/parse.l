@@ -1,11 +1,7 @@
-L   [a-zA-Z_]
-A   [a-zA-Z_0-9]
-
 %{
+#include <stdio.h>
 #include "parser2.tab.h"
 #include "html.h"
-
-    
 extern void yyerror(const char *);  /* prints grammar violation message */
 
 extern int sym_type(const char *);  /* returns type from symbol table */
@@ -15,81 +11,62 @@ extern int sym_type(const char *);  /* returns type from symbol table */
 static void comment(void);
 static int check_type(void);
 
-    //"return"				{yylval.nom=strdup(yytext); return(RETURN); }
-//";"					{yylval.nom=strdup(yytext); return ';'; }
-
-/*
-  "continue"              {yylval.nom=strdup(yytext); return(CONTINUE);}
-"break"                 {yylval.nom=strdup(yytext); return(BREAK);}
-"return"                {yylval.nom=strdup(yytext); return(RETURN);}
-("{"|"<%")				{ return '{'; }
-("}"|"%>")				{ return '}'; }
-
-*/
-
-/*
- Avec ';' , Ca fonctionne lorsque l'on fait une declaration de variable ( etc int x=3;) ou que l'on fait une declaration de fonction ( ex : int coucou();) mais pas quand on écrit un ';' après une expression.
- Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' mais il faut aussi implémenter ceux qui dependent de '}' ... 
-*/    
 %}
-
 %option noyywrap
+%x COMMENT
 %%
 
 
-"char"					{yylval.nom=strdup(yytext); return(CHAR); }
-"double"				{yylval.nom=strdup(yytext); return(DOUBLE); }
-"float"					{yylval.nom=strdup(yytext); return(FLOAT); }
-"int"					{yylval.nom=strdup(yytext); return(INT); }
-"long"					{yylval.nom=strdup(yytext); return(LONG); }
-"short"					{yylval.nom=strdup(yytext); return(SHORT); }
-"unsigned"				{yylval.nom=strdup(yytext); return(UNSIGNED); }
-"void"					{yylval.nom=strdup(yytext); return(VOID); }
-"const"                 {yylval.nom=strdup(yytext);return(CONST);}
-"restrict"                 {yylval.nom=strdup(yytext);return(RESTRICT);}
-"volatile"                 {yylval.nom=strdup(yytext);return(VOLATILE);}
+"auto"					{print_balise_span("type_specifier","auto"); }
+"case"					{print_balise_span("type_specifier","case"); }
+"struct"				{print_balise_span("jump_statement","struct"); }
+"const"					{print_balise_span("type_specifier","const");  }
+"continue"				{print_balise_span("type_specifier","continue"); }
+"default"				{print_balise_span("type_specifier","default"); }
+"do"					{print_balise_span("jump_statement","do"); }
+"double"				{print_balise_span("type_specifier","double"); }
+"else"					{print_balise_span("type_specifier","else"); }
+"enum"					{print_balise_span("type_specifier","enum"); }
+"extern"				{print_balise_span("type_specifier","extern"); }
+"float"					{print_balise_span("type_specifier","float"); }
 
-"if"                     {yylval.nom=strdup(yytext);return(IF);}
-
-";"					{yylval.nom=strdup(yytext); return(POINT_VIRGULE); }
-("{"|"<%")				{yylval.nom=strdup(yytext); return(ACCO_OUV); }
-("}"|"%>")				{yylval.nom=strdup(yytext); return(ACCO_FER); }
-","					{yylval.nom=strdup(yytext); return(VIRGULE); }
-":"					{yylval.nom=strdup(yytext); return(DEUXPOINTS); }
-"="					{yylval.nom=strdup(yytext); return(EGAL); }
-"("					{yylval.nom=strdup(yytext); return(PAR_OUV); }
-")"					{yylval.nom=strdup(yytext); return(PAR_FER); }
-("["|"<:")				{yylval.nom=strdup(yytext); return(CRO_OUV); }
-("]"|":>")				{yylval.nom=strdup(yytext); return(CRO_FER); }
-"."					{yylval.nom=strdup(yytext); return(POINT); }
-"&"					{yylval.nom=strdup(yytext); return(ECOMMERCIAL); }
-"!"					{yylval.nom=strdup(yytext); return(POINT_EXCLA); }
-"~"					{yylval.nom=strdup(yytext); return(EQUIVALENT); }
-"-"					{yylval.nom=strdup(yytext); return(MOINS); }
-"+"					{yylval.nom=strdup(yytext); return(PLUS); }
-"*"					{yylval.nom=strdup(yytext); return(FOIS); }
-"/"					{yylval.nom=strdup(yytext); return(DIVISE); }
-"%"					{yylval.nom=strdup(yytext); return(POURCENT); }
-"<"					{yylval.nom=strdup(yytext); return(INFERIEUR); }
-">"					{yylval.nom=strdup(yytext); return(SUPERIEUR); }
-"^"					{yylval.nom=strdup(yytext); return(PUISSANCE); }
-"|"					{yylval.nom=strdup(yytext); return(TILT); }
-"?"					{yylval.nom=strdup(yytext); return(POINT_INTERRO); }
+"goto"					{print_balise_span("type_specifier","goto"); }
+"if"					{print_balise_span("jaune","if"); }
+"inline"				{print_balise_span("type_specifier","inline"); }
+"int"					{print_balise_span("type_specifier","int"); }
+"long"					{print_balise_span("type_specifier","long"); }
+"register"				{print_balise_span("type_specifier","register"); }
+"restrict"				{print_balise_span("type_specifier","restrict"); }
+"return"				{print_balise_span("jaune","break"); }
+"short"					{print_balise_span("type_specifier","short"); }
+"signed"				{print_balise_span("type_specifier","signed"); }
+"sizeof"				{print_balise_span("jump_statement","sizeof"); }
+"static"				{print_balise_span("type_specifier","static"); }
+"switch"				{print_balise_span("jump_statement","switch"); }
+"typedef"				{print_balise_span("type_specifier","typedef"); }
+"union"					{print_balise_span("type_specifier","union"); }
+"unsigned"				{print_balise_span("type_specifier","unsigned"); }
+"void"					{print_balise_span("type_specifier","void");}
+"volatile"				{print_balise_span("type_specifier","volatile");}
+"while"					{print_balise_span("type_specifier","while");}
 
 
+"char"					{print_balise_span("type_specifier","char");}
+"for"					{print_balise_span("jaune","for");}
+"else"					{print_balise_span("jaune","else");}
+";"                                     {print_balise_span("vert",";");}
+"{"                                     {print_balise_span("vert","{");}
+"}"                                     {print_balise_span("vert","}");}
 
-
-
-
+"/*" {fprintf(f_output,"<span class=\"comment\">/*");BEGIN(COMMENT);}
+<COMMENT>. {fprintf(f_output,"%c",yytext[0]);}
+<COMMENT>"*/" {fprintf(f_output, "*/</span>");BEGIN(INITIAL);}
 
 \n {fprintf(f_output,"<br \\>\n");}
 . {fprintf(f_output,"%c",yytext[0]);}
 
-
 %%
-  /*
-    Si un mot n'est ni un typedef ou enum
-    alors c'est un identifier */
+
 static int check_type(void)
 {
     switch (sym_type(yytext))

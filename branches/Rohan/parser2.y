@@ -1,93 +1,31 @@
-%{
-
-#include "html.h"
-#include "tools.h"
-
-//mieux vaut ne pas utiliser deftype parce que ca arrete la vérification de type et certains erreurs peut être ignorés??
-
-
-
-%}
-                                               
-//Creation des token juste pour lever les erreurs lors de la compilation, à modifier par la suite
-
-/* On devrait commencer par regarder le 'haut' de la grammaire, i.e on commence par l'état start ( translation unit) et on descend dans l'arborescence en appliquant les règles, vu que c'est trop relou de partir du bas, comme en prenant une accolade et essayer de la faire passer dans le parse par exemple. */
-
-%token  KEYWORD TYPE
 %union{
- char* nom;
+  char* nom;
  }
-                        
-%type   <nom> primary_expression constant enumeration_constant string generic_selection generic_assoc_list generic_association postfix_expression argument_expression_list unary_expression unary_operator cast_expression multiplicative_expression additive_expression relational_expression equality_expression and_expression exclusive_or_expression inclusive_or_expression logical_and_expression logical_or_expression conditional_expression assignment_expression assignment_operator expression constant_expression declaration declaration_specifiers init_declarator_list init_declarator storage_class_specifier type_specifier struct_or_union_specifier struct_or_union struct_declaration_list struct_declaration specifier_qualifier_list struct_declarator_list struct_declarator enum_specifier enumerator_list enumerator atomic_type_specifier type_qualifier function_specifier alignment_specifier declarator direct_declarator pointer type_qualifier_list parameter_type_list parameter_list  parameter_declaration identifier_list type_name abstract_declarator direct_abstract_declarator initializer initializer_list designation designator_list designator static_assert_declaration statement labeled_statement compound_statement block_item_list block_item expression_statement selection_statement iteration_statement jump_statement translation_unit external_declaration function_definition declaration_list shift_expression
-                        
-%token<nom>IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
-%token<nom>PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
-%token<nom>AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
-%token<nom>SUB_ASSIGN LEFT_ASSIGN RIGHT_ASSIGN AND_ASSIGN
-%token<nom>XOR_ASSIGN OR_ASSIGN
-%token<nom> TYPEDEF_NAME ENUMERATION_CONSTANT
-%token<nom>POINT_VIRGULE ACCO_OUV ACCO_FER VIRGULE DEUXPOINTS EGAL PAR_OUV PAR_FER CRO_OUV CRO_FER POINT ECOMMERCIAL POINT_EXCLA EQUIVALENT MOINS PLUS FOIS DIVISE POUCENT INFERIEUR SUPERIEUR PUISSANCE TILT POINT_INTERRO POURCENT
+%token	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
+%token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
+%token	AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
+%token	SUB_ASSIGN LEFT_ASSIGN RIGHT_ASSIGN AND_ASSIGN
+%token	XOR_ASSIGN OR_ASSIGN
+%token	TYPEDEF_NAME ENUMERATION_CONSTANT
 
-%token<nom>TYPEDEF EXTERN STATIC AUTO REGISTER INLINE
-%token<nom> CONST RESTRICT VOLATILE ATOMIC
-%token<nom> BOOL CHAR SHORT INT LONG SIGNED UNSIGNED FLOAT DOUBLE VOID
-%token<nom> COMPLEX IMAGINARY 
-%token<nom>STRUCT UNION ENUM ELLIPSIS
-%token<nom> CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO
-%token<nom>RETURN BREAK CONTINUE
-%token<nom>ALIGNAS ALIGNOF  GENERIC NORETURN STATIC_ASSERT THREAD_LOCAL
+%token	TYPEDEF EXTERN STATIC AUTO REGISTER INLINE
+%token	CONST RESTRICT VOLATILE
+%token	BOOL CHAR SHORT INT LONG SIGNED UNSIGNED FLOAT DOUBLE VOID
+%token	COMPLEX IMAGINARY 
+%token	STRUCT UNION ENUM ELLIPSIS
+
+%token	CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
+
+%token	ALIGNAS ALIGNOF ATOMIC GENERIC NORETURN STATIC_ASSERT THREAD_LOCAL
 
 %start translation_unit
 %%
-
-
-/*------------------------------------------------------------------------------------------------->*/
-
-
-type_specifier
-:       VOID {print_balise_span("type_specifier",$1);} 
-	| CHAR {print_balise_span("type_specifier",$1);}
-	| SHORT {print_balise_span("type_specifier",$1);} 
-	| INT {print_balise_span("type_specifier",$1);} 
-	| LONG {print_balise_span("type_specifier",$1);} 
-	| FLOAT {print_balise_span("type_specifier",$1);} 
-	| DOUBLE {print_balise_span("type_specifier",$1);} 
-	| SIGNED {print_balise_span("type_specifier",$1);} 
-	| UNSIGNED {print_balise_span("type_specifier",$1);} 
-	| BOOL {print_balise_span("type_specifier",$1);}
-	| COMPLEX {print_balise_span("type_specifier",$1);} 
-	| IMAGINARY	 {print_balise_span("type_specifier",$1);}   	/* non-mandated extension */
-	| atomic_type_specifier
-	| struct_or_union_specifier
-	| enum_specifier
-	| TYPEDEF_NAME	 {print_balise_span("type_specifier",$1);} 	/* after it has been defined as such */
-	;
-
-
-type_qualifier
-	: CONST {print_balise_span("type_specifier",$1);}
-	| RESTRICT {print_balise_span("type_specifier",$1);}
-	| VOLATILE {print_balise_span("type_specifier",$1);}
-	| ATOMIC {print_balise_span("type_specifier",$1);}
-	;
-
-
-
-
-
-
-
-
-/*<----------------------------------------------------------------------------------------------->*/
-
-
-
 
 primary_expression
 	: IDENTIFIER
 	| constant
 	| string 
-	| PAR_OUV expression PAR_FER
+	| '(' expression ')'
 	| generic_selection
 	;
 
@@ -107,35 +45,35 @@ string
 	;
 
 generic_selection
-	: GENERIC PAR_OUV assignment_expression VIRGULE generic_assoc_list PAR_FER
+	: GENERIC '(' assignment_expression ',' generic_assoc_list ')'
 	;
 
 generic_assoc_list
 	: generic_association
-	| generic_assoc_list VIRGULE generic_association
+	| generic_assoc_list ',' generic_association
 	;
 
 generic_association
-	: type_name DEUXPOINTS assignment_expression
-	| DEFAULT DEUXPOINTS assignment_expression
+	: type_name ':' assignment_expression
+	| DEFAULT ':' assignment_expression
 	;
 
 postfix_expression
 	: primary_expression
-	| postfix_expression CRO_OUV expression CRO_FER
-	| postfix_expression PAR_OUV PAR_FER
-	| postfix_expression PAR_OUV argument_expression_list PAR_FER
-	| postfix_expression POINT IDENTIFIER
+	| postfix_expression '[' expression ']'
+	| postfix_expression '(' ')'
+	| postfix_expression '(' argument_expression_list ')'
+	| postfix_expression '.' IDENTIFIER
 	| postfix_expression PTR_OP IDENTIFIER
 	| postfix_expression INC_OP
 	| postfix_expression DEC_OP
-	| PAR_OUV type_name PAR_FER ACCO_OUV initializer_list ACCO_FER 
-	| PAR_OUV type_name PAR_FER ACCO_OUV initializer_list VIRGULE ACCO_FER 
+	| '(' type_name ')' '{' initializer_list '}'
+	| '(' type_name ')' '{' initializer_list ',' '}'
 	;
 
 argument_expression_list
 	: assignment_expression
-	| argument_expression_list VIRGULE assignment_expression
+	| argument_expression_list ',' assignment_expression
 	;
 
 unary_expression
@@ -144,85 +82,85 @@ unary_expression
 	| DEC_OP unary_expression
 	| unary_operator cast_expression
 	| SIZEOF unary_expression
-	| SIZEOF PAR_OUV type_name PAR_FER
-	| ALIGNOF PAR_OUV type_name PAR_FER
+	| SIZEOF '(' type_name ')'
+	| ALIGNOF '(' type_name ')'
 	;
 
 unary_operator
-: ECOMMERCIAL  {fprintf(f_output,"%s",$1);}
-	| FOIS {fprintf(f_output,"%s",$1);}
-	| PLUS {fprintf(f_output,"%s",$1);}
-	| MOINS {fprintf(f_output,"%s",$1);}
-	| EQUIVALENT  {fprintf(f_output,"%s",$1);}
-	| POINT_EXCLA {fprintf(f_output,"%s",$1);}
+	: '&'
+	| '*'
+	| '+'
+	| '-'
+	| '~'
+	| '!'
 	;
 
 cast_expression
 	: unary_expression
-	| PAR_OUV type_name PAR_FER cast_expression {fprintf(f_output,"%s",$1);fprintf(f_output,"%s",$3);}
+	| '(' type_name ')' cast_expression
 	;
 
 multiplicative_expression
 	: cast_expression
-	| multiplicative_expression FOIS cast_expression {fprintf(f_output,"%s",$2);}
-	| multiplicative_expression DIVISE cast_expression {fprintf(f_output,"%s",$2);}
-	| multiplicative_expression POURCENT cast_expression {fprintf(f_output,"%s",$2);}
+	| multiplicative_expression '*' cast_expression
+	| multiplicative_expression '/' cast_expression
+	| multiplicative_expression '%' cast_expression
 	;
 
 additive_expression
 	: multiplicative_expression
-	| additive_expression PLUS multiplicative_expression {fprintf(f_output,"%s",$2);}
-	| additive_expression MOINS multiplicative_expression {fprintf(f_output,"%s",$2);}
+	| additive_expression '+' multiplicative_expression
+	| additive_expression '-' multiplicative_expression
 	;
 
 shift_expression
 	: additive_expression
-	| shift_expression LEFT_OP additive_expression  {}
-	| shift_expression RIGHT_OP additive_expression {}
+	| shift_expression LEFT_OP additive_expression
+	| shift_expression RIGHT_OP additive_expression
 	;
 
 relational_expression
 	: shift_expression
-	| relational_expression INFERIEUR shift_expression {fprintf(f_output,"%s",$2);}
-	| relational_expression SUPERIEUR shift_expression {fprintf(f_output,"%s",$2);}
-	| relational_expression LE_OP shift_expression {}
-	| relational_expression GE_OP shift_expression {}
+	| relational_expression '<' shift_expression
+	| relational_expression '>' shift_expression
+	| relational_expression LE_OP shift_expression
+	| relational_expression GE_OP shift_expression
 	;
 
 equality_expression
 	: relational_expression
-	| equality_expression EQ_OP relational_expression {}
-	| equality_expression NE_OP relational_expression {}
+	| equality_expression EQ_OP relational_expression
+	| equality_expression NE_OP relational_expression
 	;
 
 and_expression
 	: equality_expression
-	| and_expression ECOMMERCIAL equality_expression {fprintf(f_output,"%s",$2);}
+	| and_expression '&' equality_expression
 	;
 
 exclusive_or_expression
 	: and_expression
-	| exclusive_or_expression PUISSANCE and_expression {fprintf(f_output,"%s",$2);}
+	| exclusive_or_expression '^' and_expression
 	;
 
 inclusive_or_expression
 	: exclusive_or_expression
-	| inclusive_or_expression TILT exclusive_or_expression {fprintf(f_output,"%s",$2);}
+	| inclusive_or_expression '|' exclusive_or_expression
 	;
 
 logical_and_expression
 	: inclusive_or_expression
-	| logical_and_expression AND_OP inclusive_or_expression {fprintf(f_output,"%s",$2);}
+	| logical_and_expression AND_OP inclusive_or_expression
 	;
 
 logical_or_expression
 	: logical_and_expression
-	| logical_or_expression OR_OP logical_and_expression {fprintf(f_output,"%s",$2);}
+	| logical_or_expression OR_OP logical_and_expression
 	;
 
 conditional_expression
 	: logical_or_expression
-	| logical_or_expression POINT_INTERRO expression DEUXPOINTS conditional_expression {fprintf(f_output,"%s",$2);fprintf(f_output,"%s",$4);}
+	| logical_or_expression '?' expression ':' conditional_expression
 	;
 
 assignment_expression
@@ -231,7 +169,7 @@ assignment_expression
 	;
 
 assignment_operator
-	: EGAL
+	: '='
 	| MUL_ASSIGN
 	| DIV_ASSIGN
 	| MOD_ASSIGN
@@ -246,7 +184,7 @@ assignment_operator
 
 expression
 	: assignment_expression
-	| expression VIRGULE assignment_expression
+	| expression ',' assignment_expression
 	;
 
 constant_expression
@@ -254,8 +192,8 @@ constant_expression
 	;
 
 declaration
-	: declaration_specifiers POINT_VIRGULE 
-	| declaration_specifiers init_declarator_list POINT_VIRGULE
+	: declaration_specifiers ';'
+	| declaration_specifiers init_declarator_list ';'
 	| static_assert_declaration
 	;
 
@@ -274,28 +212,45 @@ declaration_specifiers
 
 init_declarator_list
 	: init_declarator
-	| init_declarator_list VIRGULE init_declarator
+	| init_declarator_list ',' init_declarator
 	;
 
 init_declarator
-	: declarator EGAL initializer
+	: declarator '=' initializer
 	| declarator
 	;
 
 storage_class_specifier
 	: TYPEDEF	/* identifiers must be flagged as TYPEDEF_NAME */
 	| EXTERN
-| STATIC
+	| STATIC
 	| THREAD_LOCAL
 	| AUTO
 	| REGISTER
 	;
 
-
+type_specifier
+	: VOID
+	| CHAR
+	| SHORT
+	| INT
+	| LONG
+	| FLOAT
+	| DOUBLE
+	| SIGNED
+	| UNSIGNED
+	| BOOL
+	| COMPLEX
+	| IMAGINARY	  	/* non-mandated extension */
+	| atomic_type_specifier
+	| struct_or_union_specifier
+	| enum_specifier
+	| TYPEDEF_NAME		/* after it has been defined as such */
+	;
 
 struct_or_union_specifier
-: struct_or_union ACCO_OUV  struct_declaration_list ACCO_FER 
-	| struct_or_union IDENTIFIER ACCO_OUV struct_declaration_list ACCO_FER
+	: struct_or_union '{' struct_declaration_list '}'
+	| struct_or_union IDENTIFIER '{' struct_declaration_list '}'
 	| struct_or_union IDENTIFIER
 	;
 
@@ -310,8 +265,8 @@ struct_declaration_list
 	;
 
 struct_declaration
-	: specifier_qualifier_list POINT_VIRGULE	/* for anonymous struct/union */
-	| specifier_qualifier_list struct_declarator_list POINT_VIRGULE
+	: specifier_qualifier_list ';'	/* for anonymous struct/union */
+	| specifier_qualifier_list struct_declarator_list ';'
 	| static_assert_declaration
 	;
 
@@ -324,46 +279,52 @@ specifier_qualifier_list
 
 struct_declarator_list
 	: struct_declarator
-	| struct_declarator_list VIRGULE struct_declarator
+	| struct_declarator_list ',' struct_declarator
 	;
 
 struct_declarator
-	: DEUXPOINTS constant_expression
-	| declarator DEUXPOINTS constant_expression
+	: ':' constant_expression
+	| declarator ':' constant_expression
 	| declarator
 	;
 
 enum_specifier
-	: ENUM ACCO_OUV  enumerator_list ACCO_FER  
-	| ENUM ACCO_OUV  enumerator_list VIRGULE ACCO_FER  
-	| ENUM IDENTIFIER ACCO_OUV  enumerator_list ACCO_FER  
-	| ENUM IDENTIFIER ACCO_OUV  enumerator_list VIRGULE ACCO_FER  
+	: ENUM '{' enumerator_list '}'
+	| ENUM '{' enumerator_list ',' '}'
+	| ENUM IDENTIFIER '{' enumerator_list '}'
+	| ENUM IDENTIFIER '{' enumerator_list ',' '}'
 	| ENUM IDENTIFIER
 	;
 
 enumerator_list
 	: enumerator
-	| enumerator_list VIRGULE enumerator
+	| enumerator_list ',' enumerator
 	;
 
 enumerator	/* identifiers must be flagged as ENUMERATION_CONSTANT */
-	: enumeration_constant EGAL constant_expression
+	: enumeration_constant '=' constant_expression
 	| enumeration_constant
 	;
 
 atomic_type_specifier
-	: ATOMIC PAR_OUV type_name PAR_FER
+	: ATOMIC '(' type_name ')'
 	;
 
+type_qualifier
+	: CONST
+	| RESTRICT
+	| VOLATILE
+	| ATOMIC
+	;
 
 function_specifier
-	: INLINE 
+	: INLINE
 	| NORETURN
 	;
 
 alignment_specifier
-	: ALIGNAS PAR_OUV type_name PAR_FER
-	| ALIGNAS PAR_OUV constant_expression PAR_FER
+	: ALIGNAS '(' type_name ')'
+	| ALIGNAS '(' constant_expression ')'
 	;
 
 declarator
@@ -372,27 +333,27 @@ declarator
 	;
 
 direct_declarator
-    :     IDENTIFIER 
-	| PAR_OUV declarator PAR_FER
-	| direct_declarator CRO_OUV CRO_FER
-	| direct_declarator CRO_OUV FOIS CRO_FER
-	| direct_declarator CRO_OUV STATIC type_qualifier_list assignment_expression CRO_FER
-	| direct_declarator CRO_OUV STATIC assignment_expression CRO_FER
-	| direct_declarator CRO_OUV type_qualifier_list FOIS CRO_FER
-	| direct_declarator CRO_OUV type_qualifier_list STATIC assignment_expression CRO_FER
-	| direct_declarator CRO_OUV type_qualifier_list assignment_expression CRO_FER
-	| direct_declarator CRO_OUV type_qualifier_list CRO_FER
-	| direct_declarator CRO_OUV assignment_expression CRO_FER
-	| direct_declarator PAR_OUV parameter_type_list PAR_FER
-	| direct_declarator PAR_OUV PAR_FER
-	| direct_declarator PAR_OUV identifier_list PAR_FER
+	: IDENTIFIER
+	| '(' declarator ')'
+	| direct_declarator '[' ']'
+	| direct_declarator '[' '*' ']'
+	| direct_declarator '[' STATIC type_qualifier_list assignment_expression ']'
+	| direct_declarator '[' STATIC assignment_expression ']'
+	| direct_declarator '[' type_qualifier_list '*' ']'
+	| direct_declarator '[' type_qualifier_list STATIC assignment_expression ']'
+	| direct_declarator '[' type_qualifier_list assignment_expression ']'
+	| direct_declarator '[' type_qualifier_list ']'
+	| direct_declarator '[' assignment_expression ']'
+	| direct_declarator '(' parameter_type_list ')'
+	| direct_declarator '(' ')'
+	| direct_declarator '(' identifier_list ')'
 	;
 
 pointer
-	: FOIS type_qualifier_list pointer
-	| FOIS type_qualifier_list
-	| FOIS pointer
-	| FOIS
+	: '*' type_qualifier_list pointer
+	| '*' type_qualifier_list
+	| '*' pointer
+	| '*'
 	;
 
 type_qualifier_list
@@ -402,13 +363,13 @@ type_qualifier_list
 
 
 parameter_type_list
-	: parameter_list VIRGULE ELLIPSIS
+	: parameter_list ',' ELLIPSIS
 	| parameter_list
 	;
 
 parameter_list
 	: parameter_declaration
-	| parameter_list VIRGULE parameter_declaration
+	| parameter_list ',' parameter_declaration
 	;
 
 parameter_declaration
@@ -419,7 +380,7 @@ parameter_declaration
 
 identifier_list
 	: IDENTIFIER
-	| identifier_list VIRGULE IDENTIFIER
+	| identifier_list ',' IDENTIFIER
 	;
 
 type_name
@@ -434,44 +395,44 @@ abstract_declarator
 	;
 
 direct_abstract_declarator
-	: PAR_OUV abstract_declarator PAR_FER
-	| CRO_OUV CRO_FER
-	| CRO_OUV FOIS CRO_FER
-	| CRO_OUV STATIC type_qualifier_list assignment_expression CRO_FER
-	| CRO_OUV STATIC assignment_expression CRO_FER
-	| CRO_OUV type_qualifier_list STATIC assignment_expression CRO_FER
-	| CRO_OUV type_qualifier_list assignment_expression CRO_FER
-	| CRO_OUV type_qualifier_list CRO_FER
-	| CRO_OUV assignment_expression CRO_FER
-	| direct_abstract_declarator CRO_OUV CRO_FER
-	| direct_abstract_declarator CRO_OUV FOIS CRO_FER
-	| direct_abstract_declarator CRO_OUV STATIC type_qualifier_list assignment_expression CRO_FER
-	| direct_abstract_declarator CRO_OUV STATIC assignment_expression CRO_FER
-	| direct_abstract_declarator CRO_OUV type_qualifier_list assignment_expression CRO_FER
-	| direct_abstract_declarator CRO_OUV type_qualifier_list STATIC assignment_expression CRO_FER
-	| direct_abstract_declarator CRO_OUV type_qualifier_list CRO_FER
-	| direct_abstract_declarator CRO_OUV assignment_expression CRO_FER
-	| PAR_OUV PAR_FER
-	| PAR_OUV parameter_type_list PAR_FER
-	| direct_abstract_declarator PAR_OUV PAR_FER
-	| direct_abstract_declarator PAR_OUV parameter_type_list PAR_FER
+	: '(' abstract_declarator ')'
+	| '[' ']'
+	| '[' '*' ']'
+	| '[' STATIC type_qualifier_list assignment_expression ']'
+	| '[' STATIC assignment_expression ']'
+	| '[' type_qualifier_list STATIC assignment_expression ']'
+	| '[' type_qualifier_list assignment_expression ']'
+	| '[' type_qualifier_list ']'
+	| '[' assignment_expression ']'
+	| direct_abstract_declarator '[' ']'
+	| direct_abstract_declarator '[' '*' ']'
+	| direct_abstract_declarator '[' STATIC type_qualifier_list assignment_expression ']'
+	| direct_abstract_declarator '[' STATIC assignment_expression ']'
+	| direct_abstract_declarator '[' type_qualifier_list assignment_expression ']'
+	| direct_abstract_declarator '[' type_qualifier_list STATIC assignment_expression ']'
+	| direct_abstract_declarator '[' type_qualifier_list ']'
+	| direct_abstract_declarator '[' assignment_expression ']'
+	| '(' ')'
+	| '(' parameter_type_list ')'
+	| direct_abstract_declarator '(' ')'
+	| direct_abstract_declarator '(' parameter_type_list ')'
 	;
 
 initializer
-	: ACCO_OUV  initializer_list ACCO_FER 
-	| ACCO_OUV  initializer_list VIRGULE ACCO_FER  
+	: '{' initializer_list '}'
+	| '{' initializer_list ',' '}'
 	| assignment_expression
 	;
 
 initializer_list
 	: designation initializer
 	| initializer
-	| initializer_list VIRGULE designation initializer
-	| initializer_list VIRGULE initializer
+	| initializer_list ',' designation initializer
+	| initializer_list ',' initializer
 	;
 
 designation
-	: designator_list EGAL
+	: designator_list '='
 	;
 
 designator_list
@@ -480,12 +441,12 @@ designator_list
 	;
 
 designator
-	: CRO_OUV constant_expression CRO_FER
-	| POINT IDENTIFIER
+	: '[' constant_expression ']'
+	| '.' IDENTIFIER
 	;
 
 static_assert_declaration
-	: STATIC_ASSERT PAR_OUV constant_expression VIRGULE STRING_LITERAL PAR_FER POINT_VIRGULE
+	: STATIC_ASSERT '(' constant_expression ',' STRING_LITERAL ')' ';'
 	;
 
 statement
@@ -498,14 +459,14 @@ statement
 	;
 
 labeled_statement
-	: IDENTIFIER DEUXPOINTS statement
-	| CASE constant_expression DEUXPOINTS statement
-	| DEFAULT DEUXPOINTS statement
+	: IDENTIFIER ':' statement
+	| CASE constant_expression ':' statement
+	| DEFAULT ':' statement
 	;
 
 compound_statement
-	: ACCO_OUV  ACCO_FER  
-	| ACCO_OUV     block_item_list ACCO_FER  
+	: '{' '}'
+	| '{'  block_item_list '}'
 	;
 
 block_item_list
@@ -519,31 +480,31 @@ block_item
 	;
 
 expression_statement
-	: POINT_VIRGULE
-	| expression POINT_VIRGULE
+	: ';'
+	| expression ';'
 	;
 
 selection_statement
-: IF PAR_OUV expression PAR_FER statement ELSE statement {print_balise_span("type_specifier",$1);fprintf(f_output,"%s",$2);}
-|       IF PAR_OUV expression PAR_FER statement {print_balise_span("type_specifier",$1);fprintf(f_output,"%s",$2);fprintf(f_output,"%s",$4);}
-        |       SWITCH PAR_OUV expression PAR_FER statement 
+	: IF '(' expression ')' statement ELSE statement
+	| IF '(' expression ')' statement
+	| SWITCH '(' expression ')' statement
 	;
 
 iteration_statement
-	: WHILE PAR_OUV expression PAR_FER statement
-	| DO statement WHILE PAR_OUV expression PAR_FER POINT_VIRGULE
-	| FOR PAR_OUV expression_statement expression_statement PAR_FER statement
-	| FOR PAR_OUV expression_statement expression_statement expression PAR_FER statement
-	| FOR PAR_OUV declaration expression_statement PAR_FER statement
-	| FOR PAR_OUV declaration expression_statement expression PAR_FER statement
+	: WHILE '(' expression ')' statement
+	| DO statement WHILE '(' expression ')' ';'
+	| FOR '(' expression_statement expression_statement ')' statement
+	| FOR '(' expression_statement expression_statement expression ')' statement
+	| FOR '(' declaration expression_statement ')' statement
+	| FOR '(' declaration expression_statement expression ')' statement
 	;
 
 jump_statement
-: GOTO IDENTIFIER POINT_VIRGULE
-        |       CONTINUE  POINT_VIRGULE
-        |       BREAK POINT_VIRGULE
-        |       RETURN POINT_VIRGULE
-        |       RETURN expression POINT_VIRGULE
+	: GOTO IDENTIFIER ';'
+	| CONTINUE ';'
+	| BREAK ';'
+	| RETURN ';'
+	| RETURN expression ';'
 	;
 
 translation_unit
@@ -552,8 +513,8 @@ translation_unit
 	;
 
 external_declaration
-	: function_definition /* Pour declarer une fonction */
-	| declaration /* Toutes les autres déclarations */
+	: function_definition
+	| declaration
 	;
 
 function_definition
@@ -567,7 +528,10 @@ declaration_list
 	;
 
 %%
+#include <stdio.h>
 
-void yyerror (char const *s) {
-   fprintf (stderr, "%s\n", s);
- } 
+void yyerror(const char *s)
+{
+	fflush(stdout);
+	fprintf(stderr, "*** %s\n", s);
+}
