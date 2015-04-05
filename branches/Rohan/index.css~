@@ -11,6 +11,7 @@ background-color: #e3e8f2;
 font-size:20px;
 font-family:Courier New;
 text-align:center;
+color:#6678ac;
 }
 
 .bordure
@@ -50,4 +51,14 @@ font-style: italic;
 .vert
 {
 color: #339933;
+}
+
+.nombre
+{
+color:#0705e5;
+}
+
+.string
+{
+color:red;
 }

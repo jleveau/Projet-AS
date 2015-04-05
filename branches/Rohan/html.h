@@ -7,6 +7,7 @@ typedef struct attribut* attribut;
 typedef struct balise* balise;
 
 FILE* f_output;
+int indent;
 
 
 void print_fin_balise(struct balise* b);

@@ -1,11 +1,12 @@
 
+
+/*Je suis un commentaire et je suis colorié hihi */
+
+
 struct coucou{
 char x ;
 int y ;
 };
-
-/* Bonjour Bonjour ! */
-else
 
 int yyparse(Rationnel **rationnel, yyscan_t scanner);
 int coucou();
