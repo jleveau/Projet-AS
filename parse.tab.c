@@ -65,15 +65,17 @@
 #line 1 "parse.y" /* yacc.c:339  */
 
 
-#include "html.h"
-#include "tools.h"
+#include "libs/html.h"
+#include "libs/tools.h"
 
 //mieux vaut ne pas utiliser deftype parce que ca arrete la vérification de type et certains erreurs peut être ignorés??
 
 
 
+void yyerror (char const *s);
 
-#line 77 "parse.tab.c" /* yacc.c:339  */
+
+#line 79 "parse.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -191,12 +193,12 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 17 "parse.y" /* yacc.c:355  */
+#line 19 "parse.y" /* yacc.c:355  */
 
  char* nom;
  
 
-#line 200 "parse.tab.c" /* yacc.c:355  */
+#line 202 "parse.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -211,7 +213,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 215 "parse.tab.c" /* yacc.c:358  */
+#line 217 "parse.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -516,34 +518,34 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    42,    42,    43,    44,    45,    46,    50,    51,    52,
-      56,    60,    61,    65,    69,    70,    74,    75,    79,    80,
-      81,    82,    83,    84,    85,    86,    87,    88,    92,    93,
-      97,    98,    99,   100,   101,   102,   103,   107,   108,   109,
-     110,   111,   112,   116,   117,   121,   122,   123,   124,   128,
-     129,   130,   134,   135,   136,   140,   141,   142,   143,   144,
-     148,   149,   150,   154,   155,   159,   160,   164,   165,   169,
-     170,   174,   175,   179,   180,   184,   185,   189,   190,   191,
-     192,   193,   194,   195,   196,   197,   198,   199,   203,   204,
-     208,   212,   213,   214,   218,   219,   220,   221,   222,   223,
-     224,   225,   226,   227,   231,   232,   236,   237,   241,   242,
-     243,   244,   245,   246,   250,   251,   252,   253,   254,   255,
-     256,   257,   258,   259,   260,   261,   262,   263,   264,   265,
-     269,   270,   271,   275,   276,   280,   281,   285,   286,   287,
-     291,   292,   293,   294,   298,   299,   303,   304,   305,   309,
-     310,   311,   312,   313,   317,   318,   322,   323,   327,   331,
-     332,   333,   334,   338,   339,   343,   344,   348,   349,   353,
-     354,   355,   356,   357,   358,   359,   360,   361,   362,   363,
-     364,   365,   366,   370,   371,   372,   373,   377,   378,   383,
-     384,   388,   389,   393,   394,   395,   399,   400,   404,   405,
-     409,   410,   411,   415,   416,   417,   418,   419,   420,   421,
-     422,   423,   424,   425,   426,   427,   428,   429,   430,   431,
-     432,   433,   434,   435,   439,   440,   441,   445,   446,   447,
-     448,   452,   456,   457,   461,   462,   466,   470,   471,   472,
-     473,   474,   475,   479,   480,   481,   485,   486,   490,   491,
-     495,   496,   500,   501,   505,   506,   507,   511,   512,   513,
-     514,   515,   516,   520,   521,   522,   523,   524,   528,   529,
-     533,   534,   538,   539,   543,   544
+       0,    44,    44,    45,    46,    47,    48,    52,    53,    54,
+      58,    62,    63,    67,    71,    72,    76,    77,    81,    82,
+      83,    84,    85,    86,    87,    88,    89,    90,    94,    95,
+      99,   100,   101,   102,   103,   104,   105,   109,   110,   111,
+     112,   113,   114,   118,   119,   123,   124,   125,   126,   130,
+     131,   132,   136,   137,   138,   142,   143,   144,   145,   146,
+     150,   151,   152,   156,   157,   161,   162,   166,   167,   171,
+     172,   176,   177,   181,   182,   186,   187,   191,   192,   193,
+     194,   195,   196,   197,   198,   199,   200,   201,   205,   206,
+     210,   214,   215,   216,   220,   221,   222,   223,   224,   225,
+     226,   227,   228,   229,   233,   234,   238,   239,   243,   244,
+     245,   246,   247,   248,   252,   253,   254,   255,   256,   257,
+     258,   259,   260,   261,   262,   263,   264,   265,   266,   267,
+     271,   272,   273,   277,   278,   282,   283,   287,   288,   289,
+     293,   294,   295,   296,   300,   301,   305,   306,   307,   311,
+     312,   313,   314,   315,   319,   320,   324,   325,   329,   333,
+     334,   335,   336,   340,   341,   345,   346,   350,   351,   355,
+     356,   357,   358,   359,   360,   361,   362,   363,   364,   365,
+     366,   367,   368,   372,   373,   374,   375,   379,   380,   385,
+     386,   390,   391,   395,   396,   397,   401,   402,   406,   407,
+     411,   412,   413,   417,   418,   419,   420,   421,   422,   423,
+     424,   425,   426,   427,   428,   429,   430,   431,   432,   433,
+     434,   435,   436,   437,   441,   442,   443,   447,   448,   449,
+     450,   454,   458,   459,   463,   464,   468,   472,   473,   474,
+     475,   476,   477,   481,   482,   483,   487,   488,   492,   493,
+     497,   498,   502,   503,   507,   508,   509,   513,   514,   515,
+     516,   517,   518,   522,   523,   524,   525,   526,   530,   531,
+     535,   536,   540,   541,   545,   546
 };
 #endif
 
@@ -2059,109 +2061,157 @@ yyreduce:
   switch (yyn)
     {
         case 114:
-#line 250 "parse.y" /* yacc.c:1646  */
+#line 252 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2065 "parse.tab.c" /* yacc.c:1646  */
+#line 2067 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 115:
-#line 251 "parse.y" /* yacc.c:1646  */
+#line 253 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2071 "parse.tab.c" /* yacc.c:1646  */
+#line 2073 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 116:
-#line 252 "parse.y" /* yacc.c:1646  */
+#line 254 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2077 "parse.tab.c" /* yacc.c:1646  */
+#line 2079 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 117:
-#line 253 "parse.y" /* yacc.c:1646  */
+#line 255 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2083 "parse.tab.c" /* yacc.c:1646  */
+#line 2085 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 118:
-#line 254 "parse.y" /* yacc.c:1646  */
+#line 256 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2089 "parse.tab.c" /* yacc.c:1646  */
+#line 2091 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 119:
-#line 255 "parse.y" /* yacc.c:1646  */
+#line 257 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2095 "parse.tab.c" /* yacc.c:1646  */
+#line 2097 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 120:
-#line 256 "parse.y" /* yacc.c:1646  */
+#line 258 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2101 "parse.tab.c" /* yacc.c:1646  */
+#line 2103 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 121:
-#line 257 "parse.y" /* yacc.c:1646  */
+#line 259 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2107 "parse.tab.c" /* yacc.c:1646  */
+#line 2109 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 122:
-#line 258 "parse.y" /* yacc.c:1646  */
+#line 260 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2113 "parse.tab.c" /* yacc.c:1646  */
+#line 2115 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 123:
-#line 259 "parse.y" /* yacc.c:1646  */
+#line 261 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2119 "parse.tab.c" /* yacc.c:1646  */
+#line 2121 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 124:
-#line 260 "parse.y" /* yacc.c:1646  */
+#line 262 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2125 "parse.tab.c" /* yacc.c:1646  */
+#line 2127 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 125:
-#line 261 "parse.y" /* yacc.c:1646  */
+#line 263 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2131 "parse.tab.c" /* yacc.c:1646  */
+#line 2133 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 129:
-#line 265 "parse.y" /* yacc.c:1646  */
+#line 267 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2137 "parse.tab.c" /* yacc.c:1646  */
+#line 2139 "parse.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 130:
+#line 271 "parse.y" /* yacc.c:1646  */
+    {(yyval.nom)=yylval.nom;}
+#line 2145 "parse.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 131:
+#line 272 "parse.y" /* yacc.c:1646  */
+    {(yyval.nom)=yylval.nom;}
+#line 2151 "parse.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 132:
+#line 273 "parse.y" /* yacc.c:1646  */
+    {(yyval.nom)=yylval.nom;}
+#line 2157 "parse.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 149:
+#line 311 "parse.y" /* yacc.c:1646  */
+    {(yyval.nom)=yylval.nom;}
+#line 2163 "parse.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 150:
+#line 312 "parse.y" /* yacc.c:1646  */
+    {(yyval.nom)=yylval.nom;}
+#line 2169 "parse.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 151:
+#line 313 "parse.y" /* yacc.c:1646  */
+    {(yyval.nom)=yylval.nom;}
+#line 2175 "parse.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 152:
+#line 314 "parse.y" /* yacc.c:1646  */
+    {(yyval.nom)=yylval.nom;}
+#line 2181 "parse.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 153:
+#line 315 "parse.y" /* yacc.c:1646  */
+    {(yyval.nom)=yylval.nom;}
+#line 2187 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 159:
-#line 331 "parse.y" /* yacc.c:1646  */
+#line 333 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2143 "parse.tab.c" /* yacc.c:1646  */
+#line 2193 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 160:
-#line 332 "parse.y" /* yacc.c:1646  */
+#line 334 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2149 "parse.tab.c" /* yacc.c:1646  */
+#line 2199 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 161:
-#line 333 "parse.y" /* yacc.c:1646  */
+#line 335 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2155 "parse.tab.c" /* yacc.c:1646  */
+#line 2205 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 162:
-#line 334 "parse.y" /* yacc.c:1646  */
+#line 336 "parse.y" /* yacc.c:1646  */
     {print_balise_type_specifier((yyvsp[0].nom));}
-#line 2161 "parse.tab.c" /* yacc.c:1646  */
+#line 2211 "parse.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 2165 "parse.tab.c" /* yacc.c:1646  */
+#line 2215 "parse.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2389,9 +2439,10 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 547 "parse.y" /* yacc.c:1906  */
+#line 549 "parse.y" /* yacc.c:1906  */
 
 
-void yyerror (char const *s) {
-   fprintf (stderr, "%s\n", s);
- } 
+
+void yyerror (char const *s){
+	printf(" %s ", s);
+}

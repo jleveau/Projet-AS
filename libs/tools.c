@@ -1,5 +1,7 @@
 #include "tools.h"
 
+/* ajoute une fonction dans la liste de fonctions,
+ * la liste ne depend pas d'une pile car les fonctions sont accessibles partout dans le code*/
 void new_function(char* nom, char* description, variable* params, int nb_param){
 	function f=malloc(sizeof(*f));
 	f->nom=nom;
@@ -18,6 +20,7 @@ list list_create(){
 	return l;
 }
 
+/* cree une variable et l'ajoute dans la liste au sommet de la pile */
 void create_variable(char* nom, char* description){
 	variable v=malloc(sizeof(*v));
 	v->nom=nom;
@@ -39,6 +42,7 @@ void print_variable(variable v){
 	printf(" %s : %s \n", v->nom,v->description);
 }
 
+// affiche la liste au sommet de la pile de variables
 void print_variables(){
 	list l=(list)stack_top(variables_stack);
 	while (l->first!=NULL){
@@ -46,3 +50,4 @@ void print_variables(){
 		l->first=l->first->next;
 	}
 }
+

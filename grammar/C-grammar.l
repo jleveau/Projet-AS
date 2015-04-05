@@ -179,13 +179,15 @@ static void comment(void)
 
 static int check_type(void)
 {
+		printf("%s \n", yytext);
     switch (sym_type(yytext))
     {
     case TYPEDEF_NAME:                /* previously defined */
         return TYPEDEF_NAME;
     case ENUMERATION_CONSTANT:        /* previously defined */
         return ENUMERATION_CONSTANT;
-    default:                          /* includes undefined */
+    default:     {                     /* includes undefined */
         return IDENTIFIER;
+        }
     }
 }

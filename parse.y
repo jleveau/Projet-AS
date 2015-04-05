@@ -1,11 +1,13 @@
 %{
 
-#include "html.h"
-#include "tools.h"
+#include "libs/html.h"
+#include "libs/tools.h"
 
 //mieux vaut ne pas utiliser deftype parce que ca arrete la vérification de type et certains erreurs peut être ignorés??
 
 
+
+void yyerror (char const *s);
 
 %}
                                                
@@ -18,8 +20,8 @@
  char* nom;
  }
                         
-%type<nom>type_specifier atomic_type_specifier struct_or_union_specifier enum_specifier type_qualifier
-%token	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
+%type<nom> type_specifier atomic_type_specifier struct_or_union_specifier enum_specifier type_qualifier
+%token<nom>	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
 %token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
 %token	AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
 %token	SUB_ASSIGN LEFT_ASSIGN RIGHT_ASSIGN AND_ASSIGN
@@ -233,8 +235,8 @@ init_declarator_list
 	;
 
 init_declarator
-	: declarator '=' initializer
-	| declarator
+	: declarator '=' initializer 
+	| declarator  
 	;
 
 storage_class_specifier
@@ -266,9 +268,9 @@ type_specifier
 	;
 
 struct_or_union_specifier
-: struct_or_union '{'  struct_declaration_list '}' 
-	| struct_or_union IDENTIFIER '{' struct_declaration_list '}'
-	| struct_or_union IDENTIFIER
+: struct_or_union '{'  struct_declaration_list '}' {$$=yylval.nom;}
+	| struct_or_union IDENTIFIER '{' struct_declaration_list '}' {$$=yylval.nom;}
+	| struct_or_union IDENTIFIER {$$=yylval.nom;}
 	;
 
 struct_or_union
@@ -306,11 +308,11 @@ struct_declarator
 	;
 
 enum_specifier
-	: ENUM '{'  enumerator_list '}'  
-	| ENUM '{'  enumerator_list ',' '}'  
-	| ENUM IDENTIFIER '{'  enumerator_list '}'  
-	| ENUM IDENTIFIER '{'  enumerator_list ',' '}'  
-	| ENUM IDENTIFIER
+	: ENUM '{'  enumerator_list '}'  {$$=yylval.nom;}
+	| ENUM '{'  enumerator_list ',' '}'  {$$=yylval.nom;}
+	| ENUM IDENTIFIER '{'  enumerator_list '}'  {$$=yylval.nom;}
+	| ENUM IDENTIFIER '{'  enumerator_list ',' '}'  {$$=yylval.nom;}
+	| ENUM IDENTIFIER {$$=yylval.nom;}
 	;
 
 enumerator_list
@@ -350,7 +352,7 @@ declarator
 	;
 
 direct_declarator
-    :     IDENTIFIER 
+    :     IDENTIFIER  
 	| '(' declarator ')'
 	| direct_declarator '[' ']'
 	| direct_declarator '[' '*' ']'
@@ -546,6 +548,7 @@ declaration_list
 
 %%
 
-void yyerror (char const *s) {
-   fprintf (stderr, "%s\n", s);
- } 
+
+void yyerror (char const *s){
+	printf(" %s ", s);
+}

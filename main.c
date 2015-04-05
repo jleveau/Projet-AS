@@ -7,7 +7,8 @@
 //pour utiliser des asserts
 #include <assert.h>
 #include "parse.tab.h"
-#include "html.h"
+#include "libs/html.h"
+#include "libs/tools.h"
 
 /*
 
@@ -22,7 +23,7 @@ FILE* create_html(char* titre){
 	fprintf(f_output,"   <meta charset=\"utf-8\">");
 	fprintf(f_output,"   <title>%s</title>",titre);
 	fprintf(f_output,"   <!doctype html>");
-	fprintf(f_output, "<link rel=\"stylesheet\" type=\"text/css\" href=\"index.css\">");
+	fprintf(f_output, "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/index.css\">");
 	fprintf(f_output,"</head>");								// </HEADER>
 
 	//body
@@ -44,18 +45,22 @@ int fermer_html(FILE* fd){
   return(fclose(fd)); //close avec flush
 }
 
+void init_structures(){
+	variables_stack=stack_create();
+	stack_push(variables_stack,list_create());
+	function_list=list_create();
+}
 
 int main(int argc,char** argv){
    FILE* html=create_html("test");
    //assert(argc==2 && "invalide number of argument");
    
-
+  init_structures();
   int fd=open(argv[1],O_RDONLY);
   dup2(fd,0);
   
-  
   yyparse(); // On parse l'entree (une seule fois)
-  
+  print_variables();
 
   if(fermer_html(html)){
     perror("fermeture du html");

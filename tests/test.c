@@ -1,21 +1,9 @@
 
-#include "rationnel.h"
-#include "ensemble.h"
-#include "automate.h"
-#include "parse.h"
-#include "scan.h"
-#include "outils.h"
-
-#include <stdbool.h>
-#include < stdlib.h >
-#include <assert.h>
-#include <stdio.h>
 
 struct coucou{
 char x;
 int y;
 };
-
 
 int yyparse(Rationnel **rationnel, yyscan_t scanner);
 int coucou();
@@ -27,10 +15,10 @@ x=0;
 }
 Rationnel *rationnel(Noeud etiquette, char lettre, int position_min, int position_max, void *data, Rationnel *gauche, Rationnel *droit, Rationnel *pere)
 {
-int x=2;
-int y=3;
-int z=4;
-int w=5;
+	int x=2;
+	int y=3;
+	int z=4;
+	int w=5;
    Rationnel *rat;	
    rat->etiquette = etiquette;
    rat->lettre = lettre;
