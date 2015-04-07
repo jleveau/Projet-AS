@@ -1,41 +1,19 @@
-%{
-
-#include "libs/html.h"
-#include "libs/tools.h"
-
-//mieux vaut ne pas utiliser deftype parce que ca arrete la vérification de type et certains erreurs peut être ignorés??
-
-
-
-void yyerror (char const *s);
-
-%}
-                                               
-//Creation des token juste pour lever les erreurs lors de la compilation, à modifier par la suite
-
-/* On devrait commencer par regarder le 'haut' de la grammaire, i.e on commence par l'état start ( translation unit) et on descend dans l'arborescence en appliquant les règles, vu que c'est trop relou de partir du bas, comme en prenant une accolade et essayer de la faire passer dans le parse par exemple. */
-
-%token  KEYWORD TYPE
-%union{
- char* nom;
- }
-                        
-%type<nom> type_specifier atomic_type_specifier struct_or_union_specifier enum_specifier type_qualifier
-%token<nom>	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
+%token	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
 %token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
 %token	AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
 %token	SUB_ASSIGN LEFT_ASSIGN RIGHT_ASSIGN AND_ASSIGN
 %token	XOR_ASSIGN OR_ASSIGN
-%token<nom> TYPEDEF_NAME ENUMERATION_CONSTANT
+%token	TYPEDEF_NAME ENUMERATION_CONSTANT
 
 %token	TYPEDEF EXTERN STATIC AUTO REGISTER INLINE
-%token<nom> CONST RESTRICT VOLATILE ATOMIC
-%token<nom> BOOL CHAR SHORT INT LONG SIGNED UNSIGNED FLOAT DOUBLE VOID
-%token<nom> COMPLEX IMAGINARY 
-%token STRUCT UNION ENUM ELLIPSIS
-%token CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO
-%token RETURN BREAK CONTINUE
-%token	ALIGNAS ALIGNOF  GENERIC NORETURN STATIC_ASSERT THREAD_LOCAL
+%token	CONST RESTRICT VOLATILE
+%token	BOOL CHAR SHORT INT LONG SIGNED UNSIGNED FLOAT DOUBLE VOID
+%token	COMPLEX IMAGINARY 
+%token	STRUCT UNION ENUM ELLIPSIS
+
+%token	CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
+
+%token	ALIGNAS ALIGNOF ATOMIC GENERIC NORETURN STATIC_ASSERT THREAD_LOCAL
 
 %start translation_unit
 %%
@@ -86,8 +64,8 @@ postfix_expression
 	| postfix_expression PTR_OP IDENTIFIER
 	| postfix_expression INC_OP
 	| postfix_expression DEC_OP
-	| '(' type_name ')' '{' initializer_list '}' 
-	| '(' type_name ')' '{' initializer_list ',' '}' 
+	| '(' type_name ')' '{' initializer_list '}'
+	| '(' type_name ')' '{' initializer_list ',' '}'
 	;
 
 argument_expression_list
@@ -106,7 +84,7 @@ unary_expression
 	;
 
 unary_operator
-: '&'
+	: '&'
 	| '*'
 	| '+'
 	| '-'
@@ -211,7 +189,7 @@ constant_expression
 	;
 
 declaration
-	: declaration_specifiers ';' 
+	: declaration_specifiers ';'
 	| declaration_specifiers init_declarator_list ';'
 	| static_assert_declaration
 	;
@@ -235,42 +213,42 @@ init_declarator_list
 	;
 
 init_declarator
-	: declarator '=' initializer 
-	| declarator  
+	: declarator '=' initializer
+	| declarator
 	;
 
 storage_class_specifier
 	: TYPEDEF	/* identifiers must be flagged as TYPEDEF_NAME */
 	| EXTERN
-| STATIC
+	| STATIC
 	| THREAD_LOCAL
 	| AUTO
 	| REGISTER
 	;
 
 type_specifier
-    :       VOID {print_balise_type_specifier($1);} 
-	| CHAR {print_balise_type_specifier($1);}
-	| SHORT {print_balise_type_specifier($1);} 
-	| INT {print_balise_type_specifier($1);} 
-	| LONG {print_balise_type_specifier($1);} 
-	| FLOAT {print_balise_type_specifier($1);} 
-	| DOUBLE {print_balise_type_specifier($1);} 
-	| SIGNED {print_balise_type_specifier($1);} 
-	| UNSIGNED {print_balise_type_specifier($1);} 
-	| BOOL {print_balise_type_specifier($1);}
-	| COMPLEX {print_balise_type_specifier($1);} 
-	| IMAGINARY	 {print_balise_type_specifier($1);}   	/* non-mandated extension */
+	: VOID
+	| CHAR
+	| SHORT
+	| INT
+	| LONG
+	| FLOAT
+	| DOUBLE
+	| SIGNED
+	| UNSIGNED
+	| BOOL
+	| COMPLEX
+	| IMAGINARY	  	/* non-mandated extension */
 	| atomic_type_specifier
 	| struct_or_union_specifier
 	| enum_specifier
-	| TYPEDEF_NAME	 {print_balise_type_specifier($1);} 	/* after it has been defined as such */
+	| TYPEDEF_NAME		/* after it has been defined as such */
 	;
 
 struct_or_union_specifier
-: struct_or_union '{'  struct_declaration_list '}' {$$=yylval.nom;}
-	| struct_or_union IDENTIFIER '{' struct_declaration_list '}' {$$=yylval.nom;}
-	| struct_or_union IDENTIFIER {$$=yylval.nom;}
+	: struct_or_union '{' struct_declaration_list '}'
+	| struct_or_union IDENTIFIER '{' struct_declaration_list '}'
+	| struct_or_union IDENTIFIER
 	;
 
 struct_or_union
@@ -308,11 +286,11 @@ struct_declarator
 	;
 
 enum_specifier
-	: ENUM '{'  enumerator_list '}'  {$$=yylval.nom;}
-	| ENUM '{'  enumerator_list ',' '}'  {$$=yylval.nom;}
-	| ENUM IDENTIFIER '{'  enumerator_list '}'  {$$=yylval.nom;}
-	| ENUM IDENTIFIER '{'  enumerator_list ',' '}'  {$$=yylval.nom;}
-	| ENUM IDENTIFIER {$$=yylval.nom;}
+	: ENUM '{' enumerator_list '}'
+	| ENUM '{' enumerator_list ',' '}'
+	| ENUM IDENTIFIER '{' enumerator_list '}'
+	| ENUM IDENTIFIER '{' enumerator_list ',' '}'
+	| ENUM IDENTIFIER
 	;
 
 enumerator_list
@@ -330,14 +308,14 @@ atomic_type_specifier
 	;
 
 type_qualifier
-	: CONST {print_balise_type_specifier($1);}
-	| RESTRICT {print_balise_type_specifier($1);}
-	| VOLATILE {print_balise_type_specifier($1);}
-	| ATOMIC {print_balise_type_specifier($1);}
+	: CONST
+	| RESTRICT
+	| VOLATILE
+	| ATOMIC
 	;
 
 function_specifier
-	: INLINE 
+	: INLINE
 	| NORETURN
 	;
 
@@ -352,7 +330,7 @@ declarator
 	;
 
 direct_declarator
-    :     IDENTIFIER  
+	: IDENTIFIER
 	| '(' declarator ')'
 	| direct_declarator '[' ']'
 	| direct_declarator '[' '*' ']'
@@ -438,8 +416,8 @@ direct_abstract_declarator
 	;
 
 initializer
-	: '{'  initializer_list '}' 
-	| '{'  initializer_list ',' '}'  
+	: '{' initializer_list '}'
+	| '{' initializer_list ',' '}'
 	| assignment_expression
 	;
 
@@ -484,8 +462,8 @@ labeled_statement
 	;
 
 compound_statement
-	: '{'  '}'  
-	| '{'    block_item_list '}'  
+	: '{' '}'
+	| '{'  block_item_list '}'
 	;
 
 block_item_list
@@ -504,9 +482,9 @@ expression_statement
 	;
 
 selection_statement
-: IF '(' expression ')' statement ELSE statement 
-        |       IF '(' expression ')' statement 
-        |       SWITCH '(' expression ')' statement 
+	: IF '(' expression ')' statement ELSE statement
+	| IF '(' expression ')' statement
+	| SWITCH '(' expression ')' statement
 	;
 
 iteration_statement
@@ -519,11 +497,11 @@ iteration_statement
 	;
 
 jump_statement
-: GOTO IDENTIFIER ';'
-        |       CONTINUE  ';'
-        |       BREAK ';'
-        |       RETURN ';'
-        |       RETURN expression ';'
+	: GOTO IDENTIFIER ';'
+	| CONTINUE ';'
+	| BREAK ';'
+	| RETURN ';'
+	| RETURN expression ';'
 	;
 
 translation_unit
@@ -532,8 +510,8 @@ translation_unit
 	;
 
 external_declaration
-	: function_definition /* Pour declarer une fonction */
-	| declaration /* Toutes les autres déclarations */
+	: function_definition
+	| declaration
 	;
 
 function_definition
@@ -547,8 +525,10 @@ declaration_list
 	;
 
 %%
+#include <stdio.h>
 
-
-void yyerror (char const *s){
-	printf(" %s ", s);
+void yyerror(const char *s)
+{
+	fflush(stdout);
+	fprintf(stderr, "*** %s\n", s);
 }

@@ -59,8 +59,9 @@ Utiliser bison + Renvoyer les règles pour les indentations du style : if mais s
 "char"					{print_balise_span("type_specifier","char");}
 "for"					{print_balise_span("jaune","for");}
 "else"					{print_balise_span("jaune","else");}
+
 ";"                                     {print_balise_span("vert",";");}
-"{"                                     {indent=indent+2;int i=0;while(i<indent){fprintf(f_output,"_");i++;};print_balise_span("vert","{");}
+"{"                                     {indent=indent+2;int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;};print_balise_span("vert","{");}
 "}"                                     {indent=indent-2;print_balise_span("vert","}");}
 "("                                     {print_balise_span("vert","(");}
 ")"                                     {print_balise_span("vert",")");}
@@ -78,7 +79,7 @@ Utiliser bison + Renvoyer les règles pour les indentations du style : if mais s
 <COMMENT>"*/" {fprintf(f_output, "*/</span>");BEGIN(INITIAL);}
 
 "//" {fprintf(f_output,"<span class=\"comment\">//");BEGIN(COMMENT);}
-<COMMENT>\n {fprintf(f_output,"</span><br \\>");int i=0;while(i<indent){fprintf(f_output,"_");i++;};BEGIN(INITIAL);}
+<COMMENT>\n {fprintf(f_output,"</span><br \\>");int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;};BEGIN(INITIAL);}
 
 
 
@@ -93,7 +94,7 @@ Utiliser bison + Renvoyer les règles pour les indentations du style : if mais s
 
 
 
-\n {fprintf(f_output,"<br \\>\n");int i=0;while(i<indent){fprintf(f_output,"_");i++;}}
+\n {fprintf(f_output,"<br \\>\n");int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;}}
 . {fprintf(f_output,"%c",yytext[0]);}
 
 %%

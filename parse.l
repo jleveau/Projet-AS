@@ -33,7 +33,6 @@ extern int sym_type(const char *);  /* returns type from symbol table */
 
 #define sym_type(identifier) IDENTIFIER /* with no symbol table, fake it */
 
-static void comment(void);
 static int check_type(void);
 
     //"return"				{yylval.nom=strdup(yytext); return(RETURN); }
@@ -55,30 +54,49 @@ static int check_type(void);
 %}
 
 %option noyywrap
+%x COMMENT
+%x STRING
 %%
 
-"auto"					{ fprintf(f_output,"%s",yytext); return(AUTO); }
-"break"					{ fprintf(f_output,"%s",yytext); return(BREAK); }
-"case"					{ fprintf(f_output,"%s",yytext); return(CASE); }
-"continue"				{ fprintf(f_output,"%s",yytext); return(CONTINUE); }
-"default"				{ fprintf(f_output,"%s",yytext); return(DEFAULT); }
-"do"					{ fprintf(f_output,"%s",yytext); return(DO); }
-"else"					{ fprintf(f_output,"%s",yytext); return(ELSE); }
-"enum"					{ fprintf(f_output,"%s",yytext); return(ENUM); }
-"extern"				{ fprintf(f_output,"%s",yytext); return(EXTERN); }
-"for"					{ fprintf(f_output,"%s",yytext); return(FOR); }
-"goto"					{ fprintf(f_output,"%s",yytext); return(GOTO); }
-"if"					{ fprintf(f_output,"%s",yytext); return(IF); }
-"inline"				{ fprintf(f_output,"%s",yytext); return(INLINE); }
-"register"				{ fprintf(f_output,"%s",yytext); return(REGISTER); }
-"return"				{ fprintf(f_output,"%s",yytext); return(RETURN); }
-"static"				{ fprintf(f_output,"%s",yytext); return(STATIC); }
-"struct"				{ fprintf(f_output,"%s",yytext); return(STRUCT); }
-"switch"				{ fprintf(f_output,"%s",yytext); return(SWITCH); }
-"typedef"				{ fprintf(f_output,"%s",yytext); return(TYPEDEF); }
-"union"					{ fprintf(f_output,"%s",yytext); return(UNION); }
-"while"					{ fprintf(f_output,"%s",yytext); return(WHILE); }
 
+
+
+"auto"					{print_balise_span("type_specifier","auto"); return AUTO; }
+"case"					{print_balise_span("jaune","case"); return  CASE;} 
+"struct"				{print_balise_span("type_specifier","struct"); return  STRUCT;} 
+"const"					{print_balise_span("type_specifier","const");  return  CONST;} 
+"continue"				{print_balise_span("type_specifier","continue"); return  CONTINUE;} 
+"default"				{print_balise_span("type_specifier","default"); return  DEFAULT;} 
+"do"					{print_balise_span("jump_statement","do"); return  DO;} 
+"double"				{print_balise_span("type_specifier","double"); return  DOUBLE;} 
+"enum"					{print_balise_span("type_specifier","enum"); return  ENUM;} 
+"extern"				{print_balise_span("type_specifier","extern"); return  EXTERN;} 
+"float"					{print_balise_span("type_specifier","float"); return  FLOAT;} 
+
+"goto"					{print_balise_span("type_specifier","goto"); return  GOTO;} 
+"if"					{print_balise_span("jaune","if"); return  IF;} 
+"inline"				{print_balise_span("type_specifier","inline"); return  INLINE;} 
+"int"					{print_balise_span("type_specifier","int"); return  INT;} 
+"long"					{print_balise_span("type_specifier","long"); return  LONG;} 
+"register"				{print_balise_span("type_specifier","register"); return  REGISTER;} 
+"restrict"				{print_balise_span("type_specifier","restrict"); return  RESTRICT;} 
+"return"				{print_balise_span("jaune","break"); return  BREAK;} 
+"short"					{print_balise_span("type_specifier","short"); return  SHORT;} 
+"signed"				{print_balise_span("type_specifier","signed"); return  SIGNED;} 
+"sizeof"				{print_balise_span("jump_statement","sizeof"); return  SIZEOF;} 
+"static"				{print_balise_span("type_specifier","static"); return  STATIC;} 
+"switch"				{print_balise_span("jaune","switch"); return  SWITCH;} 
+"typedef"				{print_balise_span("type_specifier","typedef"); return  TYPEDEF;} 
+"union"					{print_balise_span("type_specifier","union"); return  UNION;} 
+"unsigned"				{print_balise_span("type_specifier","unsigned"); return  UNSIGNED;} 
+"void"					{print_balise_span("type_specifier","void");return  VOID;} 
+"volatile"				{print_balise_span("type_specifier","volatile");return  VOLATILE;} 
+"while"					{print_balise_span("type_specifier","while");return  WHILE;} 
+
+
+"char"					{print_balise_span("type_specifier","char");return  CHAR;} 
+"for"					{print_balise_span("jaune","for");return  FOR;} 
+"else"					{print_balise_span("jaune","else");return  ELSE;} 
 
 
 "_Alignas"                              { fprintf(f_output,"%s",yytext); return ALIGNAS; }
@@ -93,23 +111,7 @@ static int check_type(void);
 "_Thread_local"                         { fprintf(f_output,"%s",yytext); return THREAD_LOCAL; }
 "__func__"                              { fprintf(f_output,"%s",yytext); return FUNC_NAME; }
 
-"char"					{yylval.nom=strdup(yytext); return(CHAR); }
-"double"				{yylval.nom=strdup(yytext); return(DOUBLE); }
-"float"					{yylval.nom=strdup(yytext); return(FLOAT); }
-"int"					{yylval.nom=strdup(yytext); return(INT); }
-"long"					{yylval.nom=strdup(yytext); return(LONG); }
-"short"					{yylval.nom=strdup(yytext); return(SHORT); }
-"unsigned"				{yylval.nom=strdup(yytext); return(UNSIGNED); }
-"void"					{yylval.nom=strdup(yytext); return(VOID); }
-"const"                 {yylval.nom=strdup(yytext);return(CONST);}
-"restrict"                 {yylval.nom=strdup(yytext);return(RESTRICT);}
-"volatile"                 {yylval.nom=strdup(yytext);return(VOLATILE);
-
-
-}
-
-
-{L}{A}*					{yylval.nom=strdup(yytext); return check_type(); }
+{L}{A}*					{yylval=strdup(yytext); return check_type(); }
 
 {HP}{H}+{IS}?				{ fprintf(f_output,"%s",yytext); return I_CONSTANT; }
 {NZ}{D}*{IS}?				{ fprintf(f_output,"%s",yytext); return I_CONSTANT; }
@@ -117,7 +119,7 @@ static int check_type(void);
 {CP}?"'"([^'\\\n]|{ES})+"'"		{ fprintf(f_output,"%s",yytext); return I_CONSTANT; }
 
 {D}+{E}{FS}?				{ fprintf(f_output,"%s",yytext); return F_CONSTANT; }
-{D}*"."{D}+{E}?{FS}?			{ fprintf(f_output,"%s",yytext); fprintf(f_output,"%s",yytext); return F_CONSTANT; }
+{D}*"."{D}+{E}?{FS}?			{ print_balise_span("nombre",yytext); return F_CONSTANT; }
 {D}+"."{E}?{FS}?			{ fprintf(f_output,"%s",yytext); return F_CONSTANT; }
 {HP}{H}+{P}{FS}?			{ fprintf(f_output,"%s",yytext); return F_CONSTANT; }
 {HP}{H}*"."{H}+{P}{FS}?			{ fprintf(f_output,"%s",yytext); return F_CONSTANT; }
@@ -148,32 +150,51 @@ static int check_type(void);
 ">="					{ fprintf(f_output,"%s",yytext); return GE_OP; }
 "=="					{ fprintf(f_output,"%s",yytext); return EQ_OP; }
 "!="					{ fprintf(f_output,"%s",yytext); return NE_OP; }
-";"					{ fprintf(f_output,"%s",yytext); return ';'; }
-("{"|"<%")				{ fprintf(f_output,"%s",yytext); return '{'; }
-("}"|"%>")				{ fprintf(f_output,"%s",yytext); return '}'; }
+";"					{print_balise_span("vert",";"); return ';'; }
+("{"|"<%")				 {indent=indent+2;int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;};print_balise_span("vert","{"); return '{'; }
+("}"|"%>")				{indent=indent-2;print_balise_span("vert","}"); return '}'; }
 ","					{ fprintf(f_output,"%s",yytext); return ','; }
 ":"					{ fprintf(f_output,"%s",yytext); return ':'; }
 "="					{ fprintf(f_output,"%s",yytext); return '='; }
-"("					{ fprintf(f_output,"%s",yytext); return '('; }
-")"					{ fprintf(f_output,"%s",yytext); return ')'; }
+"("					{print_balise_span("vert","("); return '('; }
+")"					{print_balise_span("vert",")"); return ')'; }
 ("["|"<:")				{ fprintf(f_output,"%s",yytext); return '['; }
 ("]"|":>")				{ fprintf(f_output,"%s",yytext); return ']'; }
 "."					{ fprintf(f_output,"%s",yytext); return '.'; }
 "&"					{ fprintf(f_output,"%s",yytext); return '&'; }
-"!"					{ fprintf(f_output,"%s",yytext); return '!'; }
+"!"					{print_balise_span("vert","!"); return '!'; }
 "~"					{ fprintf(f_output,"%s",yytext); return '~'; }
-"-"					{ fprintf(f_output,"%s",yytext); return '-'; }
-"+"					{ fprintf(f_output,"%s",yytext); return '+'; }
-"*"					{ fprintf(f_output,"%s",yytext); return '*'; }
+"-"					{print_balise_span("vert","-"); return '-'; }
+"+"					{print_balise_span("vert","+"); return '+'; }
+"*"					{print_balise_span("vert","*"); return '*'; }
 "/"					{ fprintf(f_output,"%s",yytext); return '/'; }
 "%"					{ fprintf(f_output,"%s",yytext); return '%'; }
 "<"					{ fprintf(f_output,"%s",yytext); return '<'; }
 ">"					{ fprintf(f_output,"%s",yytext); return '>'; }
 "^"					{ fprintf(f_output,"%s",yytext); return '^'; }
 "|"					{ fprintf(f_output,"%s",yytext); return '|'; }
-"?"					{ fprintf(f_output,"%s",yytext); return '?'; }
+"?"					{print_balise_span("vert","?"); return '?'; }
 
-\n {fprintf(f_output,"<br \\>\n");}
+
+
+
+"/*" {fprintf(f_output,"<span class=\"comment\">/*");BEGIN(COMMENT);}
+<COMMENT>. {fprintf(f_output,"%c",yytext[0]);}
+<COMMENT>"*/" {fprintf(f_output, "*/</span>");BEGIN(INITIAL);}
+
+"//" {fprintf(f_output,"<span class=\"comment\">//");BEGIN(COMMENT);}
+<COMMENT>\n {fprintf(f_output,"</span><br \\>");int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;};BEGIN(INITIAL);}
+
+
+
+
+
+"\"" {fprintf(f_output,"<span class=\"string\">\"");BEGIN(STRING);}
+<STRING>"\"" {fprintf(f_output,"\"</span>");BEGIN(INITIAL);}
+<STRING>. {fprintf(f_output,"%c",yytext[0]);}
+
+
+\n {fprintf(f_output,"<br \\>\n");int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;}}
 . {fprintf(f_output,"%c",yytext[0]);}
 
 

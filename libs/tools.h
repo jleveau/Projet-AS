@@ -26,8 +26,21 @@ typedef struct function_t {
 } *function;
 
 
+
+/* Englobe les piles de déclaration (variables, et typedef) */
+typedef struct ID_manager_t{
+	stack  typedef_stack;
+	stack variables_stack;
+} * ID_manager;
+
+ID_manager id_manager;
+
+void new_block();
+void init_id_manager();
+
 list function_list;
-stack variables_stack;
+stack typedef_stack;
+
 
 void create_variable(char* name, char* description);
 void add_to_list(list l,void* elem);

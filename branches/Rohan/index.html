@@ -1,522 +1,522 @@
 <!doctype html><html lang="fr"><head>   <meta charset="utf-8">   <title>test</title>   <!doctype html><link rel="stylesheet" type="text/css" href="index.css"></head><body><div class="header"> <h1>Projet d'analyse syntaxique, licence 3 2014-2015</h1></div><div class="bordure"> <div class="Code"> <br \>
-<br \>
+#include <span class=<span class="string">"jaune"</span>> coucou</span><br \>
 <span class="comment">/*Je suis un commentaire et je suis colorié hihi */</span><br \>
 <br \>
 <br \>
-<span class="type_specifier " >struct</span> coucou__<span class="vert " >{</span><br \>
-__<span class="type_specifier " >char</span> x <span class="vert " >;</span><br \>
-__<span class="type_specifier " >int</span> y <span class="vert " >;</span><br \>
-__<span class="vert " >}</span><span class="vert " >;</span><br \>
+<span class="type_specifier " >struct</span> coucou&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;<span class="type_specifier " >char</span> x <span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="type_specifier " >int</span> y <span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><span class="vert " >;</span><br \>
 <br \>
 <span class="type_specifier " >int</span> yyparse<span class="vert " >(</span>Rationnel <span class="vert " >*</span><span class="vert " >*</span>rationnel, yyscan_t scanner<span class="vert " >)</span><span class="vert " >;</span><br \>
 <span class="type_specifier " >int</span> coucou<span class="vert " >(</span><span class="vert " >)</span><span class="vert " >;</span><br \>
 <span class="type_specifier " >void</span> fonctiondelamort<span class="vert " >(</span><span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__<span class="type_specifier " >const</span> int x=<span class="nombre " >2</span><span class="vert " >;</span><br \>
-__x=<span class="nombre " >1</span><span class="vert " >+</span><span class="nombre " >2</span><span class="vert " >;</span><br \>
-__x=<span class="nombre " >0</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;<span class="type_specifier " >const</span> int x=<span class="nombre " >2</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;x=<span class="nombre " >1</span><span class="vert " >+</span><span class="nombre " >2</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;x=<span class="nombre " >0</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 Rationnel <span class="vert " >*</span>rationnel<span class="vert " >(</span>Noeud etiquette, <span class="type_specifier " >char</span> lettre, int position_min, int position_max, <span class="type_specifier " >void</span> <span class="vert " >*</span>data, Rationnel <span class="vert " >*</span>gauche, Rationnel <span class="vert " >*</span>droit, Rationnel <span class="vert " >*</span>pere<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__<span class="type_specifier " >int</span> x=<span class="nombre " >2</span><span class="vert " >;</span><br \>
-__<span class="type_specifier " >int</span> y=<span class="nombre " >3</span><span class="vert " >;</span><br \>
-__<span class="type_specifier " >int</span> z=<span class="nombre " >4</span><span class="vert " >;</span><br \>
-__<span class="type_specifier " >int</span> w=<span class="nombre " >5</span><span class="vert " >;</span><br \>
-__   Rationnel <span class="vert " >*</span>rat<span class="vert " >;</span>	<br \>
-__   rat<span class="vert " >-</span>>etiquette = etiquette<span class="vert " >;</span><br \>
-__   rat<span class="vert " >-</span>>lettre = lettre<span class="vert " >;</span><br \>
-__   rat<span class="vert " >-</span>>position_min = position_min<span class="vert " >;</span><br \>
-__   rat<span class="vert " >-</span>>position_max = position_max<span class="vert " >;</span><br \>
-__   rat<span class="vert " >-</span>>data = data<span class="vert " >;</span><br \>
-__   rat<span class="vert " >-</span>>gauche = gauche<span class="vert " >;</span><br \>
-__   rat<span class="vert " >-</span>>droit = droit<span class="vert " >;</span><br \>
-__   rat<span class="vert " >-</span>>pere = pere<span class="vert " >;</span><br \>
-__   <span class="jaune " >break</span><span class="vert " >;</span> <br \>
-__	<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;<span class="type_specifier " >int</span> x=<span class="nombre " >2</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="type_specifier " >int</span> y=<span class="nombre " >3</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="type_specifier " >int</span> z=<span class="nombre " >4</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="type_specifier " >int</span> w=<span class="nombre " >5</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   Rationnel <span class="vert " >*</span>rat<span class="vert " >;</span>	<br \>
+&nbsp;&nbsp;   rat<span class="vert " >-</span>>etiquette = etiquette<span class="vert " >;</span><br \>
+&nbsp;&nbsp;   rat<span class="vert " >-</span>>lettre = lettre<span class="vert " >;</span><br \>
+&nbsp;&nbsp;   rat<span class="vert " >-</span>>position_min = position_min<span class="vert " >;</span><br \>
+&nbsp;&nbsp;   rat<span class="vert " >-</span>>position_max = position_max<span class="vert " >;</span><br \>
+&nbsp;&nbsp;   rat<span class="vert " >-</span>>data = data<span class="vert " >;</span><br \>
+&nbsp;&nbsp;   rat<span class="vert " >-</span>>gauche = gauche<span class="vert " >;</span><br \>
+&nbsp;&nbsp;   rat<span class="vert " >-</span>>droit = droit<span class="vert " >;</span><br \>
+&nbsp;&nbsp;   rat<span class="vert " >-</span>>pere = pere<span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span><span class="vert " >;</span> <br \>
+&nbsp;&nbsp;	<span class="vert " >}</span><br \>
 <br \>
 Rationnel <span class="vert " >*</span>Epsilon<span class="vert " >(</span><span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   <span class="jaune " >break</span> rationnel<span class="vert " >(</span>EPSILON, <span class="nombre " >0</span>, <span class="nombre " >0</span>, <span class="nombre " >0</span>, NULL, NULL, NULL, NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> rationnel<span class="vert " >(</span>EPSILON, <span class="nombre " >0</span>, <span class="nombre " >0</span>, <span class="nombre " >0</span>, NULL, NULL, NULL, NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Rationnel <span class="vert " >*</span>Lettre<span class="vert " >(</span><span class="type_specifier " >char</span> l<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   <span class="jaune " >break</span> rationnel<span class="vert " >(</span>LETTRE, l, <span class="nombre " >0</span>, <span class="nombre " >0</span>, NULL, NULL, NULL, NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> rationnel<span class="vert " >(</span>LETTRE, l, <span class="nombre " >0</span>, <span class="nombre " >0</span>, NULL, NULL, NULL, NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Rationnel <span class="vert " >*</span>Union<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="nombre " >1</span>, Rationnel<span class="vert " >*</span> rat<span class="nombre " >2</span><span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   <span class="comment">// Cas particulier où rat1 est vide</span><br \>__   <span class="jaune " >if</span> <span class="vert " >(</span><span class="vert " >!</span>rat<span class="nombre " >1</span><span class="vert " >)</span><br \>
-__      <span class="jaune " >break</span> rat<span class="nombre " >2</span><span class="vert " >;</span><br \>
-__<br \>
-__   <span class="comment">// Cas particulier où rat2 est vide</span><br \>__   <span class="jaune " >if</span> <span class="vert " >(</span><span class="vert " >!</span>rat<span class="nombre " >2</span><span class="vert " >)</span><br \>
-__      <span class="jaune " >break</span> rat<span class="nombre " >1</span><span class="vert " >;</span><br \>
-__   <br \>
-__   <span class="jaune " >break</span> rationnel<span class="vert " >(</span>UNION, <span class="nombre " >0</span>, <span class="nombre " >0</span>, <span class="nombre " >0</span>, NULL, rat<span class="nombre " >1</span>, rat<span class="nombre " >2</span>, NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   <span class="comment">// Cas particulier où rat1 est vide</span><br \>&nbsp;&nbsp;   <span class="jaune " >if</span> <span class="vert " >(</span><span class="vert " >!</span>rat<span class="nombre " >1</span><span class="vert " >)</span><br \>
+&nbsp;&nbsp;      <span class="jaune " >break</span> rat<span class="nombre " >2</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;   <span class="comment">// Cas particulier où rat2 est vide</span><br \>&nbsp;&nbsp;   <span class="jaune " >if</span> <span class="vert " >(</span><span class="vert " >!</span>rat<span class="nombre " >2</span><span class="vert " >)</span><br \>
+&nbsp;&nbsp;      <span class="jaune " >break</span> rat<span class="nombre " >1</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> rationnel<span class="vert " >(</span>UNION, <span class="nombre " >0</span>, <span class="nombre " >0</span>, <span class="nombre " >0</span>, NULL, rat<span class="nombre " >1</span>, rat<span class="nombre " >2</span>, NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Rationnel <span class="vert " >*</span>Concat<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="nombre " >1</span>, Rationnel<span class="vert " >*</span> rat<span class="nombre " >2</span><span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   <span class="jaune " >if</span> <span class="vert " >(</span><span class="vert " >!</span>rat<span class="nombre " >1</span> || <span class="vert " >!</span>rat<span class="nombre " >2</span><span class="vert " >)</span><br \>
-__      <span class="jaune " >break</span> NULL<span class="vert " >;</span><br \>
-__<br \>
-__   <span class="jaune " >if</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="nombre " >1</span><span class="vert " >)</span> == EPSILON<span class="vert " >)</span><br \>
-__      <span class="jaune " >break</span> rat<span class="nombre " >2</span><span class="vert " >;</span><br \>
-__<br \>
-__   <span class="jaune " >if</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="nombre " >2</span><span class="vert " >)</span> == EPSILON<span class="vert " >)</span><br \>
-__      <span class="jaune " >break</span> rat<span class="nombre " >1</span><span class="vert " >;</span><br \>
-__   <br \>
-__   <span class="jaune " >break</span> rationnel<span class="vert " >(</span>CONCAT, <span class="nombre " >0</span>, <span class="nombre " >0</span>, <span class="nombre " >0</span>, NULL, rat<span class="nombre " >1</span>, rat<span class="nombre " >2</span>, NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >if</span> <span class="vert " >(</span><span class="vert " >!</span>rat<span class="nombre " >1</span> || <span class="vert " >!</span>rat<span class="nombre " >2</span><span class="vert " >)</span><br \>
+&nbsp;&nbsp;      <span class="jaune " >break</span> NULL<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;   <span class="jaune " >if</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="nombre " >1</span><span class="vert " >)</span> == EPSILON<span class="vert " >)</span><br \>
+&nbsp;&nbsp;      <span class="jaune " >break</span> rat<span class="nombre " >2</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;   <span class="jaune " >if</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="nombre " >2</span><span class="vert " >)</span> == EPSILON<span class="vert " >)</span><br \>
+&nbsp;&nbsp;      <span class="jaune " >break</span> rat<span class="nombre " >1</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> rationnel<span class="vert " >(</span>CONCAT, <span class="nombre " >0</span>, <span class="nombre " >0</span>, <span class="nombre " >0</span>, NULL, rat<span class="nombre " >1</span>, rat<span class="nombre " >2</span>, NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Rationnel <span class="vert " >*</span>Star<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   <span class="jaune " >break</span> rationnel<span class="vert " >(</span>STAR, <span class="nombre " >0</span>, <span class="nombre " >0</span>, <span class="nombre " >0</span>, NULL, rat, NULL, NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> rationnel<span class="vert " >(</span>STAR, <span class="nombre " >0</span>, <span class="nombre " >0</span>, <span class="nombre " >0</span>, NULL, rat, NULL, NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 bool est_racine<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   <span class="jaune " >break</span> <span class="vert " >(</span>rat<span class="vert " >-</span>>pere == NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> <span class="vert " >(</span>rat<span class="vert " >-</span>>pere == NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Noeud get_etiquette<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   <span class="jaune " >break</span> rat<span class="vert " >-</span>>etiquette<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> rat<span class="vert " >-</span>>etiquette<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 <span class="type_specifier " >char</span> get_lettre<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   assert <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span> == LETTRE<span class="vert " >)</span><span class="vert " >;</span><br \>
-__   <span class="jaune " >break</span> rat<span class="vert " >-</span>>lettre<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   assert <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span> == LETTRE<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> rat<span class="vert " >-</span>>lettre<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 <span class="type_specifier " >int</span> get_position_min<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__  <span class="comment">// assert (get_etiquette(rat) == LETTRE);</span><br \>__   <span class="jaune " >break</span> rat<span class="vert " >-</span>>position_min<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;  <span class="comment">// assert (get_etiquette(rat) == LETTRE);</span><br \>&nbsp;&nbsp;   <span class="jaune " >break</span> rat<span class="vert " >-</span>>position_min<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 <span class="type_specifier " >int</span> get_position_max<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   <span class="comment">//assert (get_etiquette(rat) == LETTRE);</span><br \>__   <span class="jaune " >break</span> rat<span class="vert " >-</span>>position_max<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   <span class="comment">//assert (get_etiquette(rat) == LETTRE);</span><br \>&nbsp;&nbsp;   <span class="jaune " >break</span> rat<span class="vert " >-</span>>position_max<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 <span class="type_specifier " >void</span> set_position_min<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat, int valeur<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__  <span class="comment">// assert (get_etiquette(rat) == LETTRE);</span><br \>__   rat<span class="vert " >-</span>>position_min = valeur<span class="vert " >;</span><br \>
-__   <span class="jaune " >break</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;  <span class="comment">// assert (get_etiquette(rat) == LETTRE);</span><br \>&nbsp;&nbsp;   rat<span class="vert " >-</span>>position_min = valeur<span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 <span class="type_specifier " >void</span> set_position_max<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat, int valeur<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__  <span class="comment">// assert (get_etiquette(rat) == LETTRE);</span><br \>__  <br \>
-__rat<span class="vert " >-</span>>position_max = valeur<span class="vert " >;</span><br \>
-__   <span class="jaune " >break</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;  <span class="comment">// assert (get_etiquette(rat) == LETTRE);</span><br \>&nbsp;&nbsp;  <br \>
+&nbsp;&nbsp;rat<span class="vert " >-</span>>position_max = valeur<span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Rationnel <span class="vert " >*</span>fils_gauche<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   assert<span class="vert " >(</span><span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span> == CONCAT<span class="vert " >)</span> || <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span> == UNION<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-__   <span class="jaune " >break</span> rat<span class="vert " >-</span>>gauche<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   assert<span class="vert " >(</span><span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span> == CONCAT<span class="vert " >)</span> || <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span> == UNION<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> rat<span class="vert " >-</span>>gauche<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Rationnel <span class="vert " >*</span>fils_droit<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   assert<span class="vert " >(</span><span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span> == CONCAT<span class="vert " >)</span> || <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span> == UNION<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-__   <span class="jaune " >break</span> rat<span class="vert " >-</span>>droit<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   assert<span class="vert " >(</span><span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span> == CONCAT<span class="vert " >)</span> || <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span> == UNION<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> rat<span class="vert " >-</span>>droit<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Rationnel <span class="vert " >*</span>fils<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   assert<span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span> == STAR<span class="vert " >)</span><span class="vert " >;</span><br \>
-__   <span class="jaune " >break</span> rat<span class="vert " >-</span>>gauche<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   assert<span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span> == STAR<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> rat<span class="vert " >-</span>>gauche<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Rationnel <span class="vert " >*</span>pere<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   assert<span class="vert " >(</span><span class="vert " >!</span>est_racine<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-__   <span class="jaune " >break</span> rat<span class="vert " >-</span>>pere<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   assert<span class="vert " >(</span><span class="vert " >!</span>est_racine<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> rat<span class="vert " >-</span>>pere<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 <span class="type_specifier " >void</span> print_rationnel<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   <span class="jaune " >if</span> <span class="vert " >(</span>rat == NULL<span class="vert " >)</span><br \>
-__   ____<span class="vert " >{</span><br \>
-____      printf<span class="vert " >(</span><span class="string">"∅"</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____      <span class="jaune " >break</span><span class="vert " >;</span><br \>
-____   <span class="vert " >}</span><br \>
-__   <br \>
-__   <span class="jaune " >switch</span><span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><br \>
-__   ____<span class="vert " >{</span><br \>
-____      <span class="jaune " >case</span> EPSILON:<br \>
-____         printf<span class="vert " >(</span><span class="string">"ε"</span><span class="vert " >)</span><span class="vert " >;</span>         <br \>
-____         break<span class="vert " >;</span><br \>
-____         <br \>
-____      <span class="jaune " >case</span> LETTRE:<br \>
-____         printf<span class="vert " >(</span><span class="string">"%c"</span>, get_lettre<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         break<span class="vert " >;</span><br \>
-____<br \>
-____      <span class="jaune " >case</span> UNION:<br \>
-____         printf<span class="vert " >(</span><span class="string">"("</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         print_rationnel<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         printf<span class="vert " >(</span><span class="string">" + "</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         print_rationnel<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         printf<span class="vert " >(</span><span class="string">")"</span><span class="vert " >)</span><span class="vert " >;</span>         <br \>
-____         break<span class="vert " >;</span><br \>
-____<br \>
-____      <span class="jaune " >case</span> CONCAT:<br \>
-____         printf<span class="vert " >(</span><span class="string">"["</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         print_rationnel<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         printf<span class="vert " >(</span><span class="string">" . "</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         print_rationnel<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         printf<span class="vert " >(</span><span class="string">"]"</span><span class="vert " >)</span><span class="vert " >;</span>         <br \>
-____         break<span class="vert " >;</span><br \>
-____<br \>
-____      <span class="jaune " >case</span> STAR:<br \>
-____         printf<span class="vert " >(</span><span class="string">"{"</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         print_rationnel<span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         printf<span class="vert " >(</span><span class="string">"}*"</span><span class="vert " >)</span><span class="vert " >;</span>         <br \>
-____         break<span class="vert " >;</span><br \>
-____<br \>
-____      <span class="type_specifier " >default</span>:<br \>
-____         assert<span class="vert " >(</span>false<span class="vert " >)</span><span class="vert " >;</span><br \>
-____         break<span class="vert " >;</span><br \>
-____   <span class="vert " >}</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >if</span> <span class="vert " >(</span>rat == NULL<span class="vert " >)</span><br \>
+&nbsp;&nbsp;   &nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      printf<span class="vert " >(</span><span class="string">"∅"</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      <span class="jaune " >break</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;   <span class="vert " >}</span><br \>
+&nbsp;&nbsp;   <br \>
+&nbsp;&nbsp;   <span class="jaune " >switch</span><span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><br \>
+&nbsp;&nbsp;   &nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      <span class="jaune " >case</span> EPSILON:<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         printf<span class="vert " >(</span><span class="string">"ε"</span><span class="vert " >)</span><span class="vert " >;</span>         <br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         <br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      <span class="jaune " >case</span> LETTRE:<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         printf<span class="vert " >(</span><span class="string">"%c"</span>, get_lettre<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      <span class="jaune " >case</span> UNION:<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         printf<span class="vert " >(</span><span class="string">"("</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         print_rationnel<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         printf<span class="vert " >(</span><span class="string">" + "</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         print_rationnel<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         printf<span class="vert " >(</span><span class="string">")"</span><span class="vert " >)</span><span class="vert " >;</span>         <br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      <span class="jaune " >case</span> CONCAT:<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         printf<span class="vert " >(</span><span class="string">"["</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         print_rationnel<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         printf<span class="vert " >(</span><span class="string">" . "</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         print_rationnel<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         printf<span class="vert " >(</span><span class="string">"]"</span><span class="vert " >)</span><span class="vert " >;</span>         <br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      <span class="jaune " >case</span> STAR:<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         printf<span class="vert " >(</span><span class="string">"{"</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         print_rationnel<span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         printf<span class="vert " >(</span><span class="string">"}*"</span><span class="vert " >)</span><span class="vert " >;</span>         <br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      <span class="type_specifier " >default</span>:<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         assert<span class="vert " >(</span>false<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;   <span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Rationnel <span class="vert " >*</span>expression_to_rationnel<span class="vert " >(</span><span class="type_specifier " >const</span> <span class="type_specifier " >char</span> <span class="vert " >*</span>expr<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__    Rationnel <span class="vert " >*</span>rat<span class="vert " >;</span><br \>
-__    yyscan_t scanner<span class="vert " >;</span><br \>
-__    YY_BUFFER_STATE state<span class="vert " >;</span><br \>
-__<br \>
-__    <span class="comment">// Initialisation du scanner</span><br \>__    <span class="jaune " >if</span> <span class="vert " >(</span>yylex_init<span class="vert " >(</span>&scanner<span class="vert " >)</span><span class="vert " >)</span><br \>
-__        <span class="jaune " >break</span> NULL<span class="vert " >;</span><br \>
-__ <br \>
-__    state = yy_scan_string<span class="vert " >(</span>expr, scanner<span class="vert " >)</span><span class="vert " >;</span><br \>
-__<br \>
-__    <span class="comment">// Test si parsing ok.</span><br \>__    <span class="jaune " >if</span> <span class="vert " >(</span>yyparse<span class="vert " >(</span>&rat, scanner<span class="vert " >)</span><span class="vert " >)</span> <br \>
-__        <span class="jaune " >break</span> NULL<span class="vert " >;</span><br \>
-__    <br \>
-__    <span class="comment">// Libération mémoire</span><br \>__    yy_delete_buffer<span class="vert " >(</span>state, scanner<span class="vert " >)</span><span class="vert " >;</span><br \>
-__ <br \>
-__    yylex_destroy<span class="vert " >(</span>scanner<span class="vert " >)</span><span class="vert " >;</span><br \>
-__ <br \>
-__    <span class="jaune " >break</span> rat<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;    Rationnel <span class="vert " >*</span>rat<span class="vert " >;</span><br \>
+&nbsp;&nbsp;    yyscan_t scanner<span class="vert " >;</span><br \>
+&nbsp;&nbsp;    YY_BUFFER_STATE state<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;    <span class="comment">// Initialisation du scanner</span><br \>&nbsp;&nbsp;    <span class="jaune " >if</span> <span class="vert " >(</span>yylex_init<span class="vert " >(</span>&scanner<span class="vert " >)</span><span class="vert " >)</span><br \>
+&nbsp;&nbsp;        <span class="jaune " >break</span> NULL<span class="vert " >;</span><br \>
+&nbsp;&nbsp; <br \>
+&nbsp;&nbsp;    state = yy_scan_string<span class="vert " >(</span>expr, scanner<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;    <span class="comment">// Test si parsing ok.</span><br \>&nbsp;&nbsp;    <span class="jaune " >if</span> <span class="vert " >(</span>yyparse<span class="vert " >(</span>&rat, scanner<span class="vert " >)</span><span class="vert " >)</span> <br \>
+&nbsp;&nbsp;        <span class="jaune " >break</span> NULL<span class="vert " >;</span><br \>
+&nbsp;&nbsp;    <br \>
+&nbsp;&nbsp;    <span class="comment">// Libération mémoire</span><br \>&nbsp;&nbsp;    yy_delete_buffer<span class="vert " >(</span>state, scanner<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp; <br \>
+&nbsp;&nbsp;    yylex_destroy<span class="vert " >(</span>scanner<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp; <br \>
+&nbsp;&nbsp;    <span class="jaune " >break</span> rat<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 <span class="type_specifier " >void</span> rationnel_to_dot<span class="vert " >(</span>Rationnel <span class="vert " >*</span>rat, <span class="type_specifier " >char</span><span class="vert " >*</span> nom_fichier<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   FILE <span class="vert " >*</span>fp = fopen<span class="vert " >(</span>nom_fichier, <span class="string">"w+"</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-__   rationnel_to_dot_aux<span class="vert " >(</span>rat, fp, <span class="vert " >-</span><span class="nombre " >1</span>, <span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   FILE <span class="vert " >*</span>fp = fopen<span class="vert " >(</span>nom_fichier, <span class="string">"w+"</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   rationnel_to_dot_aux<span class="vert " >(</span>rat, fp, <span class="vert " >-</span><span class="nombre " >1</span>, <span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 <span class="type_specifier " >int</span> rationnel_to_dot_aux<span class="vert " >(</span>Rationnel <span class="vert " >*</span>rat, FILE <span class="vert " >*</span>output, int pere, int noeud_courant<span class="vert " >)</span><br \>
-__<span class="vert " >{</span>   <br \>
-__   int saved_pere = noeud_courant<span class="vert " >;</span><br \>
-__<br \>
-__   <span class="jaune " >if</span> <span class="vert " >(</span>pere >= <span class="nombre " >1</span><span class="vert " >)</span><br \>
-__      fprintf<span class="vert " >(</span>output, <span class="string">"\tnode%d -> node%d;\n"</span>, pere, noeud_courant<span class="vert " >)</span><span class="vert " >;</span><br \>
-__   <span class="jaune " >else</span><br \>
-__      fprintf<span class="vert " >(</span>output, <span class="string">"digraph G{\n"</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-__   <br \>
-__   <span class="jaune " >switch</span><span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><br \>
-__   ____<span class="vert " >{</span><br \>
-____      <span class="jaune " >case</span> LETTRE:<br \>
-____         fprintf<span class="vert " >(</span>output, <span class="string">"\tnode%d [label = \"</span>%c<span class="vert " >-</span>%d\<span class="string">"];\n"</span>, noeud_courant, get_lettre<span class="vert " >(</span>rat<span class="vert " >)</span>, rat<span class="vert " >-</span>>position_min<span class="vert " >)</span><span class="vert " >;</span><br \>
-____         noeud_courant<span class="vert " >+</span><span class="vert " >+</span><span class="vert " >;</span><br \>
-____         break<span class="vert " >;</span><br \>
-____<br \>
-____      <span class="jaune " >case</span> EPSILON:<br \>
-____         fprintf<span class="vert " >(</span>output, <span class="string">"\tnode%d [label = \"</span>ε<span class="vert " >-</span>%d\<span class="string">"];\n"</span>, noeud_courant, rat<span class="vert " >-</span>>position_min<span class="vert " >)</span><span class="vert " >;</span><br \>
-____         noeud_courant<span class="vert " >+</span><span class="vert " >+</span><span class="vert " >;</span><br \>
-____         break<span class="vert " >;</span><br \>
-____<br \>
-____      <span class="jaune " >case</span> UNION:<br \>
-____         fprintf<span class="vert " >(</span>output, <span class="string">"\tnode%d [label = \"</span><span class="vert " >+</span> <span class="vert " >(</span>%d/%d<span class="vert " >)</span>\<span class="string">"];\n"</span>, noeud_courant, rat<span class="vert " >-</span>>position_min, rat<span class="vert " >-</span>>position_max<span class="vert " >)</span><span class="vert " >;</span><br \>
-____         noeud_courant = rationnel_to_dot_aux<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>, output, noeud_courant, noeud_courant<span class="vert " >+</span><span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         noeud_courant = rationnel_to_dot_aux<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>, output, saved_pere, noeud_courant<span class="vert " >+</span><span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         break<span class="vert " >;</span><br \>
-____<br \>
-____      <span class="jaune " >case</span> CONCAT:<br \>
-____         fprintf<span class="vert " >(</span>output, <span class="string">"\tnode%d [label = \"</span>. <span class="vert " >(</span>%d/%d<span class="vert " >)</span>\<span class="string">"];\n"</span>, noeud_courant, rat<span class="vert " >-</span>>position_min, rat<span class="vert " >-</span>>position_max<span class="vert " >)</span><span class="vert " >;</span><br \>
-____         noeud_courant = rationnel_to_dot_aux<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>, output, noeud_courant, noeud_courant<span class="vert " >+</span><span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         noeud_courant = rationnel_to_dot_aux<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>, output, saved_pere, noeud_courant<span class="vert " >+</span><span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         break<span class="vert " >;</span><br \>
-____<br \>
-____      <span class="jaune " >case</span> STAR:<br \>
-____         fprintf<span class="vert " >(</span>output, <span class="string">"\tnode%d [label = \"</span><span class="vert " >*</span> <span class="vert " >(</span>%d/%d<span class="vert " >)</span>\<span class="string">"];\n"</span>, noeud_courant, rat<span class="vert " >-</span>>position_min, rat<span class="vert " >-</span>>position_max<span class="vert " >)</span><span class="vert " >;</span><br \>
-____         noeud_courant = rationnel_to_dot_aux<span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span>, output, noeud_courant, noeud_courant<span class="vert " >+</span><span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____         break<span class="vert " >;</span><br \>
-____         <br \>
-____      <span class="type_specifier " >default</span>:<br \>
-____         assert<span class="vert " >(</span>false<span class="vert " >)</span><span class="vert " >;</span><br \>
-____         break<span class="vert " >;</span><br \>
-____   <span class="vert " >}</span><br \>
-__   <span class="jaune " >if</span> <span class="vert " >(</span>pere < <span class="nombre " >0</span><span class="vert " >)</span><br \>
-__      fprintf<span class="vert " >(</span>output, <span class="string">"}\n"</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-__   <span class="jaune " >break</span> noeud_courant<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span>   <br \>
+&nbsp;&nbsp;   int saved_pere = noeud_courant<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;   <span class="jaune " >if</span> <span class="vert " >(</span>pere >= <span class="nombre " >1</span><span class="vert " >)</span><br \>
+&nbsp;&nbsp;      fprintf<span class="vert " >(</span>output, <span class="string">"\tnode%d -> node%d;\n"</span>, pere, noeud_courant<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >else</span><br \>
+&nbsp;&nbsp;      fprintf<span class="vert " >(</span>output, <span class="string">"digraph G{\n"</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <br \>
+&nbsp;&nbsp;   <span class="jaune " >switch</span><span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><br \>
+&nbsp;&nbsp;   &nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      <span class="jaune " >case</span> LETTRE:<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         fprintf<span class="vert " >(</span>output, <span class="string">"\tnode%d [label = \"</span>%c<span class="vert " >-</span>%d\<span class="string">"];\n"</span>, noeud_courant, get_lettre<span class="vert " >(</span>rat<span class="vert " >)</span>, rat<span class="vert " >-</span>>position_min<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         noeud_courant<span class="vert " >+</span><span class="vert " >+</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      <span class="jaune " >case</span> EPSILON:<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         fprintf<span class="vert " >(</span>output, <span class="string">"\tnode%d [label = \"</span>ε<span class="vert " >-</span>%d\<span class="string">"];\n"</span>, noeud_courant, rat<span class="vert " >-</span>>position_min<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         noeud_courant<span class="vert " >+</span><span class="vert " >+</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      <span class="jaune " >case</span> UNION:<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         fprintf<span class="vert " >(</span>output, <span class="string">"\tnode%d [label = \"</span><span class="vert " >+</span> <span class="vert " >(</span>%d/%d<span class="vert " >)</span>\<span class="string">"];\n"</span>, noeud_courant, rat<span class="vert " >-</span>>position_min, rat<span class="vert " >-</span>>position_max<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         noeud_courant = rationnel_to_dot_aux<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>, output, noeud_courant, noeud_courant<span class="vert " >+</span><span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         noeud_courant = rationnel_to_dot_aux<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>, output, saved_pere, noeud_courant<span class="vert " >+</span><span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      <span class="jaune " >case</span> CONCAT:<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         fprintf<span class="vert " >(</span>output, <span class="string">"\tnode%d [label = \"</span>. <span class="vert " >(</span>%d/%d<span class="vert " >)</span>\<span class="string">"];\n"</span>, noeud_courant, rat<span class="vert " >-</span>>position_min, rat<span class="vert " >-</span>>position_max<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         noeud_courant = rationnel_to_dot_aux<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>, output, noeud_courant, noeud_courant<span class="vert " >+</span><span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         noeud_courant = rationnel_to_dot_aux<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>, output, saved_pere, noeud_courant<span class="vert " >+</span><span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      <span class="jaune " >case</span> STAR:<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         fprintf<span class="vert " >(</span>output, <span class="string">"\tnode%d [label = \"</span><span class="vert " >*</span> <span class="vert " >(</span>%d/%d<span class="vert " >)</span>\<span class="string">"];\n"</span>, noeud_courant, rat<span class="vert " >-</span>>position_min, rat<span class="vert " >-</span>>position_max<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         noeud_courant = rationnel_to_dot_aux<span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span>, output, noeud_courant, noeud_courant<span class="vert " >+</span><span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         <br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      <span class="type_specifier " >default</span>:<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         assert<span class="vert " >(</span>false<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;   <span class="vert " >}</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >if</span> <span class="vert " >(</span>pere < <span class="nombre " >0</span><span class="vert " >)</span><br \>
+&nbsp;&nbsp;      fprintf<span class="vert " >(</span>output, <span class="string">"}\n"</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> noeud_courant<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
-<span class="type_specifier " >int</span> rec_numeroter_rationnel<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="vert " >)</span>__<span class="vert " >{</span><br \>
-__	int max<span class="vert " >;</span><br \>
-__	<span class="jaune " >switch</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>____<span class="vert " >{</span><br \>
-____		<span class="jaune " >case</span> EPSILON :<br \>
-____			set_position_max<span class="vert " >(</span>rat,get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> LETTRE :<br \>
-____			set_position_max<span class="vert " >(</span>rat,get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> STAR :<br \>
-____			set_position_min<span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span>,get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			set_position_max<span class="vert " >(</span>rat,rec_numeroter_rationnel<span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> UNION :<br \>
-____			set_position_min<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			max=rec_numeroter_rationnel<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			set_position_min<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,max<span class="vert " >+</span><span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			set_position_max<span class="vert " >(</span>rat,rec_numeroter_rationnel<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> CONCAT :<br \>
-____			set_position_min<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			max=rec_numeroter_rationnel<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			set_position_min<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,max<span class="vert " >+</span><span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			set_position_max<span class="vert " >(</span>rat,rec_numeroter_rationnel<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____	<span class="vert " >}</span><br \>
-__	<span class="jaune " >break</span> get_position_max<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+<span class="type_specifier " >int</span> rec_numeroter_rationnel<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="vert " >)</span>&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;	int max<span class="vert " >;</span><br \>
+&nbsp;&nbsp;	<span class="jaune " >switch</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> EPSILON :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			set_position_max<span class="vert " >(</span>rat,get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> LETTRE :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			set_position_max<span class="vert " >(</span>rat,get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> STAR :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			set_position_min<span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span>,get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			set_position_max<span class="vert " >(</span>rat,rec_numeroter_rationnel<span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> UNION :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			set_position_min<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			max=rec_numeroter_rationnel<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			set_position_min<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,max<span class="vert " >+</span><span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			set_position_max<span class="vert " >(</span>rat,rec_numeroter_rationnel<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> CONCAT :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			set_position_min<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			max=rec_numeroter_rationnel<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			set_position_min<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,max<span class="vert " >+</span><span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			set_position_max<span class="vert " >(</span>rat,rec_numeroter_rationnel<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;	<span class="vert " >}</span><br \>
+&nbsp;&nbsp;	<span class="jaune " >break</span> get_position_max<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 <span class="type_specifier " >void</span> numeroter_rationnel<span class="vert " >(</span>Rationnel <span class="vert " >*</span>rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__	set_position_min<span class="vert " >(</span>rat,<span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-__	rec_numeroter_rationnel<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >;</span><br \>
-__	<span class="jaune " >break</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;	set_position_min<span class="vert " >(</span>rat,<span class="nombre " >1</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;	rec_numeroter_rationnel<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;	<span class="jaune " >break</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 <br \>
 bool contient_mot_vide<span class="vert " >(</span>Rationnel <span class="vert " >*</span>rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__	bool vide<span class="vert " >;</span><br \>
-__	<span class="jaune " >switch</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>____<span class="vert " >{</span><br \>
-____		<span class="jaune " >case</span> EPSILON :<br \>
-____			vide= true<span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> LETTRE :<br \>
-____			vide= false<span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> STAR :<br \>
-____			vide= true<span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> UNION :<br \>
-____			vide= contient_mot_vide<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span> || contient_mot_vide<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> CONCAT :<br \>
-____			vide= contient_mot_vide<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span> && contient_mot_vide<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____	<span class="vert " >}</span><br \>
-__	<span class="jaune " >break</span> vide<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;	bool vide<span class="vert " >;</span><br \>
+&nbsp;&nbsp;	<span class="jaune " >switch</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> EPSILON :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			vide= true<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> LETTRE :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			vide= false<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> STAR :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			vide= true<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> UNION :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			vide= contient_mot_vide<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span> || contient_mot_vide<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> CONCAT :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			vide= contient_mot_vide<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span> && contient_mot_vide<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;	<span class="vert " >}</span><br \>
+&nbsp;&nbsp;	<span class="jaune " >break</span> vide<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
-Ensemble<span class="vert " >*</span> premier_rec<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat, Ensemble<span class="vert " >*</span> ens<span class="vert " >)</span>__<span class="vert " >{</span><br \>
-__		<span class="jaune " >switch</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>____<span class="vert " >{</span><br \>
-____		<span class="jaune " >case</span> EPSILON :<br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> LETTRE :<br \>
-____			ajouter_element<span class="vert " >(</span>ens,get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> STAR :<br \>
-____			ajouter_elements<span class="vert " >(</span>ens,premier_rec<span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> UNION :<br \>
-____			ajouter_elements<span class="vert " >(</span>ens,premier_rec<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			ajouter_elements<span class="vert " >(</span>ens,premier_rec<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> CONCAT :<br \>
-____			ajouter_elements<span class="vert " >(</span>ens,premier_rec<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			<span class="jaune " >if</span> <span class="vert " >(</span>contient_mot_vide<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >)</span><br \>
-____				ajouter_elements<span class="vert " >(</span>ens,premier_rec<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____	<span class="vert " >}</span><br \>
-__	<span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+Ensemble<span class="vert " >*</span> premier_rec<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat, Ensemble<span class="vert " >*</span> ens<span class="vert " >)</span>&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;		<span class="jaune " >switch</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> EPSILON :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> LETTRE :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_element<span class="vert " >(</span>ens,get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> STAR :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_elements<span class="vert " >(</span>ens,premier_rec<span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> UNION :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_elements<span class="vert " >(</span>ens,premier_rec<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_elements<span class="vert " >(</span>ens,premier_rec<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> CONCAT :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_elements<span class="vert " >(</span>ens,premier_rec<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			<span class="jaune " >if</span> <span class="vert " >(</span>contient_mot_vide<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >)</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;				ajouter_elements<span class="vert " >(</span>ens,premier_rec<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;	<span class="vert " >}</span><br \>
+&nbsp;&nbsp;	<span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Ensemble <span class="vert " >*</span>premier<span class="vert " >(</span>Rationnel <span class="vert " >*</span>rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   Ensemble<span class="vert " >*</span> ens = creer_ensemble<span class="vert " >(</span>NULL,NULL,NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
-__   premier_rec<span class="vert " >(</span>rat,ens<span class="vert " >)</span><span class="vert " >;</span><br \>
-__   <span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   Ensemble<span class="vert " >*</span> ens = creer_ensemble<span class="vert " >(</span>NULL,NULL,NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   premier_rec<span class="vert " >(</span>rat,ens<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
-Ensemble<span class="vert " >*</span> dernier_rec<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat, Ensemble<span class="vert " >*</span> ens<span class="vert " >)</span>__<span class="vert " >{</span><br \>
-__		<span class="jaune " >switch</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>____<span class="vert " >{</span><br \>
-____		<span class="jaune " >case</span> EPSILON :<br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> LETTRE :<br \>
-____			ajouter_element<span class="vert " >(</span>ens,get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> STAR :<br \>
-____			ajouter_elements<span class="vert " >(</span>ens,dernier_rec<span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> UNION :<br \>
-____			ajouter_elements<span class="vert " >(</span>ens,dernier_rec<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			ajouter_elements<span class="vert " >(</span>ens,dernier_rec<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> CONCAT :<br \>
-____			ajouter_elements<span class="vert " >(</span>ens,dernier_rec<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			<span class="jaune " >if</span> <span class="vert " >(</span>contient_mot_vide<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >)</span><br \>
-____				ajouter_elements<span class="vert " >(</span>ens,dernier_rec<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span>		<br \>
-____			break<span class="vert " >;</span><br \>
-____	<span class="vert " >}</span><br \>
-__	<span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+Ensemble<span class="vert " >*</span> dernier_rec<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat, Ensemble<span class="vert " >*</span> ens<span class="vert " >)</span>&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;		<span class="jaune " >switch</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> EPSILON :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> LETTRE :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_element<span class="vert " >(</span>ens,get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> STAR :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_elements<span class="vert " >(</span>ens,dernier_rec<span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> UNION :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_elements<span class="vert " >(</span>ens,dernier_rec<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_elements<span class="vert " >(</span>ens,dernier_rec<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> CONCAT :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_elements<span class="vert " >(</span>ens,dernier_rec<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			<span class="jaune " >if</span> <span class="vert " >(</span>contient_mot_vide<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >)</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;				ajouter_elements<span class="vert " >(</span>ens,dernier_rec<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,ens<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span>		<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;	<span class="vert " >}</span><br \>
+&nbsp;&nbsp;	<span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Ensemble <span class="vert " >*</span>dernier<span class="vert " >(</span>Rationnel <span class="vert " >*</span>rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   Ensemble<span class="vert " >*</span> ens = creer_ensemble<span class="vert " >(</span>NULL,NULL,NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
-__   dernier_rec<span class="vert " >(</span>rat,ens<span class="vert " >)</span><span class="vert " >;</span><br \>
-__   <span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   Ensemble<span class="vert " >*</span> ens = creer_ensemble<span class="vert " >(</span>NULL,NULL,NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   dernier_rec<span class="vert " >(</span>rat,ens<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
-Ensemble<span class="vert " >*</span> suivant_rec<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat, Ensemble<span class="vert " >*</span> ens,int pos<span class="vert " >)</span>__<span class="vert " >{</span><br \>
-__	<span class="jaune " >switch</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>____<span class="vert " >{</span><br \>
-____		<span class="jaune " >case</span> EPSILON :<br \>
-____		<span class="jaune " >case</span> LETTRE :<br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> STAR :<br \>
-____			<span class="jaune " >if</span> <span class="vert " >(</span>est_dans_l_ensemble<span class="vert " >(</span>dernier<span class="vert " >(</span>rat<span class="vert " >)</span>,pos<span class="vert " >)</span><span class="vert " >)</span><br \>
-____				ajouter_elements<span class="vert " >(</span>ens,premier<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			ajouter_elements<span class="vert " >(</span>ens,suivant_rec<span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span>,ens,pos<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> UNION :<br \>
-____			ajouter_elements<span class="vert " >(</span>ens,suivant_rec<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,ens,pos<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			ajouter_elements<span class="vert " >(</span>ens,suivant_rec<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,ens,pos<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> CONCAT :<br \>
-____			<span class="jaune " >if</span> <span class="vert " >(</span>est_dans_l_ensemble<span class="vert " >(</span>dernier<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>,pos<span class="vert " >)</span><span class="vert " >)</span><br \>
-____				ajouter_elements<span class="vert " >(</span>ens,premier<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span>			<br \>
-____			ajouter_elements<span class="vert " >(</span>ens,suivant_rec<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,ens,pos<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____			ajouter_elements<span class="vert " >(</span>ens,suivant_rec<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,ens,pos<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span>		<br \>
-____			break<span class="vert " >;</span><br \>
-____	<span class="vert " >}</span><br \>
-__	<span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+Ensemble<span class="vert " >*</span> suivant_rec<span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat, Ensemble<span class="vert " >*</span> ens,int pos<span class="vert " >)</span>&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;	<span class="jaune " >switch</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> EPSILON :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> LETTRE :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> STAR :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			<span class="jaune " >if</span> <span class="vert " >(</span>est_dans_l_ensemble<span class="vert " >(</span>dernier<span class="vert " >(</span>rat<span class="vert " >)</span>,pos<span class="vert " >)</span><span class="vert " >)</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;				ajouter_elements<span class="vert " >(</span>ens,premier<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_elements<span class="vert " >(</span>ens,suivant_rec<span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span>,ens,pos<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> UNION :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_elements<span class="vert " >(</span>ens,suivant_rec<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,ens,pos<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_elements<span class="vert " >(</span>ens,suivant_rec<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,ens,pos<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> CONCAT :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			<span class="jaune " >if</span> <span class="vert " >(</span>est_dans_l_ensemble<span class="vert " >(</span>dernier<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>,pos<span class="vert " >)</span><span class="vert " >)</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;				ajouter_elements<span class="vert " >(</span>ens,premier<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span>			<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_elements<span class="vert " >(</span>ens,suivant_rec<span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,ens,pos<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_elements<span class="vert " >(</span>ens,suivant_rec<span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,ens,pos<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span>		<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;	<span class="vert " >}</span><br \>
+&nbsp;&nbsp;	<span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Ensemble <span class="vert " >*</span>suivant<span class="vert " >(</span>Rationnel <span class="vert " >*</span>rat, int position<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   Ensemble<span class="vert " >*</span> ens = creer_ensemble<span class="vert " >(</span>NULL,NULL,NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
-__   suivant_rec<span class="vert " >(</span>rat,ens,position<span class="vert " >)</span><span class="vert " >;</span><br \>
-__   <span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   Ensemble<span class="vert " >*</span> ens = creer_ensemble<span class="vert " >(</span>NULL,NULL,NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   suivant_rec<span class="vert " >(</span>rat,ens,position<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >break</span> ens<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
-<span class="type_specifier " >void</span> rec_pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat,<span class="type_specifier " >char</span><span class="vert " >*</span> tab<span class="vert " >)</span>__<span class="vert " >{</span><br \>
-__	<span class="jaune " >switch</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>____<span class="vert " >{</span><br \>
-____		<span class="jaune " >case</span> EPSILON :<br \>
-____		<span class="jaune " >case</span> LETTRE :<br \>
-____			tab[get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span>]=get_lettre<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >;</span><br \>
-____			<span class="jaune " >break</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> STAR :<br \>
-____			rec_pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span>,tab<span class="vert " >)</span><span class="vert " >;</span><br \>
-____			<span class="jaune " >break</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> UNION :<br \>
-____			rec_pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,tab<span class="vert " >)</span><span class="vert " >;</span><br \>
-____			rec_pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,tab<span class="vert " >)</span><span class="vert " >;</span><br \>
-____			<span class="jaune " >break</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____		<span class="jaune " >case</span> CONCAT :<br \>
-____			rec_pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,tab<span class="vert " >)</span><span class="vert " >;</span><br \>
-____			rec_pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,tab<span class="vert " >)</span><span class="vert " >;</span><br \>
-____			<span class="jaune " >break</span><span class="vert " >;</span><br \>
-____			break<span class="vert " >;</span><br \>
-____	<span class="vert " >}</span><br \>
-__	<span class="jaune " >break</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+<span class="type_specifier " >void</span> rec_pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat,<span class="type_specifier " >char</span><span class="vert " >*</span> tab<span class="vert " >)</span>&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;	<span class="jaune " >switch</span> <span class="vert " >(</span>get_etiquette<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> EPSILON :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> LETTRE :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			tab[get_position_min<span class="vert " >(</span>rat<span class="vert " >)</span>]=get_lettre<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			<span class="jaune " >break</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> STAR :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			rec_pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>fils<span class="vert " >(</span>rat<span class="vert " >)</span>,tab<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			<span class="jaune " >break</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> UNION :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			rec_pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,tab<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			rec_pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,tab<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			<span class="jaune " >break</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		<span class="jaune " >case</span> CONCAT :<br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			rec_pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>fils_gauche<span class="vert " >(</span>rat<span class="vert " >)</span>,tab<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			rec_pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>fils_droit<span class="vert " >(</span>rat<span class="vert " >)</span>,tab<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			<span class="jaune " >break</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;			break<span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;	<span class="vert " >}</span><br \>
+&nbsp;&nbsp;	<span class="jaune " >break</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
-<span class="type_specifier " >char</span><span class="vert " >*</span> pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="vert " >)</span>__<span class="vert " >{</span><br \>
-__<br \>
-__	<span class="type_specifier " >char</span><span class="vert " >*</span> tab=malloc<span class="vert " >(</span>get_position_max<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >*</span><span class="jump_statement " >sizeof</span><span class="vert " >(</span><span class="type_specifier " >char</span><span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-__	rec_pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>rat,tab<span class="vert " >)</span><span class="vert " >;</span><br \>
-__	<span class="jaune " >break</span> tab<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+<span class="type_specifier " >char</span><span class="vert " >*</span> pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>Rationnel<span class="vert " >*</span> rat<span class="vert " >)</span>&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;	<span class="type_specifier " >char</span><span class="vert " >*</span> tab=malloc<span class="vert " >(</span>get_position_max<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >*</span><span class="jump_statement " >sizeof</span><span class="vert " >(</span><span class="type_specifier " >char</span><span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;	rec_pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>rat,tab<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;	<span class="jaune " >break</span> tab<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Automate <span class="vert " >*</span>Glushkov<span class="vert " >(</span>Rationnel <span class="vert " >*</span>rat<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__<br \>
-__   Automate<span class="vert " >*</span> aut=creer_<span class="type_specifier " >auto</span>mate<span class="vert " >(</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-__<br \>
-__   <span class="type_specifier " >char</span> c<span class="vert " >;</span><br \>
-__   int dest<span class="vert " >;</span><br \>
-__   <span class="type_specifier " >char</span><span class="vert " >*</span> lettres=pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >;</span><br \>
-__<br \>
-__   ajouter_etat_initial<span class="vert " >(</span>aut,<span class="nombre " >0</span><span class="vert " >)</span><span class="vert " >;</span>  <span class="comment">//On crée un état initial 0 (epsilon)</span><br \>__   <span class="jaune " >if</span> <span class="vert " >(</span>contient_mot_vide<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>____<span class="vert " >{</span><br \>
-____		ajouter_etat_final<span class="vert " >(</span>aut,<span class="nombre " >0</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____   <span class="vert " >}</span><br \>
-__   <br \>
-__   Ensemble_iterateur it_premier=premier_iterateur_ensemble<span class="vert " >(</span>premier<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span> <span class="comment">//On crée des transition entre l'état 0 et les premiers.</span><br \>__   <span class="type_specifier " >while</span> <span class="vert " >(</span><span class="vert " >!</span>iterateur_ensemble_est_vide<span class="vert " >(</span>it_premier<span class="vert " >)</span><span class="vert " >)</span>____<span class="vert " >{</span><br \>
-____	    c=lettres[get_element<span class="vert " >(</span>it_premier<span class="vert " >)</span>]<span class="vert " >;</span>  <span class="comment">//On recupere la lettre associée a l'état</span><br \>____	    dest=get_element<span class="vert " >(</span>it_premier<span class="vert " >)</span><span class="vert " >;</span>     <span class="comment">//On va chercher la destination de la transition (le sommet de premier)</span><br \>____		ajouter_transition<span class="vert " >(</span>aut,<span class="nombre " >0</span>,c,dest<span class="vert " >)</span><span class="vert " >;</span>     <span class="comment">// On crée la transition entre l'état 0 et le sommet actuel dans premier</span><br \>____		it_premier=iterateur_suivant_ensemble<span class="vert " >(</span>it_premier<span class="vert " >)</span><span class="vert " >;</span><br \>
-____   <span class="vert " >}</span><br \>
-__   <br \>
-__   <br \>
-__   Ensemble_iterateur it_dernier=premier_iterateur_ensemble<span class="vert " >(</span>dernier<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span>  <span class="comment">// les elements de dernier sont les etats finaux</span><br \>__   <span class="type_specifier " >while</span> <span class="vert " >(</span><span class="vert " >!</span>iterateur_ensemble_est_vide<span class="vert " >(</span>it_dernier<span class="vert " >)</span><span class="vert " >)</span>____<span class="vert " >{</span><br \>
-____		ajouter_etat_final<span class="vert " >(</span>aut,get_element<span class="vert " >(</span>it_dernier<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-____		it_dernier=iterateur_suivant_ensemble<span class="vert " >(</span>it_dernier<span class="vert " >)</span><span class="vert " >;</span><br \>
-____   <span class="vert " >}</span><br \>
-__   <br \>
-__   <span class="jaune " >for</span> <span class="vert " >(</span>int i=<span class="nombre " >1</span><span class="vert " >;</span>i<=get_position_max<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >;</span>i<span class="vert " >+</span><span class="vert " >+</span><span class="vert " >)</span>____<span class="vert " >{</span> <span class="comment">//On crée toutes les autres transitions</span><br \>____	    Ensemble_iterateur it_transition=premier_iterateur_ensemble<span class="vert " >(</span>suivant<span class="vert " >(</span>rat,i<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span> <span class="comment">//On parcours l'ensemble des transitions</span><br \>____	    <span class="type_specifier " >while</span> <span class="vert " >(</span><span class="vert " >!</span>iterateur_ensemble_est_vide<span class="vert " >(</span>it_transition<span class="vert " >)</span><span class="vert " >)</span>______<span class="vert " >{</span><br \>
-______			c=lettres[get_element<span class="vert " >(</span>it_transition<span class="vert " >)</span>]<span class="vert " >;</span> <span class="comment">//La lettre de la destionation</span><br \>______			dest=get_element<span class="vert " >(</span>it_transition<span class="vert " >)</span><span class="vert " >;</span>  <span class="comment">// position de fin</span><br \>______			ajouter_transition<span class="vert " >(</span>aut,i,c,dest<span class="vert " >)</span><span class="vert " >;</span> <span class="comment">// crée la transition</span><br \>______			it_transition=iterateur_suivant_ensemble<span class="vert " >(</span>it_transition<span class="vert " >)</span><span class="vert " >;</span><br \>
-______		<span class="vert " >}</span><br \>
-____	<span class="vert " >}</span><br \>
-__	<span class="jaune " >break</span> aut<span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;   Automate<span class="vert " >*</span> aut=creer_<span class="type_specifier " >auto</span>mate<span class="vert " >(</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;   <span class="type_specifier " >char</span> c<span class="vert " >;</span><br \>
+&nbsp;&nbsp;   int dest<span class="vert " >;</span><br \>
+&nbsp;&nbsp;   <span class="type_specifier " >char</span><span class="vert " >*</span> lettres=pos_to_<span class="type_specifier " >char</span><span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<br \>
+&nbsp;&nbsp;   ajouter_etat_initial<span class="vert " >(</span>aut,<span class="nombre " >0</span><span class="vert " >)</span><span class="vert " >;</span>  <span class="comment">//On crée un état initial 0 (epsilon)</span><br \>&nbsp;&nbsp;   <span class="jaune " >if</span> <span class="vert " >(</span>contient_mot_vide<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		ajouter_etat_final<span class="vert " >(</span>aut,<span class="nombre " >0</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;   <span class="vert " >}</span><br \>
+&nbsp;&nbsp;   <br \>
+&nbsp;&nbsp;   Ensemble_iterateur it_premier=premier_iterateur_ensemble<span class="vert " >(</span>premier<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span> <span class="comment">//On crée des transition entre l'état 0 et les premiers.</span><br \>&nbsp;&nbsp;   <span class="type_specifier " >while</span> <span class="vert " >(</span><span class="vert " >!</span>iterateur_ensemble_est_vide<span class="vert " >(</span>it_premier<span class="vert " >)</span><span class="vert " >)</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;	    c=lettres[get_element<span class="vert " >(</span>it_premier<span class="vert " >)</span>]<span class="vert " >;</span>  <span class="comment">//On recupere la lettre associée a l'état</span><br \>&nbsp;&nbsp;&nbsp;&nbsp;	    dest=get_element<span class="vert " >(</span>it_premier<span class="vert " >)</span><span class="vert " >;</span>     <span class="comment">//On va chercher la destination de la transition (le sommet de premier)</span><br \>&nbsp;&nbsp;&nbsp;&nbsp;		ajouter_transition<span class="vert " >(</span>aut,<span class="nombre " >0</span>,c,dest<span class="vert " >)</span><span class="vert " >;</span>     <span class="comment">// On crée la transition entre l'état 0 et le sommet actuel dans premier</span><br \>&nbsp;&nbsp;&nbsp;&nbsp;		it_premier=iterateur_suivant_ensemble<span class="vert " >(</span>it_premier<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;   <span class="vert " >}</span><br \>
+&nbsp;&nbsp;   <br \>
+&nbsp;&nbsp;   <br \>
+&nbsp;&nbsp;   Ensemble_iterateur it_dernier=premier_iterateur_ensemble<span class="vert " >(</span>dernier<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span>  <span class="comment">// les elements de dernier sont les etats finaux</span><br \>&nbsp;&nbsp;   <span class="type_specifier " >while</span> <span class="vert " >(</span><span class="vert " >!</span>iterateur_ensemble_est_vide<span class="vert " >(</span>it_dernier<span class="vert " >)</span><span class="vert " >)</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		ajouter_etat_final<span class="vert " >(</span>aut,get_element<span class="vert " >(</span>it_dernier<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;		it_dernier=iterateur_suivant_ensemble<span class="vert " >(</span>it_dernier<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;   <span class="vert " >}</span><br \>
+&nbsp;&nbsp;   <br \>
+&nbsp;&nbsp;   <span class="jaune " >for</span> <span class="vert " >(</span>int i=<span class="nombre " >1</span><span class="vert " >;</span>i<=get_position_max<span class="vert " >(</span>rat<span class="vert " >)</span><span class="vert " >;</span>i<span class="vert " >+</span><span class="vert " >+</span><span class="vert " >)</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span> <span class="comment">//On crée toutes les autres transitions</span><br \>&nbsp;&nbsp;&nbsp;&nbsp;	    Ensemble_iterateur it_transition=premier_iterateur_ensemble<span class="vert " >(</span>suivant<span class="vert " >(</span>rat,i<span class="vert " >)</span><span class="vert " >)</span><span class="vert " >;</span> <span class="comment">//On parcours l'ensemble des transitions</span><br \>&nbsp;&nbsp;&nbsp;&nbsp;	    <span class="type_specifier " >while</span> <span class="vert " >(</span><span class="vert " >!</span>iterateur_ensemble_est_vide<span class="vert " >(</span>it_transition<span class="vert " >)</span><span class="vert " >)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			c=lettres[get_element<span class="vert " >(</span>it_transition<span class="vert " >)</span>]<span class="vert " >;</span> <span class="comment">//La lettre de la destionation</span><br \>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			dest=get_element<span class="vert " >(</span>it_transition<span class="vert " >)</span><span class="vert " >;</span>  <span class="comment">// position de fin</span><br \>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			ajouter_transition<span class="vert " >(</span>aut,i,c,dest<span class="vert " >)</span><span class="vert " >;</span> <span class="comment">// crée la transition</span><br \>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			it_transition=iterateur_suivant_ensemble<span class="vert " >(</span>it_transition<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		<span class="vert " >}</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;	<span class="vert " >}</span><br \>
+&nbsp;&nbsp;	<span class="jaune " >break</span> aut<span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 bool meme_langage <span class="vert " >(</span><span class="type_specifier " >const</span> <span class="type_specifier " >char</span> <span class="vert " >*</span>expr<span class="nombre " >1</span>, <span class="type_specifier " >const</span> <span class="type_specifier " >char</span><span class="vert " >*</span> expr<span class="nombre " >2</span><span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   A_FAIRE_RETURN<span class="vert " >(</span>true<span class="vert " >)</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   A_FAIRE_RETURN<span class="vert " >(</span>true<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Systeme systeme<span class="vert " >(</span>Automate <span class="vert " >*</span><span class="type_specifier " >auto</span>mate<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   A_FAIRE_RETURN<span class="vert " >(</span>NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   A_FAIRE_RETURN<span class="vert " >(</span>NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 <span class="type_specifier " >void</span> print_ligne<span class="vert " >(</span>Rationnel <span class="vert " >*</span><span class="vert " >*</span>ligne, int n<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   <span class="jaune " >for</span> <span class="vert " >(</span>int j = <span class="nombre " >0</span><span class="vert " >;</span> j <=n<span class="vert " >;</span> j<span class="vert " >+</span><span class="vert " >+</span><span class="vert " >)</span><br \>
-__      ____<span class="vert " >{</span><br \>
-____         print_rationnel<span class="vert " >(</span>ligne[j]<span class="vert " >)</span><span class="vert " >;</span><br \>
-____         <span class="jaune " >if</span> <span class="vert " >(</span>j<n<span class="vert " >)</span><br \>
-____            printf<span class="vert " >(</span><span class="string">"X%d\t+\t"</span>, j<span class="vert " >)</span><span class="vert " >;</span><br \>
-____      <span class="vert " >}</span><br \>
-__   printf<span class="vert " >(</span><span class="string">"\n"</span><span class="vert " >)</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >for</span> <span class="vert " >(</span>int j = <span class="nombre " >0</span><span class="vert " >;</span> j <=n<span class="vert " >;</span> j<span class="vert " >+</span><span class="vert " >+</span><span class="vert " >)</span><br \>
+&nbsp;&nbsp;      &nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         print_rationnel<span class="vert " >(</span>ligne[j]<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;         <span class="jaune " >if</span> <span class="vert " >(</span>j<n<span class="vert " >)</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;            printf<span class="vert " >(</span><span class="string">"X%d\t+\t"</span>, j<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      <span class="vert " >}</span><br \>
+&nbsp;&nbsp;   printf<span class="vert " >(</span><span class="string">"\n"</span><span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 <span class="type_specifier " >void</span> print_systeme<span class="vert " >(</span>Systeme systeme, int n<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   <span class="jaune " >for</span> <span class="vert " >(</span>int i = <span class="nombre " >0</span><span class="vert " >;</span> i <= n<span class="vert " >-</span><span class="nombre " >1</span><span class="vert " >;</span> i<span class="vert " >+</span><span class="vert " >+</span><span class="vert " >)</span><br \>
-__   ____<span class="vert " >{</span><br \>
-____      printf<span class="vert " >(</span><span class="string">"X%d\t= "</span>, i<span class="vert " >)</span><span class="vert " >;</span><br \>
-____      print_ligne<span class="vert " >(</span>systeme[i], n<span class="vert " >)</span><span class="vert " >;</span><br \>
-____   <span class="vert " >}</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   <span class="jaune " >for</span> <span class="vert " >(</span>int i = <span class="nombre " >0</span><span class="vert " >;</span> i <= n<span class="vert " >-</span><span class="nombre " >1</span><span class="vert " >;</span> i<span class="vert " >+</span><span class="vert " >+</span><span class="vert " >)</span><br \>
+&nbsp;&nbsp;   &nbsp;&nbsp;&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      printf<span class="vert " >(</span><span class="string">"X%d\t= "</span>, i<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;      print_ligne<span class="vert " >(</span>systeme[i], n<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;&nbsp;&nbsp;   <span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Rationnel <span class="vert " >*</span><span class="vert " >*</span>resoudre_variable_arden<span class="vert " >(</span>Rationnel <span class="vert " >*</span><span class="vert " >*</span>ligne, int numero_variable, int n<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   A_FAIRE_RETURN<span class="vert " >(</span>NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   A_FAIRE_RETURN<span class="vert " >(</span>NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Rationnel <span class="vert " >*</span><span class="vert " >*</span>substituer_variable<span class="vert " >(</span>Rationnel <span class="vert " >*</span><span class="vert " >*</span>ligne, int numero_variable, Rationnel <span class="vert " >*</span><span class="vert " >*</span>valeur_variable, int n<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   A_FAIRE_RETURN<span class="vert " >(</span>NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   A_FAIRE_RETURN<span class="vert " >(</span>NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Systeme resoudre_systeme<span class="vert " >(</span>Systeme systeme, int n<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   A_FAIRE_RETURN<span class="vert " >(</span>NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   A_FAIRE_RETURN<span class="vert " >(</span>NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 <br \>
 Rationnel <span class="vert " >*</span>Arden<span class="vert " >(</span>Automate <span class="vert " >*</span><span class="type_specifier " >auto</span>mate<span class="vert " >)</span><br \>
-__<span class="vert " >{</span><br \>
-__   A_FAIRE_RETURN<span class="vert " >(</span>NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
-__<span class="vert " >}</span><br \>
+&nbsp;&nbsp;<span class="vert " >{</span><br \>
+&nbsp;&nbsp;   A_FAIRE_RETURN<span class="vert " >(</span>NULL<span class="vert " >)</span><span class="vert " >;</span><br \>
+&nbsp;&nbsp;<span class="vert " >}</span><br \>
 </div></div></body></html>

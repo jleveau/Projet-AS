@@ -82,14 +82,10 @@ void ajouter_attribut(balise b,char* nom, char* val){
     
 }
 
-void print_balise_type_specifier(char* param){
-	balise b=print_debut_balise("span","type_specifier");
-	print_fin_debut_balise();fprintf(f_output, "%s",param); 
-	print_fin_balise(b);
-}
-
-void print_balise_jump_statement(char* param){
-  balise b =print_debut_balise("span","jump_statement");
-  print_fin_debut_balise();fprintf(f_output,"%s",param);
-  print_fin_balise(b);
+void print_balise_span(char* type, char* param)
+{
+   balise b=print_debut_balise("span",type);
+   print_fin_debut_balise();fprintf(f_output,"%s",param);
+   print_fin_balise(b);
+   
 }

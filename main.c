@@ -31,6 +31,7 @@ FILE* create_html(char* titre){
 	fprintf(f_output,"<div class=\"header\"> ");
 	fprintf(f_output,"<h1>Projet d'analyse syntaxique, licence 3 2014-2015</h1>");
 	fprintf(f_output,"</div>");
+	fprintf(f_output,"<div class=\"bordure\"> ");
 	fprintf(f_output,"<div class=\"Code\"> ");
 	
  
@@ -39,30 +40,33 @@ FILE* create_html(char* titre){
 }
 
 int fermer_html(FILE* fd){
-	fprintf(fd,"</div>");
+  fprintf(fd,"</div>");
+  fprintf(fd,"</div>");
   fprintf(fd, "</body>");
   fprintf(fd, "</html>");
   return(fclose(fd)); //close avec flush
 }
 
 void init_structures(){
-	variables_stack=stack_create();
-	stack_push(variables_stack,list_create());
+	
 	function_list=list_create();
+	
+    init_id_manager();
 }
 
 int main(int argc,char** argv){
-   FILE* html=create_html("test");
+	int fd=open(argv[1],O_RDONLY);
+	dup2(fd,0);
+	
+   create_html("test");
    //assert(argc==2 && "invalide number of argument");
    
   init_structures();
-  int fd=open(argv[1],O_RDONLY);
-  dup2(fd,0);
-  
+
   yyparse(); // On parse l'entree (une seule fois)
   print_variables();
 
-  if(fermer_html(html)){
+  if(fermer_html(f_output)){
     perror("fermeture du html");
     exit(EXIT_FAILURE);
   }
