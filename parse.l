@@ -60,7 +60,7 @@ static int check_type(void);
 
 
 
-
+"#".*                    {//On efface les include et tous ce qui est apres}
 "auto"					{print_balise_span("type_specifier","auto"); return AUTO; }
 "case"					{print_balise_span("jaune","case"); return  CASE;} 
 "struct"				{print_balise_span("type_specifier","struct"); return  STRUCT;} 
@@ -86,7 +86,7 @@ static int check_type(void);
 "sizeof"				{print_balise_span("jump_statement","sizeof"); return  SIZEOF;} 
 "static"				{print_balise_span("type_specifier","static"); return  STATIC;} 
 "switch"				{print_balise_span("jaune","switch"); return  SWITCH;} 
-"typedef"				{print_balise_span("type_specifier","typedef"); return  TYPEDEF;} 
+"typedef"				{print_balise_span("type_specifier","typedef");  return  TYPEDEF;} 
 "union"					{print_balise_span("type_specifier","union"); return  UNION;} 
 "unsigned"				{print_balise_span("type_specifier","unsigned"); return  UNSIGNED;} 
 "void"					{print_balise_span("type_specifier","void");return  VOID;} 
@@ -111,7 +111,7 @@ static int check_type(void);
 "_Thread_local"                         { fprintf(f_output,"%s",yytext); return THREAD_LOCAL; }
 "__func__"                              { fprintf(f_output,"%s",yytext); return FUNC_NAME; }
 
-{L}{A}*					{yylval=strdup(yytext); return check_type(); }
+{L}{A}*					{yylval.val=strdup(yytext); return check_type(); }
 
 {HP}{H}+{IS}?				{ fprintf(f_output,"%s",yytext); return I_CONSTANT; }
 {NZ}{D}*{IS}?				{ fprintf(f_output,"%s",yytext); return I_CONSTANT; }

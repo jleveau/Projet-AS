@@ -1,3 +1,12 @@
+%{
+#include <stdio.h> 
+%}
+
+%union{
+	char* val;
+}
+
+%type<val> init_declarator_list init_declarator initializer declarator
 %token	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
 %token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
 %token	AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
@@ -16,6 +25,8 @@
 %token	ALIGNAS ALIGNOF ATOMIC GENERIC NORETURN STATIC_ASSERT THREAD_LOCAL
 
 %start translation_unit
+
+
 %%
 
 primary_expression
@@ -190,12 +201,12 @@ constant_expression
 
 declaration
 	: declaration_specifiers ';'
-	| declaration_specifiers init_declarator_list ';'
+	| declaration_specifiers init_declarator_list ';' {printf("%s \n",$2);}
 	| static_assert_declaration
 	;
 
 declaration_specifiers
-	: storage_class_specifier declaration_specifiers
+	: storage_class_specifier declaration_specifiers {/*ajouter_typedef($2);*/}
 	| storage_class_specifier
 	| type_specifier declaration_specifiers
 	| type_specifier
@@ -208,17 +219,17 @@ declaration_specifiers
 	;
 
 init_declarator_list
-	: init_declarator
-	| init_declarator_list ',' init_declarator
+	: init_declarator {$$=$1;}
+	| init_declarator_list ',' init_declarator {$$=$1; /*faut ajouter les suivants après*/}
 	;
 
 init_declarator
 	: declarator '=' initializer
-	| declarator
+	| declarator {$$=$1;}
 	;
 
 storage_class_specifier
-	: TYPEDEF	/* identifiers must be flagged as TYPEDEF_NAME */
+	: TYPEDEF   /* identifiers must be flagged as TYPEDEF_NAME */
 	| EXTERN
 	| STATIC
 	| THREAD_LOCAL
@@ -325,8 +336,8 @@ alignment_specifier
 	;
 
 declarator
-	: pointer direct_declarator
-	| direct_declarator
+	: pointer direct_declarator {$$=$1;}
+	| direct_declarator {$$=$1;}
 	;
 
 direct_declarator
@@ -525,7 +536,6 @@ declaration_list
 	;
 
 %%
-#include <stdio.h>
 
 void yyerror(const char *s)
 {

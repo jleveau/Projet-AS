@@ -1202,7 +1202,7 @@ YY_RULE_SETUP
 case 25:
 YY_RULE_SETUP
 #line 89 "parse.l"
-{print_balise_span("type_specifier","typedef"); return  TYPEDEF;} 
+{print_balise_span("type_specifier","typedef");  return  TYPEDEF;} 
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
@@ -1302,7 +1302,7 @@ YY_RULE_SETUP
 case 45:
 YY_RULE_SETUP
 #line 114 "parse.l"
-{yylval=strdup(yytext); return check_type(); }
+{yylval.val=strdup(yytext); return check_type(); }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP

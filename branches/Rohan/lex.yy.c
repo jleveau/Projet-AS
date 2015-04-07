@@ -1036,114 +1036,114 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 62 "parse.l"
+#line 63 "parse.l"
 {print_balise_span("vert",";");}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 63 "parse.l"
+#line 64 "parse.l"
 {indent=indent+2;int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;};print_balise_span("vert","{");}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 64 "parse.l"
+#line 65 "parse.l"
 {indent=indent-2;print_balise_span("vert","}");}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 65 "parse.l"
+#line 66 "parse.l"
 {print_balise_span("vert","(");}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 66 "parse.l"
+#line 67 "parse.l"
 {print_balise_span("vert",")");}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 67 "parse.l"
+#line 68 "parse.l"
 {print_balise_span("nombre",yytext);}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 68 "parse.l"
+#line 69 "parse.l"
 {print_balise_span("vert","*");}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 69 "parse.l"
+#line 70 "parse.l"
 {print_balise_span("vert","+");}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 70 "parse.l"
+#line 71 "parse.l"
 {print_balise_span("vert","-");}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 71 "parse.l"
+#line 72 "parse.l"
 {print_balise_span("vert","!");}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 72 "parse.l"
+#line 73 "parse.l"
 {print_balise_span("vert","?");}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 76 "parse.l"
+#line 77 "parse.l"
 {fprintf(f_output,"<span class=\"comment\">/*");BEGIN(COMMENT);}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 77 "parse.l"
+#line 78 "parse.l"
 {fprintf(f_output,"%c",yytext[0]);}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 78 "parse.l"
+#line 79 "parse.l"
 {fprintf(f_output, "*/</span>");BEGIN(INITIAL);}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 80 "parse.l"
+#line 81 "parse.l"
 {fprintf(f_output,"<span class=\"comment\">//");BEGIN(COMMENT);}
 	YY_BREAK
 case 49:
 /* rule 49 can match eol */
 YY_RULE_SETUP
-#line 81 "parse.l"
+#line 82 "parse.l"
 {fprintf(f_output,"</span><br \\>");int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;};BEGIN(INITIAL);}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 87 "parse.l"
+#line 88 "parse.l"
 {fprintf(f_output,"<span class=\"string\">\"");BEGIN(STRING);}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 88 "parse.l"
+#line 89 "parse.l"
 {fprintf(f_output,"\"</span>");BEGIN(INITIAL);}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 89 "parse.l"
+#line 90 "parse.l"
 {fprintf(f_output,"%c",yytext[0]);}
 	YY_BREAK
 case 53:
 /* rule 53 can match eol */
 YY_RULE_SETUP
-#line 96 "parse.l"
+#line 97 "parse.l"
 {fprintf(f_output,"<br \\>\n");int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;}}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 97 "parse.l"
+#line 98 "parse.l"
 {fprintf(f_output,"%c",yytext[0]);}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 99 "parse.l"
+#line 100 "parse.l"
 ECHO;
 	YY_BREAK
 #line 1150 "lex.yy.c"
@@ -2146,7 +2146,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 98 "parse.l"
+#line 99 "parse.l"
 
 
 
