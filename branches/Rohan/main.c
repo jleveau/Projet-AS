@@ -23,13 +23,36 @@ FILE* create_html(char* titre){
 	fprintf(f_output,"   <title>%s</title>",titre);
 	fprintf(f_output,"   <!doctype html>");
 	fprintf(f_output, "<link rel=\"stylesheet\" type=\"text/css\" href=\"index.css\">");
+    fprintf(f_output,"<link href=\"css/style.default.css\" rel=\"stylesheet\">");
+    fprintf(f_output,"<link href=\"css/jquery.datatables.css\" rel=\"stylesheet\">");
+    fprintf(f_output,"<link href=\"css/font.helvetica-neue.css\" rel=\"stylesheet\">");
+    
+    
 	fprintf(f_output,"</head>");								// </HEADER>
 
 	//body
 	fprintf(f_output, "<body>");
-	fprintf(f_output,"<div class=\"header\"> ");
-	fprintf(f_output,"<h1>Projet d'analyse syntaxique, licence 3 2014-2015</h1>");
-	fprintf(f_output,"</div>");
+    fprintf(f_output," <div class=\"leftpanel sticky-leftpanel\" >");
+    fprintf(f_output," <div class=\"logopanel\" >");
+    fprintf(f_output,"<h1><span>[</span> Projet <span>]</span></h1>");
+    fprintf(f_output,"</div>");
+    fprintf(f_output,"<div class=\"leftpanelinner\">");
+    fprintf(f_output,"<div class=\"visible-xs hidden-sm hidden-md hidden-lg\">");
+    fprintf(f_output,"<div class=\"media userlogged\">");
+    fprintf(f_output,"</div>");
+    fprintf(f_output,"</div>");
+    
+    fprintf(f_output,"<h5 class=\"sidebartitle\">Navigation</h5>");
+    
+    fprintf(f_output,"<ul class=\"nav nav-pills nav-stacked nav-bracket\">") ;
+    fprintf(f_output,"</ul>");
+    fprintf(f_output,"</div>");
+    fprintf(f_output,"</div>");
+    
+    fprintf(f_output,"<div class=\" mainpanel\">");
+    fprintf(f_output,"<div class=\"contentpanel\"");
+    
+    
 	fprintf(f_output,"<div class=\"bordure\"> ");
 	fprintf(f_output,"<div class=\"Code\"> ");
 	
@@ -39,6 +62,10 @@ FILE* create_html(char* titre){
 }
 
 int fermer_html(FILE* fd){
+   fprintf(fd,"</div>");
+   
+   fprintf(fd,"</div>");
+   
 	fprintf(fd,"</div>");
 	fprintf(fd,"</div>");
   fprintf(fd, "</body>");
@@ -48,7 +75,7 @@ int fermer_html(FILE* fd){
 
 
 int main(int argc,char** argv){
-   FILE* html=create_html("test");
+   FILE* html=create_html(argv[1]);
    //assert(argc==2 && "invalide number of argument");
    
 

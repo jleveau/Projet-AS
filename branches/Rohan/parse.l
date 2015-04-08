@@ -10,6 +10,7 @@ extern int sym_type(const char *);  /* returns type from symbol table */
 
 static void comment(void);
 static int check_type(void);
+int nb_ligne=1;
 /*
 
 Utiliser bison + Renvoyer les règles pour les indentations du style : if mais sans accolade après, enlever l'indentation quand on voit un break dans ce cas là etc..
@@ -42,7 +43,7 @@ Utiliser bison + Renvoyer les règles pour les indentations du style : if mais s
 "long"					{print_balise_span("type_specifier","long"); }
 "register"				{print_balise_span("type_specifier","register"); }
 "restrict"				{print_balise_span("type_specifier","restrict"); }
-"return"				{print_balise_span("jaune","break"); }
+"return"				{print_balise_span("jaune","return"); }
 "short"					{print_balise_span("type_specifier","short"); }
 "signed"				{print_balise_span("type_specifier","signed"); }
 "sizeof"				{print_balise_span("jump_statement","sizeof"); }
@@ -94,7 +95,7 @@ Utiliser bison + Renvoyer les règles pour les indentations du style : if mais s
 
 
 
-\n {fprintf(f_output,"<br \\>\n");int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;}}
+\n {fprintf(f_output,"<br \\>\n");fprintf(f_output,"%d. ",nb_ligne);nb_ligne++;int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;}}
 . {fprintf(f_output,"%c",yytext[0]);}
 
 %%
