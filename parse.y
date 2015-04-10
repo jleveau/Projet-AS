@@ -10,8 +10,8 @@ int type=0; //0 = default, 1 = fonction,2 = variable;
 %union{
 	char* val;
 }
-%type<val> function_definition declaration_specifiers declaration_list compound_statement
-%type<val> declarator direct_declarator init_declarator_list init_declarator initializer 
+%type<val> function_definition declaration_specifiers declaration_list compound_statement block_item_list declaration statement block_item parameter_declaration 
+%type<val> declarator direct_declarator init_declarator_list init_declarator initializer  type_specifier
 %token<val>	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
 %token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
 %token	AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
@@ -21,7 +21,7 @@ int type=0; //0 = default, 1 = fonction,2 = variable;
 
 %token	TYPEDEF EXTERN STATIC AUTO REGISTER INLINE
 %token	CONST RESTRICT VOLATILE
-%token	BOOL CHAR SHORT INT LONG SIGNED UNSIGNED FLOAT DOUBLE VOID
+%token<val>	BOOL CHAR SHORT INT LONG SIGNED UNSIGNED FLOAT DOUBLE VOID
 %token	COMPLEX IMAGINARY 
 %token	STRUCT UNION ENUM ELLIPSIS
 
@@ -205,8 +205,8 @@ constant_expression
 	;
 
 declaration
-	: declaration_specifiers ';' {	type=2; printf("%s \n",$1); /*variables*/}
-	| declaration_specifiers init_declarator_list ';' {	type=2; printf("%s,%s \n",$1,$2); /*variables*/}
+	: declaration_specifiers ';' {type=2; printf("variable : %s \n",$1); /*variables*/}
+	| declaration_specifiers init_declarator_list ';' {create_variable($2,$1,"description");	/*type=2; printf("type : %s variable :%s \n",$1,); variables*/}
 	| static_assert_declaration
 	;
 
@@ -214,7 +214,7 @@ declaration_specifiers
 	: storage_class_specifier declaration_specifiers {/*ajouter_typedef($2);*/}
 	| storage_class_specifier
 	| type_specifier declaration_specifiers 
-	| type_specifier
+	| type_specifier 
 	| type_qualifier declaration_specifiers
 	| type_qualifier
 	| function_specifier declaration_specifiers
@@ -243,7 +243,7 @@ storage_class_specifier
 	;
 
 type_specifier
-	: VOID
+	: VOID 
 	| CHAR
 	| SHORT
 	| INT
@@ -341,24 +341,12 @@ alignment_specifier
 	;
 
 declarator
-	: pointer direct_declarator {$$=$2;}
-	| direct_declarator {$$=$1;}
+	: pointer direct_declarator
+	| direct_declarator
 	;
 
 direct_declarator
-	: IDENTIFIER {
-				printf("type : %d \n",type);
-				switch (type){
-					case 1:
-						fprintf(stderr,"fonction %s \n",$1);
-						break;
-					case 2:
-						fprintf(stderr,"variable %s \n",$1);
-						break;
-					default :
-						yyerror("declaration error \n");
-								}
-				}
+	: IDENTIFIER
 	| '(' declarator ')'
 	| direct_declarator '[' ']'  {printf("%s \n",$1);}
 	| direct_declarator '[' '*' ']' 
@@ -370,7 +358,7 @@ direct_declarator
 	| direct_declarator '[' type_qualifier_list ']'
 	| direct_declarator '[' assignment_expression ']'
 	| direct_declarator '(' parameter_type_list ')'
-	| direct_declarator '(' ')'
+	| direct_declarator '(' ')' {deny_parameter();}
 	| direct_declarator '(' identifier_list ')'
 	;
 
@@ -389,7 +377,7 @@ type_qualifier_list
 
 parameter_type_list
 	: parameter_list ',' ELLIPSIS
-	| parameter_list
+	| parameter_list 
 	;
 
 parameter_list
@@ -398,7 +386,7 @@ parameter_list
 	;
 
 parameter_declaration
-	: declaration_specifiers declarator
+	: declaration_specifiers declarator {printf("parameter");add_parameter($1,$2,"descri");  printf("type : %s parameter  : %s \n",$1,$2);}
 	| declaration_specifiers abstract_declarator
 	| declaration_specifiers
 	;
@@ -476,7 +464,7 @@ static_assert_declaration
 
 statement
 	: labeled_statement
-	| compound_statement
+	| compound_statement 
 	| expression_statement
 	| selection_statement
 	| iteration_statement
@@ -490,18 +478,18 @@ labeled_statement
 	;
 
 compound_statement
-	: '{' '}'
-	| '{'  block_item_list '}'
+	: '{' '}' 
+	| '{' {printf("in \n");} block_item_list  '}'  {printf("out \n");}
 	;
 
 block_item_list
-	: block_item
+	: block_item 
 	| block_item_list block_item
 	;
 
 block_item
-	: declaration
-	| statement
+	: declaration 
+	| statement 
 	;
 
 expression_statement
@@ -543,8 +531,8 @@ external_declaration
 	;
 
 function_definition
-	: declaration_specifiers declarator declaration_list compound_statement 
-	| declaration_specifiers declarator compound_statement
+	: declaration_specifiers  declarator declaration_list compound_statement
+	| declaration_specifiers[ds]  declarator[d] {printf("definition");name_function($d,$ds,"description");} compound_statement[c]
 	;
 
 declaration_list

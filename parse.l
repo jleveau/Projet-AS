@@ -75,11 +75,11 @@ static int check_type(void);
 "goto"					{print_balise_span("type_specifier","goto"); return  GOTO;} 
 "if"					{print_balise_span("jaune","if"); return  IF;} 
 "inline"				{print_balise_span("type_specifier","inline"); return  INLINE;} 
-"int"					{print_balise_span("type_specifier","int"); return  INT;} 
+"int"					{print_balise_span("type_specifier","int"); yylval.val="int";return  INT;} 
 "long"					{print_balise_span("type_specifier","long"); return  LONG;} 
 "register"				{print_balise_span("type_specifier","register"); return  REGISTER;} 
 "restrict"				{print_balise_span("type_specifier","restrict"); return  RESTRICT;} 
-"return"				{print_balise_span("jaune","break"); return  RETURN;} 
+"return"				{print_balise_span("jaune","return"); return  RETURN;} 
 "short"					{print_balise_span("type_specifier","short"); return  SHORT;} 
 "signed"				{print_balise_span("type_specifier","signed"); return  SIGNED;} 
 "sizeof"				{print_balise_span("jump_statement","sizeof"); return  SIZEOF;} 
@@ -88,7 +88,7 @@ static int check_type(void);
 "typedef"				{print_balise_span("type_specifier","typedef");  return  TYPEDEF;} 
 "union"					{print_balise_span("type_specifier","union"); return  UNION;} 
 "unsigned"				{print_balise_span("type_specifier","unsigned"); return  UNSIGNED;} 
-"void"					{print_balise_span("type_specifier","void");return  VOID;} 
+"void"					{print_balise_span("type_specifier","void"); yylval.val="void";return  VOID;} 
 "volatile"				{print_balise_span("type_specifier","volatile");return  VOLATILE;} 
 "while"					{print_balise_span("type_specifier","while");return  WHILE;} 
 
