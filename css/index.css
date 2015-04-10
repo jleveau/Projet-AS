@@ -62,3 +62,8 @@ color:#0705e5;
 {
 color:#f73c22;
 }
+
+div[class^='block']
+{
+background-color:yellow;
+}

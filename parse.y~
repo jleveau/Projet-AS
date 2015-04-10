@@ -4,7 +4,7 @@
 void yyerror(const char *);  /* prints grammar violation message */
 
 int type=0; //0 = default, 1 = fonction,2 = variable;
-char* tmp;
+
 %}
 
 %union{
@@ -80,8 +80,8 @@ postfix_expression
 	| postfix_expression PTR_OP IDENTIFIER
 	| postfix_expression INC_OP
 	| postfix_expression DEC_OP
-	| '(' type_name ')' '{' {tmp=new_block(list_create());} initializer_list '}' {fin_block(tmp);/*je crois que c'est la block d'une fonctionne, à vérifier*/}
-	| '(' type_name ')' '{' {tmp=new_block(list_create());} initializer_list ',' '}' {fin_block(tmp);}
+	| '(' type_name ')' '{' {new_block();} initializer_list '}' {fin_block();/*je crois que c'est la block d'une fonctionne, à vérifier*/}
+	| '(' type_name ')' '{' {new_block();} initializer_list ',' '}' {fin_block();}
 	;
 
 argument_expression_list
@@ -262,8 +262,8 @@ type_specifier
 	;
 
 struct_or_union_specifier
-	: struct_or_union '{' {tmp=new_block(list_create());} struct_declaration_list '}' {fin_block(tmp);} 
-	| struct_or_union IDENTIFIER '{' {tmp=new_block(list_create());} struct_declaration_list '}' {fin_block(tmp);}
+	: struct_or_union '{' {new_block();} struct_declaration_list '}' {fin_block();} 
+	| struct_or_union IDENTIFIER '{' {new_block();} struct_declaration_list '}' {fin_block();}
 	| struct_or_union IDENTIFIER
 	;
 
@@ -302,10 +302,10 @@ struct_declarator
 	;
 
 enum_specifier
-	: ENUM '{'{tmp=new_block(list_create());} enumerator_list '}' {fin_block(tmp);}
-	| ENUM '{' {tmp=new_block(list_create());} enumerator_list ',' '}' {fin_block(tmp);}
-	| ENUM IDENTIFIER '{'{tmp=new_block(list_create());} enumerator_list '}' {fin_block(tmp);}
-	| ENUM IDENTIFIER '{' {tmp=new_block(list_create());} enumerator_list ',' '}'{fin_block(tmp);}
+	: ENUM '{'{new_block();} enumerator_list '}' {fin_block();}
+	| ENUM '{' {new_block();} enumerator_list ',' '}' {fin_block();}
+	| ENUM IDENTIFIER '{'{new_block();} enumerator_list '}' {fin_block();}
+	| ENUM IDENTIFIER '{' {new_block();} enumerator_list ',' '}'{fin_block();}
 	| ENUM IDENTIFIER
 	;
 
@@ -371,7 +371,7 @@ direct_declarator
 	| direct_declarator '[' assignment_expression ']'
 	| direct_declarator '(' parameter_type_list ')'
 	| direct_declarator '(' ')'
-	| direct_declarator '(' {/*cree nouvelle liste pour passer en parametre à tmp=new_block list l=list_create();*/} identifier_list {}')'
+	| direct_declarator '(' identifier_list ')'
 	;
 
 pointer
@@ -490,8 +490,8 @@ labeled_statement
 	;
 
 compound_statement
-	: '{' {tmp=new_block(list_create());}  {fin_block("block0");/*"block0 car tmp fait bugguer; à régler*/} '}'
-	| '{' {tmp=new_block(list_create());}  block_item_list '}' {fin_block("block0");}
+	: '{' '}' {/*pas un block*/}
+	| '{' {new_block();}  block_item_list '}' {fin_block();}
 	;
 
 block_item_list

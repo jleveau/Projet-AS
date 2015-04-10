@@ -8,6 +8,7 @@ typedef struct balise* balise;
 
 FILE* f_output;
 int indent;
+int id_block;
 
 
 void print_fin_balise(struct balise* b);
@@ -16,7 +17,8 @@ balise print_debut_balise(char* nom,char* classe);
 void ajouter_attribut(balise b, char *nom, char* val);
 void print_fin_debut_balise();
 balise creer_balise(char *nom, char* classe);
-
+balise creer_balise_block(char* id);
 void print_balise_span(char* type, char* param);
+int anchor_balise();
 
 #endif

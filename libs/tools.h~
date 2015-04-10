@@ -33,7 +33,6 @@ stack variables_stack;
 
 
 char* new_block(list l);
-void fin_blockTEST();
 void fin_block(char* id);
 
 list function_list;
