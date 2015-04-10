@@ -33,7 +33,6 @@ stack variables_stack;
 
 
 void new_block();
-void init_id_manager();
 
 list function_list;
 stack typedef_stack;
