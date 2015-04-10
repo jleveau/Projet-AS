@@ -64,9 +64,14 @@
 /* Copy the first part of user declarations.  */
 #line 1 "parse.y" /* yacc.c:339  */
 
-#include <stdio.h>
+#include <stdio.h> 
 
-#line 70 "parse.tab.c" /* yacc.c:339  */
+void yyerror(const char *);  /* prints grammar violation message */
+
+int type=0; //0 = default, 1 = fonction,2 = variable;
+
+
+#line 75 "parse.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -182,11 +187,11 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 5 "parse.y" /* yacc.c:355  */
+#line 10 "parse.y" /* yacc.c:355  */
 
 	char* val;
 
-#line 190 "parse.tab.c" /* yacc.c:355  */
+#line 195 "parse.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -201,7 +206,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 205 "parse.tab.c" /* yacc.c:358  */
+#line 210 "parse.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -506,34 +511,34 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    33,    33,    34,    35,    36,    37,    41,    42,    43,
-      47,    51,    52,    56,    60,    61,    65,    66,    70,    71,
-      72,    73,    74,    75,    76,    77,    78,    79,    83,    84,
-      88,    89,    90,    91,    92,    93,    94,    98,    99,   100,
-     101,   102,   103,   107,   108,   112,   113,   114,   115,   119,
-     120,   121,   125,   126,   127,   131,   132,   133,   134,   135,
-     139,   140,   141,   145,   146,   150,   151,   155,   156,   160,
-     161,   165,   166,   170,   171,   175,   176,   180,   181,   182,
-     183,   184,   185,   186,   187,   188,   189,   190,   194,   195,
-     199,   203,   204,   205,   209,   210,   211,   212,   213,   214,
-     215,   216,   217,   218,   222,   223,   227,   228,   232,   233,
-     234,   235,   236,   237,   241,   242,   243,   244,   245,   246,
-     247,   248,   249,   250,   251,   252,   253,   254,   255,   256,
-     260,   261,   262,   266,   267,   271,   272,   276,   277,   278,
-     282,   283,   284,   285,   289,   290,   294,   295,   296,   300,
-     301,   302,   303,   304,   308,   309,   313,   314,   318,   322,
-     323,   324,   325,   329,   330,   334,   335,   339,   340,   344,
-     345,   346,   347,   348,   349,   350,   351,   352,   353,   354,
-     355,   356,   357,   361,   362,   363,   364,   368,   369,   374,
-     375,   379,   380,   384,   385,   386,   390,   391,   395,   396,
-     400,   401,   402,   406,   407,   408,   409,   410,   411,   412,
-     413,   414,   415,   416,   417,   418,   419,   420,   421,   422,
-     423,   424,   425,   426,   430,   431,   432,   436,   437,   438,
-     439,   443,   447,   448,   452,   453,   457,   461,   462,   463,
-     464,   465,   466,   470,   471,   472,   476,   477,   481,   482,
-     486,   487,   491,   492,   496,   497,   498,   502,   503,   504,
-     505,   506,   507,   511,   512,   513,   514,   515,   519,   520,
-     524,   525,   529,   530,   534,   535
+       0,    38,    38,    39,    40,    41,    42,    46,    47,    48,
+      52,    56,    57,    61,    65,    66,    70,    71,    75,    76,
+      77,    78,    79,    80,    81,    82,    83,    84,    88,    89,
+      93,    94,    95,    96,    97,    98,    99,   103,   104,   105,
+     106,   107,   108,   112,   113,   117,   118,   119,   120,   124,
+     125,   126,   130,   131,   132,   136,   137,   138,   139,   140,
+     144,   145,   146,   150,   151,   155,   156,   160,   161,   165,
+     166,   170,   171,   175,   176,   180,   181,   185,   186,   187,
+     188,   189,   190,   191,   192,   193,   194,   195,   199,   200,
+     204,   208,   209,   210,   214,   215,   216,   217,   218,   219,
+     220,   221,   222,   223,   227,   228,   232,   233,   237,   238,
+     239,   240,   241,   242,   246,   247,   248,   249,   250,   251,
+     252,   253,   254,   255,   256,   257,   258,   259,   260,   261,
+     265,   266,   267,   271,   272,   276,   277,   281,   282,   283,
+     287,   288,   289,   290,   294,   295,   299,   300,   301,   305,
+     306,   307,   308,   309,   313,   314,   318,   319,   323,   327,
+     328,   329,   330,   334,   335,   339,   340,   344,   345,   349,
+     362,   363,   364,   365,   366,   367,   368,   369,   370,   371,
+     372,   373,   374,   378,   379,   380,   381,   385,   386,   391,
+     392,   396,   397,   401,   402,   403,   407,   408,   412,   413,
+     417,   418,   419,   423,   424,   425,   426,   427,   428,   429,
+     430,   431,   432,   433,   434,   435,   436,   437,   438,   439,
+     440,   441,   442,   443,   447,   448,   449,   453,   454,   455,
+     456,   460,   464,   465,   469,   470,   474,   478,   479,   480,
+     481,   482,   483,   487,   488,   489,   493,   494,   498,   499,
+     503,   504,   508,   509,   513,   514,   515,   519,   520,   521,
+     522,   523,   524,   528,   529,   530,   531,   532,   536,   537,
+     541,   542,   546,   547,   551,   552
 };
 #endif
 
@@ -2052,20 +2057,62 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 92:
-#line 204 "parse.y" /* yacc.c:1646  */
-    {printf("%s \n",(yyvsp[-1].val));}
-#line 2059 "parse.tab.c" /* yacc.c:1646  */
+        case 91:
+#line 208 "parse.y" /* yacc.c:1646  */
+    {	type=2; printf("%s \n",(yyvsp[-1].val)); /*variables*/}
+#line 2064 "parse.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 92:
+#line 209 "parse.y" /* yacc.c:1646  */
+    {	type=2; printf("%s,%s \n",(yyvsp[-2].val),(yyvsp[-1].val)); /*variables*/}
+#line 2070 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 94:
-#line 209 "parse.y" /* yacc.c:1646  */
+#line 214 "parse.y" /* yacc.c:1646  */
     {/*ajouter_typedef($2);*/}
-#line 2065 "parse.tab.c" /* yacc.c:1646  */
+#line 2076 "parse.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 167:
+#line 344 "parse.y" /* yacc.c:1646  */
+    {(yyval.val)=(yyvsp[0].val);}
+#line 2082 "parse.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 168:
+#line 345 "parse.y" /* yacc.c:1646  */
+    {(yyval.val)=(yyvsp[0].val);}
+#line 2088 "parse.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 169:
+#line 349 "parse.y" /* yacc.c:1646  */
+    {
+				printf("type : %d \n",type);
+				switch (type){
+					case 1:
+						fprintf(stderr,"fonction %s \n",(yyvsp[0].val));
+						break;
+					case 2:
+						fprintf(stderr,"variable %s \n",(yyvsp[0].val));
+						break;
+					default :
+						yyerror("declaration error \n");
+								}
+				}
+#line 2106 "parse.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 171:
+#line 363 "parse.y" /* yacc.c:1646  */
+    {printf("%s \n",(yyvsp[-2].val));}
+#line 2112 "parse.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 2069 "parse.tab.c" /* yacc.c:1646  */
+#line 2116 "parse.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2293,11 +2340,8 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 538 "parse.y" /* yacc.c:1906  */
+#line 555 "parse.y" /* yacc.c:1906  */
 
-
-void yyerror(const char *s)
-{
-	fflush(stdout);
-	fprintf(stderr, "*** %s\n", s);
+void yyerror(const char *s){
+	fprintf(stderr,"syntaxe error %s",s);
 }

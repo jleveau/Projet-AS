@@ -1,13 +1,18 @@
 %{
 #include <stdio.h> 
+
+void yyerror(const char *);  /* prints grammar violation message */
+
+int type=0; //0 = default, 1 = fonction,2 = variable;
+
 %}
 
 %union{
 	char* val;
 }
-
-%type<val> init_declarator_list init_declarator initializer declarator
-%token	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
+%type<val> function_definition declaration_specifiers declaration_list compound_statement
+%type<val> declarator direct_declarator init_declarator_list init_declarator initializer 
+%token<val>	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
 %token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
 %token	AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
 %token	SUB_ASSIGN LEFT_ASSIGN RIGHT_ASSIGN AND_ASSIGN
@@ -200,15 +205,15 @@ constant_expression
 	;
 
 declaration
-	: declaration_specifiers ';'
-	| declaration_specifiers init_declarator_list ';' {printf("%s \n",$2);}
+	: declaration_specifiers ';' {	type=2; printf("%s \n",$1); /*variables*/}
+	| declaration_specifiers init_declarator_list ';' {	type=2; printf("%s,%s \n",$1,$2); /*variables*/}
 	| static_assert_declaration
 	;
 
 declaration_specifiers
 	: storage_class_specifier declaration_specifiers {/*ajouter_typedef($2);*/}
 	| storage_class_specifier
-	| type_specifier declaration_specifiers
+	| type_specifier declaration_specifiers 
 	| type_specifier
 	| type_qualifier declaration_specifiers
 	| type_qualifier
@@ -219,13 +224,13 @@ declaration_specifiers
 	;
 
 init_declarator_list
-	: init_declarator {$$=$1;}
-	| init_declarator_list ',' init_declarator {$$=$1; /*faut ajouter les suivants après*/}
+	: init_declarator 
+	| init_declarator_list ',' init_declarator 
 	;
 
 init_declarator
 	: declarator '=' initializer
-	| declarator {$$=$1;}
+	| declarator 
 	;
 
 storage_class_specifier
@@ -336,15 +341,27 @@ alignment_specifier
 	;
 
 declarator
-	: pointer direct_declarator {$$=$1;}
+	: pointer direct_declarator {$$=$2;}
 	| direct_declarator {$$=$1;}
 	;
 
 direct_declarator
-	: IDENTIFIER
+	: IDENTIFIER {
+				printf("type : %d \n",type);
+				switch (type){
+					case 1:
+						fprintf(stderr,"fonction %s \n",$1);
+						break;
+					case 2:
+						fprintf(stderr,"variable %s \n",$1);
+						break;
+					default :
+						yyerror("declaration error \n");
+								}
+				}
 	| '(' declarator ')'
-	| direct_declarator '[' ']'
-	| direct_declarator '[' '*' ']'
+	| direct_declarator '[' ']'  {printf("%s \n",$1);}
+	| direct_declarator '[' '*' ']' 
 	| direct_declarator '[' STATIC type_qualifier_list assignment_expression ']'
 	| direct_declarator '[' STATIC assignment_expression ']'
 	| direct_declarator '[' type_qualifier_list '*' ']'
@@ -516,17 +533,17 @@ jump_statement
 	;
 
 translation_unit
-	: external_declaration
-	| translation_unit external_declaration
+	: external_declaration 
+	| translation_unit external_declaration 
 	;
 
 external_declaration
-	: function_definition
-	| declaration
+	:  function_definition 
+	|  declaration 
 	;
 
 function_definition
-	: declaration_specifiers declarator declaration_list compound_statement
+	: declaration_specifiers declarator declaration_list compound_statement 
 	| declaration_specifiers declarator compound_statement
 	;
 
@@ -536,9 +553,6 @@ declaration_list
 	;
 
 %%
-
-void yyerror(const char *s)
-{
-	fflush(stdout);
-	fprintf(stderr, "*** %s\n", s);
+void yyerror(const char *s){
+	fprintf(stderr,"syntaxe error %s",s);
 }

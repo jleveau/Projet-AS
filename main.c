@@ -50,8 +50,7 @@ int fermer_html(FILE* fd){
 void init_structures(){
 	
 	function_list=list_create();
-	
-    init_id_manager();
+	variables_stack=stack_create();
 }
 
 int main(int argc,char** argv){

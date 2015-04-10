@@ -27,7 +27,6 @@ WS  [ \t\v\n\f]
 #include <stdio.h>
 
     
-extern void yyerror(const char *);  /* prints grammar violation message */
 
 extern int sym_type(const char *);  /* returns type from symbol table */
 
@@ -60,7 +59,7 @@ static int check_type(void);
 
 
 
-"#".*                    {//On efface les include et tous ce qui est apres}
+"#".*                    {/*On efface les include et tous ce qui est apres*/}
 "auto"					{print_balise_span("type_specifier","auto"); return AUTO; }
 "case"					{print_balise_span("jaune","case"); return  CASE;} 
 "struct"				{print_balise_span("type_specifier","struct"); return  STRUCT;} 
@@ -80,7 +79,7 @@ static int check_type(void);
 "long"					{print_balise_span("type_specifier","long"); return  LONG;} 
 "register"				{print_balise_span("type_specifier","register"); return  REGISTER;} 
 "restrict"				{print_balise_span("type_specifier","restrict"); return  RESTRICT;} 
-"return"				{print_balise_span("jaune","break"); return  BREAK;} 
+"return"				{print_balise_span("jaune","break"); return  RETURN;} 
 "short"					{print_balise_span("type_specifier","short"); return  SHORT;} 
 "signed"				{print_balise_span("type_specifier","signed"); return  SIGNED;} 
 "sizeof"				{print_balise_span("jump_statement","sizeof"); return  SIZEOF;} 
@@ -204,7 +203,6 @@ static int check_type(void);
     alors c'est un identifier */
 static int check_type(void)
 {
-	printf("%s \n",yytext);
 	fprintf(f_output,"%s",yytext);  
   switch (sym_type(yytext))
     {
