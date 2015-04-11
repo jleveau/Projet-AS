@@ -10,18 +10,20 @@ typedef struct cell_t{
 }*cell;
 
 typedef struct list_t {
-	cell first;
+	cell first; cell last;
 } *list;
 
 typedef struct variable_t {
 	char* nom;
+	char* type;
 	char* description;
 } *variable;
 
 typedef struct function_t {
 	char* nom;
+	char* type;
 	char* description;
-	variable* arguments; //Le nombre d'arguments ne changeant pas, on va utiliser un tableau.
+	list arguments;
 	int nb_arguments;
 } *function;
 
@@ -40,11 +42,19 @@ list function_list;
 stack typedef_stack;
 
 
-void create_variable(char* name, char* description);
+void create_variable(char* name,char* type,char* description);
+
+void add_parameter(char* nom, char* type,char* description);
+void name_function(char* type,char* nom,char* description);
+
 void add_to_list(list l,void* elem);
 list list_create();
+int list_empty(list l);
 
 void print_variable(variable v);
 void print_variables();
+void print_function(function f);
+void print_functions();
+void deny_parameter();
 
 #endif

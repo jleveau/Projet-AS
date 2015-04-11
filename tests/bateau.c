@@ -1,16 +1,13 @@
 
 /* test_queue.c */
-void g(){int d=0;}
-int b;
 
-int f(int a, int b){
+
+
+int f(int a, int b,int h,int z){
 	if (a){
-		int c;
+		int c;int d;
 	}
 	return a;
 }
 
-int main () 
-{
-	int a=4;
-}
+void g(){int d=0;}

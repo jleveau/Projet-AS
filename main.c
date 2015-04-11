@@ -52,19 +52,23 @@ void init_structures(){
 	function_list=list_create();
 	variables_stack=stack_create();
 	new_block(variables_stack);
+
 }
 
 int main(int argc,char** argv){
 	int fd=open(argv[1],O_RDONLY);
 	dup2(fd,0);
-	
+
    create_html("test");
    //assert(argc==2 && "invalide number of argument");
    
   init_structures();
 
   yyparse(); // On parse l'entree (une seule fois)
+  
   print_variables();
+  printf("\n \n");
+  print_functions();
 
   if(fermer_html(f_output)){
     perror("fermeture du html");

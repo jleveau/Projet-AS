@@ -1159,7 +1159,7 @@ YY_RULE_SETUP
 case 16:
 YY_RULE_SETUP
 #line 78 "parse.l"
-{print_balise_span("type_specifier","int"); return  INT;} 
+{print_balise_span("type_specifier","int"); yylval.val="int";return  INT;} 
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
@@ -1179,7 +1179,7 @@ YY_RULE_SETUP
 case 20:
 YY_RULE_SETUP
 #line 82 "parse.l"
-{print_balise_span("jaune","break"); return  RETURN;} 
+{print_balise_span("jaune","return"); return  RETURN;} 
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
@@ -1224,7 +1224,7 @@ YY_RULE_SETUP
 case 29:
 YY_RULE_SETUP
 #line 91 "parse.l"
-{print_balise_span("type_specifier","void");return  VOID;} 
+{print_balise_span("type_specifier","void"); yylval.val="void";return  VOID;} 
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
