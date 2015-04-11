@@ -80,8 +80,8 @@ postfix_expression
 	| postfix_expression PTR_OP IDENTIFIER
 	| postfix_expression INC_OP
 	| postfix_expression DEC_OP
-	| '(' type_name ')' '{' {tmp=new_block(list_create());} initializer_list '}' {fin_block(tmp);/*je crois que c'est la block d'une fonctionne, à vérifier*/}
-	| '(' type_name ')' '{' {tmp=new_block(list_create());} initializer_list ',' '}' {fin_block(tmp);}
+	| '(' type_name ')' '{' {tmp=new_block(list_create());} initializer_list '}' {fin_block("tmp");/*je crois que c'est la block d'une fonctionne, à vérifier*/}
+	| '(' type_name ')' '{' {tmp=new_block(list_create());} initializer_list ',' '}' {fin_block("tmp");}
 	;
 
 argument_expression_list
@@ -262,8 +262,8 @@ type_specifier
 	;
 
 struct_or_union_specifier
-	: struct_or_union '{' {tmp=new_block(list_create());} struct_declaration_list '}' {fin_block(tmp);} 
-	| struct_or_union IDENTIFIER '{' {tmp=new_block(list_create());} struct_declaration_list '}' {fin_block(tmp);}
+	: struct_or_union '{' {tmp=new_block(list_create());} struct_declaration_list '}' {fin_block("tmp");} 
+	| struct_or_union IDENTIFIER '{' {tmp=new_block(list_create());} struct_declaration_list '}' {fin_block("tmp");}
 	| struct_or_union IDENTIFIER
 	;
 
@@ -302,10 +302,10 @@ struct_declarator
 	;
 
 enum_specifier
-	: ENUM '{'{tmp=new_block(list_create());} enumerator_list '}' {fin_block(tmp);}
-	| ENUM '{' {tmp=new_block(list_create());} enumerator_list ',' '}' {fin_block(tmp);}
-	| ENUM IDENTIFIER '{'{tmp=new_block(list_create());} enumerator_list '}' {fin_block(tmp);}
-	| ENUM IDENTIFIER '{' {tmp=new_block(list_create());} enumerator_list ',' '}'{fin_block(tmp);}
+	: ENUM '{'{tmp=new_block(list_create());} enumerator_list '}' {fin_block("tmp");}
+	| ENUM '{' {tmp=new_block(list_create());} enumerator_list ',' '}' {fin_block("tmp");}
+	| ENUM IDENTIFIER '{'{tmp=new_block(list_create());} enumerator_list '}' {fin_block("tmp");}
+	| ENUM IDENTIFIER '{' {tmp=new_block(list_create());} enumerator_list ',' '}'{fin_block("tmp");}
 	| ENUM IDENTIFIER
 	;
 
