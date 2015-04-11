@@ -10,7 +10,7 @@ typedef struct cell_t{
 }*cell;
 
 typedef struct list_t {
-	cell first; cell last;
+	cell first;
 } *list;
 
 typedef struct variable_t {
@@ -55,6 +55,5 @@ void print_variable(variable v);
 void print_variables();
 void print_function(function f);
 void print_functions();
-void deny_parameter();
 
 #endif

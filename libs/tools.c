@@ -131,10 +131,6 @@ void name_function(char* type,char* nom,char* description){
 	}
 }
 
-void new_block(){
-	stack_push(variables_stack,list_create());
-}
-
 void print_function(function f){
 	printf("func : %s %s ( ",f->type,f->nom);
 	cell l=f->arguments->first;
