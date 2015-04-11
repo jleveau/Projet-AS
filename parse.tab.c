@@ -2238,7 +2238,7 @@ yyreduce:
 
   case 257:
 #line 493 "parse.y" /* yacc.c:1646  */
-    {fin_block(tmp);/*"block0 car tmp fait bugguer; à régler*/}
+    {fin_block("block0");/*"block0 car tmp fait bugguer; à régler*/}
 #line 2243 "parse.tab.c" /* yacc.c:1646  */
     break;
 
@@ -2250,7 +2250,7 @@ yyreduce:
 
   case 260:
 #line 494 "parse.y" /* yacc.c:1646  */
-    {fin_block(tmp);}
+    {fin_block("block0");}
 #line 2255 "parse.tab.c" /* yacc.c:1646  */
     break;
 
