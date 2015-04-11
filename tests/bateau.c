@@ -1,6 +1,6 @@
 
 /* test_queue.c */
-void g(){int d=0;}
+
 
 
 int f(int a, int b,int h,int z){
@@ -9,3 +9,5 @@ int f(int a, int b,int h,int z){
 	}
 	return a;
 }
+
+void g(){int d=0;}

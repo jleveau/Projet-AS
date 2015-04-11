@@ -64,6 +64,7 @@ int main(int argc,char** argv){
   init_structures();
 
   yyparse(); // On parse l'entree (une seule fois)
+  
   print_variables();
   printf("\n \n");
   print_functions();

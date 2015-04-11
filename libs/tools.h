@@ -10,7 +10,7 @@ typedef struct cell_t{
 }*cell;
 
 typedef struct list_t {
-	cell first;
+	cell first; cell last;
 } *list;
 
 typedef struct variable_t {
@@ -27,7 +27,6 @@ typedef struct function_t {
 	int nb_arguments;
 } *function;
 
-int parameters_allowed; 
 
 
 /* Englobe les piles de déclaration (variables, et typedef) */
@@ -48,6 +47,7 @@ void name_function(char* type,char* nom,char* description);
 
 void add_to_list(list l,void* elem);
 list list_create();
+int list_empty(list l);
 
 void print_variable(variable v);
 void print_variables();

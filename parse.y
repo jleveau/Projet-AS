@@ -3,7 +3,6 @@
 
 void yyerror(const char *);  /* prints grammar violation message */
 
-int type=0; //0 = default, 1 = fonction,2 = variable;
 
 %}
 
@@ -205,7 +204,7 @@ constant_expression
 	;
 
 declaration
-	: declaration_specifiers ';' {type=2; printf("variable : %s \n",$1); /*variables*/}
+	: declaration_specifiers ';' {printf("variable : %s \n",$1); /*variables*/}
 	| declaration_specifiers init_declarator_list ';' {create_variable($2,$1,"description");	/*type=2; printf("type : %s variable :%s \n",$1,); variables*/}
 	| static_assert_declaration
 	;
@@ -348,7 +347,7 @@ declarator
 direct_declarator
 	: IDENTIFIER
 	| '(' declarator ')'
-	| direct_declarator '[' ']'  {printf("%s \n",$1);}
+	| direct_declarator '[' ']'  {printf(" tableau %s \n",$1);}
 	| direct_declarator '[' '*' ']' 
 	| direct_declarator '[' STATIC type_qualifier_list assignment_expression ']'
 	| direct_declarator '[' STATIC assignment_expression ']'
@@ -358,7 +357,7 @@ direct_declarator
 	| direct_declarator '[' type_qualifier_list ']'
 	| direct_declarator '[' assignment_expression ']'
 	| direct_declarator '(' parameter_type_list ')'
-	| direct_declarator '(' ')' {deny_parameter();}
+	| direct_declarator '(' ')'
 	| direct_declarator '(' identifier_list ')'
 	;
 
@@ -386,7 +385,7 @@ parameter_list
 	;
 
 parameter_declaration
-	: declaration_specifiers declarator {printf("parameter");add_parameter($1,$2,"descri");  printf("type : %s parameter  : %s \n",$1,$2);}
+	: declaration_specifiers declarator {add_parameter($2,$1,"descri");}
 	| declaration_specifiers abstract_declarator
 	| declaration_specifiers
 	;
@@ -479,7 +478,7 @@ labeled_statement
 
 compound_statement
 	: '{' '}' 
-	| '{' {printf("in \n");} block_item_list  '}'  {printf("out \n");}
+	| '{' block_item_list  '}' 
 	;
 
 block_item_list
@@ -532,7 +531,7 @@ external_declaration
 
 function_definition
 	: declaration_specifiers  declarator declaration_list compound_statement
-	| declaration_specifiers[ds]  declarator[d] {printf("definition");name_function($d,$ds,"description");} compound_statement[c]
+	| declaration_specifiers[ds]  declarator[d] {name_function($d,$ds,"description");} compound_statement[c]
 	;
 
 declaration_list

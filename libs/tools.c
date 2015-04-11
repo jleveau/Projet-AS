@@ -28,36 +28,28 @@ void create_variable(char* nom,char* type, char* description){
 	add_to_list(l,v);
 }
 
-void add_parameter(char* nom, char* type,char* description){
-	
-	printf("iiiii \n");
-	function f = (function)function_list->first;
-	
-	if (!f){
-		printf("null \n");
-		parameters_allowed=1;
-		function f=malloc(sizeof(*f));
-		f->nom=NULL;
-		f->arguments=list_create();
-		printf("%s avant \n",f->nom);
-
-	}
-	if (f->nom!=NULL){
-		printf("nom \n");
-		parameters_allowed=1;
-		function f=malloc(sizeof(*f));
-		f->arguments=list_create();
-		f->nom=NULL;
-	}
-	printf("apres \n");
+void add_parameter(char* nom, char* type,char* description){	
 	variable v = malloc(sizeof *v);
 	v->type=type;
 	v->nom=nom;
 	v->description="param description";
 	
-	add_to_list(f->arguments,v);
+	if (list_empty(function_list)){
+		function f=malloc(sizeof(*f));
+		f->nom=NULL;
+		f->arguments=list_create();
+		add_to_list(function_list,f);
+	}
 	
-	add_to_list(function_list,f);
+	function f = (function)function_list->first->elem;
+	if (!f->nom)
+		add_to_list(f->arguments,v);
+	else {
+		function f=malloc(sizeof(*f));
+		f->nom=NULL;
+		f->arguments=list_create();
+		add_to_list(function_list,f);
+	}
 }
 
 void add_to_list(list l,void* elem){
@@ -68,20 +60,38 @@ void add_to_list(list l,void* elem){
 	l->first=new;
 }
 
+int list_empty(list l){
+	return !(int)l->first;
+}
+
 void name_function(char* type,char* nom,char* description){
-	function f= (function)function_list->first;
-	if (!parameters_allowed){
+	if (list_empty(function_list) ){
+		function f= malloc(sizeof(*f));
+		f->arguments=list_create();
+		f->nom=nom;
+		f->type=type;
+		f->description=description;
+		add_to_list(function_list,f);	
+
+		return;
+	}
+	function f= (function)function_list->first->elem;
+	if (f->nom){
 		f=malloc(sizeof(*f));
 		f->arguments=list_create();
 		f->nom=NULL;
+		add_to_list(function_list,f);	
+		f->nom=nom;
+		f->type=type;
+		f->description=description;
+		return;
 	}
-	f->nom=nom;
-	f->type=type;
-	f->description=description;
-}
-
-void deny_parameter(){
-	parameters_allowed=0;
+	else {
+		f->nom=nom;
+		f->type=type;
+		f->description=description;
+		return;
+	}
 }
 
 void new_block(){
@@ -89,7 +99,14 @@ void new_block(){
 }
 
 void print_function(function f){
-	printf("%s %s : %s \n",f->type, f->nom,f->description);
+	printf("func : %s %s ( ",f->type,f->nom);
+	cell l=f->arguments->first;
+	while (l){
+		print_variable(l->elem);
+		printf(",");
+		l=l->next;
+	}
+	printf(") \n");
 }
 
 void print_functions(){
@@ -103,7 +120,7 @@ void print_functions(){
 
 
 void print_variable(variable v){
-	printf("%s %s : %s \n",v->type, v->nom,v->description);
+	printf("var : %s %s ",v->type, v->nom);
 }
 
 // affiche la liste au sommet de la pile de variables
@@ -111,6 +128,7 @@ void print_variables(){
 	list l=(list)stack_top(variables_stack);
 	while (l->first!=NULL){
 		print_variable((variable)l->first->elem);
+		printf("\n");
 		l->first=l->first->next;
 	}
 }
