@@ -9,10 +9,23 @@
 #include "parse.tab.h"
 #include "libs/html.h"
 #include "libs/tools.h"
+#include "dirent.h"
 
 /*
 
  */
+
+void ecriture_fichier()
+{
+   struct dirent *lecture;
+   DIR *rep;
+   rep = opendir("./tests/" );
+   while ((lecture = readdir(rep))) {
+      printf("%s\n", lecture->d_name);
+   }
+}
+
+
 FILE* create_html(char* titre){
    f_output=fopen("index.html","w+");
    
