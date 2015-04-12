@@ -31,7 +31,7 @@ if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
     }
     else
       {
-    fprintf(f_output,"<li><a href=\"tests/%s.html\"><i class=\"fa fa-caret-right\"></i> %s</a></li>",lecture->d_name,lecture->d_name);
+    fprintf(f_output,"<li><a href=\"%s.html\"><i class=\"fa fa-caret-right\"></i> %s</a></li>",lecture->d_name,lecture->d_name);
   }
   }
   fprintf(f_output,"</ul>");
@@ -40,8 +40,8 @@ if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
 }
 
 
-FILE* create_html(char* titre){ 
-  f_output=fopen("index.html","w+");
+FILE* create_html(char* titre){
+  f_output=fopen(titre,"w+");
    
 	//header
    fprintf(f_output,"<!doctype html>");
@@ -134,7 +134,7 @@ void init_structures(){
 }
 
 int main(int argc,char** argv){
-  /*  int i=0;
+    int i=0;
   struct dirent *lecture;
   DIR *rep ;
   rep = opendir(argv[1]);
@@ -143,6 +143,7 @@ int main(int argc,char** argv){
     }
     else
       {
+	strcat(lecture->d_name,".html");
     tableau_fichier[i] =lecture->d_name;
     i++;
     printf("%s\n",lecture->d_name);
@@ -154,12 +155,12 @@ int main(int argc,char** argv){
     {    
       int fd=open(tableau_fichier[i],O_RDONLY);
       dup2(fd,0);
-      printf("ici ici\n");
+      printf("avant create_html\n");
       create_html(tableau_fichier[i]);
       //assert(argc==2 && "invalide number of argument");
-      printf("lala\n");
+      printf("après + avant init_structure\n");
       init_structures();
-      printf("entre les deux\n");
+      printf("après + avant yyarse()\n");
       yyparse(); // On parse l'entree (une seule fois)
       printf("après yyparse();");
       print_variables();
@@ -171,10 +172,13 @@ int main(int argc,char** argv){
 	perror("fermeture du html");
 	exit(EXIT_FAILURE);
       }
+      printf("on passe par ici les gonz\n");
+      FILE * fp = fopen(tableau_fichier[i+1],"w+");
+      yyrestart(fp);
       i++;
     }
-    return 0;*/
-
+    return 0;
+  /*
   int fd=open(argv[1],O_RDONLY);
   dup2(fd,0);
   create_html("index.html");
@@ -186,5 +190,5 @@ int main(int argc,char** argv){
     perror("fermeture du html");
     exit(EXIT_FAILURE);
   }
-  return 0;
+  return 0;*/
 }
