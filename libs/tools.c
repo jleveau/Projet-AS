@@ -65,18 +65,18 @@ void add_to_list(list l,void* elem){
 }
 
 //peut-être nécessaire que ca retourne une balise, à voir
-char* new_block(list variables_stack){
+char* new_block(list l){
   fprintf(f_output, "/*new block */\n");
-  char block_nameID[20];	
+char block_nameID[20];	
   sprintf(block_nameID, "block%d", id_block); 
   balise block=creer_balise_block(block_nameID);
   // block->id=id_block;
   id_block++;
-  if(!variables_stack){
-    variables_stack=list_create();		
+  if(!l){
+    l=list_create();		
   }	
-  stack_push(variables_stack, variables_stack);
-  
+  stack_push(variables_stack, l);
+
 return block_nameID; 
 }
 

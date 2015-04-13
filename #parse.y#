@@ -1,16 +1,15 @@
 %{
-#include <stdio.h>
+#include <stdio.h> 
 
 void yyerror(const char *);  /* prints grammar violation message */
 
-char* tmp;
 
 %}
 
 %union{
 	char* val;
 }
-%type<val> function_definition declaration_specifiers declaration_list compound_statement block_item_list declaration statement block_item parameter_declaration 
+%type<val> function_definition declaration_specifiers declaration_list ompound_statement block_item_list declaration statement block_item parameter_declaration 
 %type<val> declarator direct_declarator init_declarator_list init_declarator initializer  type_specifier
 %token<val>	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
 %token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
@@ -80,8 +79,8 @@ postfix_expression
 	| postfix_expression PTR_OP IDENTIFIER
 	| postfix_expression INC_OP
 	| postfix_expression DEC_OP
-	| '(' type_name ')' '{' {new_block(NULL);} initializer_list '}' {fin_block("tmp");/*je crois que c'est la block d'une fonctionne, à vérifier*/}
-	| '(' type_name ')' '{' {new_block(NULL);} initializer_list ',' '}' {fin_block("tmp");}
+	| '(' type_name ')' '{' initializer_list '}'
+	| '(' type_name ')' '{' initializer_list ',' '}'
 	;
 
 argument_expression_list
@@ -262,8 +261,8 @@ type_specifier
 	;
 
 struct_or_union_specifier
-	: struct_or_union '{' {new_block(NULL);} struct_declaration_list '}' {fin_block("tmp");} 
-	| struct_or_union IDENTIFIER '{' {new_block(NULL);} struct_declaration_list '}' {fin_block("tmp");}
+	: struct_or_union '{' struct_declaration_list '}'
+	| struct_or_union IDENTIFIER '{' struct_declaration_list '}'
 	| struct_or_union IDENTIFIER
 	;
 
@@ -302,10 +301,10 @@ struct_declarator
 	;
 
 enum_specifier
-	: ENUM '{'{new_block(NULL);} enumerator_list '}' {fin_block("tmp");}
-	| ENUM '{' {new_block(NULL);} enumerator_list ',' '}' {fin_block("tmp");}
-	| ENUM IDENTIFIER '{'{new_block(NULL);} enumerator_list '}' {fin_block("tmp");}
-	| ENUM IDENTIFIER '{' {new_block(NULL);} enumerator_list ',' '}'{fin_block("tmp");}
+	: ENUM '{' enumerator_list '}'
+	| ENUM '{' enumerator_list ',' '}'
+	| ENUM IDENTIFIER '{' enumerator_list '}'
+	| ENUM IDENTIFIER '{' enumerator_list ',' '}'
 	| ENUM IDENTIFIER
 	;
 
@@ -359,7 +358,7 @@ direct_declarator
 	| direct_declarator '[' assignment_expression ']'
 	| direct_declarator '(' parameter_type_list ')'
 	| direct_declarator '(' ')'
-	| direct_declarator '(' {/*cree nouvelle liste pour passer en parametre à new_block list l=list_create();*/} identifier_list {}')'
+	| direct_declarator '(' identifier_list ')'
 	;
 
 pointer
@@ -478,8 +477,8 @@ labeled_statement
 	;
 
 compound_statement
-	: '{' {new_block(NULL);}  {fin_block("block0");/*"block0 car tmp fait bugguer; à régler*/} '}'
-	| '{' {new_block(NULL);}  block_item_list '}' {fin_block("block0");}
+	: '{' '}' 
+	| '{' block_item_list  '}' 
 	;
 
 block_item_list

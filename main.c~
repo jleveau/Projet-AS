@@ -64,7 +64,7 @@ void init_structures(){
 	
 	function_list=list_create();
 	variables_stack=stack_create();
-	new_block(NULL);
+	new_block(variables_stack);
 
 }
 

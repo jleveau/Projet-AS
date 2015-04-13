@@ -80,8 +80,8 @@ postfix_expression
 	| postfix_expression PTR_OP IDENTIFIER
 	| postfix_expression INC_OP
 	| postfix_expression DEC_OP
-	| '(' type_name ')' '{' {new_block(NULL);} initializer_list '}' {fin_block("tmp");/*je crois que c'est la block d'une fonctionne, à vérifier*/}
-	| '(' type_name ')' '{' {new_block(NULL);} initializer_list ',' '}' {fin_block("tmp");}
+	| '(' type_name ')' '{' {tmp=new_block(list_create());} initializer_list '}' {fin_block("tmp");/*je crois que c'est la block d'une fonctionne, à vérifier*/}
+	| '(' type_name ')' '{' {tmp=new_block(list_create());} initializer_list ',' '}' {fin_block("tmp");}
 	;
 
 argument_expression_list
@@ -262,8 +262,8 @@ type_specifier
 	;
 
 struct_or_union_specifier
-	: struct_or_union '{' {new_block(NULL);} struct_declaration_list '}' {fin_block("tmp");} 
-	| struct_or_union IDENTIFIER '{' {new_block(NULL);} struct_declaration_list '}' {fin_block("tmp");}
+	: struct_or_union '{' {tmp=new_block(list_create());} struct_declaration_list '}' {fin_block("tmp");} 
+	| struct_or_union IDENTIFIER '{' {tmp=new_block(list_create());} struct_declaration_list '}' {fin_block("tmp");}
 	| struct_or_union IDENTIFIER
 	;
 
@@ -302,10 +302,10 @@ struct_declarator
 	;
 
 enum_specifier
-	: ENUM '{'{new_block(NULL);} enumerator_list '}' {fin_block("tmp");}
-	| ENUM '{' {new_block(NULL);} enumerator_list ',' '}' {fin_block("tmp");}
-	| ENUM IDENTIFIER '{'{new_block(NULL);} enumerator_list '}' {fin_block("tmp");}
-	| ENUM IDENTIFIER '{' {new_block(NULL);} enumerator_list ',' '}'{fin_block("tmp");}
+	: ENUM '{'{tmp=new_block(list_create());} enumerator_list '}' {fin_block("tmp");}
+	| ENUM '{' {tmp=new_block(list_create());} enumerator_list ',' '}' {fin_block("tmp");}
+	| ENUM IDENTIFIER '{'{tmp=new_block(list_create());} enumerator_list '}' {fin_block("tmp");}
+	| ENUM IDENTIFIER '{' {tmp=new_block(list_create());} enumerator_list ',' '}'{fin_block("tmp");}
 	| ENUM IDENTIFIER
 	;
 
@@ -359,7 +359,7 @@ direct_declarator
 	| direct_declarator '[' assignment_expression ']'
 	| direct_declarator '(' parameter_type_list ')'
 	| direct_declarator '(' ')'
-	| direct_declarator '(' {/*cree nouvelle liste pour passer en parametre à new_block list l=list_create();*/} identifier_list {}')'
+	| direct_declarator '(' {/*cree nouvelle liste pour passer en parametre à tmp=new_block list l=list_create();*/} identifier_list {}')'
 	;
 
 pointer
@@ -478,8 +478,8 @@ labeled_statement
 	;
 
 compound_statement
-	: '{' {new_block(NULL);}  {fin_block("block0");/*"block0 car tmp fait bugguer; à régler*/} '}'
-	| '{' {new_block(NULL);}  block_item_list '}' {fin_block("block0");}
+	: '{' {tmp=new_block(list_create());}  {fin_block("block0");/*"block0 car tmp fait bugguer; à régler*/} '}'
+	| '{' {tmp=new_block(list_create());}  block_item_list '}' {fin_block("block0");}
 	;
 
 block_item_list
