@@ -17,6 +17,7 @@
 char* tableau_fichier[20];
 void ecriture_fichier()
 {
+printf("on passe dans la fonction écriture_fichier !");
   struct dirent *lecture;
   DIR *rep ;
    
@@ -155,6 +156,8 @@ int main(int argc,char** argv){
     {    
       int fd=open(tableau_fichier[i],O_RDONLY);
       dup2(fd,0);
+		FILE * fp = fopen(tableau_fichier[i],"w+");
+      yyrestart(fp);
       printf("avant create_html\n");
       create_html(tableau_fichier[i]);
       //assert(argc==2 && "invalide number of argument");
@@ -173,8 +176,6 @@ int main(int argc,char** argv){
 	exit(EXIT_FAILURE);
       }
       printf("on passe par ici les gonz\n");
-      FILE * fp = fopen(tableau_fichier[i+1],"w+");
-      yyrestart(fp);
       i++;
     }
     return 0;
