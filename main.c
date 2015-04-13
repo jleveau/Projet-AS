@@ -15,13 +15,12 @@
 
  */
 char* tableau_fichier[20];
-void ecriture_fichier()
+void ecriture_fichier(char* directory)
 {
-printf("on passe dans la fonction écriture_fichier !");
   struct dirent *lecture;
   DIR *rep ;
    
-  rep = opendir("./tests/");
+  rep = opendir(directory);
   fprintf(f_output,"<li class=\"nav-parent\">");
   fprintf(f_output,"<a href=\"#\"><i class=\"fa fa-map-marker\"></i> <span>Mon dossier</span></a>");
   fprintf(f_output,"<ul class=\"children\">");   
@@ -31,7 +30,7 @@ printf("on passe dans la fonction écriture_fichier !");
 if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
     }
     else
-      {
+      {        
     fprintf(f_output,"<li><a href=\"%s.html\"><i class=\"fa fa-caret-right\"></i> %s</a></li>",lecture->d_name,lecture->d_name);
   }
   }
@@ -42,7 +41,8 @@ if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
 
 
 FILE* create_html(char* titre){
-  f_output=fopen(titre,"w+");
+   // f_output=fopen(titre,"w+");
+   f_output=fopen("index.html","w+");
    
 	//header
    fprintf(f_output,"<!doctype html>");
@@ -75,7 +75,7 @@ FILE* create_html(char* titre){
    
    fprintf(f_output,"<ul class=\"nav nav-pills nav-stacked nav-bracket\">") ;
    fprintf(f_output,"<li class=\"active\"><a href=\"#\"><i class=\"fa fa-tachometer\"></i> <span>Page de Présentation</span></a></li>");
-   ecriture_fichier();
+   ecriture_fichier("./tests");
    
    fprintf(f_output,"</ul>");
    fprintf(f_output,"</div>");
@@ -135,7 +135,7 @@ void init_structures(){
 }
 
 int main(int argc,char** argv){
-    int i=0;
+   /* int i=0;
   struct dirent *lecture;
   DIR *rep ;
   rep = opendir(argv[1]);
@@ -178,8 +178,8 @@ int main(int argc,char** argv){
       printf("on passe par ici les gonz\n");
       i++;
     }
-    return 0;
-  /*
+    return 0;*/
+  
   int fd=open(argv[1],O_RDONLY);
   dup2(fd,0);
   create_html("index.html");
@@ -191,5 +191,5 @@ int main(int argc,char** argv){
     perror("fermeture du html");
     exit(EXIT_FAILURE);
   }
-  return 0;*/
+  return 0;
 }
