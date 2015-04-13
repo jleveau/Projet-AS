@@ -25,8 +25,7 @@ WS  [ \t\v\n\f]
 #include "parse.tab.h"
 #include "libs/html.h"
 #include <stdio.h>
-
-    
+   
 
 extern int sym_type(const char *);  /* returns type from symbol table */
 
@@ -67,21 +66,21 @@ static int check_type(void);
 "continue"				{print_balise_span("type_specifier","continue"); return  CONTINUE;} 
 "default"				{print_balise_span("type_specifier","default"); return  DEFAULT;} 
 "do"					{print_balise_span("jump_statement","do"); return  DO;} 
-"double"				{print_balise_span("type_specifier","double"); return  DOUBLE;} 
+"double"				{print_balise_span("type_specifier","double");yylval.val="double";return  DOUBLE;} 
 "enum"					{print_balise_span("type_specifier","enum"); return  ENUM;} 
 "extern"				{print_balise_span("type_specifier","extern"); return  EXTERN;} 
-"float"					{print_balise_span("type_specifier","float"); return  FLOAT;} 
+"float"					{print_balise_span("type_specifier","float"); yylval.val="float";return  FLOAT;} 
 
 "goto"					{print_balise_span("type_specifier","goto"); return  GOTO;} 
 "if"					{print_balise_span("jaune","if"); return  IF;} 
 "inline"				{print_balise_span("type_specifier","inline"); return  INLINE;} 
 "int"					{print_balise_span("type_specifier","int"); yylval.val="int";return  INT;} 
 "long"					{print_balise_span("type_specifier","long"); return  LONG;} 
-"register"				{print_balise_span("type_specifier","register"); return  REGISTER;} 
+"register"				{print_balise_span("type_specifier","register");yylval.val="long"; return  REGISTER;} 
 "restrict"				{print_balise_span("type_specifier","restrict"); return  RESTRICT;} 
 "return"				{print_balise_span("jaune","return"); return  RETURN;} 
-"short"					{print_balise_span("type_specifier","short"); return  SHORT;} 
-"signed"				{print_balise_span("type_specifier","signed"); return  SIGNED;} 
+"short"					{print_balise_span("type_specifier","short"); yylval.val="short";return  SHORT;} 
+"signed"				{print_balise_span("type_specifier","signed"); yylval.val="signed";return  SIGNED;} 
 "sizeof"				{print_balise_span("jump_statement","sizeof"); return  SIZEOF;} 
 "static"				{print_balise_span("type_specifier","static"); return  STATIC;} 
 "switch"				{print_balise_span("jaune","switch"); return  SWITCH;} 
@@ -93,7 +92,7 @@ static int check_type(void);
 "while"					{print_balise_span("type_specifier","while");return  WHILE;} 
 
 
-"char"					{print_balise_span("type_specifier","char");return  CHAR;} 
+"char"					{print_balise_span("type_specifier","char");yylval.val="char";return  CHAR;} 
 "for"					{print_balise_span("jaune","for");return  FOR;} 
 "else"					{print_balise_span("jaune","else");return  ELSE;} 
 
@@ -110,6 +109,9 @@ static int check_type(void);
 "_Thread_local"                         { fprintf(f_output,"%s",yytext); return THREAD_LOCAL; }
 "__func__"                              { fprintf(f_output,"%s",yytext); return FUNC_NAME; }
 
+
+        
+
 {L}{A}*					{yylval.val=strdup(yytext); return check_type(); }
 
 {HP}{H}+{IS}?				{ fprintf(f_output,"%s",yytext); return I_CONSTANT; }
@@ -117,13 +119,13 @@ static int check_type(void);
 "0"{O}*{IS}?				{ fprintf(f_output,"%s",yytext); return I_CONSTANT; }
 {CP}?"'"([^'\\\n]|{ES})+"'"		{ fprintf(f_output,"%s",yytext); return I_CONSTANT; }
 
+
 {D}+{E}{FS}?				{ fprintf(f_output,"%s",yytext); return F_CONSTANT; }
 {D}*"."{D}+{E}?{FS}?			{ print_balise_span("nombre",yytext); return F_CONSTANT; }
 {D}+"."{E}?{FS}?			{ fprintf(f_output,"%s",yytext); return F_CONSTANT; }
 {HP}{H}+{P}{FS}?			{ fprintf(f_output,"%s",yytext); return F_CONSTANT; }
 {HP}{H}*"."{H}+{P}{FS}?			{ fprintf(f_output,"%s",yytext); return F_CONSTANT; }
 {HP}{H}+"."{P}{FS}?			{ fprintf(f_output,"%s",yytext); return F_CONSTANT; }
-
 
 ({SP}?\"([^"\\\n]|{ES})*\"{WS}*)+	{ fprintf(f_output,"%s",yytext); return STRING_LITERAL; }
 
@@ -150,7 +152,7 @@ static int check_type(void);
 "=="					{ fprintf(f_output,"%s",yytext); return EQ_OP; }
 "!="					{ fprintf(f_output,"%s",yytext); return NE_OP; }
 ";"					{print_balise_span("vert",";"); return ';'; }
-("{"|"<%")				 {indent=indent+2;int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;};print_balise_span("vert","{"); return '{'; }
+("{"|"<%")				 {indent=indent+2;print_balise_span("vert","{"); return '{'; }
 ("}"|"%>")				{indent=indent-2;print_balise_span("vert","}"); return '}'; }
 ","					{ fprintf(f_output,"%s",yytext); return ','; }
 ":"					{ fprintf(f_output,"%s",yytext); return ':'; }
@@ -185,13 +187,9 @@ static int check_type(void);
 <COMMENT>\n {fprintf(f_output,"</span><br \\>");int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;};BEGIN(INITIAL);}
 
 
-
-
-
 "\"" {fprintf(f_output,"<span class=\"string\">\"");BEGIN(STRING);}
 <STRING>"\"" {fprintf(f_output,"\"</span>");BEGIN(INITIAL);}
 <STRING>. {fprintf(f_output,"%c",yytext[0]);}
-
 
 \n {fprintf(f_output,"<br \\>\n");int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;}}
 . {fprintf(f_output,"%c",yytext[0]);}

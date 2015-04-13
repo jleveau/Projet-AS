@@ -1,4 +1,6 @@
 flex parse.l
 bison -dv parse.y 
-gcc -o main parse.tab.c lex.yy.c libs/html.c libs/tools.c libs/stack.c main.c -lfl
+
+gcc main.c -o main
+gcc -o capitaine capitaine.c parse.tab.c lex.yy.c libs/html.c libs/tools.c libs/stack.c -lfl
 

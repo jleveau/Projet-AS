@@ -1,15 +1,7 @@
 
-ptr f(){
-	int a=4;
-	typedef  int* ptr;
+int main(char a){
 	
-	ptr b=&a;
-	return b;
-}
-
-int main(){
-	f();
-	ptr b=0;
+	int b=0;
 	
 	return 0;
 }

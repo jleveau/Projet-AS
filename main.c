@@ -1,213 +1,62 @@
-#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <stdlib.h>
-#include <math.h>
+#include <dirent.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <errno.h>
 #include <string.h>
-//Include pour utiliser open 
-#include <fcntl.h>
-//pour utiliser des asserts
-#include <assert.h>
-#include "parse.tab.h"
-#include "libs/html.h"
-#include "libs/tools.h"
-//pour la lecture de dossier
-#include "dirent.h"
+#include <regex.h>
 
-/*
-Fonction qui lit un dossier passé en paramètre et écrit dans le fichier html
-dans la barre de menu les fichiers qui sont dans ce dossier.
- */
+
 char* tableau_fichier[20];
-void ecriture_fichier(char* directory)
+
+
+
+
+int main(int argc, char** argv)
 {
+	
+regex_t regex;
+int reti;
+reti = regcomp(&regex, "[[:alnum:]].c", 0);
+
+	
+   if (argc!=2)
+	return 0;
   struct dirent *lecture;
   DIR *rep ;
    
-  rep = opendir(directory);
-  fprintf(f_output,"<li class=\"nav-parent\">");
-  fprintf(f_output,"<a href=\"#\"><i class=\"fa fa-map-marker\"></i> <span>Mon dossier</span></a>");
-  fprintf(f_output,"<ul class=\"children\">");   
-   
-   
+  rep = opendir(argv[1]);
+  
+  char buf[1024];
+  getcwd(buf,sizeof(buf));
+  
   while ((lecture = readdir(rep))) {
      //Si c'est un '.' ou '..' alors on ne fait rien
-if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
-    }
-    else
-      {        
-    fprintf(f_output,"<li><a href=\"%s.html\"><i class=\"fa fa-caret-right\"></i> %s</a></li>",lecture->d_name,lecture->d_name);
-  }
-  }
-  fprintf(f_output,"</ul>");
-  fprintf(f_output,"</li>");
-   
-}
-
-
-FILE* create_html(char* titre){
-   // f_output=fopen(titre,"w+");
-   f_output=fopen(titre,"w+");
-   
-   
-	//header
-   fprintf(f_output,"<!doctype html>");
-   fprintf(f_output,"<html lang=\"fr\">");
-   fprintf(f_output,"<head>");								//<HEADER>
-   fprintf(f_output,"   <meta charset=\"utf-8\">");
-   fprintf(f_output,"   <title>%s</title>",titre);
-   fprintf(f_output,"   <!doctype html>");
-   fprintf(f_output, "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/index.css\">");
-   fprintf(f_output,"<link href=\"branches/Rohan/css/style.default.css\" rel=\"stylesheet\">");
-   fprintf(f_output,"<link href=\"branches/Rohan/css/jquery.datatables.css\" rel=\"stylesheet\">");
-   fprintf(f_output,"<link href=\"branches/Rohan/css/font.helvetica-neue.css\" rel=\"stylesheet\">");
-   
-   
-   fprintf(f_output,"</head>");								// </HEADER>
-   
-   //body
-   fprintf(f_output, "<body>");
-   fprintf(f_output," <div class=\"leftpanel sticky-leftpanel\" >");
-   fprintf(f_output," <div class=\"logopanel\" >");
-   fprintf(f_output,"<h1><span>[</span> Projet <span>]</span></h1>");
-   fprintf(f_output,"</div>");
-   fprintf(f_output,"<div class=\"leftpanelinner\">");
-   fprintf(f_output,"<div class=\"visible-xs hidden-sm hidden-md hidden-lg\">");
-   fprintf(f_output,"<div class=\"media userlogged\">");
-   fprintf(f_output,"</div>");
-   fprintf(f_output,"</div>");
-   
-   fprintf(f_output,"<h5 class=\"sidebartitle\">Navigation</h5>");
-   
-   fprintf(f_output,"<ul class=\"nav nav-pills nav-stacked nav-bracket\">") ;
-   fprintf(f_output,"<li class=\"active\"><a href=\"#\"><i class=\"fa fa-tachometer\"></i> <span>Page de Présentation</span></a></li>");
-
-   // Appel de la fonction qui liste les fichiers d'un dossier
-   ecriture_fichier("./tests");
-   
-                                
-   
-   fprintf(f_output,"</ul>");
-   fprintf(f_output,"</div>");
-   fprintf(f_output,"</div>");
-   
-   fprintf(f_output,"<div class=\" mainpanel\">");
-   fprintf(f_output,"<div class=\"contentpanel\"");
-   
-   
-   fprintf(f_output,"<div class=\"bordure\"> ");
-   fprintf(f_output,"<div class=\"Code\"> ");
-   
-   
-   
-   return f_output;
-}
-
-
-//Include en bas de page, permet de faire des joulies animations
-void source_js()
-{
-  fprintf(f_output,"<script src=\"js/jquery-1.10.2.min.js\"></script>");
-  fprintf(f_output,"  <script src=\"js/jquery-migrate-1.2.1.min.js\"></script>");
-  fprintf(f_output,"  <script src=\"js/bootstrap.min.js\"></script>");
-  fprintf(f_output,"  <script src=\"js/modernizr.min.js\"></script>");
-  fprintf(f_output,"   <script src=\"js/jquery.sparkline.min.js\"></script>");
-  fprintf(f_output," <script src=\"js/toggles.min.js\"></script>");
-  fprintf(f_output,"   <script src=\"js/retina.min.js\"></script>");
-  fprintf(f_output," <script src=\"js/jquery.cookies.js\"></script>");
-  fprintf(f_output," <script src=\"js/flot/flot.min.js\"></script>");
-  fprintf(f_output," <script src=\"js/flot/flot.resize.min.js\"></script>");
-  fprintf(f_output,"   <script src=\"js/morris.min.js\"></script>");
-  fprintf(f_output," <script src=\"js/raphael-2.1.0.min.js\"></script>");
-  fprintf(f_output,"      <script src=\"js/jquery.datatables.min.js\"></script>");
-  fprintf(f_output," <script src=\"js/chosen.jquery.min.js\"></script>");
-  fprintf(f_output,"     <script src=\"js/custom.js\"></script>");
-  fprintf(f_output," <script src=\"js/dashboard.js\"></script>");
-   
-
-}
-
-
-int fermer_html(FILE* fd){
-  fprintf(fd,"</div>");
-  fprintf(fd,"</div>");
-  fprintf(fd,"</div>");
-  fprintf(fd,"</div>");
-  source_js();
-  fprintf(fd, "</body>");
-  fprintf(fd, "</html>");
-  return(fclose(fd)); //close avec flush
-}
-
-void init_structures(){
+     if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
+     }
+     else{
+		 reti = regexec(&regex, lecture->d_name, 0, NULL, 0);
+		 if(reti == REG_NOMATCH)
+		 {
+		 }
+		 else
+		 {
+		 char* path=malloc((strlen(argv[1])+strlen(lecture->d_name)+2)*sizeof(char));
+		 strcpy(path,argv[1]);
+		 strcat(path,lecture->d_name);
+		  
+		 strcpy(path,argv[1]);
+		 strcat(path,lecture->d_name);
+		 
+		 if (fork()==0)
+			execl("./capitaine","capitaine",path,buf,lecture->d_name,0);
+		}
+	}
 	
-  function_list=list_create();
-  variables_stack=stack_create();
-  new_block();
-}
-
-
-//Fonction principale du code
-int main(int argc,char** argv){
-   /* int i=0;
-  struct dirent *lecture;
-  DIR *rep ;
-  rep = opendir(argv[1]);
-  while ((lecture = readdir(rep))) {
-    if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
-    }
-    else
-      {
-    tableau_fichier[i] =lecture->d_name;
-    i++;
-    printf("%s\n",lecture->d_name);
-    }
   }
-  
-  i=0;
-  while(tableau_fichier[i]!=NULL)
-    {
-       char toto[100] = "tests/";
-   strcat(toto,tableau_fichier[i]);
-   printf("%s",toto);
-      int fd=open(toto,O_RDONLY);
-      dup2(fd,0);
-		FILE * fp = fopen(tableau_fichier[i],"w+");
-      yyrestart(fp);
-      printf("avant create_html\n");
-      create_html(tableau_fichier[i]);
-      //assert(argc==2 && "invalide number of argument");
-      printf("après + avant init_structure\n");
-      init_structures();
-      printf("après + avant yyarse()\n");
-      yyparse(); // On parse l'entree (une seule fois)
-      printf("après yyparse();");
-      print_variables();
-      printf("\n \n");
-      print_functions();
-
-
-      if(fermer_html(f_output)){
-	perror("fermeture du html");
-	exit(EXIT_FAILURE);
-      }
-      printf("on passe par ici les gonz\n");
-      i++;
-    }
-    return 0;*/
-
-
-
+  while(wait(NULL)>0) 
+   return 0;
    
-     
-  int fd=open(argv[1],O_RDONLY);
-  dup2(fd,0);
-  create_html("index.html");
-  init_structures();
-  yyparse();
-  print_variables();
-  print_functions();
-  if(fermer_html(f_output)){
-    perror("fermeture du html");
-    exit(EXIT_FAILURE);
-  }
-  return 0;
 }
