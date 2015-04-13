@@ -9,10 +9,12 @@
 #include "parse.tab.h"
 #include "libs/html.h"
 #include "libs/tools.h"
+//pour la lecture de dossier
 #include "dirent.h"
 
 /*
-
+Fonction qui lit un dossier passé en paramètre et écrit dans le fichier html
+dans la barre de menu les fichiers qui sont dans ce dossier.
  */
 char* tableau_fichier[20];
 void ecriture_fichier(char* directory)
@@ -27,6 +29,7 @@ void ecriture_fichier(char* directory)
    
    
   while ((lecture = readdir(rep))) {
+     //Si c'est un '.' ou '..' alors on ne fait rien
 if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
     }
     else
@@ -42,7 +45,8 @@ if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
 
 FILE* create_html(char* titre){
    // f_output=fopen(titre,"w+");
-   f_output=fopen("index.html","w+");
+   f_output=fopen(titre,"w+");
+   
    
 	//header
    fprintf(f_output,"<!doctype html>");
@@ -75,7 +79,11 @@ FILE* create_html(char* titre){
    
    fprintf(f_output,"<ul class=\"nav nav-pills nav-stacked nav-bracket\">") ;
    fprintf(f_output,"<li class=\"active\"><a href=\"#\"><i class=\"fa fa-tachometer\"></i> <span>Page de Présentation</span></a></li>");
+
+   // Appel de la fonction qui liste les fichiers d'un dossier
    ecriture_fichier("./tests");
+   
+                                
    
    fprintf(f_output,"</ul>");
    fprintf(f_output,"</div>");
@@ -93,6 +101,8 @@ FILE* create_html(char* titre){
    return f_output;
 }
 
+
+//Include en bas de page, permet de faire des joulies animations
 void source_js()
 {
   fprintf(f_output,"<script src=\"js/jquery-1.10.2.min.js\"></script>");
@@ -134,6 +144,8 @@ void init_structures(){
   new_block();
 }
 
+
+//Fonction principale du code
 int main(int argc,char** argv){
    /* int i=0;
   struct dirent *lecture;
@@ -144,7 +156,6 @@ int main(int argc,char** argv){
     }
     else
       {
-	strcat(lecture->d_name,".html");
     tableau_fichier[i] =lecture->d_name;
     i++;
     printf("%s\n",lecture->d_name);
@@ -153,8 +164,11 @@ int main(int argc,char** argv){
   
   i=0;
   while(tableau_fichier[i]!=NULL)
-    {    
-      int fd=open(tableau_fichier[i],O_RDONLY);
+    {
+       char toto[100] = "tests/";
+   strcat(toto,tableau_fichier[i]);
+   printf("%s",toto);
+      int fd=open(toto,O_RDONLY);
       dup2(fd,0);
 		FILE * fp = fopen(tableau_fichier[i],"w+");
       yyrestart(fp);
@@ -179,7 +193,11 @@ int main(int argc,char** argv){
       i++;
     }
     return 0;*/
-  
+
+
+
+   
+     
   int fd=open(argv[1],O_RDONLY);
   dup2(fd,0);
   create_html("index.html");
