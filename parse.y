@@ -487,7 +487,7 @@ labeled_statement
 
 compound_statement
 	: '{' {new_block(NULL);}  {fin_block("block0");/*"block0 car tmp fait bugguer; à régler*/} '}'
-	| '{' {new_block(NULL);}  block_item_list '}' {fin_block("block0");}
+	| '{' block_item_list '}' {fin_block("block0");}
 	;
 
 block_item_list
