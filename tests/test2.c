@@ -1,7 +1,10 @@
 
-int main(char a){
+int g(char a, int c){
 	
-	int b=0;
+	int b;
 	
 	return 0;
+}
+
+void f(int a, int b){
 }

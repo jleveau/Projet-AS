@@ -52,7 +52,6 @@ retih = regcomp(&regexh,"[[:alnum:]].h",0);
 		  
 		 strcpy(path,argv[1]);
 		 strcat(path,lecture->d_name);
-		 
 		 if (fork()==0)
 			execl("./capitaine","capitaine",path,buf,lecture->d_name,0);
 		}

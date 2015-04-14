@@ -94,7 +94,8 @@ FILE* create_html(char* titre,char* dir){
    // f_output=fopen(titre,"w+");
    
    char* fin =".html";
-   char* path=malloc((strlen(dir)+strlen(titre)+strlen(fin)+2)*sizeof(char));
+   
+   char* path=malloc((strlen(dir)+strlen(titre)+strlen(fin)+strlen("/html/")+4)*sizeof(char));
     strcpy(path,dir);
     strcat(path,"/html/");
 	strcat(path,titre);
@@ -203,6 +204,7 @@ void init_structures(){
 int main(int argc,char** argv){     
   int fd=open(argv[1],O_RDONLY);
   dup2(fd,0);
+
   create_html(argv[3],argv[2]);
   init_structures();
   yyparse();
@@ -212,5 +214,7 @@ int main(int argc,char** argv){
     perror("fermeture du html");
     exit(EXIT_FAILURE);
   }
+
+  
   return 0;
 }

@@ -531,7 +531,7 @@ external_declaration
 
 function_definition
 	: declaration_specifiers  declarator declaration_list compound_statement
-	| declaration_specifiers[ds]  declarator[d] {name_function($d,$ds,"description");} compound_statement[c]
+	| declaration_specifiers[ds]  declarator[d] {name_function($ds,$d,"description");} compound_statement[c]
 	;
 
 declaration_list
