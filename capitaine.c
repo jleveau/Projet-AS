@@ -11,6 +11,8 @@
 #include "libs/tools.h"
 //pour la lecture de dossier
 #include "dirent.h"
+//utilisation des expressions régulières
+#include <regex.h>
 
 /*
 Fonction qui lit un dossier passé en paramètre et écrit dans le fichier html
@@ -19,22 +21,67 @@ dans la barre de menu les fichiers qui sont dans ce dossier.
 
 void ecriture_fichier(char* directory)
 {
+    regex_t regexc,regexh;
+int retic;
+int retih;
+retic = regcomp(&regexc, "[[:alnum:]].c", 0);
+retih = regcomp(&regexh,"[[:alnum:]].h",0);
+
   struct dirent *lecture;
   DIR *rep ;
    
   rep = opendir(directory);
+  
+  
   fprintf(f_output,"<li class=\"nav-parent\">");
-  fprintf(f_output,"<a href=\"#\"><i class=\"fa fa-map-marker\"></i> <span>Mon dossier</span></a>");
+  fprintf(f_output,"<a href=\"#\"><i class=\"fa fa-map-marker\"></i> <span>Header</span></a>");
   fprintf(f_output,"<ul class=\"children\">");   
-   
+
+
+  
    
   while ((lecture = readdir(rep))) {
      //Si c'est un '.' ou '..' alors on ne fait rien
 if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
     }
     else
-      {        
-    fprintf(f_output,"<li><a href=\"%s.html\"><i class=\"fa fa-caret-right\"></i> %s</a></li>",lecture->d_name,lecture->d_name);
+      {
+         retih = regexec(&regexh, lecture->d_name, 0, NULL, 0);
+         if(retih == REG_NOMATCH)
+         {
+         }
+         else
+         {
+            fprintf(f_output,"<li><a href=\"%s.html\"><i class=\"fa fa-caret-right\"></i> %s</a></li>",lecture->d_name,lecture->d_name);
+         }
+    
+  }
+  }
+  fprintf(f_output,"</ul>");
+  fprintf(f_output,"</li>");
+
+
+  fprintf(f_output,"<li class=\"nav-parent\">");
+  fprintf(f_output,"<a href=\"#\"><i class=\"fa fa-map-marker\"></i> <span>Source File</span></a>");
+  fprintf(f_output,"<ul class=\"children\">");   
+   
+  rep=opendir(directory);
+  
+  while ((lecture = readdir(rep))) {
+     //Si c'est un '.' ou '..' alors on ne fait rien
+if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
+    }
+    else
+      {
+         retic = regexec(&regexc, lecture->d_name, 0, NULL, 0);
+         if(retic == REG_NOMATCH)
+         {
+         }
+         else
+         {
+            fprintf(f_output,"<li><a href=\"%s.html\"><i class=\"fa fa-caret-right\"></i> %s</a></li>",lecture->d_name,lecture->d_name);
+         }
+    
   }
   }
   fprintf(f_output,"</ul>");
@@ -112,22 +159,22 @@ FILE* create_html(char* titre,char* dir){
 //Include en bas de page, permet de faire des joulies animations
 void source_js()
 {
-  fprintf(f_output,"<script src=\"js/jquery-1.10.2.min.js\"></script>");
-  fprintf(f_output,"  <script src=\"js/jquery-migrate-1.2.1.min.js\"></script>");
-  fprintf(f_output,"  <script src=\"js/bootstrap.min.js\"></script>");
-  fprintf(f_output,"  <script src=\"js/modernizr.min.js\"></script>");
-  fprintf(f_output,"   <script src=\"js/jquery.sparkline.min.js\"></script>");
-  fprintf(f_output," <script src=\"js/toggles.min.js\"></script>");
-  fprintf(f_output,"   <script src=\"js/retina.min.js\"></script>");
-  fprintf(f_output," <script src=\"js/jquery.cookies.js\"></script>");
-  fprintf(f_output," <script src=\"js/flot/flot.min.js\"></script>");
-  fprintf(f_output," <script src=\"js/flot/flot.resize.min.js\"></script>");
-  fprintf(f_output,"   <script src=\"js/morris.min.js\"></script>");
-  fprintf(f_output," <script src=\"js/raphael-2.1.0.min.js\"></script>");
-  fprintf(f_output,"      <script src=\"js/jquery.datatables.min.js\"></script>");
-  fprintf(f_output," <script src=\"js/chosen.jquery.min.js\"></script>");
-  fprintf(f_output,"     <script src=\"js/custom.js\"></script>");
-  fprintf(f_output," <script src=\"js/dashboard.js\"></script>");
+  fprintf(f_output,"<script src=\"../js/jquery-1.10.2.min.js\"></script>");
+  fprintf(f_output,"  <script src=\"../js/jquery-migrate-1.2.1.min.js\"></script>");
+  fprintf(f_output,"  <script src=\"../js/bootstrap.min.js\"></script>");
+  fprintf(f_output,"  <script src=\"../js/modernizr.min.js\"></script>");
+  fprintf(f_output,"   <script src=\"../js/jquery.sparkline.min.js\"></script>");
+  fprintf(f_output," <script src=\"../js/toggles.min.js\"></script>");
+  fprintf(f_output,"   <script src=\"../js/retina.min.js\"></script>");
+  fprintf(f_output," <script src=\"../js/jquery.cookies.js\"></script>");
+  fprintf(f_output," <script src=\"../js/flot/flot.min.js\"></script>");
+  fprintf(f_output," <script src=\"../js/flot/flot.resize.min.js\"></script>");
+  fprintf(f_output,"   <script src=\"../js/morris.min.js\"></script>");
+  fprintf(f_output," <script src=\"../js/raphael-2.1.0.min.js\"></script>");
+  fprintf(f_output,"      <script src=\"../js/jquery.datatables.min.js\"></script>");
+  fprintf(f_output," <script src=\"../js/chosen.jquery.min.js\"></script>");
+  fprintf(f_output,"     <script src=\"../js/custom.js\"></script>");
+  fprintf(f_output," <script src=\"../js/dashboard.js\"></script>");
    
 
 }

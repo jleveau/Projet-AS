@@ -17,9 +17,11 @@ char* tableau_fichier[20];
 int main(int argc, char** argv)
 {
 	
-regex_t regex;
-int reti;
-reti = regcomp(&regex, "[[:alnum:]].c", 0);
+   regex_t regexc,regexh;
+int retic;
+int retih;
+retic = regcomp(&regexc, "[[:alnum:]].c", 0);
+retih = regcomp(&regexh,"[[:alnum:]].h",0);
 
 	
    if (argc!=2)
@@ -37,8 +39,9 @@ reti = regcomp(&regex, "[[:alnum:]].c", 0);
      if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
      }
      else{
-		 reti = regexec(&regex, lecture->d_name, 0, NULL, 0);
-		 if(reti == REG_NOMATCH)
+		 retic = regexec(&regexc, lecture->d_name, 0, NULL, 0);
+         retih = regexec(&regexh,lecture->d_name,0,NULL,0);
+		 if(retic == REG_NOMATCH && retih == REG_NOMATCH)
 		 {
 		 }
 		 else
