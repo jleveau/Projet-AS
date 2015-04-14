@@ -110,11 +110,12 @@ FILE* create_html(char* titre,char* dir){
    fprintf(f_output,"   <meta charset=\"utf-8\">");
    fprintf(f_output,"   <title>%s</title>",titre);
    fprintf(f_output,"   <!doctype html>");
+
    fprintf(f_output, "<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/index.css\">");
    fprintf(f_output,"<link href=\"../branches/Rohan/css/style.default.css\" rel=\"stylesheet\">");
    fprintf(f_output,"<link href=\"../branches/Rohan/css/jquery.datatables.css\" rel=\"stylesheet\">");
    fprintf(f_output,"<link href=\"../branches/Rohan/css/font.helvetica-neue.css\" rel=\"stylesheet\">");
-   
+   fprintf(f_output,"<link rel=\"stylesheet\" href=\"http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css\">");
    
    fprintf(f_output,"</head>");								// </HEADER>
    
@@ -133,7 +134,7 @@ FILE* create_html(char* titre,char* dir){
    fprintf(f_output,"<h5 class=\"sidebartitle\">Navigation</h5>");
    
    fprintf(f_output,"<ul class=\"nav nav-pills nav-stacked nav-bracket\">") ;
-   fprintf(f_output,"<li class=\"active\"><a href=\"#\"><i class=\"fa fa-tachometer\"></i> <span>Page de Présentation</span></a></li>");
+   fprintf(f_output,"<li class=\"active\"><a href=\"#\"><i class=\"fa fa-calendar-o\"></i> <span>Page de Présentation</span></a></li>");
 
    // Appel de la fonction qui liste les fichiers d'un dossier
    ecriture_fichier("./tests");
@@ -207,6 +208,8 @@ int main(int argc,char** argv){
 
   create_html(argv[3],argv[2]);
   init_structures();
+	nb_ligne++;
+fprintf(f_output,"<span class=\"numerotation\">%d.   </span>",nb_ligne);
   yyparse();
   print_variables();
   print_functions();

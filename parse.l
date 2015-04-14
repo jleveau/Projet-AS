@@ -191,7 +191,7 @@ static int check_type(void);
 <STRING>"\"" {fprintf(f_output,"\"</span>");BEGIN(INITIAL);}
 <STRING>. {fprintf(f_output,"%c",yytext[0]);}
 
-\n {fprintf(f_output,"<br \\>\n");int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;}}
+\n {fprintf(f_output,"<br \\>\n");nb_ligne++;fprintf(f_output,"<span class=\"numerotation\">%d.  </span>",nb_ligne);int i=0;while(i<indent){fprintf(f_output,"&nbsp;");i++;}}
 . {fprintf(f_output,"%c",yytext[0]);}
 
 
