@@ -10,4 +10,7 @@ int f(int a, int b,int h,int z){
 	return a;
 }
 
+int g(int a,int b){
+}
+
 void g(){int d=0;}

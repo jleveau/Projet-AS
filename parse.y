@@ -10,24 +10,32 @@ char* tmp;
 %union{
 	char* val;
 }
-%type<val> function_definition declaration_specifiers declaration_list compound_statement block_item_list declaration statement block_item parameter_declaration 
-%type<val> declarator direct_declarator init_declarator_list init_declarator initializer  type_specifier
+%type<val> function_definition declaration_specifiers declaration_list compound_statement block_item_list declaration statement block_item parameter_declaration  and_expression
+%type<val> static_assert_declaration storage_class_specifier type_qualifier function_specifier alignment_specifier atomic_type_specifier struct_or_union exclusive_or_expression
+%type<val> struct_or_union_specifier enum_specifier pointer assignment_expression labeled_statement expression_statement selection_statement iteration_statement jump_statement
+%type<val> declarator direct_declarator init_declarator_list init_declarator initializer  type_specifier conditional_expression unary_expression postfix_expression cast_expression
+%type<val>  primary_expression constant string  generic_selection logical_or_expression expression type_name logical_and_expression type_qualifier_list inclusive_or_expression
+%type<val> equality_expression relational_expression shift_expression additive_expression multiplicative_expression specifier_qualifier_list
+
+
+
+ 
 %token<val>	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
-%token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
-%token	AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
-%token	SUB_ASSIGN LEFT_ASSIGN RIGHT_ASSIGN AND_ASSIGN
-%token	XOR_ASSIGN OR_ASSIGN
-%token	TYPEDEF_NAME ENUMERATION_CONSTANT
+%token<val>	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
+%token<val>	AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
+%token<val>	SUB_ASSIGN LEFT_ASSIGN RIGHT_ASSIGN AND_ASSIGN
+%token<val>	XOR_ASSIGN OR_ASSIGN
+%token<val>	TYPEDEF_NAME ENUMERATION_CONSTANT
 
-%token	TYPEDEF EXTERN STATIC AUTO REGISTER INLINE
-%token	CONST RESTRICT VOLATILE
+%token<val>	TYPEDEF EXTERN STATIC AUTO REGISTER INLINE
+%token<val>	CONST RESTRICT VOLATILE
 %token<val>	BOOL CHAR SHORT INT LONG SIGNED UNSIGNED FLOAT DOUBLE VOID
-%token	COMPLEX IMAGINARY 
-%token	STRUCT UNION ENUM ELLIPSIS
+%token<val>	COMPLEX IMAGINARY 
+%token<val>	STRUCT UNION ENUM ELLIPSIS
 
-%token	CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
+%token<val>	CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
 
-%token	ALIGNAS ALIGNOF ATOMIC GENERIC NORETURN STATIC_ASSERT THREAD_LOCAL
+%token<val>	ALIGNAS ALIGNOF ATOMIC GENERIC NORETURN STATIC_ASSERT THREAD_LOCAL
 
 %start translation_unit
 
@@ -80,8 +88,8 @@ postfix_expression
 	| postfix_expression PTR_OP IDENTIFIER
 	| postfix_expression INC_OP
 	| postfix_expression DEC_OP
-	| '(' type_name ')' '{' {new_block(NULL);} initializer_list '}' {fin_block("tmp");/*je crois que c'est la block d'une fonctionne, à vérifier*/}
-	| '(' type_name ')' '{' {new_block(NULL);} initializer_list ',' '}' {fin_block("tmp");}
+	| '(' type_name ')' {new_block(NULL);}'{'  initializer_list '}' {fin_block("tmp");/*je crois que c'est la block d'une fonctionne, à vérifier*/}
+	| '(' type_name ')' {new_block(NULL);}'{'  initializer_list ',' '}' {fin_block("tmp");}
 	;
 
 argument_expression_list
