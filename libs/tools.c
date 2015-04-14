@@ -14,16 +14,12 @@ void new_function(char* nom, char* description, list arguments, int nb_param){
 }
 
 list list_create(){
-<<<<<<< HEAD
-  list l=malloc(sizeof(*l));
-  l->first=NULL;
-  return l;
-=======
+
 	list l=malloc(sizeof(*l));
 	l->last=NULL;
 	l->first=NULL;
 	return l;
->>>>>>> tmp
+
 }
 
 /* cree une variable et l'ajoute dans la liste au sommet de la pile */
@@ -93,7 +89,7 @@ char block_nameID[20];
   }	
   stack_push(variables_stack, l);
 
-return block_nameID; 
+return NULL; 
 }
 
 //test sans block name car ca fait bugger

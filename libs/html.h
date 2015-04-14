@@ -10,6 +10,8 @@ FILE* f_output;
 int indent;
 int id_block;
 
+int nb_ligne;
+
 
 void print_fin_balise(struct balise* b);
 void print_attributs(struct attribut * attrib);

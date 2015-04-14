@@ -197,7 +197,7 @@ void init_structures(){
 	
   function_list=list_create();
   variables_stack=stack_create();
-  new_block();
+  new_block(NULL);
 }
 
 
@@ -208,7 +208,7 @@ int main(int argc,char** argv){
 
   create_html(argv[3],argv[2]);
   init_structures();
-	nb_ligne++;
+	nb_ligne=1;
 fprintf(f_output,"<span class=\"numerotation\">%d.   </span>",nb_ligne);
   yyparse();
   print_variables();

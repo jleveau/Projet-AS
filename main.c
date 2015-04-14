@@ -44,19 +44,19 @@ retih = regcomp(&regexh,"[[:alnum:]].h",0);
 		 }
 		 else
 		 {
-		 char* path=malloc((strlen(argv[1])+strlen(lecture->d_name)+2)*sizeof(char));
-		 strcpy(path,argv[1]);
-		 strcat(path,lecture->d_name);
-		  
-		 strcpy(path,argv[1]);
-		 strcat(path,lecture->d_name);
-		 if (fork()==0)
-			execl("./capitaine","capitaine",path,buf,lecture->d_name,0);
+			 char* path=malloc((strlen(argv[1])+strlen(lecture->d_name)+2)*sizeof(char));
+			 strcpy(path,argv[1]);
+			 strcat(path,lecture->d_name);
+			  
+			 strcpy(path,argv[1]);
+			 strcat(path,lecture->d_name);
+			 if (fork()==0)
+				execl("./capitaine","capitaine",path,buf,lecture->d_name,(char*)NULL);
 		}
 	}
 	
   }
-  while(wait(NULL)>0) 
+  while(wait(NULL)>0);
    return 0;
    
 }
