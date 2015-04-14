@@ -1,15 +1,10 @@
 
-ptr f(){
-	int a=4;
-	typedef  int* ptr;
+int g(char a, int c){
 	
-	ptr b=&a;
-	return b;
-}
-
-int main(){
-	f();
-	ptr b=0;
+	int b;
 	
 	return 0;
+}
+
+void f(int a, int b){
 }

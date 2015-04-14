@@ -2,10 +2,7 @@ body
 {
 font-family: Verdana, sans-serif;
 background-color: #e3e8f2;
-
-
 }
-
 .header
 {
 font-size:20px;
@@ -13,7 +10,6 @@ font-family:Courier New;
 text-align:center;
 color:#6678ac;
 }
-
 .bordure
 {
 border: 2px solid #d5dae3;
@@ -23,47 +19,43 @@ background-color:#ebf4fb;
 .Code
 {
 font: normal normal 1em/1.2em monospace; margin:0; padding:0; background:none; vertical-align:top;margin-left: 10px;
-	
 }
-
 .type_specifier
 {
 color: #993333;
 }
-
 .jump_statement
 {
 color : red;
 font-weight:bold;
 }
-
 .jaune
 {
 color: #b1b100;
 }
-
 .comment
 {
 color: #808080;
 font-style: italic;
 }
-
 .vert
 {
 color: #339933;
 }
-
 .nombre
 {
 color:#0705e5;
 }
-
 .string
 {
 color:#f73c22;
 }
-
-div[class^='block']
+.numerotation
 {
-background-color:yellow;
+color:#5c5a5a;
+margin-right:5px;
+}
+.indent
+{
+margin-left:20px;
 }

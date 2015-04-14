@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "stack.h"
+#include <stdbool.h>
 
 typedef struct cell_t{
 	void* elem;
@@ -10,6 +11,7 @@ typedef struct cell_t{
 }*cell;
 
 typedef struct list_t {
+	cell last;
 	cell first;
 } *list;
 
@@ -49,7 +51,7 @@ void name_function(char* type,char* nom,char* description);
 
 void add_to_list(list l,void* elem);
 list list_create();
-int list_empty(list l);
+bool list_empty(list l);
 
 void print_variable(variable v);
 void print_variables();

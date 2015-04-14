@@ -14,9 +14,16 @@ void new_function(char* nom, char* description, list arguments, int nb_param){
 }
 
 list list_create(){
+<<<<<<< HEAD
   list l=malloc(sizeof(*l));
   l->first=NULL;
   return l;
+=======
+	list l=malloc(sizeof(*l));
+	l->last=NULL;
+	l->first=NULL;
+	return l;
+>>>>>>> tmp
 }
 
 /* cree une variable et l'ajoute dans la liste au sommet de la pile */
@@ -41,27 +48,36 @@ void add_parameter(char* nom, char* type,char* description){
 	if (list_empty(function_list)){
 		function f=malloc(sizeof(*f));
 		f->nom=NULL;
+		f->type=NULL;
 		f->arguments=list_create();
 		add_to_list(function_list,f);
 	}
 	
-	function f = (function)function_list->first->elem;
-	if (!f->nom)
+	function f = (function)function_list->last->elem;
+	if (!f->nom){
 		add_to_list(f->arguments,v);
+	}
 	else {
 		function f=malloc(sizeof(*f));
 		f->nom=NULL;
 		f->arguments=list_create();
 		add_to_list(function_list,f);
+		add_to_list(f->arguments,v);
 	}
 }
 
 void add_to_list(list l,void* elem){
-
-  cell new=malloc(sizeof(*new));
-  new->elem=elem;
-  new->next=l->first;
-  l->first=new;
+	cell new=malloc(sizeof(*new));
+	new->elem=elem;
+	new->next=NULL;
+	if (!l->last){
+		l->first=new;
+		l->last=new;
+		return;
+	}
+	l->last->next=new;
+	l->last=new;
+	l->last->next=NULL;
 }
 
 //peut-être nécessaire que ca retourne une balise, à voir
@@ -97,8 +113,8 @@ void fin_block(char* block_nameID){
 //stack_pop(variables_stack);
 }
 
-int list_empty(list l){
-	return !(int)l->first;
+bool list_empty(list l){
+	return !l->last;
 }
 
 void name_function(char* type,char* nom,char* description){
@@ -109,10 +125,9 @@ void name_function(char* type,char* nom,char* description){
 		f->type=type;
 		f->description=description;
 		add_to_list(function_list,f);	
-
 		return;
 	}
-	function f= (function)function_list->first->elem;
+	function f= (function)function_list->last->elem;
 	if (f->nom){
 		f=malloc(sizeof(*f));
 		f->arguments=list_create();
@@ -144,13 +159,12 @@ void print_function(function f){
 
 void print_functions(){
 	list l=function_list;
-	while (l->first!=NULL){
-		print_function((function)l->first->elem);
-		l->first=l->first->next;
+	cell c=l->first;
+	while (c){
+		print_function((function)c->elem);
+		c=c->next;
 	}
 }
-
-
 
 void print_variable(variable v){
 	printf("var : %s %s ",v->type, v->nom);
@@ -159,10 +173,11 @@ void print_variable(variable v){
 // affiche la liste au sommet de la pile de variables
 void print_variables(){
 	list l=(list)stack_top(variables_stack);
-	while (l->first!=NULL){
-		print_variable((variable)l->first->elem);
+	cell c=l->first;
+	while (c){
+		print_variable((variable)c->elem);
 		printf("\n");
-		l->first=l->first->next;
+		c=c->next;
 	}
 }
 
