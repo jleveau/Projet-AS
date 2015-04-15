@@ -1,47 +1,37 @@
-<script language="javascript" type="text/javascript">
 function GetId(id)
-{
-return document.getElementById(id);
-}
-var id_set;
-
-function SetId(id)
-{
-    id_set = id;
-    return id_set;
-}
-
-
-var i=false; // La bulle n'est pas visible par default
- 
+{		return document.getElementById(id);
+}				var i=false; 
 function move(e) {
-    if(i) {  // Si la bulle est visible, on calcul en temps reel sa position ideale
-	if(document.documentElement.clientWidth>0) {
-	    id_set.style.left=20+event.x+document.documentElement.scrollLeft+"px";
-	    id_set.style.top=10+event.y+document.documentElement.scrollTop+"px";
-	} else {
-	    id_set.style.left=20+event.x+document.body.scrollLeft+"px";
-	    id_set.style.top=10+event.y+document.body.scrollTop+"px";
-        }
-	
+    if(i) { 
+	if (navigator.appName!="Microsoft Internet Explorer") { // Si on est pas sous IE
+	    GetId("fonction").style.left=e.pageX + 5+"px";
+	    GetId("fonction").style.top=e.pageY + 10+"px";
+	}
+	else {
+	    if(document.documentElement.clientWidth>0) {
+		GetId("fonction").style.left=20+event.x+document.documentElement.scrollLeft+"px";
+		GetId("fonction").style.top=10+event.y+document.documentElement.scrollTop+"px";
+	    }
+	    else {
+		GetId("fonction").style.left=20+event.x+document.body.scrollLeft+"px";
+		GetId("fonction").style.top=10+event.y+document.body.scrollTop+"px";
+	    }
+	}
     }
 }
 
-function montre(text,id) {
-  SetId(id);
-  if(i==false) {
-  id_set.style.visibility="visible"; //On le rend visible
-  id_set.innerHTML = text; // On copie le texte (ou le Html) à l'intérieur
-  i=true;
-  }
+function montre(text) {
+    if(i==false) {
+	GetId("fonction").style.visibility="visible"; 
+	GetId("fonction").innerHTML = text;
+	i=true;
+    }
 }
-
-
 function cache() {
-if(i==true) {
-id_set.style.visibility="hidden"; // Si la bulle est visible, on la cache
-i=false;
+    if(i==true) {
+	GetId("fonction").style.visibility="hidden";
+	i=false;
+    }
 }
-}
-document.onmousemove=move; // On met à jour la position de la bulle
-</script>
+document.onmousemove=move; 
+

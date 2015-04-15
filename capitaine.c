@@ -79,7 +79,7 @@ if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
          }
          else
          {
-            fprintf(f_output,"<li><a href=\"%s.html\"><i class=\"fa fa-caret-right\"></i> %s</a></li>",lecture->d_name,lecture->d_name);
+            fprintf(f_output,"<li> <a href=\"%s.html\"><i class=\"fa fa-caret-right\"></i> %s</a></li>",lecture->d_name,lecture->d_name);
          }
     
   }
@@ -110,7 +110,6 @@ FILE* create_html(char* titre,char* dir){
    fprintf(f_output,"   <meta charset=\"utf-8\">");
    fprintf(f_output,"   <title>%s</title>",titre);
    fprintf(f_output,"   <!doctype html>");
-   fprintf(f_output,"<script src=\"javascript.js\"></script>");
    fprintf(f_output, "<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/index.css\">");
    fprintf(f_output,"<link href=\"../branches/Rohan/css/style.default.css\" rel=\"stylesheet\">");
    fprintf(f_output,"<link href=\"../branches/Rohan/css/jquery.datatables.css\" rel=\"stylesheet\">");
@@ -121,6 +120,7 @@ FILE* create_html(char* titre,char* dir){
    
    //body
    fprintf(f_output, "<body>");
+   fprintf(f_output, "<div id=\"fonction\" class=\"infobulle\"></div>");
    fprintf(f_output," <div class=\"leftpanel sticky-leftpanel\" >");
    fprintf(f_output," <div class=\"logopanel\" >");
    fprintf(f_output,"<h1><span>[</span> Projet <span>]</span></h1>");
@@ -151,6 +151,9 @@ FILE* create_html(char* titre,char* dir){
    
    fprintf(f_output,"<div class=\"bordure\"> ");
    fprintf(f_output,"<div class=\"Code\"> ");
+   fprintf(f_output,"<p   onmouseover=\"montre('texte');\" onmouseout=\"cache();\" >Ici on écrit du texte wesh ! </p>");
+   fprintf(f_output,"<span href=\"#\" id=\"test\">Hover Me! <span class=\"popup\"><span class=\"type_specifier \" >int</span> f<span class=\"vert \" >(</span><span class=\"type_specifier \" >int</span> a, <span class=\"type_specifier \" >int</span> b,<span class=\"type_specifier \" >int</span> h,<span class=\"type_specifier \" >int</span> z<span class=\"vert \" >)</span></span> </span>");
+   
    
    
    
@@ -177,6 +180,7 @@ void source_js()
   fprintf(f_output," <script src=\"../js/chosen.jquery.min.js\"></script>");
   fprintf(f_output,"     <script src=\"../js/custom.js\"></script>");
   fprintf(f_output," <script src=\"../js/dashboard.js\"></script>");
+  fprintf(f_output,"<script src=\"../javascript.js\"></script>");
    
 
 }
