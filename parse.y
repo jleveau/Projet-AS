@@ -11,6 +11,19 @@ char* tmp;
 
 %}
 
+<<<<<<< HEAD
+=======
+%union{
+	char* val;
+}
+%type<val> function_definition declaration_specifiers declaration_list compound_statement block_item_list declaration statement block_item parameter_declaration  and_expression
+%type<val> static_assert_declaration storage_class_specifier type_qualifier function_specifier alignment_specifier atomic_type_specifier struct_or_union exclusive_or_expression
+%type<val> struct_or_union_specifier enum_specifier pointer assignment_expression labeled_statement expression_statement selection_statement iteration_statement jump_statement
+%type<val> declarator direct_declarator init_declarator_list init_declarator initializer  type_specifier conditional_expression unary_expression postfix_expression cast_expression
+%type<val>  primary_expression constant string  generic_selection logical_or_expression expression type_name logical_and_expression type_qualifier_list inclusive_or_expression parameter_type_list
+%type<val> equality_expression relational_expression shift_expression additive_expression multiplicative_expression specifier_qualifier_list
+
+>>>>>>> 64f5947934594cbc0a9a73503fd37ae8a2b34c1b
 
 %token	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
 %token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
@@ -76,8 +89,13 @@ generic_association
 postfix_expression
 	: primary_expression
 	| postfix_expression '[' expression ']'
+<<<<<<< HEAD
 	| postfix_expression %prec EXPR '(' ')' ////Appel de fonction 
 	| postfix_expression %prec EXPR  '(' argument_expression_list ')' ////Appel de fonction
+=======
+	| postfix_expression '(' ')' 
+	| postfix_expression '(' argument_expression_list ')'
+>>>>>>> 64f5947934594cbc0a9a73503fd37ae8a2b34c1b
 	| postfix_expression '.' IDENTIFIER
 	| postfix_expression PTR_OP IDENTIFIER
 	| postfix_expression INC_OP
@@ -381,7 +399,12 @@ parameter_type_list
 	: parameter_list ',' ELLIPSIS
 	| parameter_list 
 	;
+<<<<<<< HEAD
 	
+=======
+
+
+>>>>>>> 64f5947934594cbc0a9a73503fd37ae8a2b34c1b
 parameter_list
 	: parameter_declaration
 	| parameter_list ',' parameter_declaration
