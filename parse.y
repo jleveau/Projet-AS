@@ -1,4 +1,8 @@
 %{
+#ifndef YYSTYPE
+# define YYSTYPE char*
+#endif	
+	
 #include <stdio.h>
 
 void yyerror(const char *);  /* prints grammar violation message */
@@ -7,35 +11,25 @@ char* tmp;
 
 %}
 
-%union{
-	char* val;
-}
-%type<val> function_definition declaration_specifiers declaration_list compound_statement block_item_list declaration statement block_item parameter_declaration  and_expression
-%type<val> static_assert_declaration storage_class_specifier type_qualifier function_specifier alignment_specifier atomic_type_specifier struct_or_union exclusive_or_expression
-%type<val> struct_or_union_specifier enum_specifier pointer assignment_expression labeled_statement expression_statement selection_statement iteration_statement jump_statement
-%type<val> declarator direct_declarator init_declarator_list init_declarator initializer  type_specifier conditional_expression unary_expression postfix_expression cast_expression
-%type<val>  primary_expression constant string  generic_selection logical_or_expression expression type_name logical_and_expression type_qualifier_list inclusive_or_expression
-%type<val> equality_expression relational_expression shift_expression additive_expression multiplicative_expression specifier_qualifier_list
 
+%token	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
+%token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
+%token	AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
+%token	SUB_ASSIGN LEFT_ASSIGN RIGHT_ASSIGN AND_ASSIGN
+%token	XOR_ASSIGN OR_ASSIGN
+%token	TYPEDEF_NAME ENUMERATION_CONSTANT
 
+%token	TYPEDEF EXTERN STATIC AUTO REGISTER INLINE
+%token	CONST RESTRICT VOLATILE
+%token	BOOL CHAR SHORT INT LONG SIGNED UNSIGNED FLOAT DOUBLE VOID
+%token	COMPLEX IMAGINARY 
+%token	STRUCT UNION ENUM ELLIPSIS
 
- 
-%token<val>	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
-%token<val>	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
-%token<val>	AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
-%token<val>	SUB_ASSIGN LEFT_ASSIGN RIGHT_ASSIGN AND_ASSIGN
-%token<val>	XOR_ASSIGN OR_ASSIGN
-%token<val>	TYPEDEF_NAME ENUMERATION_CONSTANT
+%token	CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
 
-%token<val>	TYPEDEF EXTERN STATIC AUTO REGISTER INLINE
-%token<val>	CONST RESTRICT VOLATILE
-%token<val>	BOOL CHAR SHORT INT LONG SIGNED UNSIGNED FLOAT DOUBLE VOID
-%token<val>	COMPLEX IMAGINARY 
-%token<val>	STRUCT UNION ENUM ELLIPSIS
+%token	ALIGNAS ALIGNOF ATOMIC GENERIC NORETURN STATIC_ASSERT THREAD_LOCAL
 
-%token<val>	CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
-
-%token<val>	ALIGNAS ALIGNOF ATOMIC GENERIC NORETURN STATIC_ASSERT THREAD_LOCAL
+%left EXPR
 
 %start translation_unit
 
@@ -82,8 +76,8 @@ generic_association
 postfix_expression
 	: primary_expression
 	| postfix_expression '[' expression ']'
-	| postfix_expression '(' ')' 
-	| postfix_expression '(' argument_expression_list ')
+	| postfix_expression %prec EXPR '(' ')' ////Appel de fonction 
+	| postfix_expression %prec EXPR  '(' argument_expression_list ')' ////Appel de fonction
 	| postfix_expression '.' IDENTIFIER
 	| postfix_expression PTR_OP IDENTIFIER
 	| postfix_expression INC_OP
@@ -93,7 +87,7 @@ postfix_expression
 	;
 
 argument_expression_list
-	: assignment_expression
+	: assignment_expression ////// Parametre 
 	| argument_expression_list ',' assignment_expression
 	;
 
@@ -354,7 +348,7 @@ declarator
 	;
 
 direct_declarator
-	: IDENTIFIER
+	: IDENTIFIER 
 	| '(' declarator ')'
 	| direct_declarator '[' ']'  {printf(" tableau %s \n",$1);}
 	| direct_declarator '[' '*' ']' 
@@ -365,9 +359,9 @@ direct_declarator
 	| direct_declarator '[' type_qualifier_list assignment_expression ']'
 	| direct_declarator '[' type_qualifier_list ']'
 	| direct_declarator '[' assignment_expression ']'
-	| direct_declarator '(' parameter_type_list ')' {declared_function_balise($1,$3);}
+	| direct_declarator '(' parameter_type_list ')'
 	| direct_declarator '(' ')'
-	| direct_declarator '(' {/*cree nouvelle liste pour passer en parametre à new_block list l=list_create();*/} identifier_list {}')'
+	| direct_declarator '(' identifier_list ')'  
 	;
 
 pointer
@@ -387,8 +381,7 @@ parameter_type_list
 	: parameter_list ',' ELLIPSIS
 	| parameter_list 
 	;
-direct_declarator '(' parameter_type_list ')' 
-	| direct_declarator '(' ')'
+	
 parameter_list
 	: parameter_declaration
 	| parameter_list ',' parameter_declaration
@@ -401,7 +394,7 @@ parameter_declaration
 	;
 
 identifier_list
-	: IDENTIFIER
+	: IDENTIFIER {printf("identifier : %s",$1);}
 	| identifier_list ',' IDENTIFIER
 	;
 

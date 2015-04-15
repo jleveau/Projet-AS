@@ -1,6 +1,13 @@
 #include "tools.h"
 #include "html.h"
 
+char* string_concat(char* s1,char* s2){
+	char* s=malloc(strlen(s1)+strlen(s2)+1);
+	strcpy(s,s1);
+	strcat(s,s2);
+	return s;
+}
+
 /* ajoute une fonction dans la liste de fonctions,
  * la liste ne depend pas d'une pile car les fonctions sont accessibles partout dans le code*/
 

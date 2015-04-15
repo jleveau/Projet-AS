@@ -59,6 +59,8 @@ bool list_empty(list l);
 
 void declared_function_balise(char* type,char* nom);
 
+char* string_concat(char* s1,char* s2);
+
 void print_variable(variable v);
 void print_variables();
 void print_function(function f);

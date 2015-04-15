@@ -22,6 +22,9 @@ ES  (\\(['"4\?\\abfnrtv]|[0-7]{1,3}|x[a-fA-F0-9]+))
 WS  [ \t\v\n\f]
 
 %{
+#ifndef YYSTYPE
+# define YYSTYPE char*
+#endif
 #include "parse.tab.h"
 #include "libs/html.h"
 #include "libs/tools.h"
@@ -34,13 +37,13 @@ extern int sym_type(const char *);  /* returns type from symbol table */
 
 static int check_type(void);
 
-    //"return"				{yylval.nom=strdup(yytext); return(RETURN); }
-//";"					{yylval.nom=strdup(yytext); return ';'; }
+    //"return"				{yylval=strdup(yytext); return(RETURN); }
+//";"					{yylval=strdup(yytext); return ';'; }
 
 /*
-  "continue"              {fprintf(f_output,yylval.nom=strdup(yytext); return(CONTINUE);}
-"break"                 {fprintf(f_output,yylval.nom=strdup(yytext); return(BREAK);}
-"return"                {fprintf(f_output,yylval.nom=strdup(yytext); return(RETURN);}
+  "continue"              {fprintf(f_output,yylval=strdup(yytext); return(CONTINUE);}
+"break"                 {fprintf(f_output,yylval=strdup(yytext); return(BREAK);}
+"return"                {fprintf(f_output,yylval=strdup(yytext); return(RETURN);}
 ("{"|"<%")				{ fprintf(f_output,"%s",yytext); return '{'; }
 ("}"|"%>")				{ fprintf(f_output,"%s",yytext); return '}'; }
 
@@ -67,33 +70,33 @@ static int check_type(void);
 "continue"				{print_balise_span("type_specifier","continue"); return  CONTINUE;} 
 "default"				{print_balise_span("type_specifier","default"); return  DEFAULT;} 
 "do"					{print_balise_span("jump_statement","do"); return  DO;} 
-"double"				{print_balise_span("type_specifier","double");yylval.val="double";return  DOUBLE;} 
+"double"				{print_balise_span("type_specifier","double");yylval="double";return  DOUBLE;} 
 "enum"					{print_balise_span("type_specifier","enum"); return  ENUM;} 
 "extern"				{print_balise_span("type_specifier","extern"); return  EXTERN;} 
-"float"					{print_balise_span("type_specifier","float"); yylval.val="float";return  FLOAT;} 
+"float"					{print_balise_span("type_specifier","float"); yylval="float";return  FLOAT;} 
 
 "goto"					{print_balise_span("type_specifier","goto"); return  GOTO;} 
 "if"					{print_balise_span("jaune","if"); return  IF;} 
 "inline"				{print_balise_span("type_specifier","inline"); return  INLINE;} 
-"int"					{print_balise_span("type_specifier","int"); yylval.val="int";return  INT;} 
+"int"					{print_balise_span("type_specifier","int"); yylval="int";return  INT;} 
 "long"					{print_balise_span("type_specifier","long"); return  LONG;} 
-"register"				{print_balise_span("type_specifier","register");yylval.val="long"; return  REGISTER;} 
+"register"				{print_balise_span("type_specifier","register");yylval="long"; return  REGISTER;} 
 "restrict"				{print_balise_span("type_specifier","restrict"); return  RESTRICT;} 
 "return"				{print_balise_span("jaune","return"); return  RETURN;} 
-"short"					{print_balise_span("type_specifier","short"); yylval.val="short";return  SHORT;} 
-"signed"				{print_balise_span("type_specifier","signed"); yylval.val="signed";return  SIGNED;} 
+"short"					{print_balise_span("type_specifier","short"); yylval="short";return  SHORT;} 
+"signed"				{print_balise_span("type_specifier","signed"); yylval="signed";return  SIGNED;} 
 "sizeof"				{print_balise_span("jump_statement","sizeof"); return  SIZEOF;} 
 "static"				{print_balise_span("type_specifier","static"); return  STATIC;} 
 "switch"				{print_balise_span("jaune","switch"); return  SWITCH;} 
 "typedef"				{print_balise_span("type_specifier","typedef");  return  TYPEDEF;} 
 "union"					{print_balise_span("type_specifier","union"); return  UNION;} 
 "unsigned"				{print_balise_span("type_specifier","unsigned"); return  UNSIGNED;} 
-"void"					{print_balise_span("type_specifier","void"); yylval.val="void";return  VOID;} 
+"void"					{print_balise_span("type_specifier","void"); yylval="void";return  VOID;} 
 "volatile"				{print_balise_span("type_specifier","volatile");return  VOLATILE;} 
 "while"					{print_balise_span("type_specifier","while");return  WHILE;} 
 
 
-"char"					{print_balise_span("type_specifier","char");yylval.val="char";return  CHAR;} 
+"char"					{print_balise_span("type_specifier","char");yylval="char";return  CHAR;} 
 "for"					{print_balise_span("jaune","for");return  FOR;} 
 "else"					{print_balise_span("jaune","else");return  ELSE;} 
 
@@ -113,7 +116,7 @@ static int check_type(void);
 
         
 
-{L}{A}*					{yylval.val=strdup(yytext); return check_type(); }
+{L}{A}*					{yylval=strdup(yytext); return check_type(); }
 
 {HP}{H}+{IS}?				{ fprintf(f_output,"%s",yytext); return I_CONSTANT; }
 {NZ}{D}*{IS}?				{ fprintf(f_output,"%s",yytext); return I_CONSTANT; }

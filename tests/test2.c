@@ -1,27 +1,22 @@
 int constante;
 int banae;
+char f(int d,int e){
+	return 'a';
+}
+
 
 int g(char a, int c){
 	
-	int b;
-	if (b){
-		float h;
-	}
+	int j;
+	int i;
+	
+	f(i,j);
+	
 	return 0;
 }
 
-void f(int a, int b){
-	char c;
+int foo(a, b)
+int a;
+double b;
+{
 }
-
-int h(){
-	
-	f(constante,banae);
-	
-	char z ;
-}
-
-char test(char m){
-	return m;
-}
-
