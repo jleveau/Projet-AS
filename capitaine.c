@@ -34,7 +34,7 @@ retih = regcomp(&regexh,"[[:alnum:]].h",0);
   
   
   fprintf(f_output,"<li class=\"nav-parent\">");
-  fprintf(f_output,"<a href=\"#\"><i class=\"fa fa-map-marker\"></i> <span>Header</span></a>");
+  fprintf(f_output,"<a href=\"#\"><i class=\"fa fa-plus\"></i> <span>Header</span></a>");
   fprintf(f_output,"<ul class=\"children\">");   
 
 
@@ -62,7 +62,7 @@ if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
 
 
   fprintf(f_output,"<li class=\"nav-parent\">");
-  fprintf(f_output,"<a href=\"#\"><i class=\"fa fa-map-marker\"></i> <span>Source File</span></a>");
+  fprintf(f_output,"<a href=\"#\"><i class=\"fa fa-plus\"></i> <span>Source File</span></a>");
   fprintf(f_output,"<ul class=\"children\">");   
    
   rep=opendir(directory);

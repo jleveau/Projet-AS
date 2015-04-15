@@ -33,5 +33,34 @@ function cache() {
 	i=false;
     }
 }
+
+function ChangeClassMenuHeader()
+{
+var head = GetId('Header');
+if(head.getAttribute('class') == 'fa fa-plus')
+{
+head.ClassName='fa fa-minus';
+}
+else
+{
+head.ClassName='fa fa-plus';
+}
+
+}
+
+function ChangeClassMenuSource()
+{
+var head = GetId('Source');
+if(head.getAttribute('class') == 'fa fa-plus')
+{
+head.ClassName='fa fa-minus';
+}
+else
+{
+head.ClassName='fa fa-plus';
+}
+
+}
+
 document.onmousemove=move; 
 
