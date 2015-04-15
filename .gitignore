@@ -1,0 +1,2 @@
+*.html parse.tab.h parse.tab.c parse.output lex.yy.c *.txt capitaine main
+main.c~ #parse.y#

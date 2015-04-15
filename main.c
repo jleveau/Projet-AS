@@ -22,8 +22,10 @@ retic = regcomp(&regexc, "[[:alnum:]].c", 0);
 retih = regcomp(&regexh,"[[:alnum:]].h",0);
 
 	
-   if (argc!=2)
-	return 0;
+   if (argc!=2){
+		fprintf(stderr,"capitaine : nombre d'arguments invalide : %d \n",argc);
+		return EXIT_FAILURE;
+	}
   struct dirent *lecture;
   DIR *rep ;
    
@@ -50,8 +52,11 @@ retih = regcomp(&regexh,"[[:alnum:]].h",0);
 			  
 			 strcpy(path,argv[1]);
 			 strcat(path,lecture->d_name);
-			 if (fork()==0)
+			 if (fork()==0){
 				execl("./capitaine","capitaine",path,buf,lecture->d_name,(char*)NULL);
+				fprintf(stderr,"exec error \n");
+				return EXIT_FAILURE;
+			}
 		}
 	}
 	

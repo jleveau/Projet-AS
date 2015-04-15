@@ -1,0 +1,13 @@
+-----------------tests/test2.c------------------- 
+block : block1 === 
+ var : int b 
+ 
+ 
+block : block2 === 
+ stack variables vide 
+ 
+block : block0 === 
+ stack variables vide 
+ 
+func : int g ( var : char a ,var : int c ,) 
+func : void f ( var : int a ,var : int b ,) 

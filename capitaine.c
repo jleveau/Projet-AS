@@ -196,22 +196,39 @@ int fermer_html(FILE* fd){
 void init_structures(){
 	
   function_list=list_create();
-  variables_stack=stack_create();
+  block_stack=stack_create();
+  id_block=0;
   new_block(NULL);
 }
 
+void create_log(char* name){
+  char log[20]="./log/";
+  strcat(log,name);
+  strcat(log,".txt");
+  int fd;
+  if((fd = open(log, O_CREAT | O_RDWR,0666))==-1){
+    perror("open");
+  }
+  dup2(fd,1);
+}
 
 //Fonction principale du code
-int main(int argc,char** argv){     
+int main(int argc,char** argv){ 
+	if (argc !=4){
+		fprintf(stderr,"capitaine : nombre d'arguments invalide");
+	}   
   int fd=open(argv[1],O_RDONLY);
+  create_log(argv[3]);
   dup2(fd,0);
+	printf("-----------------%s------------------- \n",argv[1]);
 
   create_html(argv[3],argv[2]);
   init_structures();
 	nb_ligne=1;
 fprintf(f_output,"<span class=\"numerotation\">%d.   </span>",nb_ligne);
   yyparse();
-  print_variables();
+  fin_block(NULL);
+ // print_variables();
   print_functions();
   if(fermer_html(f_output)){
     perror("fermeture du html");

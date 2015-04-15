@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include "stack.h"
 #include <stdbool.h>
+#include <string.h>
+#include <assert.h>
 
 typedef struct cell_t{
 	void* elem;
@@ -29,16 +31,18 @@ typedef struct function_t {
 	int nb_arguments;
 } *function;
 
-
+typedef struct block_t{
+	char* name_id;
+	list variables;
+} * block;
 
 /* Englobe les piles de déclaration (variables, et typedef) */
 
-stack variables_stack;
+stack block_stack;
 
-
-char* new_block(list l);
+block new_block(list l);
 void fin_blockTEST();
-void fin_block(char* id);
+void fin_block();
 
 list function_list;
 stack typedef_stack;

@@ -88,8 +88,8 @@ postfix_expression
 	| postfix_expression PTR_OP IDENTIFIER
 	| postfix_expression INC_OP
 	| postfix_expression DEC_OP
-	| '(' type_name ')' {new_block(NULL);}'{'  initializer_list '}' {fin_block("tmp");/*je crois que c'est la block d'une fonctionne, à vérifier*/}
-	| '(' type_name ')' {new_block(NULL);}'{'  initializer_list ',' '}' {fin_block("tmp");}
+	| '(' type_name ')' '{'  initializer_list '}'
+	| '(' type_name ')' '{'  initializer_list ',' '}'
 	;
 
 argument_expression_list
@@ -270,8 +270,8 @@ type_specifier
 	;
 
 struct_or_union_specifier
-	: struct_or_union '{' {new_block(NULL);} struct_declaration_list '}' {fin_block("tmp");} 
-	| struct_or_union IDENTIFIER '{' {new_block(NULL);} struct_declaration_list '}' {fin_block("tmp");}
+	: struct_or_union '{'  struct_declaration_list '}'  
+	| struct_or_union IDENTIFIER '{'  struct_declaration_list '}' 
 	| struct_or_union IDENTIFIER
 	;
 
@@ -310,10 +310,10 @@ struct_declarator
 	;
 
 enum_specifier
-	: ENUM '{'{new_block(NULL);} enumerator_list '}' {fin_block("tmp");}
-	| ENUM '{' {new_block(NULL);} enumerator_list ',' '}' {fin_block("tmp");}
-	| ENUM IDENTIFIER '{'{new_block(NULL);} enumerator_list '}' {fin_block("tmp");}
-	| ENUM IDENTIFIER '{' {new_block(NULL);} enumerator_list ',' '}'{fin_block("tmp");}
+	: ENUM '{' enumerator_list '}' 
+	| ENUM '{'enumerator_list ',' '}' 
+	| ENUM IDENTIFIER '{' enumerator_list '}' 
+	| ENUM IDENTIFIER '{'  enumerator_list ',' '}'
 	| ENUM IDENTIFIER
 	;
 
@@ -486,8 +486,8 @@ labeled_statement
 	;
 
 compound_statement
-	: '{' {new_block(NULL);}  {fin_block("block0");/*"block0 car tmp fait bugguer; à régler*/} '}'
-	| '{' block_item_list '}' {fin_block("block0");}
+	: '{'  '}'
+	| '{' block_item_list '}'
 	;
 
 block_item_list

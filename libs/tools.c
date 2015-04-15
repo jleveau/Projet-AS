@@ -29,8 +29,8 @@ void create_variable(char* nom,char* type, char* description){
 	v->nom=nom;
 	v->type=type;
 	v->description=description;
-	list l=stack_top(variables_stack);
-
+	block b=(block)stack_top(block_stack);
+	list l=b->variables;
 
   add_to_list(l,v);
 }
@@ -77,19 +77,26 @@ void add_to_list(list l,void* elem){
 }
 
 //peut-être nécessaire que ca retourne une balise, à voir
-char* new_block(list l){
-  fprintf(f_output, "/*new block */\n");
-char block_nameID[20];	
-  sprintf(block_nameID, "block%d", id_block); 
-  balise block=creer_balise_block(block_nameID);
-  // block->id=id_block;
-  id_block++;
+block  new_block(list l){
   if(!l){
     l=list_create();		
   }	
-  stack_push(variables_stack, l);
+  char block_nameID[20];	
+  sprintf(block_nameID, "block%d", id_block); 
+  
+  
+  fprintf(f_output, "/*new block id = %d */\n",id_block);
+  block b=malloc(sizeof(*b));
+  b->name_id=malloc((strlen(block_nameID)+1)*sizeof(char));
+  strcpy(b->name_id,block_nameID);
+  b->variables=l;
+  id_block++;
+  
+  balise block=creer_balise_block(block_nameID);
 
-return NULL; 
+  stack_push(block_stack, b);
+
+  return b;
 }
 
 //test sans block name car ca fait bugger
@@ -101,12 +108,14 @@ void fin_blockTEST(){
 //stack_pop(variables_stack);
 }
 
-void fin_block(char* block_nameID){
+void fin_block(){
+  block b=(block)stack_top(block_stack);
   fprintf(f_output, "/*fin block */\n");
-  fprintf(f_output, "<a href=\"#%s\">}</a>", block_nameID);
+  fprintf(f_output, "<a href=\"#%s\">}</a>", b->name_id);
   fprintf(f_output, "</div>");
   
-//stack_pop(variables_stack);
+  print_variables();
+  stack_pop(block_stack);
 }
 
 bool list_empty(list l){
@@ -168,12 +177,22 @@ void print_variable(variable v){
 
 // affiche la liste au sommet de la pile de variables
 void print_variables(){
-	list l=(list)stack_top(variables_stack);
-	cell c=l->first;
-	while (c){
-		print_variable((variable)c->elem);
-		printf("\n");
-		c=c->next;
+	block b=(block)stack_top(block_stack);
+	printf("block : %s === \n ",b->name_id);
+	list l=b->variables;
+
+	if (!list_empty(l)){
+		cell c=l->first;
+		while (c){
+			print_variable((variable)c->elem);
+			printf("\n");
+			c=c->next;
+		}
+		
 	}
+	else {
+		printf("stack variables vide");
+	}
+	printf(" \n \n");
 }
 
