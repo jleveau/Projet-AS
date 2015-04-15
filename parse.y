@@ -82,8 +82,8 @@ generic_association
 postfix_expression
 	: primary_expression
 	| postfix_expression '[' expression ']'
-	| postfix_expression '(' ')'
-	| postfix_expression '(' argument_expression_list ')'
+	| postfix_expression '(' ')' 
+	| postfix_expression '(' argument_expression_list ')
 	| postfix_expression '.' IDENTIFIER
 	| postfix_expression PTR_OP IDENTIFIER
 	| postfix_expression INC_OP
@@ -365,7 +365,7 @@ direct_declarator
 	| direct_declarator '[' type_qualifier_list assignment_expression ']'
 	| direct_declarator '[' type_qualifier_list ']'
 	| direct_declarator '[' assignment_expression ']'
-	| direct_declarator '(' parameter_type_list ')'
+	| direct_declarator '(' parameter_type_list ')' {declared_function_balise($1,$3);}
 	| direct_declarator '(' ')'
 	| direct_declarator '(' {/*cree nouvelle liste pour passer en parametre à new_block list l=list_create();*/} identifier_list {}')'
 	;
@@ -387,7 +387,8 @@ parameter_type_list
 	: parameter_list ',' ELLIPSIS
 	| parameter_list 
 	;
-
+direct_declarator '(' parameter_type_list ')' 
+	| direct_declarator '(' ')'
 parameter_list
 	: parameter_declaration
 	| parameter_list ',' parameter_declaration

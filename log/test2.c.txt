@@ -1,14 +1,40 @@
 -----------------tests/test2.c------------------- 
-block : block1 === 
- var : int b 
- 
- 
 block : block2 === 
- stack variables vide 
+ var : int constante 
+var : int banae 
+var : int b 
+var : float h 
  
+
+block : block1 === 
+ var : int constante 
+var : int banae 
+var : int b 
+ 
+
+block : block3 === 
+ var : int constante 
+var : int banae 
+var : char c 
+ 
+
+block : block4 === 
+ var : int constante 
+var : int banae 
+var : char z 
+ 
+
+block : block5 === 
+ var : int constante 
+var : int banae 
+ 
+
 block : block0 === 
- stack variables vide 
+ var : int constante 
+var : int banae 
  
+
 func : int g ( var : char a ,var : int c ,) 
 func : void f ( var : int a ,var : int b ,) 
-
+func : int h ( ) 
+func : char test ( var : char m ,) 

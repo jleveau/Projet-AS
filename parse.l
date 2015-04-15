@@ -24,8 +24,9 @@ WS  [ \t\v\n\f]
 %{
 #include "parse.tab.h"
 #include "libs/html.h"
+#include "libs/tools.h"
 #include <stdio.h>
-   
+
 
 extern int sym_type(const char *);  /* returns type from symbol table */
 
@@ -153,7 +154,7 @@ static int check_type(void);
 "!="					{ fprintf(f_output,"%s",yytext); return NE_OP; }
 ";"					{print_balise_span("vert",";"); return ';'; }
 ("{"|"<%")				 {indent=indent+2;print_balise_span("vert","{"); new_block(NULL);  return '{'; }
-("}"|"%>")				{indent=indent-2;print_balise_span("vert","}"); fin_block("block0"); return '}'; }
+("}"|"%>")				{indent=indent-2;print_balise_span("vert","}"); fin_block("teqog",5,7); return '}'; }
 ","					{ fprintf(f_output,"%s",yytext); return ','; }
 ":"					{ fprintf(f_output,"%s",yytext); return ':'; }
 "="					{ fprintf(f_output,"%s",yytext); return '='; }

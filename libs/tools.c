@@ -30,9 +30,7 @@ void create_variable(char* nom,char* type, char* description){
 	v->type=type;
 	v->description=description;
 	block b=(block)stack_top(block_stack);
-	list l=b->variables;
-
-  add_to_list(l,v);
+    add_to_list(b->variables,v);
 }
 
 void add_parameter(char* nom, char* type,char* description){	
@@ -48,7 +46,6 @@ void add_parameter(char* nom, char* type,char* description){
 		f->arguments=list_create();
 		add_to_list(function_list,f);
 	}
-	
 	function f = (function)function_list->last->elem;
 	if (!f->nom){
 		add_to_list(f->arguments,v);
@@ -76,44 +73,84 @@ void add_to_list(list l,void* elem){
 	l->last->next=NULL;
 }
 
+void print_list(list l){
+	if (!l){
+		printf("======== ======== \n");	
+		return;
+	}
+	
+	cell c=l->first;
+	if (c){
+		while (c){
+			print_variable((variable)c->elem);
+			c=c->next;
+		}
+	}
+	printf("======== ======== \n");
+}
+
+list list_concat(list l1,list l2){
+	list l=list_create();
+	cell c;
+
+	if (l1 && l1->first){
+		c=l1->first;
+		while (c){
+			add_to_list(l,c->elem);
+			c=c->next;
+		}
+	}
+	if (l2 && l2->first){
+		c=l2->first;
+		while(c){
+			add_to_list(l,c->elem);
+			c=c->next;
+		}
+	}
+	return l;
+}
+
 //peut-être nécessaire que ca retourne une balise, à voir
 block  new_block(list l){
   if(!l){
-    l=list_create();		
-  }	
+    l=list_create();
+  }
+  
+  block top_block=(block)stack_top(block_stack);
+ 
+  
   char block_nameID[20];	
-  sprintf(block_nameID, "block%d", id_block); 
+  sprintf(block_nameID, "block%d", id_block);
   
-  
-  fprintf(f_output, "/*new block id = %d */\n",id_block);
   block b=malloc(sizeof(*b));
   b->name_id=malloc((strlen(block_nameID)+1)*sizeof(char));
   strcpy(b->name_id,block_nameID);
-  b->variables=l;
-  id_block++;
   
+  if (top_block)
+	b->variables=list_concat(top_block->variables,l);
+  else 
+	  b->variables=l;
+  id_block++;
   balise block=creer_balise_block(block_nameID);
-
   stack_push(block_stack, b);
 
   return b;
 }
-
-//test sans block name car ca fait bugger
-void fin_blockTEST(){
-  fprintf(f_output, "/*fin block */\n");
-  fprintf(f_output, "<a href=\"#%s\">}</a>", "block1");
-  fprintf(f_output, "</div>");
-  
-//stack_pop(variables_stack);
-}
+//~ 
+//~ //test sans block name car ca fait bugger
+//~ void fin_blockTEST(){
+  //~ fprintf(f_output, "/*fin block */\n");
+  //~ fprintf(f_output, "<a href=\"#%s\">}</a>", "block1");
+  //~ fprintf(f_output, "</div>");
+  //~ 
+//~ //stack_pop(variables_stack);
+//~ }
 
 void fin_block(){
   block b=(block)stack_top(block_stack);
   fprintf(f_output, "/*fin block */\n");
   fprintf(f_output, "<a href=\"#%s\">}</a>", b->name_id);
   fprintf(f_output, "</div>");
-  
   print_variables();
   stack_pop(block_stack);
 }
@@ -149,6 +186,9 @@ void name_function(char* type,char* nom,char* description){
 		f->description=description;
 		return;
 	}
+}
+
+void declared_function_balise(char* type,char* nom){
 }
 
 void print_function(function f){
@@ -193,6 +233,5 @@ void print_variables(){
 	else {
 		printf("stack variables vide");
 	}
-	printf(" \n \n");
+	printf(" \n\n");
 }
-

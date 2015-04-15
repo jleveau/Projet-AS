@@ -59,6 +59,6 @@ void * stack_top(stack s){
 void stack_pop(stack s){
 	if (stack_empty(s))
 		return ;
-		
 	s->l=s->l->next;
 }
+

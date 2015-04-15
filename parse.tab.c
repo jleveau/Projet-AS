@@ -2056,56 +2056,62 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 91:
+        case 21:
+#line 86 "parse.y" /* yacc.c:1646  */
+    {fprintf(stderr,"postif \n");}
+#line 2063 "parse.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 91:
 #line 216 "parse.y" /* yacc.c:1646  */
     {printf("variable : %s \n",(yyvsp[-1].val)); /*variables*/}
-#line 2063 "parse.tab.c" /* yacc.c:1646  */
+#line 2069 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 92:
 #line 217 "parse.y" /* yacc.c:1646  */
     {create_variable((yyvsp[-1].val),(yyvsp[-2].val),"description");	/*type=2; printf("type : %s variable :%s \n",$1,); variables*/}
-#line 2069 "parse.tab.c" /* yacc.c:1646  */
+#line 2075 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 94:
 #line 222 "parse.y" /* yacc.c:1646  */
     {/*ajouter_typedef($2);*/}
-#line 2075 "parse.tab.c" /* yacc.c:1646  */
+#line 2081 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 171:
 #line 359 "parse.y" /* yacc.c:1646  */
     {printf(" tableau %s \n",(yyvsp[-2].val));}
-#line 2081 "parse.tab.c" /* yacc.c:1646  */
+#line 2087 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 182:
 #line 370 "parse.y" /* yacc.c:1646  */
     {/*cree nouvelle liste pour passer en parametre à new_block list l=list_create();*/}
-#line 2087 "parse.tab.c" /* yacc.c:1646  */
+#line 2093 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 183:
 #line 370 "parse.y" /* yacc.c:1646  */
     {}
-#line 2093 "parse.tab.c" /* yacc.c:1646  */
+#line 2099 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 195:
 #line 397 "parse.y" /* yacc.c:1646  */
     {add_parameter((yyvsp[0].val),(yyvsp[-1].val),"descri");}
-#line 2099 "parse.tab.c" /* yacc.c:1646  */
+#line 2105 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 275:
 #line 543 "parse.y" /* yacc.c:1646  */
     {name_function((yyvsp[-1].val),(yyvsp[0].val),"description");}
-#line 2105 "parse.tab.c" /* yacc.c:1646  */
+#line 2111 "parse.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 2109 "parse.tab.c" /* yacc.c:1646  */
+#line 2115 "parse.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

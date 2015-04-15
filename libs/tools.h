@@ -57,6 +57,8 @@ void add_to_list(list l,void* elem);
 list list_create();
 bool list_empty(list l);
 
+void declared_function_balise(char* type,char* nom);
+
 void print_variable(variable v);
 void print_variables();
 void print_function(function f);

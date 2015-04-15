@@ -217,6 +217,7 @@ int main(int argc,char** argv){
 	if (argc !=4){
 		fprintf(stderr,"capitaine : nombre d'arguments invalide");
 	}   
+	printf(" %s %s %s \n", argv[1],argv[2],argv[3]);
   int fd=open(argv[1],O_RDONLY);
   create_log(argv[3]);
   dup2(fd,0);
