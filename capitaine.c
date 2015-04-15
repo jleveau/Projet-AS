@@ -110,7 +110,7 @@ FILE* create_html(char* titre,char* dir){
    fprintf(f_output,"   <meta charset=\"utf-8\">");
    fprintf(f_output,"   <title>%s</title>",titre);
    fprintf(f_output,"   <!doctype html>");
-
+   fprintf(f_output,"<script src=\"javascript.js\"></script>");
    fprintf(f_output, "<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/index.css\">");
    fprintf(f_output,"<link href=\"../branches/Rohan/css/style.default.css\" rel=\"stylesheet\">");
    fprintf(f_output,"<link href=\"../branches/Rohan/css/jquery.datatables.css\" rel=\"stylesheet\">");
