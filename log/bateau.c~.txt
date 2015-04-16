@@ -1,4 +1,4 @@
------------------tests/bateau.c------------------- 
+-----------------tests/bateau.c~------------------- 
 print--- 
 block : block0 === 
  stack variables vide 
@@ -78,13 +78,6 @@ block : block0 ===
 
 func : int f ( var : int a ,var : int b ,var : int h ,var : int z ,) 
 func : (null) (null) ( var : int a ,) 
-print--- 
-print--- 
-block : block3 === 
- stack variables vide 
-
-func : int f ( var : int a ,var : int b ,var : int h ,var : int z ,) 
-func : int g ( var : int a ,var : int b ,) 
 print--- 
 block : block3 === 
  stack variables vide 

@@ -411,7 +411,7 @@ direct_abstract_declarator
 	: '(' abstract_declarator ')'
 	| '[' ']'
 	| '[' '*' ']'
-	| '[' STATIC type_qualifier_list assignment_eIDENTIFIERxpression ']'
+	| '[' STATIC type_qualifier_list assignment_expression ']'
 	| '[' STATIC assignment_expression ']'
 	| '[' type_qualifier_list STATIC assignment_expression ']'
 	| '[' type_qualifier_list assignment_expression ']'
@@ -463,7 +463,7 @@ static_assert_declaration
 	;
 
 statement
-	: labeled_statementIDENTIFIER
+	: labeled_statement
 	| compound_statement 
 	| expression_statement
 	| selection_statement

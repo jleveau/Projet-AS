@@ -11,7 +11,6 @@ int f(int a, int b,int h,int z){
 }
 
 int g(int a,int b){
-	f(2,3,4,5);
 }
 
 void g(){int d=0;}

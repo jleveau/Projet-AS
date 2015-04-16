@@ -1,6 +1,11 @@
 function GetId(id)
-{		return document.getElementById(id);
-}				var i=false; 
+{		
+	return document.getElementById(id);
+}
+
+
+
+var i=false; 
 function move(e) {
     if(i) { 
 	if (navigator.appName!="Microsoft Internet Explorer") { // Si on est pas sous IE
@@ -64,3 +69,38 @@ head.ClassName='fa fa-plus';
 
 document.onmousemove=move; 
 
+function fermer_accolade(id)
+{
+var id_block = GetId(id);
+id_block.style.visibility="hidden";
+
+}
+
+
+function showHide(divId)
+    {
+    if (document.getElementById(divId).style.display=="inline")
+        {
+        document.getElementById(divId).style.display="none";
+        }
+    else
+        {
+        document.getElementById(divId).style.display="inline";
+        }
+    }
+
+
+$(document).ready(function(){
+ 
+	$("div.show").each(function(){
+    	     $(this).hide();
+        });
+ 
+ 
+	$('#block1').click(
+	function(){
+		$('#mondivId').fadeToggle("slow","linear");
+	});
+ 
+ 
+});

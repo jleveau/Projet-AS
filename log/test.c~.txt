@@ -1,0 +1,4 @@
+-----------------tests/test.c~------------------- 
+block : block0 === 
+ stack variables vide 
+

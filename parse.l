@@ -157,7 +157,7 @@ static int check_type(void);
 "!="					{ fprintf(f_output,"%s",yytext); return NE_OP; }
 ";"					{print_balise_span("vert",";"); return ';'; }
 ("{"|"<%")				 {indent=indent+2;print_balise_span("vert","{"); new_block(NULL);  return '{'; }
-("}"|"%>")				{indent=indent-2;print_balise_span("vert","}"); fin_block("teqog",5,7); return '}'; }
+("}"|"%>")				{indent=indent-2; fin_block("teqog",5,7); return '}'; }
 ","					{ fprintf(f_output,"%s",yytext); return ','; }
 ":"					{ fprintf(f_output,"%s",yytext); return ':'; }
 "="					{ fprintf(f_output,"%s",yytext); return '='; }
