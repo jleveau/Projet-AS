@@ -6,6 +6,9 @@
 #include <stdbool.h>
 #include <string.h>
 #include <assert.h>
+#include "html.h"
+
+
 
 typedef struct cell_t{
 	void* elem;
@@ -21,6 +24,7 @@ typedef struct variable_t {
 	char* nom;
 	char* type;
 	char* description;
+	char* id;
 } *variable;
 
 typedef struct function_t {
@@ -32,9 +36,12 @@ typedef struct function_t {
 } *function;
 
 typedef struct block_t{
-	char* name_id;
+	char* id;
 	list variables;
 } * block;
+
+function UNNAMED_FUNCTION;
+
 
 /* Englobe les piles de déclaration (variables, et typedef) */
 
@@ -47,6 +54,8 @@ void fin_block();
 list function_list;
 stack typedef_stack;
 
+variable getVariable(char* name);
+function getFunction(char* name);
 
 void create_variable(char* name,char* type,char* description);
 
@@ -60,6 +69,9 @@ bool list_empty(list l);
 void declared_function_balise(char* type,char* nom);
 
 char* string_concat(char* s1,char* s2);
+
+char* create_variable_id(variable v);
+char* create_name_id(char* name);
 
 void print_variable(variable v);
 void print_variables();

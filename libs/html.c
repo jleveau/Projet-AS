@@ -1,8 +1,3 @@
-
-
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "html.h"
 
 
@@ -100,6 +95,51 @@ balise creer_balise_block(char* block_nameID){
 // ferme la balise ouvrante apres ajout (éventuel) des attributs (éventuels)
 void print_fin_debut_balise(){
 	fprintf(f_output, ">");
+}
+
+/* Crée une balise autour d'un identifiant.
+ * Son id est
+ * pour une variable : <id_block><nom_variable>
+ * pour une fonction : <nom_de_la_fonction>
+ * 
+*/
+void print_balise_identifier(char* name){
+	//Construction de l'id :
+	char* id;
+	char* class;
+	function f=getFunction(name);
+
+	if (f){ // Soit f vaut UNNAMED_FUNCTION , soit f est une fonction
+		if (f==UNNAMED_FUNCTION){
+			fprintf(stderr,"UNNAMED");
+		}
+		fprintf(stderr,"variable : %s \n",name);
+		id=name;
+		class="fonction";
+	}
+	else{
+		variable v=getVariable(name);
+			fprintf(stderr,"variable : %s \n",name);
+		if(v){
+			id=v->id;
+			class="variable";
+		}
+		else{
+			id=create_name_id(name);
+			class="variable";
+		}
+	}
+
+	//Ecriture de la base <span class=... id=...> name </span>
+   balise b=print_debut_balise("span",class);
+   fprintf(f_output," value=\"%s\" ",id);
+   print_fin_debut_balise();
+   fprintf(f_output,"%s",name);
+   print_fin_balise(b);
+   printf("print--- \n");
+   print_variables();
+   print_functions();
+	printf("print--- \n");
 }
 
 

@@ -4,6 +4,7 @@
 #endif	
 	
 #include <stdio.h>
+#include "libs/tools.h"
 
 void yyerror(const char *);  /* prints grammar violation message */
 
@@ -340,12 +341,12 @@ alignment_specifier
 	;
 
 declarator
-	: pointer direct_declarator
+	: pointer direct_declarator{$$=$2;}
 	| direct_declarator
 	;
 
 direct_declarator
-	: IDENTIFIER 
+	: IDENTIFIER {$$=$1;}
 	| '(' declarator ')'
 	| direct_declarator '[' ']'  {printf(" tableau %s \n",$1);}
 	| direct_declarator '[' '*' ']' 
@@ -358,7 +359,7 @@ direct_declarator
 	| direct_declarator '[' assignment_expression ']'
 	| direct_declarator '(' parameter_type_list ')'
 	| direct_declarator '(' ')'
-	| direct_declarator '(' identifier_list ')'  
+	| direct_declarator '(' identifier_list ')'
 	;
 
 pointer
@@ -410,7 +411,7 @@ direct_abstract_declarator
 	: '(' abstract_declarator ')'
 	| '[' ']'
 	| '[' '*' ']'
-	| '[' STATIC type_qualifier_list assignment_expression ']'
+	| '[' STATIC type_qualifier_list assignment_eIDENTIFIERxpression ']'
 	| '[' STATIC assignment_expression ']'
 	| '[' type_qualifier_list STATIC assignment_expression ']'
 	| '[' type_qualifier_list assignment_expression ']'
@@ -462,7 +463,7 @@ static_assert_declaration
 	;
 
 statement
-	: labeled_statement
+	: labeled_statementIDENTIFIER
 	| compound_statement 
 	| expression_statement
 	| selection_statement

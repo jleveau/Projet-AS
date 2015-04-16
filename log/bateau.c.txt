@@ -1,22 +1,13 @@
 -----------------tests/bateau.c------------------- 
-block : block2 === 
- var : int c 
-var : int d 
- 
+print--- 
+block : block0 === 
+ stack variables vide 
 
+print--- 
 block : block1 === 
  stack variables vide 
-
-block : block3 === 
- stack variables vide 
-
-block : block4 === 
- var : int d 
- 
 
 block : block0 === 
  stack variables vide 
 
-func : int f ( var : int a ,var : int b ,var : int h ,var : int z ,) 
-func : int g ( var : int a ,var : int b ,) 
-func : void g ( ) 
+func : int f ( ) 

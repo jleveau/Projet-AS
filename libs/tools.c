@@ -1,5 +1,5 @@
 #include "tools.h"
-#include "html.h"
+
 
 char* string_concat(char* s1,char* s2){
 	char* s=malloc(strlen(s1)+strlen(s2)+1);
@@ -29,6 +29,65 @@ list list_create(){
 
 }
 
+/* Retourne la fonction dont le nom est passé en parametre, NULL si elle n'existe pas */
+function getFunction(char* name){
+	list l=function_list;
+	if (list_empty(l))
+		return NULL;
+	cell c=l->first;
+	while (c){
+		function f=(function)c->elem;
+		if (f->nom){
+			if (strcmp(f->nom,name)==0)
+				return f;
+		}
+		else{
+			fprintf(stderr,"unnamed get FUNCTION %d \n",UNNAMED_FUNCTION);
+			return UNNAMED_FUNCTION;
+		}
+		c=c->next;
+	}
+	return NULL;
+}
+
+/* Retourne la variable en la cherchant dans le block en haut de pile, NULL si non trouvée */
+variable getVariable(char* name){
+	block b=(block)stack_top(block_stack);
+	list l=b->variables;
+	if (list_empty(l))
+		return NULL;
+	cell c=l->first;
+	while (c){
+		variable v=(variable)c->elem;
+		fprintf(stderr," v->nom %s  name : %s \n", v->nom,name);
+		if (strcmp(v->nom,name)==0){
+			return v;
+		}
+		c=c->next;
+	}
+	return NULL;
+}
+
+/* Concatene le nom du block en haut de pile, avec le nom de variable passé en parametre
+ * assert si la variable n'existe pas
+ * */
+char* create_variable_id(variable v){
+	block b=(block)stack_top(block_stack);
+	
+	char* id=malloc(strlen(b->id)+strlen(v->nom)+1);
+	strcpy(id,b->id);
+	strcat(id,v->nom);
+	return id;
+}
+
+char* create_name_id(char* name){
+	block b=(block)stack_top(block_stack);
+	char* id=malloc(strlen(b->id)+strlen(name)+1);
+	strcpy(id,b->id);
+	strcat(id,name);
+	return id;
+}
+
 /* cree une variable et l'ajoute dans la liste au sommet de la pile */
 
 void create_variable(char* nom,char* type, char* description){
@@ -37,6 +96,8 @@ void create_variable(char* nom,char* type, char* description){
 	v->type=type;
 	v->description=description;
 	block b=(block)stack_top(block_stack);
+	
+	v->id=create_variable_id(v);
     add_to_list(b->variables,v);
 }
 
@@ -125,13 +186,12 @@ block  new_block(list l){
   
   block top_block=(block)stack_top(block_stack);
  
-  
   char block_nameID[20];	
   sprintf(block_nameID, "block%d", id_block);
   
   block b=malloc(sizeof(*b));
-  b->name_id=malloc((strlen(block_nameID)+1)*sizeof(char));
-  strcpy(b->name_id,block_nameID);
+  b->id=malloc((strlen(block_nameID)+1)*sizeof(char));
+  strcpy(b->id,block_nameID);
   
   if (top_block)
 	b->variables=list_concat(top_block->variables,l);
@@ -156,7 +216,7 @@ block  new_block(list l){
 void fin_block(){
   block b=(block)stack_top(block_stack);
   fprintf(f_output, "/*fin block */\n");
-  fprintf(f_output, "<a href=\"#%s\">}</a>", b->name_id);
+  fprintf(f_output, "<a href=\"#%s\">}</a>", b->id);
   fprintf(f_output, "</div>");
   print_variables();
   stack_pop(block_stack);
@@ -165,6 +225,7 @@ void fin_block(){
 bool list_empty(list l){
 	return !l->last;
 }
+
 
 void name_function(char* type,char* nom,char* description){
 	if (list_empty(function_list) ){
@@ -225,7 +286,7 @@ void print_variable(variable v){
 // affiche la liste au sommet de la pile de variables
 void print_variables(){
 	block b=(block)stack_top(block_stack);
-	printf("block : %s === \n ",b->name_id);
+	printf("block : %s === \n ",b->id);
 	list l=b->variables;
 
 	if (!list_empty(l)){

@@ -1,7 +1,10 @@
 #ifndef HTML_H
 #define HTML_H
-#include <stdio.h>
 
+#include <stdio.h>
+#include "tools.h"
+#include <stddef.h>
+#include <stdlib.h>
 
 typedef struct attribut* attribut;
 typedef struct balise* balise;
@@ -13,8 +16,10 @@ int id_block;
 int nb_ligne;
 
 
+
 void print_fin_balise(struct balise* b);
 void print_attributs(struct attribut * attrib);
+void print_balise_identifier(char* name);
 balise print_debut_balise(char* nom,char* classe);
 void ajouter_attribut(balise b, char *nom, char* val);
 void print_fin_debut_balise();

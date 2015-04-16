@@ -29,7 +29,7 @@ WS  [ \t\v\n\f]
 #include "libs/html.h"
 #include "libs/tools.h"
 #include <stdio.h>
-
+#include <string.h>
 
 extern int sym_type(const char *);  /* returns type from symbol table */
 
@@ -205,14 +205,17 @@ static int check_type(void);
     alors c'est un identifier */
 static int check_type(void)
 {
-	fprintf(f_output,"%s",yytext);  
   switch (sym_type(yytext))
     {
-    case TYPEDEF_NAME:                /* previously defined */
-        return TYPEDEF_NAME;
-    case ENUMERATION_CONSTANT:        /* previously defined */
-        return ENUMERATION_CONSTANT;
-    default:                          /* includes undefined */
-        return IDENTIFIER;
+		case TYPEDEF_NAME:                /* previously defined */
+			return TYPEDEF_NAME;
+		case ENUMERATION_CONSTANT:        /* previously defined */
+			return ENUMERATION_CONSTANT;
+		default:                          /* includes undefined */
+		{
+			char* s=strdup(yytext);
+			print_balise_identifier(s);
+			return IDENTIFIER;
+		}
     }
 }

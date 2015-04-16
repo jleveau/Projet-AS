@@ -7,6 +7,7 @@
 #include <errno.h>
 #include <string.h>
 #include <regex.h>
+#include <sys/wait.h>
 
 char* tableau_fichier[20];
 

@@ -10,9 +10,10 @@
 #include "libs/html.h"
 #include "libs/tools.h"
 //pour la lecture de dossier
-#include "dirent.h"
+#include <dirent.h>
 //utilisation des expressions régulières
 #include <regex.h>
+#include <unistd.h>
 
 /*
 Fonction qui lit un dossier passé en paramètre et écrit dans le fichier html
@@ -202,6 +203,7 @@ void init_structures(){
   function_list=list_create();
   block_stack=stack_create();
   id_block=0;
+  UNNAMED_FUNCTION=malloc(sizeof(*UNNAMED_FUNCTION));
   new_block(NULL);
 }
 
