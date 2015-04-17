@@ -72,6 +72,8 @@ char* string_concat(char* s1,char* s2);
 
 char* create_variable_id(variable v);
 char* create_name_id(char* name);
+void print_variable_html(variable v);
+void print_function_html(function f);
 
 void print_variable(variable v);
 void print_variables();

@@ -5,10 +5,15 @@ block : block0 ===
 
 print--- 
 print--- 
+block : block0 === 
+ stack variables vide 
+
+print--- 
+print--- 
 block : block1 === 
  stack variables vide 
 
-func : void f ( ) 
+func : void f ( var : int a ,) 
 print--- 
 block : block1 === 
  var : int a 
@@ -18,13 +23,13 @@ print---
 block : block0 === 
  stack variables vide 
 
-func : void f ( ) 
+func : void f ( var : int a ,) 
 print--- 
 print--- 
 block : block2 === 
  stack variables vide 
 
-func : void f ( ) 
+func : void f ( var : int a ,) 
 func : void g ( ) 
 print--- 
 print--- 
@@ -32,15 +37,12 @@ block : block2 ===
  var : int b 
  
 
-func : void f ( ) 
+func : void f ( var : int a ,) 
 func : void g ( ) 
 print--- 
 block : block2 === 
  var : int b 
  
 
-block : block0 === 
- stack variables vide 
-
-func : void f ( ) 
+func : void f ( var : int a ,) 
 func : void g ( ) 

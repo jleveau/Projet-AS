@@ -230,8 +230,7 @@ int main(int argc,char** argv){
   create_html(argv[3],argv[2]);
   init_structures();
 	nb_ligne=1;
-fprintf(f_output,"<span class=\"numerotation\">%d.   </span>",nb_ligne);
-  yyparse();
+    yyparse();
   fin_block(NULL);
  // print_variables();
   print_functions();

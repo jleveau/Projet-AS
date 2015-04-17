@@ -270,6 +270,17 @@ void print_function(function f){
 	printf(") \n");
 }
 
+void print_function_html(function f){
+   fprintf(f_output,"func : %s %s ( ",f->type,f->nom);
+   cell l=f->arguments->first;
+   while (l){
+      print_variable_html(l->elem);
+      fprintf(f_output,",");
+      l=l->next;
+   }
+   fprintf(f_output,")");
+}
+
 void print_functions(){
 	list l=function_list;
 	cell c=l->first;
@@ -282,6 +293,12 @@ void print_functions(){
 void print_variable(variable v){
 	printf("var : %s %s ",v->type, v->nom);
 }
+
+void print_variable_html(variable v){
+fprintf(f_output,"var : %s %s ",v->type,v->nom);
+
+}
+
 
 // affiche la liste au sommet de la pile de variables
 void print_variables(){

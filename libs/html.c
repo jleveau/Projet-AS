@@ -143,19 +143,26 @@ void print_balise_identifier(char* name){
 			class="variable";
 		}
 	}
-
+    
 	//Ecriture de la base <span class=... id=...> name </span>
 	fprintf(f_output,"<span href=\"#\"class=\"%s-activable\">",class);
 	fprintf(f_output,"%s",name);
-   balise b=print_debut_balise("span",class);
-   fprintf(f_output," value=\"%s\" ",id);
-   print_fin_debut_balise();
-   fprintf(f_output,"%s",name);
-   print_fin_balise(b);
+    balise b=print_debut_balise("span",class);
+    fprintf(f_output," value=\"%s\" ",id);
+    print_fin_debut_balise();
+    if(f && f!=UNNAMED_FUNCTION){
+       print_function_html(f);
+    }
+    else
+    {
+       fprintf(f_output,"je suis une variable toute mignonne");
+       
+    }
+    print_fin_balise(b);
 	fprintf(f_output,"</span>");
-   printf("print--- \n");
-   print_variables();
-   print_functions();
+    printf("print--- \n");
+    print_variables();
+    print_functions();
 	printf("print--- \n");
 }
 

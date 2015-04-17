@@ -112,3 +112,21 @@ transform:scale(1) rotate(0);
 opacity:1; 
 
 }
+
+.variable{
+position:absolute; 
+margin-top:23px;
+margin-left:-35px;
+background-color:#f7f7f7; 
+padding:15px; 
+border-radius:3px; 
+box-shadow:0 0 2px rgba(0,0,0,.5);
+transform:scale(0) rotate(-13deg);
+transition:all .25s;
+opacity:0;
+}
+
+.variable-activable:hover .variable,.variable-activable:focus .variable{
+transform:scale(1) rotate(0);
+opacity:1; 
+}
