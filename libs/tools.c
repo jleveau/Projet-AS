@@ -216,8 +216,9 @@ block  new_block(list l){
 void fin_block(){
   block b=(block)stack_top(block_stack);
   //fprintf(f_output, "/*fin block */\n");
-  fprintf(f_output, "<a href=\"#%s\">}</a>",b->id,b->id,b->id,b->id);
   fprintf(f_output, "</div>");
+  fprintf(f_output, "<a class=\"fin_block\" value=\".%s\" name=\"#%s\">}</a>",b->id,b->id,b->id,b->id);
+  
   print_variables();
   stack_pop(block_stack);
 }

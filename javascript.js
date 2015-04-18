@@ -58,11 +58,11 @@ function ChangeClassMenuSource()
 var head = GetId('Source');
 if(head.getAttribute('class') == 'fa fa-plus')
 {
-head.ClassName='fa fa-minus';
+	head.ClassName='fa fa-minus';
 }
 else
 {
-head.ClassName='fa fa-plus';
+	head.ClassName='fa fa-plus';
 }
 
 }
@@ -99,7 +99,7 @@ $(document).ready(function(){
  
 	$('#block1').click(
 	function(){
-		$('#mondivId').fadeToggle("slow","linear");
+		$('#block1').fadeToggle("slow","linear");
 	});
  
  

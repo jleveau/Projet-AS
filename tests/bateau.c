@@ -1,7 +1,8 @@
 
-/* test_queue.c */
-
-
+/* test_queue.c */ 
+int b;
+int a;
+char z;
 
 int f(int a, int b,int h,int z){
 	if (a){

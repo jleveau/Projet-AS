@@ -116,6 +116,15 @@ FILE* create_html(char* titre,char* dir){
    fprintf(f_output,"<link href=\"../branches/Rohan/css/jquery.datatables.css\" rel=\"stylesheet\">");
    fprintf(f_output,"<link href=\"../branches/Rohan/css/font.helvetica-neue.css\" rel=\"stylesheet\">");
    fprintf(f_output,"<link rel=\"stylesheet\" href=\"http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css\">");
+   fprintf(f_output,"<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js\"></script>");      
+    
+   
+   fprintf(f_output,"<script>var toto='';var id='';$(document).ready(function(){");
+   fprintf(f_output,"$('.fin_block').click(function(){");
+   fprintf(f_output,"toto = $(this).attr('name');");
+   fprintf(f_output,"id =$(this).attr('value');});");
+   fprintf(f_output,"$(\".fin_block\").click(function(){");
+   fprintf(f_output,"$(id).slideToggle(\"slow\");});});</script>");
    
    fprintf(f_output,"</head>");								// </HEADER>
    
@@ -149,8 +158,10 @@ FILE* create_html(char* titre,char* dir){
    fprintf(f_output,"<div class=\"contentpanel\"");
    
    
+   
    fprintf(f_output,"<div class=\"bordure\"> ");
    fprintf(f_output,"<div class=\"Code\"> ");
+   
    
    
    
@@ -179,7 +190,6 @@ void source_js()
   fprintf(f_output,"     <script src=\"../js/custom.js\"></script>");
   fprintf(f_output," <script src=\"../js/dashboard.js\"></script>");
   fprintf(f_output,"<script src=\"../javascript.js\"></script>");
-  fprintf(f_output,"<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js\"></script>");
    
 
 }

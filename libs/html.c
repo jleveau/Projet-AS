@@ -100,9 +100,10 @@ int anchor_balise(){
 //balise block
 balise creer_balise_block(char* block_nameID){
   balise block=print_debut_balise_id("div", block_nameID);
-  //ajouter_attrribut(block, "name", block_nameID);
+  ajouter_attribut(block, "class", block_nameID);
+  ajouter_attribut(block, "value", block_nameID);
   print_fin_debut_balise();	
-  fprintf(f_output, "<a name=\"%s\">{</a>", block_nameID);
+  fprintf(f_output, "<a style=\"visibility:hidden;\" name=\"%s\">{</a>", block_nameID);
 	return block;
 	}
 
