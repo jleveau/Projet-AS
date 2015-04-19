@@ -23,10 +23,10 @@ dans la barre de menu les fichiers qui sont dans ce dossier.
 void ecriture_fichier(char* directory)
 {
     regex_t regexc,regexh;
-int retic;
-int retih;
-retic = regcomp(&regexc, "[[:alnum:]].c", 0);
-retih = regcomp(&regexh,"[[:alnum:]].h",0);
+	int retic;
+	int retih;
+	retic = regcomp(&regexc, "[[:alnum:]].c", 0);
+	retih = regcomp(&regexh,"[[:alnum:]].h",0);
 
   struct dirent *lecture;
   DIR *rep ;
@@ -66,28 +66,27 @@ if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
   fprintf(f_output,"<a href=\"#\"><i class=\"fa fa-plus\"></i> <span>Source File</span></a>");
   fprintf(f_output,"<ul class=\"children\">");   
    
+   free(rep);
   rep=opendir(directory);
   
-  while ((lecture = readdir(rep))) {
-     //Si c'est un '.' ou '..' alors on ne fait rien
-if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
-    }
-    else
-      {
-         retic = regexec(&regexc, lecture->d_name, 0, NULL, 0);
-         if(retic == REG_NOMATCH)
-         {
-         }
-         else
-         {
-            fprintf(f_output,"<li> <a href=\"%s.html\"><i class=\"fa fa-caret-right\"></i> %s</a></li>",lecture->d_name,lecture->d_name);
-         }
-    
-  }
-  }
-  fprintf(f_output,"</ul>");
-  fprintf(f_output,"</li>");
-   
+	while ((lecture = readdir(rep))) {
+	 //Si c'est un '.' ou '..' alors on ne fait rien
+		if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, ".."));
+		else
+		  {
+			 retic = regexec(&regexc, lecture->d_name, 0, NULL, 0);
+				if(retic == REG_NOMATCH){}
+			 else
+			 {
+				fprintf(f_output,"<li> <a href=\"%s.html\"><i class=\"fa fa-caret-right\"></i> %s</a></li>",lecture->d_name,lecture->d_name);
+			 }
+	  }
+	}
+	fprintf(f_output,"</ul>");
+	fprintf(f_output,"</li>");
+	free(rep);
+	regfree(&regexc);
+	regfree(&regexh);
 }
 
 
@@ -102,7 +101,7 @@ FILE* create_html(char* titre,char* dir){
 	strcat(path,titre);
 	strcat(path,fin);
    f_output=fopen(path,"w+");
-   
+   free(path);
    
 	//header
    fprintf(f_output,"<!doctype html>");
@@ -193,6 +192,7 @@ int fermer_html(FILE* fd){
   source_js();
   fprintf(fd, "</body>");
   fprintf(fd, "</html>");
+  
   return(fclose(fd)); //close avec flush
 }
 
@@ -200,8 +200,8 @@ void init_structures(){
 	
   function_list=list_create();
   block_stack=stack_create();
+  parameter_list=list_create();
   id_block=0;
-  UNNAMED_FUNCTION=malloc(sizeof(*UNNAMED_FUNCTION));
   new_block(NULL);
 }
 
@@ -225,6 +225,7 @@ int main(int argc,char** argv){
   int fd=open(argv[1],O_RDONLY);
   create_log(argv[3]);
   dup2(fd,0);
+  
 	printf("-----------------%s------------------- \n",argv[1]);
 
   create_html(argv[3],argv[2]);
@@ -232,13 +233,15 @@ int main(int argc,char** argv){
 	nb_ligne=1;
     yyparse();
   fin_block(NULL);
- // print_variables();
-  print_functions();
+  print_variables();
+  
+  stack_destroy(block_stack);
+  list_destroy(parameter_list);
+  destroy_function_list();
+  
   if(fermer_html(f_output)){
     perror("fermeture du html");
     exit(EXIT_FAILURE);
-  }
-
-  
+  }  
   return 0;
 }

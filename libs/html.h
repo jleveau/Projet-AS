@@ -6,26 +6,29 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-typedef struct attribut* attribut;
 typedef struct balise* balise;
+
+
+struct balise{
+   char* nom;
+   char* class;
+   int id; //pour les blocs 
+   char* texte;
+};
 
 FILE* f_output;
 int indent;
-int id_block;
 
 int nb_ligne;
 
+char* print_balise_fonction(char* func);
+char* print_balise_variable(char* var);
 
-
-void print_fin_balise(struct balise* b);
-void print_attributs(struct attribut * attrib);
-void print_balise_identifier(char* name);
-balise print_debut_balise(char* nom,char* classe);
-void ajouter_attribut(balise b, char *nom, char* val);
-void print_fin_debut_balise();
-balise creer_balise(char *nom, char* classe);
-balise creer_balise_block(char* id);
-void print_balise_span(char* type, char* param);
+char* print_balise_span(char* type, char* param);
+balise creer_balise_block(char* block_nameID);
+char* print_debut_balise_block();
+char* print_fin_balise_block();
+void push_to_html(char* texte);
 int anchor_balise();
 
 #endif

@@ -1,5 +1,8 @@
 #ifndef TOOLS_H
 #define TOOLS_H
+
+#define _GNU_SOURCE 1
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "stack.h"
@@ -7,7 +10,7 @@
 #include <string.h>
 #include <assert.h>
 #include "html.h"
-
+#include <stdarg.h>
 
 
 typedef struct cell_t{
@@ -43,37 +46,48 @@ typedef struct block_t{
 function UNNAMED_FUNCTION;
 
 
+char* read_buffer;
+
 /* Englobe les piles de déclaration (variables, et typedef) */
+
 
 stack block_stack;
 
-block new_block(list l);
-void fin_blockTEST();
+int id_block;
+
+
+void  new_block();
 void fin_block();
 
 list function_list;
+list parameter_list;
 stack typedef_stack;
 
 variable getVariable(char* name);
 function getFunction(char* name);
 
-void create_variable(char* name,char* type,char* description);
+variable create_variable(char* nom,char* type, char* description);
 
 void add_parameter(char* nom, char* type,char* description);
 void name_function(char* type,char* nom,char* description);
 
 void add_to_list(list l,void* elem);
 list list_create();
+void list_destroy(list l);
 bool list_empty(list l);
 
 void declared_function_balise(char* type,char* nom);
+void destroy_variable(variable v);
 
-char* string_concat(char* s1,char* s2);
+char* string_concat(int nb_args,...);
 
-char* create_variable_id(variable v);
+char* create_variable_id(variable v,int id);
 char* create_name_id(char* name);
 void print_variable_html(variable v);
 void print_function_html(function f);
+
+void destroy_function_list();
+void destroy_variable_list(list var_list);
 
 void print_variable(variable v);
 void print_variables();

@@ -27,6 +27,9 @@ void yyerror(const char *);  /* prints grammar violation message */
 %token	CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
 
 %token	ALIGNAS ALIGNOF ATOMIC GENERIC NORETURN STATIC_ASSERT THREAD_LOCAL
+%token  SEMI_COLON OPENING_BRACE CLOSING_BRACE COLON EQUAL OPENING_PARENTHESIS CLOSING_PARENTHESIS  LEFT_BRACKET RIGHT_BRACKET TILD AMPERSAND EXCLAMATION_POINT
+%token  DOT MINUS PLUS STAR SLASH PERCENT INFERIOR SUPERIOR EXPONENT PIPE INTERROGATION_POINT TWO_DOT
+
 
 
 %start translation_unit
@@ -35,512 +38,513 @@ void yyerror(const char *);  /* prints grammar violation message */
 %%
 
 primary_expression
-	: IDENTIFIER
-	| constant
-	| string 
-	| '(' expression ')'
-	| generic_selection
+	: IDENTIFIER {$$=string_concat(1,$1);}
+	| constant {$$=string_concat(1,$1);}
+	| string {$$=string_concat(1,$1);}
+	| OPENING_PARENTHESIS expression CLOSING_PARENTHESIS {$$=string_concat(3,$1,$2,$3);}
+	| generic_selection {$$=string_concat(1,$1);}
 	;
 
 constant
-	: I_CONSTANT		/* includes character_constant */
-	| F_CONSTANT
-	| ENUMERATION_CONSTANT	/* after it has been defined as such */
+	: I_CONSTANT {$$=string_concat(1,$1);}		/* includes character_constant */
+	| F_CONSTANT {$$=string_concat(1,$1);}
+	| ENUMERATION_CONSTANT {$$=string_concat(1,$1);}	/* after it has been defined as such */
 	;
 
-enumeration_constant		/* before it has been defined as such */
-	: IDENTIFIER
+enumeration_constant 		/* before it has been defined as such */
+	: IDENTIFIER {$$=string_concat(1,$1);}
 	;
 
 string
-	: STRING_LITERAL
-	| FUNC_NAME
+	: STRING_LITERAL {$$=string_concat(1,$1);}
+	| FUNC_NAME {$$=string_concat(1,$1);}
 	;
 
 generic_selection
-	: GENERIC '(' assignment_expression ',' generic_assoc_list ')'
-	;
+	: GENERIC OPENING_PARENTHESIS assignment_expression COLON generic_assoc_list CLOSING_PARENTHESIS {$$=string_concat(6,$1,$2,$3,$4,$5,$6);}
+		;
 
 generic_assoc_list
-	: generic_association
-	| generic_assoc_list ',' generic_association
+	: generic_association {$$=string_concat(1,$1);}
+	| generic_assoc_list COLON generic_association {$$=string_concat(3,$1,$2,$3);}
 	;
 
 generic_association
-	: type_name ':' assignment_expression
-	| DEFAULT ':' assignment_expression
+	: type_name TWO_DOT assignment_expression {$$=string_concat(3,$1,$2,$3);}
+	| DEFAULT TWO_DOT assignment_expression {$$=string_concat(3,$1,$2,$3);}
 	;
 
 postfix_expression
-	: primary_expression
-	| postfix_expression '[' expression ']'
-	| postfix_expression '(' ')' ////Appel de fonction 
-	| postfix_expression '(' argument_expression_list ')' ////Appel de fonction
-	| postfix_expression '.' IDENTIFIER
-	| postfix_expression PTR_OP IDENTIFIER
-	| postfix_expression INC_OP
-	| postfix_expression DEC_OP
-	| '(' type_name ')' '{'  initializer_list '}'
-	| '(' type_name ')' '{'  initializer_list ',' '}'
+	: primary_expression {$$=string_concat(1,$1);}
+	| postfix_expression LEFT_BRACKET expression RIGHT_BRACKET {$$=string_concat(4,$1,$2,$3,$4);}
+	| postfix_expression OPENING_PARENTHESIS CLOSING_PARENTHESIS {$$=string_concat(3,$1,$2,$3);}////Appel de fonction 
+	| postfix_expression OPENING_PARENTHESIS argument_expression_list CLOSING_PARENTHESIS {$$=string_concat(4,$1,$2,$3,$4);} ////Appel de fonction
+	| postfix_expression DOT IDENTIFIER {$$=string_concat(3,$1,$2,$3);}
+	| postfix_expression PTR_OP IDENTIFIER {$$=string_concat(3,$1,$2,$3);}
+	| postfix_expression INC_OP {$$=string_concat(2,$1,$2);}
+	| postfix_expression DEC_OP {$$=string_concat(2,$1,$2);}
+	| OPENING_PARENTHESIS type_name CLOSING_PARENTHESIS OPENING_BRACE  initializer_list CLOSING_BRACE {$$=string_concat(8,$1,$2,$3,print_debut_balise_block(),$4,$5,$6,print_fin_balise_block());}
+	| OPENING_PARENTHESIS type_name CLOSING_PARENTHESIS OPENING_BRACE  initializer_list COLON CLOSING_BRACE {$$=string_concat(9,$1,$2,$3,print_debut_balise_block(),$4,$5,$6,$7,print_fin_balise_block());}
 	;
 
 argument_expression_list
-	: assignment_expression ////// Parametre 
-	| argument_expression_list ',' assignment_expression
+	: assignment_expression {$$=string_concat(1,$1);}////// Parametre 
+	| argument_expression_list COLON assignment_expression {$$=string_concat(3,$1,$2,$3);}
 	;
 
 unary_expression
-	: postfix_expression
-	| INC_OP unary_expression
-	| DEC_OP unary_expression
-	| unary_operator cast_expression
-	| SIZEOF unary_expression
-	| SIZEOF '(' type_name ')'
-	| ALIGNOF '(' type_name ')'
+	: postfix_expression {$$=string_concat(1,$1);}
+	| INC_OP unary_expression {$$=string_concat(2,$1,$2);}
+	| DEC_OP unary_expression {$$=string_concat(2,$1,$2);}
+	| unary_operator cast_expression {$$=string_concat(2,$1,$2);}
+	| SIZEOF unary_expression {$$=string_concat(2,$1,$2);}
+	| SIZEOF OPENING_PARENTHESIS type_name CLOSING_PARENTHESIS {$$=string_concat(4,$1,$2,$3,$4);}
+	| ALIGNOF OPENING_PARENTHESIS type_name CLOSING_PARENTHESIS {$$=string_concat(4,$1,$2,$3,$4);}
 	;
 
 unary_operator
-	: '&'
-	| '*'
-	| '+'
-	| '-'
-	| '~'
-	| '!'
+	: AMPERSAND {$$=string_concat(1,$1);}
+	| STAR {$$=string_concat(1,$1);}
+	| PLUS {$$=string_concat(1,$1);}
+	| MINUS {$$=string_concat(1,$1);}
+	| TILD {$$=string_concat(1,$1);}
+	| EXCLAMATION_POINT {$$=string_concat(1,$1);}
 	;
 
 cast_expression
-	: unary_expression
-	| '(' type_name ')' cast_expression
+	: unary_expression {$$=string_concat(1,$1);}
+	| OPENING_PARENTHESIS type_name CLOSING_PARENTHESIS cast_expression {$$=string_concat(4,$1,$2,$3,$4);}
 	;
 
 multiplicative_expression
-	: cast_expression
-	| multiplicative_expression '*' cast_expression
-	| multiplicative_expression '/' cast_expression
-	| multiplicative_expression '%' cast_expression
+	: cast_expression {$$=string_concat(1,$1);}
+	| multiplicative_expression STAR cast_expression {$$=string_concat(3,$1,$2,$3);}
+	| multiplicative_expression SLASH cast_expression {$$=string_concat(3,$1,$2,$3);}
+	| multiplicative_expression PERCENT cast_expression {$$=string_concat(3,$1,$2,$3);}
 	;
 
 additive_expression
-	: multiplicative_expression
-	| additive_expression '+' multiplicative_expression
-	| additive_expression '-' multiplicative_expression
+	: multiplicative_expression {$$=string_concat(1,$1);}
+	| additive_expression PLUS multiplicative_expression {$$=string_concat(3,$1,$2,$3);}
+	| additive_expression MINUS multiplicative_expression {$$=string_concat(3,$1,$2,$3);}
 	;
 
 shift_expression
-	: additive_expression
-	| shift_expression LEFT_OP additive_expression
-	| shift_expression RIGHT_OP additive_expression
+	: additive_expression {$$=string_concat(1,$1);}
+	| shift_expression LEFT_OP additive_expression {$$=string_concat(3,$1,$2,$3);}
+	| shift_expression RIGHT_OP additive_expression {$$=string_concat(3,$1,$2,$3);}
 	;
 
 relational_expression
-	: shift_expression
-	| relational_expression '<' shift_expression
-	| relational_expression '>' shift_expression
-	| relational_expression LE_OP shift_expression
-	| relational_expression GE_OP shift_expression
+	: shift_expression {$$=string_concat(1,$1);}
+	| relational_expression INFERIOR shift_expression {$$=string_concat(3,$1,$2,$3);}
+	| relational_expression SUPERIOR shift_expression {$$=string_concat(3,$1,$2,$3);}
+	| relational_expression LE_OP shift_expression {$$=string_concat(3,$1,$2,$3);}
+	| relational_expression GE_OP shift_expression {$$=string_concat(3,$1,$2,$3);}
 	;
 
 equality_expression
-	: relational_expression
-	| equality_expression EQ_OP relational_expression
-	| equality_expression NE_OP relational_expression
+	: relational_expression {$$=string_concat(1,$1);}
+	| equality_expression EQ_OP relational_expression {$$=string_concat(3,$1,$2,$3);}
+	| equality_expression NE_OP relational_expression {$$=string_concat(3,$1,$2,$3);}
 	;
 
 and_expression
-	: equality_expression
-	| and_expression '&' equality_expression
+	: equality_expression {$$=string_concat(1,$1);}
+	| and_expression AMPERSAND equality_expression {$$=string_concat(3,$1,$2,$3);}
 	;
 
 exclusive_or_expression
-	: and_expression
-	| exclusive_or_expression '^' and_expression
+	: and_expression {$$=string_concat(1,$1);}
+	| exclusive_or_expression EXPONENT and_expression {$$=string_concat(3,$1,$2,$3);}
 	;
 
 inclusive_or_expression
-	: exclusive_or_expression
-	| inclusive_or_expression '|' exclusive_or_expression
+	: exclusive_or_expression {$$=string_concat(1,$1);}
+	| inclusive_or_expression PIPE exclusive_or_expression {$$=string_concat(3,$1,$2,$3);}
 	;
 
 logical_and_expression
-	: inclusive_or_expression
-	| logical_and_expression AND_OP inclusive_or_expression
+	: inclusive_or_expression {$$=string_concat(1,$1);}
+	| logical_and_expression AND_OP inclusive_or_expression {$$=string_concat(3,$1,$2,$3);}
 	;
 
 logical_or_expression
-	: logical_and_expression
-	| logical_or_expression OR_OP logical_and_expression
+	: logical_and_expression {$$=string_concat(1,$1);}
+	| logical_or_expression OR_OP logical_and_expression {$$=string_concat(3,$1,$2,$3);}
 	;
 
 conditional_expression
-	: logical_or_expression
-	| logical_or_expression '?' expression ':' conditional_expression
+	: logical_or_expression {$$=string_concat(1,$1);}
+	| logical_or_expression INTERROGATION_POINT expression TWO_DOT conditional_expression {$$=string_concat(5,$1,$2,$3,$4,$5);}
 	;
 
 assignment_expression
-	: conditional_expression
-	| unary_expression assignment_operator assignment_expression
+	: conditional_expression {$$=string_concat(1,$1);}
+	| unary_expression assignment_operator assignment_expression {$$=string_concat(3,$1,$2,$3);}
 	;
 
 assignment_operator
-	: '='
-	| MUL_ASSIGN
-	| DIV_ASSIGN
-	| MOD_ASSIGN
-	| ADD_ASSIGN
-	| SUB_ASSIGN
-	| LEFT_ASSIGN
-	| RIGHT_ASSIGN
-	| AND_ASSIGN
-	| XOR_ASSIGN
-	| OR_ASSIGN
+	: EQUAL {$$=string_concat(1,$1);}
+	| MUL_ASSIGN {$$=string_concat(1,$1);}
+	| DIV_ASSIGN {$$=string_concat(1,$1);}
+	| MOD_ASSIGN {$$=string_concat(1,$1);}
+	| ADD_ASSIGN {$$=string_concat(1,$1);}
+	| SUB_ASSIGN {$$=string_concat(1,$1);}
+	| LEFT_ASSIGN {$$=string_concat(1,$1);}
+	| RIGHT_ASSIGN {$$=string_concat(1,$1);}
+	| AND_ASSIGN {$$=string_concat(1,$1);}
+	| XOR_ASSIGN {$$=string_concat(1,$1);}
+	| OR_ASSIGN {$$=string_concat(1,$1);}
 	;
 
 expression
-	: assignment_expression
-	| expression ',' assignment_expression
+	: assignment_expression {$$=string_concat(1,$1);}
+	| expression COLON assignment_expression {$$=string_concat(3,$1,$2,$3);}
 	;
 
 constant_expression
-	: conditional_expression	/* with constraints */
+	: conditional_expression {$$=string_concat(1,$1);}	/* with constraints */
 	;
 
 declaration
-	: declaration_specifiers ';' {printf("variable : %s \n",$1); /*variables*/}
-	| declaration_specifiers init_declarator_list ';' {create_variable($2,$1,"description");	/*type=2; printf("type : %s variable :%s \n",$1,); variables*/}
-	| static_assert_declaration
+	: declaration_specifiers SEMI_COLON {$$=string_concat(2,$1,$2);  /*variables*/}
+	| declaration_specifiers init_declarator_list SEMI_COLON {create_variable(strdup($2),strdup($1),strdup("description"));$$=string_concat(3,$1,print_balise_variable($2),$3); }
+	| static_assert_declaration {$$=string_concat(1,$1);}
 	;
 
 declaration_specifiers
-	: storage_class_specifier declaration_specifiers {/*ajouter_typedef($2);*/}
-	| storage_class_specifier
-	| type_specifier declaration_specifiers 
-	| type_specifier 
-	| type_qualifier declaration_specifiers
-	| type_qualifier
-	| function_specifier declaration_specifiers
-	| function_specifier
-	| alignment_specifier declaration_specifiers
-	| alignment_specifier
+	: storage_class_specifier declaration_specifiers {$$=string_concat(2,$1,$2);}{/*ajouter_typedef($2);*/}
+	| storage_class_specifier {$$=string_concat(1,$1);}
+	| type_specifier declaration_specifiers {$$=string_concat(2,$1,$2);}
+	| type_specifier {$$=string_concat(1,$1);}
+	| type_qualifier declaration_specifiers {$$=string_concat(2,$1,$2);}
+	| type_qualifier {$$=string_concat(1,$1);}
+	| function_specifier declaration_specifiers {$$=string_concat(2,$1,$2);}
+	| function_specifier {$$=string_concat(1,$1);}
+	| alignment_specifier declaration_specifiers {$$=string_concat(2,$1,$2);}
+	| alignment_specifier {$$=string_concat(1,$1);}
 	;
 
 init_declarator_list
-	: init_declarator 
-	| init_declarator_list ',' init_declarator 
+	: init_declarator  {$$=string_concat(1,$1);}
+	| init_declarator_list COLON init_declarator  {$$=string_concat(3,$1,$2,$3);}
 	;
 
 init_declarator
-	: declarator '=' initializer
-	| declarator 
+	: declarator EQUAL initializer {$$=string_concat(3,$1,$2,$3);}
+	| declarator {$$=string_concat(1,$1);} 
 	;
 
 storage_class_specifier
-	: TYPEDEF   /* identifiers must be flagged as TYPEDEF_NAME */
-	| EXTERN
-	| STATIC
-	| THREAD_LOCAL
-	| AUTO
-	| REGISTER
+	: TYPEDEF  {$$=string_concat(1,$1);} /* identifiers must be flagged as TYPEDEF_NAME */
+	| EXTERN {$$=string_concat(1,$1);}
+	| STATIC {$$=string_concat(1,$1);}
+	| THREAD_LOCAL {$$=string_concat(1,$1);}
+	| AUTO {$$=string_concat(1,$1);}
+	| REGISTER {$$=string_concat(1,$1);}
 	;
 
 type_specifier
-	: VOID 
-	| CHAR
-	| SHORT
-	| INT
-	| LONG
-	| FLOAT
-	| DOUBLE
-	| SIGNED
-	| UNSIGNED
-	| BOOL
-	| COMPLEX
-	| IMAGINARY	  	/* non-mandated extension */
-	| atomic_type_specifier
-	| struct_or_union_specifier
-	| enum_specifier
-	| TYPEDEF_NAME		/* after it has been defined as such */
+	: VOID {$$=string_concat(1,$1);}
+	| CHAR {$$=string_concat(1,$1);}
+	| SHORT {$$=string_concat(1,$1);}
+	| INT {$$=string_concat(1,$1);}
+	| LONG {$$=string_concat(1,$1);}
+	| FLOAT {$$=string_concat(1,$1);}
+	| DOUBLE {$$=string_concat(1,$1);}
+	| SIGNED {$$=string_concat(1,$1);}
+	| UNSIGNED {$$=string_concat(1,$1);}
+	| BOOL {$$=string_concat(1,$1);}
+	| COMPLEX {$$=string_concat(1,$1);}
+	| IMAGINARY	{$$=string_concat(1,$1);}  	/* non-mandated extension */
+	| atomic_type_specifier {$$=string_concat(1,$1);}
+	| struct_or_union_specifier {$$=string_concat(1,$1);}
+	| enum_specifier {$$=string_concat(1,$1);}
+	| TYPEDEF_NAME {$$=string_concat(1,$1);}		/* after it has been defined as such */
 	;
 
 struct_or_union_specifier
-	: struct_or_union '{'  struct_declaration_list '}'  
-	| struct_or_union IDENTIFIER '{'  struct_declaration_list '}' 
-	| struct_or_union IDENTIFIER
+	: struct_or_union OPENING_BRACE  struct_declaration_list CLOSING_BRACE  {$$=string_concat(6,$1,print_debut_balise_block(),$2,$3,$4,print_fin_balise_block());}
+	| struct_or_union IDENTIFIER OPENING_BRACE  struct_declaration_list CLOSING_BRACE {$$=string_concat(7,$1,$2,print_debut_balise_block(),$3,$4,$5,print_fin_balise_block());}
+	| struct_or_union IDENTIFIER {$$=string_concat(2,$1,$2);}
 	;
 
 struct_or_union
-	: STRUCT
-	| UNION
+	: STRUCT {$$=string_concat(1,$1);}
+	| UNION {$$=string_concat(1,$1);}
 	;
 
 struct_declaration_list
-	: struct_declaration
-	| struct_declaration_list struct_declaration
+	: struct_declaration {$$=string_concat(1,$1);}
+	| struct_declaration_list struct_declaration {$$=string_concat(2,$1,$2);}
 	;
 
 struct_declaration
-	: specifier_qualifier_list ';'	/* for anonymous struct/union */
-	| specifier_qualifier_list struct_declarator_list ';'
-	| static_assert_declaration
+	: specifier_qualifier_list SEMI_COLON	{$$=string_concat(2,$1,$2);}/* for anonymous struct/union */
+	| specifier_qualifier_list struct_declarator_list SEMI_COLON {$$=string_concat(3,$1,$2,$3);}
+	| static_assert_declaration {$$=string_concat(1,$1);}
 	;
 
 specifier_qualifier_list
-	: type_specifier specifier_qualifier_list
-	| type_specifier
-	| type_qualifier specifier_qualifier_list
-	| type_qualifier
+	: type_specifier specifier_qualifier_list {$$=string_concat(2,$1,$2);}
+	| type_specifier {$$=string_concat(1,$1);}
+	| type_qualifier specifier_qualifier_list {$$=string_concat(2,$1,$2);}
+	| type_qualifier {$$=string_concat(1,$1);}
 	;
 
 struct_declarator_list
-	: struct_declarator
-	| struct_declarator_list ',' struct_declarator
+	: struct_declarator {$$=string_concat(1,$1);}
+	| struct_declarator_list COLON struct_declarator {$$=string_concat(3,$1,$2,$3);}
 	;
 
 struct_declarator
-	: ':' constant_expression
-	| declarator ':' constant_expression
-	| declarator
+	: TWO_DOT constant_expression {$$=string_concat(2,$1,$2);}
+	| declarator TWO_DOT constant_expression {$$=string_concat(3,$1,$2,$3);}
+	| declarator {$$=string_concat(1,$1);}
 	;
 
 enum_specifier
-	: ENUM '{' enumerator_list '}' 
-	| ENUM '{'enumerator_list ',' '}' 
-	| ENUM IDENTIFIER '{' enumerator_list '}' 
-	| ENUM IDENTIFIER '{'  enumerator_list ',' '}'
-	| ENUM IDENTIFIER
+	: ENUM OPENING_BRACE enumerator_list CLOSING_BRACE {$$=string_concat(6,$1,print_debut_balise_block(),$2,$3,$4,print_fin_balise_block());}
+	| ENUM OPENING_BRACE enumerator_list COLON CLOSING_BRACE   {$$=string_concat(7,$1,print_debut_balise_block(),$2,$3,$4,$5,print_fin_balise_block());}
+	| ENUM IDENTIFIER OPENING_BRACE enumerator_list CLOSING_BRACE {$$=string_concat(7,$1,$2,print_debut_balise_block(),$3,$4,$5,print_fin_balise_block());} 
+	| ENUM IDENTIFIER OPENING_BRACE  enumerator_list COLON CLOSING_BRACE {$$=string_concat(8,$1,$2,print_debut_balise_block(),$3,$4,$5,$6,print_fin_balise_block());}
+	| ENUM IDENTIFIER {$$=string_concat(2,$1,$2);}
 	;
 
 enumerator_list
-	: enumerator
-	| enumerator_list ',' enumerator
+	: enumerator {$$=string_concat(1,$1);}
+	| enumerator_list COLON enumerator {$$=string_concat(3,$1,$2,$3);}
 	;
 
 enumerator	/* identifiers must be flagged as ENUMERATION_CONSTANT */
-	: enumeration_constant '=' constant_expression
-	| enumeration_constant
+	: enumeration_constant EQUAL constant_expression {$$=string_concat(3,$1,$2,$3);}
+	| enumeration_constant {$$=string_concat(1,$1);}
 	;
 
 atomic_type_specifier
-	: ATOMIC '(' type_name ')'
+	: ATOMIC OPENING_PARENTHESIS type_name CLOSING_PARENTHESIS {$$=string_concat(4,$1,$2,$3,$4);} 
 	;
 
 type_qualifier
-	: CONST
-	| RESTRICT
-	| VOLATILE
-	| ATOMIC
+	: CONST {$$=string_concat(1,$1);}
+	| RESTRICT {$$=string_concat(1,$1);}
+	| VOLATILE {$$=string_concat(1,$1);}
+	| ATOMIC {$$=string_concat(1,$1);}
 	;
 
 function_specifier
-	: INLINE
-	| NORETURN
+	: INLINE {$$=string_concat(1,$1);}
+	| NORETURN {$$=string_concat(1,$1);}
 	;
 
 alignment_specifier
-	: ALIGNAS '(' type_name ')'
-	| ALIGNAS '(' constant_expression ')'
+	: ALIGNAS OPENING_PARENTHESIS type_name CLOSING_PARENTHESIS {$$=string_concat(4,$1,$2,$3,$4);} 
+	| ALIGNAS OPENING_PARENTHESIS constant_expression CLOSING_PARENTHESIS {$$=string_concat(4,$1,$2,$3,$4);} 
 	;
 
 declarator
-	: pointer direct_declarator{$$=$2;}
-	| direct_declarator
-	;
+	: pointer direct_declarator{$$=string_concat(2,$1,$2);}
+	| direct_declarator {$$=string_concat(1,$1);}
+	; 
 
 direct_declarator
-	: IDENTIFIER {$$=$1;}
-	| '(' declarator ')'
-	| direct_declarator '[' ']'  {printf(" tableau %s \n",$1);}
-	| direct_declarator '[' '*' ']' 
-	| direct_declarator '[' STATIC type_qualifier_list assignment_expression ']'
-	| direct_declarator '[' STATIC assignment_expression ']'
-	| direct_declarator '[' type_qualifier_list '*' ']'
-	| direct_declarator '[' type_qualifier_list STATIC assignment_expression ']'
-	| direct_declarator '[' type_qualifier_list assignment_expression ']'
-	| direct_declarator '[' type_qualifier_list ']'
-	| direct_declarator '[' assignment_expression ']'
-	| direct_declarator '(' parameter_type_list ')'
-	| direct_declarator '(' ')'
-	| direct_declarator '(' identifier_list ')'
+	: IDENTIFIER {$$=string_concat(1,$1);}
+	| OPENING_PARENTHESIS declarator CLOSING_PARENTHESIS {$$=string_concat(3,$1,$2,$3);}
+	| direct_declarator LEFT_BRACKET RIGHT_BRACKET  {$$=string_concat(3,$1,$2,$3);}
+	| direct_declarator LEFT_BRACKET STAR RIGHT_BRACKET {$$=string_concat(4,$1,$2,$3,$4);} 
+	| direct_declarator LEFT_BRACKET STATIC type_qualifier_list assignment_expression RIGHT_BRACKET {$$=string_concat(6,$1,$2,$3,$4,$5,$6);} 
+	| direct_declarator LEFT_BRACKET STATIC assignment_expression RIGHT_BRACKET {$$=string_concat(5,$1,$2,$3,$4,$5);} 
+	| direct_declarator LEFT_BRACKET type_qualifier_list STAR RIGHT_BRACKET {$$=string_concat(5,$1,$2,$3,$4,$5);} 
+	| direct_declarator LEFT_BRACKET type_qualifier_list STATIC assignment_expression RIGHT_BRACKET {$$=string_concat(6,$1,$2,$3,$4,$5,$6);} 
+	| direct_declarator LEFT_BRACKET type_qualifier_list assignment_expression RIGHT_BRACKET {$$=string_concat(5,$1,$2,$3,$4,$5);} 
+	| direct_declarator LEFT_BRACKET type_qualifier_list RIGHT_BRACKET {$$=string_concat(4,$1,$2,$3,$4);} 
+	| direct_declarator LEFT_BRACKET assignment_expression RIGHT_BRACKET {$$=string_concat(4,$1,$2,$3,$4);} 
+	| direct_declarator OPENING_PARENTHESIS parameter_type_list CLOSING_PARENTHESIS {$$=string_concat(4,print_balise_fonction($1),$2,$3,$4);} 
+	| direct_declarator OPENING_PARENTHESIS CLOSING_PARENTHESIS {$$=string_concat(3,print_balise_fonction($1),$2,$3);}
+	| direct_declarator OPENING_PARENTHESIS identifier_list CLOSING_PARENTHESIS {$$=string_concat(4,$1,$2,$3,$4);} 
 	;
 
 pointer
-	: '*' type_qualifier_list pointer
-	| '*' type_qualifier_list
-	| '*' pointer
-	| '*'
+	: STAR type_qualifier_list pointer {$$=string_concat(3,$1,$2,$3);}
+	| STAR type_qualifier_list {$$=string_concat(2,$1,$2);}
+	| STAR pointer {$$=string_concat(2,$1,$2);}
+	| STAR {$$=string_concat(1,$1);}
 	;
 
 type_qualifier_list
-	: type_qualifier
-	| type_qualifier_list type_qualifier
+	: type_qualifier {$$=string_concat(1,$1);}
+	| type_qualifier_list type_qualifier {$$=string_concat(2,$1,$2);}
 	;
 
 
 parameter_type_list
-	: parameter_list ',' ELLIPSIS
-	| parameter_list 
+	: parameter_list COLON ELLIPSIS {$$=string_concat(3,$1,$2,$3);}
+	| parameter_list  {$$=string_concat(1,$1);}
 	;
 
 parameter_list
-	: parameter_declaration
-	| parameter_list ',' parameter_declaration
+	: parameter_declaration {$$=string_concat(1,$1);}
+	| parameter_list COLON parameter_declaration {$$=string_concat(3,$1,$2,$3);}
 	;
 
 parameter_declaration
-	: declaration_specifiers declarator {add_parameter($2,$1,"descri");}
-	| declaration_specifiers abstract_declarator
-	| declaration_specifiers
+	: declaration_specifiers declarator {add_parameter(strdup($2),strdup($1),strdup("descri")); $$=string_concat(2,$1,print_balise_parameter($2)); }
+	| declaration_specifiers abstract_declarator {$$=string_concat(2,$1,$2);}
+	| declaration_specifiers {$$=string_concat(1,$1);}
 	;
 
 identifier_list
-	: IDENTIFIER {printf("identifier : %s",$1);}
-	| identifier_list ',' IDENTIFIER
+	: IDENTIFIER {$$=string_concat(1,$1); }
+	| identifier_list COLON IDENTIFIER {$$=string_concat(3,$1,$2,$3);}
 	;
 
 type_name
-	: specifier_qualifier_list abstract_declarator
-	| specifier_qualifier_list
+	: specifier_qualifier_list abstract_declarator {$$=string_concat(2,$1,$2);}
+	| specifier_qualifier_list {$$=string_concat(1,$1);}
 	;
 
 abstract_declarator
-	: pointer direct_abstract_declarator
-	| pointer
-	| direct_abstract_declarator
+	: pointer direct_abstract_declarator {$$=string_concat(2,$1,$2);}
+	| pointer {$$=string_concat(1,$1);}
+	| direct_abstract_declarator  {$$=string_concat(1,$1);}
 	;
 
 direct_abstract_declarator
-	: '(' abstract_declarator ')'
-	| '[' ']'
-	| '[' '*' ']'
-	| '[' STATIC type_qualifier_list assignment_expression ']'
-	| '[' STATIC assignment_expression ']'
-	| '[' type_qualifier_list STATIC assignment_expression ']'
-	| '[' type_qualifier_list assignment_expression ']'
-	| '[' type_qualifier_list ']'
-	| '[' assignment_expression ']'
-	| direct_abstract_declarator '[' ']'
-	| direct_abstract_declarator '[' '*' ']'
-	| direct_abstract_declarator '[' STATIC type_qualifier_list assignment_expression ']'
-	| direct_abstract_declarator '[' STATIC assignment_expression ']'
-	| direct_abstract_declarator '[' type_qualifier_list assignment_expression ']'
-	| direct_abstract_declarator '[' type_qualifier_list STATIC assignment_expression ']'
-	| direct_abstract_declarator '[' type_qualifier_list ']'
-	| direct_abstract_declarator '[' assignment_expression ']'
-	| '(' ')'
-	| '(' parameter_type_list ')'
-	| direct_abstract_declarator '(' ')'
-	| direct_abstract_declarator '(' parameter_type_list ')'
+	: OPENING_PARENTHESIS abstract_declarator CLOSING_PARENTHESIS {$$=string_concat(3,$1,$2,$3);}
+	| LEFT_BRACKET RIGHT_BRACKET {$$=string_concat(2,$1,$2);}
+	| LEFT_BRACKET STAR RIGHT_BRACKET {$$=string_concat(3,$1,$2,$3);}
+	| LEFT_BRACKET STATIC type_qualifier_list assignment_expression RIGHT_BRACKET {$$=string_concat(5,$1,$2,$3,$4,$5);} 
+	| LEFT_BRACKET STATIC assignment_expression RIGHT_BRACKET {$$=string_concat(3,$1,$2,$3);}
+	| LEFT_BRACKET type_qualifier_list STATIC assignment_expression RIGHT_BRACKET  {$$=string_concat(5,$1,$2,$3,$4,$5);}  
+	| LEFT_BRACKET type_qualifier_list assignment_expression RIGHT_BRACKET {$$=string_concat(4,$1,$2,$3,$4);} 
+	| LEFT_BRACKET type_qualifier_list RIGHT_BRACKET {$$=string_concat(3,$1,$2,$3);}
+	| LEFT_BRACKET assignment_expression RIGHT_BRACKET {$$=string_concat(3,$1,$2,$3);}
+	| direct_abstract_declarator LEFT_BRACKET RIGHT_BRACKET {$$=string_concat(3,$1,$2,$3);}
+	| direct_abstract_declarator LEFT_BRACKET STAR RIGHT_BRACKET  {$$=string_concat(4,$1,$2,$3,$4);} 
+	| direct_abstract_declarator LEFT_BRACKET STATIC type_qualifier_list assignment_expression RIGHT_BRACKET  {$$=string_concat(6,$1,$2,$3,$4,$5,$6);} 
+	| direct_abstract_declarator LEFT_BRACKET STATIC assignment_expression RIGHT_BRACKET  {$$=string_concat(5,$1,$2,$3,$4,$5);} 
+	| direct_abstract_declarator LEFT_BRACKET type_qualifier_list assignment_expression RIGHT_BRACKET  {$$=string_concat(5,$1,$2,$3,$4,$5);} 
+	| direct_abstract_declarator LEFT_BRACKET type_qualifier_list STATIC assignment_expression RIGHT_BRACKET  {$$=string_concat(6,$1,$2,$3,$4,$5,$6);} 
+	| direct_abstract_declarator LEFT_BRACKET type_qualifier_list RIGHT_BRACKET  {$$=string_concat(4,$1,$2,$3,$4);} 
+	| direct_abstract_declarator LEFT_BRACKET assignment_expression RIGHT_BRACKET {$$=string_concat(4,$1,$2,$3,$4);}
+	| OPENING_PARENTHESIS CLOSING_PARENTHESIS {$$=string_concat(2,$1,$2);}
+	| OPENING_PARENTHESIS parameter_type_list CLOSING_PARENTHESIS {$$=string_concat(3,$1,$2,$3);}
+	| direct_abstract_declarator OPENING_PARENTHESIS CLOSING_PARENTHESIS {$$=string_concat(3,$1,$2,$3);}
+	| direct_abstract_declarator OPENING_PARENTHESIS parameter_type_list CLOSING_PARENTHESIS {$$=string_concat(4,$1,$2,$3,$4);}
 	;
 
 initializer
-	: '{' initializer_list '}'
-	| '{' initializer_list ',' '}'
-	| assignment_expression
+	: OPENING_BRACE initializer_list CLOSING_BRACE {$$=string_concat(5,print_debut_balise_block(),$1,$2,$3,print_fin_balise_block());}
+	| OPENING_BRACE initializer_list COLON CLOSING_BRACE {$$=string_concat(6,print_debut_balise_block(),$1,$2,$3,$4,print_fin_balise_block());}
+	| assignment_expression {$$=string_concat(1,$1);}
 	;
 
 initializer_list
-	: designation initializer
-	| initializer
-	| initializer_list ',' designation initializer
-	| initializer_list ',' initializer
+	: designation initializer {$$=string_concat(2,$1,$2);}
+	| initializer {$$=string_concat(1,$1);}
+	| initializer_list COLON designation initializer {$$=string_concat(3,$1,$2,$3);}
+	| initializer_list COLON initializer {$$=string_concat(3,$1,$2,$3);}
 	;
 
 designation
-	: designator_list '='
+	: designator_list EQUAL {$$=string_concat(2,$1,$2);}
 	;
 
-designator_list
-	: designator
-	| designator_list designator
+designator_list 
+	: designator {$$=string_concat(1,$1);}
+	| designator_list designator {$$=string_concat(2,$1,$2);}
 	;
 
 designator
-	: '[' constant_expression ']'
-	| '.' IDENTIFIER
+	: LEFT_BRACKET constant_expression RIGHT_BRACKET {$$=string_concat(3,$1,$2,$3);}
+	| DOT IDENTIFIER {$$=string_concat(2,$1,$2);}
 	;
 
 static_assert_declaration
-	: STATIC_ASSERT '(' constant_expression ',' STRING_LITERAL ')' ';'
+	: STATIC_ASSERT OPENING_PARENTHESIS constant_expression COLON STRING_LITERAL CLOSING_PARENTHESIS SEMI_COLON {$$=string_concat(7,$1,$2,$3,$4,$5,$6,$7);}
 	;
 
 statement
-	: labeled_statement
-	| compound_statement 
-	| expression_statement
-	| selection_statement
-	| iteration_statement
-	| jump_statement
+	: labeled_statement {$$=string_concat(1,$1);}
+	| compound_statement  {$$=string_concat(1,$1);}
+	| expression_statement {$$=string_concat(1,$1);}
+	| selection_statement {$$=string_concat(1,$1);}
+	| iteration_statement {$$=string_concat(1,$1);}
+	| jump_statement {$$=string_concat(1,$1);}
 	;
 
 labeled_statement
-	: IDENTIFIER ':' statement
-	| CASE constant_expression ':' statement
-	| DEFAULT ':' statement
+	: IDENTIFIER TWO_DOT statement {$$=string_concat(3,$1,$2,$3);}
+	| CASE constant_expression TWO_DOT statement {$$=string_concat(4,$1,$2,$3,$4);}
+	| DEFAULT TWO_DOT statement {$$=string_concat(3,$1,$2,$3);}
 	;
 
 compound_statement
-	: '{'  '}'
-	| '{' block_item_list '}'
+	: OPENING_BRACE  CLOSING_BRACE {$$=string_concat(4,print_debut_balise_block(),$1,$2,print_fin_balise_block());}
+	| OPENING_BRACE block_item_list CLOSING_BRACE {$$=string_concat(5,print_debut_balise_block(),$1,$2,$3,print_fin_balise_block());}
 	;
 
 block_item_list
-	: block_item 
-	| block_item_list block_item
+	: block_item  {$$=string_concat(1,$1);}
+	| block_item_list block_item {$$=string_concat(2,$1,$2);}
 	;
 
 block_item
-	: declaration 
-	| statement 
+	: declaration {$$=string_concat(1,$1);}
+	| statement {$$=string_concat(1,$1);}
 	;
 
 expression_statement
-	: ';'
-	| expression ';'
+	: SEMI_COLON {$$=string_concat(1,$1);}
+	| expression SEMI_COLON {$$=string_concat(2,$1,$2);}
 	;
 
 selection_statement
-	: IF '(' expression ')' statement ELSE statement
-	| IF '(' expression ')' statement
-	| SWITCH '(' expression ')' statement
+	: IF OPENING_PARENTHESIS expression CLOSING_PARENTHESIS statement ELSE statement {$$=string_concat(7,$1,$2,$3,$4,$5,$6,$7);} 
+	| IF OPENING_PARENTHESIS expression CLOSING_PARENTHESIS statement {$$=string_concat(5,$1,$2,$3,$4,$5);}
+	| SWITCH OPENING_PARENTHESIS expression CLOSING_PARENTHESIS statement {$$=string_concat(5,$1,$2,$3,$4,$5);}
 	;
 
 iteration_statement
-	: WHILE '(' expression ')' statement
-	| DO statement WHILE '(' expression ')' ';'
-	| FOR '(' expression_statement expression_statement ')' statement
-	| FOR '(' expression_statement expression_statement expression ')' statement
-	| FOR '(' declaration expression_statement ')' statement
-	| FOR '(' declaration expression_statement expression ')' statement
+	: WHILE OPENING_PARENTHESIS expression CLOSING_PARENTHESIS statement {$$=string_concat(5,$1,$2,$3,$4,$5);}
+	| DO statement WHILE OPENING_PARENTHESIS expression CLOSING_PARENTHESIS SEMI_COLON {$$=string_concat(7,$1,$2,$3,$4,$5,$6,$7);}
+	| FOR OPENING_PARENTHESIS expression_statement expression_statement CLOSING_PARENTHESIS statement {$$=string_concat(6,$1,$2,$3,$4,$5,$6);}
+	| FOR OPENING_PARENTHESIS expression_statement expression_statement expression CLOSING_PARENTHESIS statement {$$=string_concat(7,$1,$2,$3,$4,$5,$6,$7);}
+	| FOR OPENING_PARENTHESIS declaration expression_statement CLOSING_PARENTHESIS statement {$$=string_concat(6,$1,$2,$3,$4,$5,$6);}
+	| FOR OPENING_PARENTHESIS declaration expression_statement expression CLOSING_PARENTHESIS statement {$$=string_concat(7,$1,$2,$3,$4,$5,$6,$7);}
 	;
 
 jump_statement
-	: GOTO IDENTIFIER ';'
-	| CONTINUE ';'
-	| BREAK ';'
-	| RETURN ';'
-	| RETURN expression ';'
+	: GOTO IDENTIFIER SEMI_COLON {$$=string_concat(3,$1,$2,$3);}
+	| CONTINUE SEMI_COLON {$$=string_concat(2,$1,$2);}
+	| BREAK SEMI_COLON {$$=string_concat(2,$1,$2);}
+	| RETURN SEMI_COLON {$$=string_concat(2,$1,$2);}
+	| RETURN expression SEMI_COLON {$$=string_concat(3,$1,$2,$3);}
 	;
 
 translation_unit
-	: external_declaration 
-	| translation_unit external_declaration 
+	: external_declaration
+	| translation_unit external_declaration  
 	;
 
 external_declaration
-	:  function_definition 
-	|  declaration 
+	:  function_definition {$$=string_concat(1,$1);push_to_html($$); free($$);}
+	|  declaration {$$=string_concat(1,$1);push_to_html($$); free($$);}
 	;
 
 function_definition
-	: declaration_specifiers  declarator declaration_list compound_statement
-	| declaration_specifiers[ds]  declarator[d] {name_function($ds,$d,"description");} compound_statement[c]
+	: declaration_specifiers  declarator declaration_list compound_statement {$$=string_concat(4,$1,$2,$3,$4);}
+	| declaration_specifiers  declarator compound_statement {name_function(strdup($1),strdup($2),strdup("description"));$$=string_concat(3,$1,$2,$3); }
 	;
 
 declaration_list
-	: declaration
-	| declaration_list declaration
+	: declaration {$$=string_concat(1,$1);}
+	| declaration_list declaration {$$=string_concat(2,$1,$2);}
 	;
 
 %%
 void yyerror(const char *s){
 	fprintf(stderr,"syntaxe error %s",s);
 }
+ 
