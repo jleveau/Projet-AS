@@ -77,8 +77,8 @@ generic_association
 postfix_expression
 	: primary_expression {$$=string_concat(1,$1);}
 	| postfix_expression LEFT_BRACKET expression RIGHT_BRACKET {$$=string_concat(4,$1,$2,$3,$4);}
-	| postfix_expression OPENING_PARENTHESIS CLOSING_PARENTHESIS {$$=string_concat(3,$1,$2,$3);}////Appel de fonction 
-	| postfix_expression OPENING_PARENTHESIS argument_expression_list CLOSING_PARENTHESIS {$$=string_concat(4,$1,$2,$3,$4);} ////Appel de fonction
+	| postfix_expression OPENING_PARENTHESIS CLOSING_PARENTHESIS {$$=string_concat(3,print_balise_fonction($1),$2,$3);}////Appel de fonction 
+	| postfix_expression OPENING_PARENTHESIS argument_expression_list CLOSING_PARENTHESIS {$$=string_concat(4,print_balise_fonction($1),$2,$3,$4);} ////Appel de fonction
 	| postfix_expression DOT IDENTIFIER {$$=string_concat(3,$1,$2,$3);}
 	| postfix_expression PTR_OP IDENTIFIER {$$=string_concat(3,$1,$2,$3);}
 	| postfix_expression INC_OP {$$=string_concat(2,$1,$2);}
