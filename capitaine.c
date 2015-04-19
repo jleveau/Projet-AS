@@ -95,13 +95,13 @@ FILE* create_html(char* titre,char* dir){
    
    char* fin =".html";
    
-   char* path=malloc((strlen(dir)+strlen(titre)+strlen(fin)+strlen("/html/")+4)*sizeof(char));
+   char* path=malloc(strlen(dir)+strlen(titre)+strlen(fin)+strlen("/html/"));
     strcpy(path,dir);
     strcat(path,"/html/");
 	strcat(path,titre);
 	strcat(path,fin);
-   f_output=fopen(path,"w+");
-   free(path);
+    f_output=fopen(path,"w+");
+    free(path);
    
 	//header
    fprintf(f_output,"<!doctype html>");
@@ -160,11 +160,6 @@ FILE* create_html(char* titre,char* dir){
    
    fprintf(f_output,"<div class=\"bordure\"> ");
    fprintf(f_output,"<div class=\"Code\"> ");
-   
-   
-   
-   
-   
    return f_output;
 }
 

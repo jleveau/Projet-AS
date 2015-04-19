@@ -1,130 +1,49 @@
 -----------------tests/bateau.c------------------- 
-print--- 
+          	 		  	block : block2 === 
+ var : <span class =" type_specifier "  > int </span > b 
+var : <span class =" type_specifier "  > int </span > a 
+var : <span class =" type_specifier "  > char </span > z 
+var : <span class =" type_specifier "  > int </span > a 
+var : <span class =" type_specifier "  > int </span > b 
+var : <span class =" type_specifier "  > int </span > h 
+var : <span class =" type_specifier "  > int </span > z 
+var : <span class =" type_specifier "  > int </span > c 
+var : <span class =" type_specifier "  > int </span > d 
+ 
+
+	 block : block1 === 
+ var : <span class =" type_specifier "  > int </span > b 
+var : <span class =" type_specifier "  > int </span > a 
+var : <span class =" type_specifier "  > char </span > z 
+var : <span class =" type_specifier "  > int </span > a 
+var : <span class =" type_specifier "  > int </span > b 
+var : <span class =" type_specifier "  > int </span > h 
+var : <span class =" type_specifier "  > int </span > z 
+ 
+
+   	block : block3 === 
+ var : <span class =" type_specifier "  > int </span > b 
+var : <span class =" type_specifier "  > int </span > a 
+var : <span class =" type_specifier "  > char </span > z 
+var : <span class =" type_specifier "  > int </span > a 
+var : <span class =" type_specifier "  > int </span > b 
+ 
+
+  block : block4 === 
+ var : <span class =" type_specifier "  > int </span > b 
+var : <span class =" type_specifier "  > int </span > a 
+var : <span class =" type_specifier "  > char </span > z 
+var : <span class =" type_specifier "  > int </span > d = 0 
+ 
+
 block : block0 === 
- stack variables vide 
-
-print--- 
-print--- 
-block : block0 === 
- var : int b 
+ var : <span class =" type_specifier "  > int </span > b 
+var : <span class =" type_specifier "  > int </span > a 
+var : <span class =" type_specifier "  > char </span > z 
  
 
-print--- 
-print--- 
-block : block0 === 
- var : int b 
-var : int a 
- 
-
-print--- 
-print--- 
-block : block0 === 
- var : int b 
-var : int a 
-var : char z 
- 
-
-print--- 
-print--- 
-block : block0 === 
- var : int b 
-var : int a 
-var : char z 
- 
-
-print--- 
-print--- 
-block : block0 === 
- var : int b 
-var : int a 
-var : char z 
- 
-
-func : (null) (null) ( var : int a ,) 
-print--- 
-print--- 
-block : block0 === 
- var : int b 
-var : int a 
-var : char z 
- 
-
-func : (null) (null) ( var : int a ,var : int b ,) 
-print--- 
-print--- 
-block : block0 === 
- var : int b 
-var : int a 
-var : char z 
- 
-
-func : (null) (null) ( var : int a ,var : int b ,var : int h ,) 
-print--- 
-print--- 
-block : block1 === 
- var : int b 
-var : int a 
-var : char z 
- 
-
-func : int f ( var : int a ,var : int b ,var : int h ,var : int z ,) 
-print--- 
-print--- 
-block : block2 === 
- var : int b 
-var : int a 
-var : char z 
- 
-
-func : int f ( var : int a ,var : int b ,var : int h ,var : int z ,) 
-print--- 
-print--- 
-block : block2 === 
- var : int b 
-var : int a 
-var : char z 
-var : int c 
- 
-
-func : int f ( var : int a ,var : int b ,var : int h ,var : int z ,) 
-print--- 
-block : block2 === 
- var : int b 
-var : int a 
-var : char z 
-var : int c 
-var : int d 
- 
-
-print--- 
-block : block1 === 
- var : int b 
-var : int a 
-var : char z 
- 
-
-func : int f ( var : int a ,var : int b ,var : int h ,var : int z ,) 
-print--- 
-block : block1 === 
- var : int b 
-var : int a 
-var : char z 
- 
-
-print--- 
-block : block0 === 
- var : int b 
-var : int a 
-var : char z 
- 
-
-func : int f ( var : int a ,var : int b ,var : int h ,var : int z ,) 
-print--- 
-print--- 
-block : block0 === 
- var : int b 
-var : int a 
-var : char z 
+variable stack empty 
+z 
  
 
 func : int f ( var : int a ,var : int b ,var : int h ,var : int z ,) 

@@ -88,7 +88,7 @@ char* print_debut_balise_block(){
 
 char* print_fin_balise_block(){
 	block top_block=(block)stack_top(block_stack);
-	return string_concat(7,strdup("<a href=\"#%s\">"),print_balise_span("vert","}"),strdup("</a>"),strdup("</div> "),strdup("<a style=\"visibility:hidden;\" name=\""),strdup(top_block),strdup("\">{</a>"));
+	return string_concat(7,strdup("<a href=\"#%s\">"),print_balise_span("vert","}"),strdup("</a>"),strdup("</div> "),strdup("<a style=\"visibility:hidden;\" name=\""),strdup(top_block->id),strdup("\">{</a>"));
 }
 
 void push_to_html(char* texte){
