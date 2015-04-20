@@ -16,7 +16,7 @@ color:#6678ac;
 }
 .Code
 {
-font: normal normal 1em/1.2em monospace; margin:0; padding:0; background:none; vertical-align:top;margin-left: 10px;
+font: normal normal 1em/1.2em monospace; margin:0; padding:0;vertical-align:top;margin-left: 10px;
 }
 .type_specifier
 {
@@ -58,40 +58,6 @@ margin-right:5px;
 margin-left:20px;
 }
 
-#fonction{
-    position: absolute;   
-    visibility : hidden;
-    border: 1px solid Black;
-font: normal normal 1em/1.2em monospace;
-    padding: 10px;
-    font-size: 10px;
-    background:rgba(0,0,0,.4);
- box-shadow:0 1px 0 rgba(255,255,255,.4);
-}
-
-
-#test:hover,#test:focus{
-text-decoration:underline;
-}
-
-.popup{
-position:absolute; 
-margin-top:23px;
-margin-left:-35px;
-background-color:#f7f7f7; 
-padding:15px; 
-border-radius:3px; 
-box-shadow:0 0 2px rgba(0,0,0,.5);
-transform:scale(0) rotate(-13deg);
-transition:all .25s;
-opacity:0;
-}
-
-#test:hover .popup,#test:focus .popup{
-transform:scale(1) rotate(0);
-opacity:1; 
-
-}
 
 
 .fonction{

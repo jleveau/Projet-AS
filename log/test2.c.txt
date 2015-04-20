@@ -4,11 +4,11 @@
 var : <span class =" type_specifier "  > int </span > c 
  
 
- 	 block : block2 === 
- stack variables vide 
+ 		 	 block : block2 === 
+ var : <span class =" type_specifier "  > int </span > b = 2344 
+ 
 
 block : block0 === 
  stack variables vide 
 
 variable stack empty 
- 

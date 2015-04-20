@@ -306,7 +306,7 @@ bool list_empty(list l){
 void name_function(char* type,char* nom,char* description){
 	if (list_empty(function_list) ){
 		function f= malloc(sizeof(*f));
-		f->arguments=list_create();
+		f->arguments=list_create();   
 		f->nom=nom;
 		f->type=type;
 		f->description=description;
@@ -356,6 +356,22 @@ void print_function_html(function f){
    }
    fprintf(f_output,")");
 }
+char * print_function_html_char(function f){
+   fprintf(stderr,"je passe ici");
+   char* f_id=malloc(strlen(f->type)+strlen(f->nom)+8);
+char* liste;
+   cell l=f->arguments->first;
+   fprintf(stderr,"j'arrive devant le while");
+   while (l){
+      char* tmp = string_concat(2,print_variable_html_char(l->elem),",");
+     liste = string_concat(2,liste,tmp);
+      l=l->next;
+   }
+   char *txt = string_concat(3,f_id,liste,")");
+   return txt;
+}
+
+
 
 void print_functions(){
 	list l=function_list;
@@ -373,6 +389,12 @@ void print_variable(variable v){
 void print_variable_html(variable v){
 fprintf(f_output,"var : %s %s ",v->type,v->nom);
 
+}
+
+char* print_variable_html_char(variable v){
+   char* v_id = malloc(strlen(v->type)+strlen(v->nom)+20);
+   sprintf(v_id,"var : %s %s",v->type,v->nom);
+   return v_id;
 }
 
 

@@ -84,7 +84,9 @@ char* string_concat(int nb_args,...);
 char* create_variable_id(variable v,int id);
 char* create_name_id(char* name);
 void print_variable_html(variable v);
+char* print_variable_html_char(variable v);
 void print_function_html(function f);
+char* print_function_html_char(function f);
 
 void destroy_function_list();
 void destroy_variable_list(list var_list);

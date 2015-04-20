@@ -70,7 +70,7 @@ char* print_balise_variable(char* var){
 	free(b);
 	return texte;
 }
-
+/*
 char* print_balise_fonction(char* func){
 	balise b=print_debut_balise_id("a", "fonction");
 	ajouter_attribut(b,"href","#");
@@ -80,6 +80,33 @@ char* print_balise_fonction(char* func){
 	free(b);
 	return texte;
 }
+*/
+char* print_balise_fonction(char* func)
+{
+   function f=getFunction(func);
+   balise b = print_debut_balise("a","fonction-activable");
+   char* texte1=string_concat(3,b->texte,strdup("/>"),strdup(func));
+   balise b1 = print_debut_balise("span","fonction");
+   if(f && f!=UNNAMED_FUNCTION){
+   char *tee = print_function_html_char(f);
+   fprintf(stderr,"teee :%s\n",tee);
+   }
+   else
+   {
+      fprintf(stderr,"coucou\n");}
+   
+   
+   char* txt = string_concat(6,texte1,b1->texte,strdup(">"),strdup("coucou"),strdup("</span>"),strdup("</a>"));
+   free(b);
+   free(b1);
+   
+    return txt;
+    
+    
+
+}
+
+
 
 char* print_balise_declaration(char* func){
 	balise b=print_debut_balise_id("a", "declaration");
