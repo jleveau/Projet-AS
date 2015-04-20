@@ -75,7 +75,7 @@ generic_association
 	;
 
 postfix_expression
-	: primary_expression {$$=string_concat(1,$1);}
+	: primary_expression {if(getVariable($1)){$$=string_concat(1,print_balise_variable($1));} else {$$=string_concat(1,$1);}}
 	| postfix_expression LEFT_BRACKET expression RIGHT_BRACKET {$$=string_concat(4,$1,$2,$3,$4);}
 	| postfix_expression OPENING_PARENTHESIS CLOSING_PARENTHESIS {$$=string_concat(3,print_balise_fonction($1),$2,$3);}////Appel de fonction 
 	| postfix_expression OPENING_PARENTHESIS argument_expression_list CLOSING_PARENTHESIS {$$=string_concat(4,print_balise_fonction($1),$2,$3,$4);} ////Appel de fonction
@@ -360,9 +360,9 @@ direct_declarator
 	| direct_declarator LEFT_BRACKET type_qualifier_list assignment_expression RIGHT_BRACKET {$$=string_concat(5,$1,$2,$3,$4,$5);} 
 	| direct_declarator LEFT_BRACKET type_qualifier_list RIGHT_BRACKET {$$=string_concat(4,$1,$2,$3,$4);} 
 	| direct_declarator LEFT_BRACKET assignment_expression RIGHT_BRACKET {$$=string_concat(4,$1,$2,$3,$4);} 
-	| direct_declarator OPENING_PARENTHESIS parameter_type_list CLOSING_PARENTHESIS {$$=string_concat(4,print_balise_fonction($1),$2,$3,$4);} 
-	| direct_declarator OPENING_PARENTHESIS CLOSING_PARENTHESIS {$$=string_concat(3,print_balise_fonction($1),$2,$3);}
-	| direct_declarator OPENING_PARENTHESIS identifier_list CLOSING_PARENTHESIS {$$=string_concat(4,$1,$2,$3,$4);} 
+	| direct_declarator OPENING_PARENTHESIS parameter_type_list CLOSING_PARENTHESIS {$$=string_concat(4,print_balise_declaration($1),$2,$3,$4);} 
+	| direct_declarator OPENING_PARENTHESIS CLOSING_PARENTHESIS {$$=string_concat(3,print_balise_declaration($1),$2,$3);}
+	| direct_declarator OPENING_PARENTHESIS identifier_list CLOSING_PARENTHESIS {$$=string_concat(4,$1,$2,print_balise_declaration($3),$4);} 
 	;
 
 pointer
@@ -468,7 +468,7 @@ static_assert_declaration
 statement
 	: labeled_statement {$$=string_concat(1,$1);}
 	| compound_statement  {$$=string_concat(1,$1);}
-	| expression_statement {$$=string_concat(1,$1);}
+| expression_statement {$$=string_concat(1,$1);}
 	| selection_statement {$$=string_concat(1,$1);}
 	| iteration_statement {$$=string_concat(1,$1);}
 	| jump_statement {$$=string_concat(1,$1);}

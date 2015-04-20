@@ -25,6 +25,7 @@ char* print_balise_fonction(char* func);
 char* print_balise_variable(char* var);
 
 char* print_balise_span(char* type, char* param);
+char* print_balise_declaration(char* func);
 balise creer_balise_block(char* block_nameID);
 char* print_debut_balise_block();
 char* print_fin_balise_block();

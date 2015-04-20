@@ -193,7 +193,6 @@ int fermer_html(FILE* fd){
   fprintf(fd,"</div>");
   fprintf(fd,"</div>");
   fprintf(fd,"</div>");
-  fprintf(fd,"</div>");
   source_js();
   fprintf(fd, "</body>");
   fprintf(fd, "</html>");

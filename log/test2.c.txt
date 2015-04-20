@@ -1,62 +1,14 @@
 -----------------tests/test2.c------------------- 
-    		 block : block1 === 
+    	block : block1 === 
  var : <span class =" type_specifier "  > char </span > a 
 var : <span class =" type_specifier "  > int </span > c 
  
 
-    	 block : block2 === 
- var : <span class =" type_specifier "  > int </span > a 
-var : <span class =" type_specifier "  > double </span > b 
- 
+ 	 block : block2 === 
+ stack variables vide 
 
- 	 block : block3 === 
- var : <span class =" type_specifier "  > int </span > a 
-var : <span class =" type_specifier "  > double </span > b 
- 
-
-block : block0 === 
- var : <span class =" type_specifier "  > int </span > a 
-var : <span class =" type_specifier "  > double </span > b 
- 
-
-variable stack empty 
- c ,) 
-print--- 
-print--- 
 block : block0 === 
  stack variables vide 
 
-func : int g ( var : char a ,var : int c ,) 
-print--- 
-print--- 
-block : block0 === 
- var : int a 
+variable stack empty 
  
-
-func : int g ( var : char a ,var : int c ,) 
-print--- 
-block : block2 === 
- var : int a 
-var : double b 
- 
-
-print--- 
-block : block0 === 
- var : int a 
-var : double b 
- 
-
-func : int g ( var : char a ,var : int c ,) 
-print--- 
-block : block3 === 
- var : int a 
-var : double b 
- 
-
-block : block0 === 
- var : int a 
-var : double b 
- 
-
-func : int g ( var : char a ,var : int c ,) 
-func : int main ( ) 

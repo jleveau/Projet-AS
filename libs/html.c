@@ -81,6 +81,17 @@ char* print_balise_fonction(char* func){
 	return texte;
 }
 
+char* print_balise_declaration(char* func){
+	balise b=print_debut_balise_id("a", "declaration");
+	ajouter_attribut(b,"href","#");
+	ajouter_attribut(b,"class","declaration-activable");
+	
+	char* texte=string_concat(6,b->texte,strdup("value=\""),strdup(func),strdup("\">"),func,strdup("</a>"));
+	free(b);
+	return texte;
+}
+
+
 char* print_debut_balise_block(){
 	block top_block=(block)stack_top(block_stack);
 	balise b=print_debut_balise_id("div", top_block->id);
