@@ -73,7 +73,10 @@ char* print_balise_variable(char* var){
 
 char* print_balise_fonction(char* func){
 	balise b=print_debut_balise_id("a", "fonction");
-	char* texte=string_concat(6,b->texte,strdup("value=\""),strdup(func), strdup("\">"),func,strdup("</a>"));
+	ajouter_attribut(b,"href","#");
+	ajouter_attribut(b,"class","fonction-activable");
+	
+	char* texte=string_concat(6,b->texte,strdup("value=\""),strdup(func),strdup("\">"),func,strdup("</a>"));
 	free(b);
 	return texte;
 }
