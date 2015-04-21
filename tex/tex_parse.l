@@ -19,30 +19,30 @@ A   [a-zA-Z_0-9]
 #include <string.h>
 %}
 %%
-
-
-
-"\begin" {yylval=strdup(yytext);return BEG;}
-
-"\\" {BEGIN(COMMANDE);}
-
-
-"title" {yylval=strdup(yytext);return TITLE;}
-"section" {yylval=strdup(yytext);return SECTION;}
-"paragraph" {yylval=strdup(yytext);return PARAGRAPH;}
-
-{L}{A}* {yylval=strdup(yytext); return WORD;}	
-\n {/* un unique saut de ligne marche comme un espace??*/;}
 \\ {return BACKSLASH;}
-"[" {yylval=strdup(yytext);return ']';}
-"[" {yylval=strdup(yytext);return ']';}
-"{" {yylval=strdup(yytext);return '{';}
-"}" {yylval=strdup(yytext);return '{';}
-[[:space:]] {yylval=strdup(yytext);return SPACE;}
-. ;
 
-\n\n {return PARAGRAPH;}
 
+"begin" {return BEG;}
+
+
+"title" {return TITLE;}
+"section" {return SECTION;}
+"paragraph" {return PARAGRAPH;}
+"newline" {return NEW_LINE;}
+"pt"/"]" {yylval=yytext; return TAILLE;}
+
+
+{L}{A}* {yylval=strdup(yytext); return WORD;}
+[[:0-9:]]+ {yylval=strdup(yytext); return NB;}
+\n {/*en latex ca fait rien*/;}
+
+"[" {yylval=strdup(yytext);return OPEN_SQUARE;}
+"]" {yylval=strdup(yytext);return CLOSE_SQUARE;}
+"{" {return OPEN_BRACE;}
+"}" {return CLOSE_BRACE;}
+[[:space:]] {return SPACE;}
+
+. {printf("TEST\n");}
 
  %%
 

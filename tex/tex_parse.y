@@ -1,5 +1,6 @@
-/*			contenu =n'importe quoi
-			text=que de tu texte
+/*			contenus =n'importe quoi
+			
+text=que de tu texte
 */
 
 %{
@@ -14,43 +15,79 @@ int yylex(void);
 extern YYSTYPE yylval;
 %}
 
-%token TEXT BEG WORD BACKSLASH SPACE
-%token SECTION PARAGRAPH TITLE
+%token TEXT BEG WORD BACKSLASH SPACE NEW_LINE TAILLE NB
+%token SECTION PARAGRAPH TITLE 
+%token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
 
 %start start
 
 %%
 
 start
-	: contenus { }
-	;
+        :	contenus { /* contenu peut être vide*/}	
+        ;
 
 
 contenus
-	: contenu {/* CONTENUS CONTENU */}
+	: contenus contenu_ou_space {/* CONTENUS CONTENU */}
+	| contenu_ou_space	
+        ;
+
+contenu_ou_space
+        : SPACE
+	| appel_commande
+        ;
+
+appel_commande
+	: BACKSLASH commande options
 	;
 
-contenu
-	: BACKSLASH commande {}
-	|
-	;
+options
+        : options OPEN_SQUARE param CLOSE_SQUARE 
+	| OPEN_SQUARE param CLOSE_SQUARE 
+	|	
+        ;
 
+param
+        : NB TAILLE
+	| WORD {/*les options non-connus ne vont pas être traités mais ne vont pas arreter le programme*/}
+        ;
 
 commande
-	: TITLE '{' string'}' {printf("<h1>%s<\\h1>", $3);}
-	| SECTION '{'string'}' {printf("<section>%s<\\section>", $3);}
-	| PARAGRAPH '{'string'}' {printf("<p>%s<\\p>", $3);}
-	;
+	: TITLE OPEN_BRACE {printf("<h1>");} texte CLOSE_BRACE {printf("<\\h1>");}
+	| sections OPEN_BRACE texte CLOSE_BRACE {printf("\\section>");}
+	| PARAGRAPH OPEN_BRACE {printf("<p>");} texte CLOSE_BRACE {printf("<\\p><\\br>");}
+	| NEW_LINE {printf("<\\br>");}
+;
+
+sections
+        : SECTION {printf("<section>");}
+        | SUB sections
+        ;
+
+texte
+        : string_ou_appel_commande 
+        | texte string_ou_appel_commande
+        ;
+
+string_ou_appel_commande
+        : string
+	| appel_commande
+        ;
 
 string
-	:
-	| string SPACE WORD {sprintf($$, "%s %s", $1, $3);}
-	;
+	: string word_or_space 
+	| word_or_space	
+;
 
+word_or_space
+     : WORD  {printf("%s",$1);}
+     | SPACE {printf("%s", " ");}
+;
 
 %%
 
 void yyerror(const char *s){
-	fprintf(stderr,"syntaxe error %s",s);
+	fprintf(stderr," %s",s);
 }
 
