@@ -66,7 +66,7 @@
 
 #ifndef YYSTYPE
 # define YYSTYPE char*
-#endif	
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include "libs/html.h"
@@ -446,7 +446,7 @@ static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "TEXT", "BEG", "WORD", "BACKSLASH",
   "SPACE", "SECTION", "PARAGRAPH", "TITLE", "'{'", "'}'", "$accept",
-  "START", "CONTENUS", "CONTENU", "COMMANDE", "STRING", YY_NULLPTR
+  "start", "contenus", "contenu", "commande", "string", YY_NULLPTR
 };
 #endif
 
@@ -1213,49 +1213,49 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 25 "tex_parse.y" /* yacc.c:1661  */
+#line 25 "tex_parse.y" /* yacc.c:1646  */
     { }
-#line 1219 "tex_parse.tab.c" /* yacc.c:1661  */
+#line 1219 "tex_parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 30 "tex_parse.y" /* yacc.c:1661  */
+#line 30 "tex_parse.y" /* yacc.c:1646  */
     {/* CONTENUS CONTENU */}
-#line 1225 "tex_parse.tab.c" /* yacc.c:1661  */
+#line 1225 "tex_parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 34 "tex_parse.y" /* yacc.c:1661  */
+#line 34 "tex_parse.y" /* yacc.c:1646  */
     {}
-#line 1231 "tex_parse.tab.c" /* yacc.c:1661  */
+#line 1231 "tex_parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 40 "tex_parse.y" /* yacc.c:1661  */
-    {printf("<h1>%s<\\h1>", (yyvsp[0]));}
-#line 1237 "tex_parse.tab.c" /* yacc.c:1661  */
+#line 40 "tex_parse.y" /* yacc.c:1646  */
+    {printf("<h1>%s<\\h1>", (yyvsp[-1]));}
+#line 1237 "tex_parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 41 "tex_parse.y" /* yacc.c:1661  */
-    {printf("<section>%s<\\section>", (yyvsp[0]));}
-#line 1243 "tex_parse.tab.c" /* yacc.c:1661  */
+#line 41 "tex_parse.y" /* yacc.c:1646  */
+    {printf("<section>%s<\\section>", (yyvsp[-1]));}
+#line 1243 "tex_parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 42 "tex_parse.y" /* yacc.c:1661  */
-    {printf("<p>%s<\\p>", (yyvsp[0]));}
-#line 1249 "tex_parse.tab.c" /* yacc.c:1661  */
+#line 42 "tex_parse.y" /* yacc.c:1646  */
+    {printf("<p>%s<\\p>", (yyvsp[-1]));}
+#line 1249 "tex_parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 47 "tex_parse.y" /* yacc.c:1661  */
+#line 47 "tex_parse.y" /* yacc.c:1646  */
     {sprintf((yyval), "%s %s", (yyvsp[-2]), (yyvsp[0]));}
-#line 1255 "tex_parse.tab.c" /* yacc.c:1661  */
+#line 1255 "tex_parse.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1259 "tex_parse.tab.c" /* yacc.c:1661  */
+#line 1259 "tex_parse.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

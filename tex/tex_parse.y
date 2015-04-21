@@ -5,7 +5,7 @@
 %{
 #ifndef YYSTYPE
 # define YYSTYPE char*
-#endif	
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include "libs/html.h"
@@ -17,34 +17,34 @@ extern YYSTYPE yylval;
 %token TEXT BEG WORD BACKSLASH SPACE
 %token SECTION PARAGRAPH TITLE
 
-%start START
+%start start
 
 %%
 
-START
-	: CONTENUS { }
+start
+	: contenus { }
 	;
 
 
-CONTENUS
-	: CONTENU {/* CONTENUS CONTENU */}
+contenus
+	: contenu {/* CONTENUS CONTENU */}
 	;
 
-CONTENU
-	: BACKSLASH COMMANDE {}
+contenu
+	: BACKSLASH commande {}
 	|
 	;
 
 
-COMMANDE
-	: TITLE '{'STRING'}' {printf("<h1>%s<\\h1>", $4);}
-	| SECTION '{'STRING'}' {printf("<section>%s<\\section>", $4);}
-	| PARAGRAPH '{'STRING'}' {printf("<p>%s<\\p>", $4);}
+commande
+	: TITLE '{' string'}' {printf("<h1>%s<\\h1>", $3);}
+	| SECTION '{'string'}' {printf("<section>%s<\\section>", $3);}
+	| PARAGRAPH '{'string'}' {printf("<p>%s<\\p>", $3);}
 	;
 
-STRING
+string
 	:
-	| STRING SPACE WORD {sprintf($$, "%s %s", $1, $3);}
+	| string SPACE WORD {sprintf($$, "%s %s", $1, $3);}
 	;
 
 

@@ -11,31 +11,34 @@ A   [a-zA-Z_0-9]
 
 %{
 /*		!<COMMANDE>{L}{A}* {return yytext;} 	car il me semble que chaque commande doit être traité séparamment*/	
-
+#ifndef YYSTYPE
+# define YYSTYPE char*
+#endif	
 #include "tex_parse.tab.h"
+#include <stdio.h>
+#include <string.h>
 %}
-
 %%
 
 
 
-"\begin" {return BEG;}
+"\begin" {yylval=strdup(yytext);return BEG;}
 
-\\ {BEGIN COMMANDE;}
+"\\" {BEGIN(COMMANDE);}
 
 
-title {return TITLE;}
-section {return SECTION;}
-paragraph {return PARAGRAPH;}
+"title" {yylval=strdup(yytext);return TITLE;}
+"section" {yylval=strdup(yytext);return SECTION;}
+"paragraph" {yylval=strdup(yytext);return PARAGRAPH;}
 
 {L}{A}* {yylval=strdup(yytext); return WORD;}	
 \n {/* un unique saut de ligne marche comme un espace??*/;}
 \\ {return BACKSLASH;}
-"[" {return ']';}
-"[" {return ']';}
-"{" {return '{';}
-"}" {return '{';}
-[[:space:]] {return SPACE;}
+"[" {yylval=strdup(yytext);return ']';}
+"[" {yylval=strdup(yytext);return ']';}
+"{" {yylval=strdup(yytext);return '{';}
+"}" {yylval=strdup(yytext);return '{';}
+[[:space:]] {yylval=strdup(yytext);return SPACE;}
 . ;
 
 \n\n {return PARAGRAPH;}
