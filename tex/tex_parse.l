@@ -1,9 +1,6 @@
 %x TEX
-%x paragraphe
-%x NOM_COMMANDE
-%x PARAMS 
 %x COMMANDE
-%x COMMANDE_PARAM
+
 
 L   [a-zA-Z_]
 A   [a-zA-Z_0-9]
@@ -19,25 +16,30 @@ A   [a-zA-Z_0-9]
 #include <string.h>
 %}
 %%
-\\ {return BACKSLASH;}
+\\ {BEGIN COMMANDE; return BACKSLASH;}
 
-"begin" {return BEG;}
-"end" {return END;}
-"enumerate" {yylval=yytext;return ENUM;}
-"itemize" {return ITEMIZE;}
-"item" {return ITEM;}
-"tabular" {return TABULAR;}
-"equation" {return EQUATION;}
+<COMMANDE>"begin" {BEGIN INITIAL; return BEG;}
+<COMMANDE>"end" {BEGIN INITIAL; return END;}
+<COMMANDE>"enumerate" {yylval=yytext; BEGIN INITIAL; return ENUM;}
+<COMMANDE>"itemize" {BEGIN INITIAL; return ITEMIZE;}
+<COMMANDE>"item" {BEGIN INITIAL; return ITEM;}
+<COMMANDE>"tabular" {BEGIN INITIAL; return TABULAR;}
+<COMMANDE>"equation" {BEGIN INITIAL; return EQUATION;}
 
-"title" {return TITLE;}
-"section" {return SECTION;}
-"paragraph" {return PARAGRAPH;}
-"newline" {return NEW_LINE;}
+<COMMANDE>"title" {BEGIN INITIAL; return TITLE;}
+<COMMANDE>"texttt" {BEGIN INITIAL; return TEXTTT;}
+<COMMANDE>"textit" {BEGIN INITIAL; return TEXTIT;}
+<COMMANDE>"underline" {BEGIN INITIAL; return UNDERLINE;}
+<COMMANDE>"section" {BEGIN INITIAL; return SECTION;}
+<COMMANDE>"paragraph" {BEGIN INITIAL; return PARAGRAPH;}
+<COMMANDE>"newline" {BEGIN INITIAL; return NEW_LINE;}
+<COMMANDE>"color" {BEGIN INITIAL; return COLOR;}
+<COMMANDE>"textcolor" {BEGIN INITIAL; return TEXTCOLOR;}
 "pt"/"]" {yylval=yytext; return TAILLE;}
 
 
 {L}{A}* {yylval=strdup(yytext); return WORD;}
-[[:0-9:]]+ {yylval=strdup(yytext); return NB;}
+[:0-9:]+ {yylval=strdup(yytext); return NB;}
 \n {/*en latex ca fait rien*/;}
 
 "[" {yylval=strdup(yytext);return OPEN_SQUARE;}
@@ -45,8 +47,6 @@ A   [a-zA-Z_0-9]
 "{" {return OPEN_BRACE;}
 "}" {return CLOSE_BRACE;}
 [[:space:]] {return SPACE;}
-
-. {printf("TEST\n");}
 
  %%
 

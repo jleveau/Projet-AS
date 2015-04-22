@@ -15,9 +15,11 @@ int yylex(void);
 extern YYSTYPE yylval;
 %}
 
-%token TEXT BEG WORD BACKSLASH SPACE NEW_LINE TAILLE NB ENUM ITEMIZE ITEM TABULAR EQUATION END
+%token TEXT BEG WORD BACKSLASH SPACE
+%token TEXTTT TEXTIT UNDERLINE NEW_LINE COLOR TEXTCOLOR TAILLE NB ENUM ITEMIZE ITEM TABULAR EQUATION END
 %token SECTION PARAGRAPH TITLE 
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
+%token A_FAIRE
 
 %start start
 
@@ -39,34 +41,65 @@ contenu_ou_space
         ;
 
 appel_commande
-	: BACKSLASH commande options
+	: BACKSLASH commande	
 	;
 
-options
-        : options OPEN_SQUARE param CLOSE_SQUARE 
-	| OPEN_SQUARE param CLOSE_SQUARE 
-	|	
-        ;
-
-param
-        : NB TAILLE
-        |ENUM 
-        |ITEMIZE
-        |TABULAR
-        |EQUATION
-	| WORD {/*les options non-connus ne vont pas être traités mais ne vont pas arreter le programme*/}
-        ;
-
 commande
-: TITLE OPEN_BRACE {fprintf(f_output,"<h1>");} texte CLOSE_BRACE {fprintf(f_output,"</h1>");}
+: TITLE {fprintf(f_output,"<h1>");}  OPEN_BRACE texte CLOSE_BRACE {fprintf(f_output,"</h1>"); /*texte parce que peut avoir que du texte ou des commandes simples dedans*/}
+| TEXTTT {fprintf(f_output,"<b>");}  OPEN_BRACE contenus CLOSE_BRACE {fprintf(f_output,"</b>"); /*contenu parce que peut avoir tous et n'importe quoi dedans*/}
+| TEXTIT {fprintf(f_output,"<em>");}  OPEN_BRACE contenus CLOSE_BRACE {fprintf(f_output,"</em>");}
+| UNDERLINE {fprintf(f_output,"<span style=\"text-decoration:underline;\">");}  OPEN_BRACE contenus CLOSE_BRACE {fprintf(f_output,"</span>");}
 | sections OPEN_BRACE texte CLOSE_BRACE {fprintf(f_output,"</section>");}
-| PARAGRAPH OPEN_BRACE {fprintf(f_output,"<p>");} texte CLOSE_BRACE {fprintf(f_output,"</p></br>");}
+| PARAGRAPH {fprintf(f_output,"<p style=\"");} options OPEN_BRACE {fprintf(f_output, "\">");} texte CLOSE_BRACE {fprintf(f_output,"</p></br>");}
 | NEW_LINE {fprintf(f_output,"</br>");}
-| BEG OPEN_BRACE param CLOSE_BRACE texte END OPEN_BRACE param CLOSE_BRACE   {/* A MODIFIER */}  
+| TEXTCOLOR OPEN_BRACE WORD[color] CLOSE_BRACE OPEN_BRACE {fprintf(f_output,"<span style=\"color:%s;\">", $color);} string CLOSE_BRACE  {fprintf(f_output,"</span>");}
+| COLOR OPEN_BRACE WORD[color] CLOSE_BRACE {fprintf(f_output,"<span style=\"color:%s\">", $color);} texte {fprintf(f_output,"</span>");}
+| BEG OPEN_BRACE paramSpecifiques[paramOpen] CLOSE_BRACE contenus fin OPEN_BRACE paramSpecifiques[paramClose] CLOSE_BRACE   {if(!strcmp($paramOpen, $paramClose)){ yyerror("open/close param différents");} /* pour begin commandes génériques ex. document etc */}  
+| BEG OPEN_BRACE paramSpecifiques texte END OPEN_BRACE paramSpecifiques CLOSE_BRACE   {/* pout begin item etc qui sont suivi par les commandes spécifieques */} 
+;
+
+options
+        : options OPEN_SQUARE optionInterieur CLOSE_SQUARE 
+	| OPEN_SQUARE optionInterieur CLOSE_SQUARE
+	|	
+;
+
+optionInterieur
+: NB TAILLE {fprintf(f_output, "font-size:%spx; ", $1);}
+| WORD {/*les options non-connus ne vont pas être traités mais ne vont pas arreter le programme*/}
+;
+
+paramSpecifiques
+:       enum_ou_itemize CLOSE_BRACE {/*pour itemize vide*/}
+	|	enum_ou_itemize CLOSE_BRACE commandesInternes_Enum_ou_Itemize
+        |TABULAR CLOSE_BRACE commandesInternes_Tabular
+        |EQUATION CLOSE_BRACE commandesInternes_Equation
+;
+
+commandesInternes_Enum_ou_Itemize
+: commandesInternes_Enum_ou_Itemize BACKSLASH ITEM texte
+| BACKSLASH ITEM texte
+;
+
+commandesInternes_Tabular
+: A_FAIRE {/*à traiter*/;}
+;
+
+commandesInternes_Equation
+: A_FAIRE {/*à traiter*/;}
+;
+
+enum_ou_itemize
+:ENUM
+     | ITEMIZE
+;
+
+fin
+:BACKSLASH END
 ;
 
 sections
-: SECTION {fprintf(f_output,"<section>");}
+: SECTION {fprintf(f_output,"<section style=\"");} options {fprintf(f_output, "\">");}
         | SUB sections
         ;
 
