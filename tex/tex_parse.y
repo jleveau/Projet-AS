@@ -15,7 +15,7 @@ int yylex(void);
 extern YYSTYPE yylval;
 %}
 
-%token TEXT BEG WORD BACKSLASH SPACE NEW_LINE TAILLE NB
+%token TEXT BEG WORD BACKSLASH SPACE NEW_LINE TAILLE NB ENUM ITEMIZE ITEM TABULAR EQUATION END
 %token SECTION PARAGRAPH TITLE 
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
 
@@ -50,18 +50,23 @@ options
 
 param
         : NB TAILLE
+        |ENUM 
+        |ITEMIZE
+        |TABULAR
+        |EQUATION
 	| WORD {/*les options non-connus ne vont pas être traités mais ne vont pas arreter le programme*/}
         ;
 
 commande
-	: TITLE OPEN_BRACE {printf("<h1>");} texte CLOSE_BRACE {printf("<\\h1>");}
-	| sections OPEN_BRACE texte CLOSE_BRACE {printf("\\section>");}
-	| PARAGRAPH OPEN_BRACE {printf("<p>");} texte CLOSE_BRACE {printf("<\\p><\\br>");}
-	| NEW_LINE {printf("<\\br>");}
+: TITLE OPEN_BRACE {fprintf(f_output,"<h1>");} texte CLOSE_BRACE {fprintf(f_output,"</h1>");}
+| sections OPEN_BRACE texte CLOSE_BRACE {fprintf(f_output,"</section>");}
+| PARAGRAPH OPEN_BRACE {fprintf(f_output,"<p>");} texte CLOSE_BRACE {fprintf(f_output,"</p></br>");}
+| NEW_LINE {fprintf(f_output,"</br>");}
+| BEG OPEN_BRACE param CLOSE_BRACE texte END OPEN_BRACE param CLOSE_BRACE   {/* A MODIFIER */}  
 ;
 
 sections
-        : SECTION {printf("<section>");}
+: SECTION {fprintf(f_output,"<section>");}
         | SUB sections
         ;
 
@@ -72,7 +77,7 @@ texte
 
 string_ou_appel_commande
         : string
-	| appel_commande
+        | appel_commande
         ;
 
 string
@@ -81,8 +86,8 @@ string
 ;
 
 word_or_space
-     : WORD  {printf("%s",$1);}
-     | SPACE {printf("%s", " ");}
+: WORD  {fprintf(f_output,"%s",$1);}
+| SPACE {fprintf(f_output,"%s", " ");}
 ;
 
 %%

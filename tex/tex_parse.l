@@ -21,9 +21,13 @@ A   [a-zA-Z_0-9]
 %%
 \\ {return BACKSLASH;}
 
-
 "begin" {return BEG;}
-
+"end" {return END;}
+"enumerate" {yylval=yytext;return ENUM;}
+"itemize" {return ITEMIZE;}
+"item" {return ITEM;}
+"tabular" {return TABULAR;}
+"equation" {return EQUATION;}
 
 "title" {return TITLE;}
 "section" {return SECTION;}
