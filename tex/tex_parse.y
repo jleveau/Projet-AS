@@ -15,8 +15,8 @@ int yylex(void);
 extern YYSTYPE yylval;
 %}
 
-%token TEXT BEG WORD BACKSLASH SPACE
-%token TEXTTT TEXTIT UNDERLINE NEW_LINE COLOR TEXTCOLOR TAILLE NB ENUM ITEMIZE ITEM TABULAR EQUATION END
+%token TEXT BEG WORD BACKSLASH SPACE CHAR
+%token BF IT TEXTTT TEXTIT UNDERLINE NEW_LINE COLOR TEXTCOLOR TAILLE NB ENUM ITEMIZE ITEM TABULAR EQUATION END
 %token SECTION PARAGRAPH TITLE 
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
 %token A_FAIRE
@@ -26,7 +26,7 @@ extern YYSTYPE yylval;
 %%
 
 start
-        :	contenus { /* contenu peut être vide*/}	
+        : contenus { /* contenu peut être vide*/}	
         ;
 
 
@@ -41,8 +41,14 @@ contenu_ou_space
         ;
 
 appel_commande
-	: BACKSLASH commande	
+	: BACKSLASH commande
+	| OPEN_BRACE BACKSLASH commande_formatage_texte
 	;
+
+commande_formatage_texte
+: BF {fprintf(f_output,"<b>");} contenus CLOSE_BRACE {fprintf(f_output,"</b>"); /*contenu parce que peut avoir tous et n'importe quoi dedans*/}
+| IT {fprintf(f_output,"<em>");} contenus CLOSE_BRACE {fprintf(f_output,"</em>");}
+;
 
 commande
 : TITLE {fprintf(f_output,"<h1>");}  OPEN_BRACE texte CLOSE_BRACE {fprintf(f_output,"</h1>"); /*texte parce que peut avoir que du texte ou des commandes simples dedans*/}
@@ -71,9 +77,9 @@ optionInterieur
 
 paramSpecifiques
 :       enum_ou_itemize CLOSE_BRACE {/*pour itemize vide*/}
-	|	enum_ou_itemize CLOSE_BRACE commandesInternes_Enum_ou_Itemize
-        |TABULAR CLOSE_BRACE commandesInternes_Tabular
-        |EQUATION CLOSE_BRACE commandesInternes_Equation
+	| enum_ou_itemize CLOSE_BRACE commandesInternes_Enum_ou_Itemize
+        | TABULAR CLOSE_BRACE commandesInternes_Tabular
+        | EQUATION CLOSE_BRACE commandesInternes_Equation
 ;
 
 commandesInternes_Enum_ou_Itemize
@@ -121,6 +127,7 @@ string
 word_or_space
 : WORD  {fprintf(f_output,"%s",$1);}
 | SPACE {fprintf(f_output,"%s", " ");}
+| CHAR {fprintf(f_output,"%s",$1);}
 ;
 
 %%

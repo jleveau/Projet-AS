@@ -16,7 +16,9 @@ A   [a-zA-Z_0-9]
 #include <string.h>
 %}
 %%
-\\ {BEGIN COMMANDE; return BACKSLASH;}
+
+
+\\/{L} {BEGIN COMMANDE; return BACKSLASH;}
 
 <COMMANDE>"begin" {BEGIN INITIAL; return BEG;}
 <COMMANDE>"end" {BEGIN INITIAL; return END;}
@@ -25,6 +27,9 @@ A   [a-zA-Z_0-9]
 <COMMANDE>"item" {BEGIN INITIAL; return ITEM;}
 <COMMANDE>"tabular" {BEGIN INITIAL; return TABULAR;}
 <COMMANDE>"equation" {BEGIN INITIAL; return EQUATION;}
+
+<COMMANDE>"it" {BEGIN INITIAL; return IT;}
+<COMMANDE>"bf" {BEGIN INITIAL; return BF;}
 
 <COMMANDE>"title" {BEGIN INITIAL; return TITLE;}
 <COMMANDE>"texttt" {BEGIN INITIAL; return TEXTTT;}
@@ -37,16 +42,18 @@ A   [a-zA-Z_0-9]
 <COMMANDE>"textcolor" {BEGIN INITIAL; return TEXTCOLOR;}
 "pt"/"]" {yylval=yytext; return TAILLE;}
 
-
 {L}{A}* {yylval=strdup(yytext); return WORD;}
 [:0-9:]+ {yylval=strdup(yytext); return NB;}
 \n {/*en latex ca fait rien*/;}
 
 "[" {yylval=strdup(yytext);return OPEN_SQUARE;}
 "]" {yylval=strdup(yytext);return CLOSE_SQUARE;}
-"{" {return OPEN_BRACE;}
+"{" {/*seulement quand suivi par backslash "{"/"\\" (marche pas!!!!!)*/return OPEN_BRACE;}
 "}" {return CLOSE_BRACE;}
 [[:space:]] {return SPACE;}
+
+\\. {yylval=strdup(yytext+1); return CHAR;}
+. {yylval=strdup(yytext); return CHAR;}
 
  %%
 
