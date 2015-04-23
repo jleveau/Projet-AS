@@ -19,6 +19,8 @@ void print_titre(char*);
 void print_word_or_char(char*);
 void print_balise_formatage(char* style);
 void print_fin_b(char* balise);
+void print_balise_formatage_span_style(char* style_type, char* style);
+void print_string(char* str);
 
 %}
 
@@ -73,7 +75,19 @@ word_or_char
 
 appel_commande_simple
 : formatage_texte_sans_param[style]  OPEN_BRACE {print_balise_formatage($style);} string_ET_appel_commande_simple CLOSE_BRACE {print_fin_b($style);}
-	;
+|formatage_texte_avec_param
+;
+
+
+formatage_texte_avec_param
+:COLOR parameter[color] {print_balise_formatage_span_style("color", $color);} string_ET_appel_commande_simple {print_fin_b("span");}
+|TEXTCOLOR parameter[color] parameter[text] {print_balise_formatage_span_style("color", $color); print_string($text); print_fin_b("span");}
+;
+
+parameter
+:OPEN_BRACE WORD[param] CLOSE_BRACE {$$=$param;}
+;
+
 
 formatage_texte_sans_param
 	:TEXTIT {$$="em";}
@@ -100,8 +114,16 @@ void print_balise_formatage(char* style){
     fprintf(f_output, "<%s>", style);
     }
 
+void print_balise_formatage_span_style(char* style_type, char* style){
+    fprintf(f_output, "<span style=\"%s:%s\">", style_type, style);
+    }
+
 void print_fin_b(char* balise){
     fprintf(f_output, "</%s>", balise);
+    }
+
+void print_string(char* str){
+    fprintf(f_output, str);
     }
 
 void print_word_or_char(char* word_or_char){

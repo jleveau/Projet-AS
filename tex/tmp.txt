@@ -1,0 +1,56 @@
+structure
+        : titre BEGIN_DOCUMENT contenus make_title contenus END_DOCUMENT {/*titre peut être n'importe où mais maketitle doit être après
+	| begin_document contenus titre contenus make_title contenus end_document
+;
+
+contenus
+	: contenus contenu_ou_space {/* CONTENUS CONTENU */}
+	| contenu_ou_space	
+        ;
+
+contenu_ou_space
+        : SPACE
+	| appel_commande
+        ;
+
+sections
+: SECTION {fprintf(f_output,"<section style=\"");} options {fprintf(f_output, "\">");}
+        | SUB sections
+        ;
+
+texte
+        : string_ou_appel_commande 
+        | texte string_ou_appel_commande
+        ;
+
+string_ou_appel_commande
+        : string
+        | appel_commande
+        ;
+
+string
+	: string word_or_space 
+	| word_or_space
+;
+
+word_or_space
+: WORD  {fprintf(f_output,"%s",$1);}
+| SPACE {fprintf(f_output,"%s", " ");}
+| CHAR {fprintf(f_output,"%s",$1);}
+;
+
+
+formatage_texte_sans_param
+	:TEXTIT
+	|TEXTTT
+	|UNDERLINE
+;
+
+
+
+char_or_brace
+:OPEN_BRACE
+	| CLOSE_BRACE
+	| OPEN_SQUARE
+	| CLOSE_SQUARE
+	| CHAR
