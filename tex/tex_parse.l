@@ -1,11 +1,12 @@
-%x TEX
-%x COMMANDE
 %x NOM_TITLE
+%x PACKAGES_A_IGNORER
 
 L   [a-zA-Z_]
 A   [a-zA-Z_0-9]
-mot [a-zA-Z_][a-zA-Z_0-9]*
+MOT [a-zA-Z_][a-zA-Z_0-9]*
 TROUS [[:SPACE:]]*\n{0,1}[[:SPACE:]]*
+OPEN_SPACE [[:SPACE:]]*
+STRING_SANS_PONC [^\n\\\{\}\[\]]
 
 
 %{
@@ -19,31 +20,53 @@ TROUS [[:SPACE:]]*\n{0,1}[[:SPACE:]]*
 #include "libs/html.h"
 
 void print_newline();
+void print_space();
 %}
 %%
+
+\n {fprintf(f_output, "&nbsp;"); /*si on est dans une balise ca affiche une espace, sinon, ca fait rien (c'est la bonne fonctionnement)*/}
+
+"[" {return OPEN_SQUARE;}
+"]" {return CLOSE_SQUARE;}
+"{" {return OPEN_BRACE;}
+"}" {return CLOSE_BRACE;}
+
+\n{OPEN_SPACE}\n {print_newline();}
 
 \\\\ |
 "\newline" {
   print_newline();
 }
 
-"\\documentclass"{TROUS}"{"{mot}"}" {
+"\\documentclass"{TROUS}"{"{MOT}"}" {
   /* pour simplifier, pour l'instant on va supposer que c'est toujours un article */
+  BEGIN PACKAGES_A_IGNORER;
   return ENTETE_DOCUMENT;
 }
 
+<PACKAGES_A_IGNORER,INITIAL>
 "\\title"{TROUS}"{" {
   BEGIN NOM_TITLE;
 }
 
+<PACKAGES_A_IGNORER,INITIAL>
+"\\begin"{TROUS}"{document}" {
+  BEGIN INITIAL;
+  return BEGIN_DOCUMENT;
+ }
+
+
+<PACKAGES_A_IGNORER>. ;
+<PACKAGES_A_IGNORER>\n ;
+
 <NOM_TITLE>\} {
-  /*ferme le titre après que le string du titre est lu et envoyé*/
+  /*ferme le titre après que le string du titre est lu et envoyé*/ 
   BEGIN INITIAL;
 }
 
-<NOM_TITLE>.*/\} {
+<NOM_TITLE>{MOT}*/\} {
   /*cherche string du titre*/
-  yylval=strdup(yytext); 
+  yylval=strdup(yytext);
   return TITLE;  
   ;
 }
@@ -52,11 +75,7 @@ void print_newline();
   return MAKETITLE;
 }
 
-"\\begin"{TROUS}"{Document}" {
-  return BEGIN_DOCUMENT;
- }
-
-"\\end"{TROUS}"{Document}" { 
+"\\end"{TROUS}"{document}" { 
   return END_DOCUMENT;
  }
 
@@ -109,12 +128,7 @@ void print_newline();
 "pt"/"]" {yylval=yytext; return TAILLE;}
 
 {L}{A}* {yylval=strdup(yytext); return WORD;}
-\n {fprintf(f_output, "&nbsp;"); /*si on est dans une balise ca affiche une espace, sinon, ca fait rien (c'est la bonne fonctionnement)*/}
-
-"[" {yylval=strdup(yytext);return OPEN_SQUARE;}
-"]" {yylval=strdup(yytext);return CLOSE_SQUARE;}
-"{" {yylval=strdup(yytext);return OPEN_BRACE;}
-"}" {yylval=strdup(yytext);return CLOSE_BRACE;}
+{STRING_SANS_PONC}* {yylval=strdup(yytext); return STRING;}
 
 \\. {
   yylval=strdup(yytext+1);
@@ -126,4 +140,8 @@ void print_newline();
 
 void print_newline(){
     fprintf(f_output, "</br>");
+}
+
+ void print_space(){
+    fprintf(f_output, "&nbsp;");
 }

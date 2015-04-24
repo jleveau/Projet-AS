@@ -3,3 +3,15 @@ conflit reduction/empilement *7 qui vient de
    22 formatage_texte_avec_param: COLOR parameter $@4 string_ET_appel_commande_simple .
 
 Pas génant car bison fait des emilements par défaut, qui est ceux qu'on veut (nous géne pas car l'empilements sont effacables)
+
+
+
+
+Pour le rapport:
+On a décidé d'ignorer tous qui est entre l'entete et le titre/debut document car ca peut être des usepackage ou d'autre chose qu'on n'a pas traité alors pour pouvoir utiliser n'importe quel .tex qui passe pour de vrai on fait ca. Par contre, à cause de ca il y aura des .tex qui peuvent passer chez nous mais pas pour de vrai.
+
+Pour nous: 
+un  paragraph est de format 
+\paragraph{titre de p en gras}{tes\color{red}tes yrzahporfhzafz hizaifh oizhaoh o}
+
+
