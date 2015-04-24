@@ -113,6 +113,14 @@ void print_space();
   return SECTION;
  }
 
+"\\subsection" {
+  return SUBSECTION;
+ }
+
+"\\subsubsection" {
+  return SUBSUBSECTION;
+ }
+
 "\\paragraph" {
   return PARAGRAPH;
  }

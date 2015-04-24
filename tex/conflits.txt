@@ -15,3 +15,13 @@ un  paragraph est de format
 \paragraph{titre de p en gras}{tes\color{red}tes yrzahporfhzafz hizaifh oizhaoh o}
 
 
+plusieurs espaces à la suite vont écrire qu'une espace
+
+section peut être vide
+
+subsection syntax: \subsection{nom subsection}{contenu non vide}
+
+
+
+pour les sections on peut avoir de frères :)
+

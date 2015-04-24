@@ -16,6 +16,7 @@ extern YYSTYPE yylval;
 
 /* à ajouter dans le fichier html pour tex */
 void print_titre(char*);
+ void print_balise_section(int niveau, char*);
 void print_word_or_char(char*);
 void print_balise(char* style);
 void print_fin_b(char* balise);
@@ -25,7 +26,7 @@ void print_balise_decoration_span_style(char* style_type, char* style);
 			
 %token ENTETE_DOCUMENT TITLE MAKETITLE BEGIN_DOCUMENT END_DOCUMENT TEXT BEG WORD BACKSLASH SPACE CHAR
 %token BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR TAILLE NB ENUM ITEMIZE ITEM TABULAR EQUATION END
-%token SECTION PARAGRAPH 
+%token  PARAGRAPH SECTION SUBSECTION SUBSUBSECTION 
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
 %token A_FAIRE
 
@@ -66,23 +67,54 @@ string_OU_appel_commande_sans_BEGIN
 ;
 
 appel_commande_sans_BEGIN
-: formatage_texte {print_balise("p");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("p");}
+: formatage_texte
 |decoration_texte_sans_param[style]  OPEN_BRACE {print_balise($style);} combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b($style);}
-|decoration_texte_avec_param  
+|decoration_texte_avec_param
 ;
 
 formatage_texte
-: PARAGRAPH OPEN_BRACE {print_balise("b");} combinaison_string_ET_appel_commande_sans_BEGIN {print_fin_b("b");} CLOSE_BRACE
+: PARAGRAPH  {print_balise("b");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE  {print_fin_b("b");}  {print_balise("p");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("p");}
+|SECTION parameter_string[titre] { print_balise_section(1, $titre);} OPEN_BRACE subsections {printf("toto\n");} CLOSE_BRACE  {print_fin_b("section");}
+;
+
+texte_ou_vide
+: combinaison_string_ET_appel_commande_sans_BEGIN
 ;	
 
 
-decoration_texte_avec_param
-:COLOR parameter[color] {print_balise_decoration_span_style("color", $color);} combinaison_string_ET_appel_commande_sans_BEGIN  {print_fin_b("span");}
-|TEXTCOLOR parameter[color] parameter[text] {print_balise_decoration_span_style("color", $color); print_word_or_char($text); print_fin_b("span");}	
+subsections
+: SUBSECTION parameter_word_or_string[titre] {print_balise_section(2, $titre);} OPEN_BRACE subsubsections CLOSE_BRACE {print_fin_b("section");} subsections
+| texte_ou_vide SUBSECTION parameter_word_or_string[titre] {print_balise_section(2, $titre);} OPEN_BRACE  subsubsections  {printf("coucou\n");} CLOSE_BRACE {print_fin_b("section");} subsections
+|
 ;
 
-parameter
+subsubsections
+: SUBSUBSECTION parameter_string[titre] {print_balise_section(3, $titre);} OPEN_BRACE subsubsections CLOSE_BRACE {print_fin_b("section");}
+| texte_ou_vide {/*bloque ici*/} subsubsection_ou_vide  
+|  
+;
+
+subsubsection_ou_vide
+:SUBSUBSECTION parameter_word_or_string[titre] {printf("coucou\n");} {print_balise_section(3, $titre);} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("section");} subsubsections
+| {printf("coucouVide\n");}
+;
+
+decoration_texte_avec_param
+:COLOR parameter_word[color] {print_balise_decoration_span_style("color", $color);} combinaison_string_ET_appel_commande_sans_BEGIN  {print_fin_b("span");}
+|TEXTCOLOR parameter_word[color] parameter_word[text] {print_balise_decoration_span_style("color", $color); print_word_or_char($text); print_fin_b("span");}	
+;
+
+parameter_word_or_string
+: parameter_word
+| parameter_string
+;
+
+parameter_word
 :OPEN_BRACE WORD[param] CLOSE_BRACE {$$=$param;}
+;
+
+parameter_string
+:OPEN_BRACE STRING[param] CLOSE_BRACE {$$=$param;}
 ;
 
 decoration_texte_sans_param
@@ -100,6 +132,11 @@ void yyerror(const char *s){
 
 void print_titre(char* titre){
     fprintf(f_output, "<h1>%s</h1>", titre);
+    }
+
+void print_balise_section(int niveau, char* titre){
+    print_balise("section");
+    fprintf(f_output, "<h%d>%s</h%d>", niveau+1, titre, niveau+1);
     }
 
 void print_balise(char* style){

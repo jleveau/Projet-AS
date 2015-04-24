@@ -13,6 +13,10 @@
 /*
  */
 FILE* create_html(char* titre){
+   char* fichier_css="index.css";
+ //ancien
+//char* fichier_css="../css/index.css";
+
    f_output=fopen("index.html","w+");
    
 	//header
@@ -22,7 +26,7 @@ FILE* create_html(char* titre){
    fprintf(f_output,"   <meta charset=\"utf-8\">");
    fprintf(f_output,"   <title>%s</title>",titre);
    fprintf(f_output,"   <!doctype html>");
-   fprintf(f_output, "<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/index.css\">");
+   fprintf(f_output, "<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\">", fichier_css);
    fprintf(f_output,"<link href=\"../branches/Rohan/css/style.default.css\" rel=\"stylesheet\">");
    fprintf(f_output,"<link href=\"../branches/Rohan/css/jquery.datatables.css\" rel=\"stylesheet\">");
    fprintf(f_output,"<link href=\"../branches/Rohan/css/font.helvetica-neue.css\" rel=\"stylesheet\">");
