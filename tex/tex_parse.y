@@ -23,15 +23,19 @@ void print_balise_formatage_span_style(char* style_type, char* style);
 void print_string(char* str);
 
 %}
-
+			
 %token ENTETE_DOCUMENT TITLE MAKETITLE BEGIN_DOCUMENT END_DOCUMENT TEXT BEG WORD BACKSLASH SPACE CHAR
 %token BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR TAILLE NB ENUM ITEMIZE ITEM TABULAR EQUATION END
 %token SECTION PARAGRAPH 
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
 %token A_FAIRE
 
+%left WORD
+%left CHAR
+%left BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR
+																		
 %start start
-					
+			
 %%
 
 start
@@ -45,21 +49,19 @@ structure
 	|	
 ;
 
-
 contenus
-        : contenus string_OU_appel_commande_simple	{/*OU car ca revient tout seul*/} 
+        : contenus string_OU_appel_commande_sans_BEGIN	{/*OU car ca revient tout seul*/} 
 	|	
 ;
 
-
-string_ET_appel_commande_simple
-        : string_ET_appel_commande_simple string_OU_appel_commande_simple {/*ET pour que l'interieur des commandes ex {ggg} peuuvent être un mélange de commandes et strings */}
-	| string_OU_appel_commande_simple
+string_ET_appel_commande_sans_BEGIN
+        : string_ET_appel_commande_sans_BEGIN string_OU_appel_commande_sans_BEGIN %prec WORD {/*ET pour que l'interieur des commandes ex {ggg} peuuvent être un mélange de commandes et strings */} 
+	| string_OU_appel_commande_sans_BEGIN  
         ;
 
-string_OU_appel_commande_simple
-        : string 
-	| appel_commande_simple
+string_OU_appel_commande_sans_BEGIN
+        : string %prec WORD {/* DEMANDE POURQUOI CA MARCHE COMME CA; prec ne doit pas utiliser un terminal fictif? */}
+	| appel_commande_sans_BEGIN
         ;
 
 string
@@ -72,22 +74,19 @@ word_or_char
 	| CHAR {print_word_or_char($1);}
 	;
 
-
-appel_commande_simple
-: formatage_texte_sans_param[style]  OPEN_BRACE {print_balise_formatage($style);} string_ET_appel_commande_simple CLOSE_BRACE {print_fin_b($style);}
+appel_commande_sans_BEGIN
+: formatage_texte_sans_param[style]  OPEN_BRACE {print_balise_formatage($style);} string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b($style);}
 |formatage_texte_avec_param
 ;
 
-
 formatage_texte_avec_param
-:COLOR parameter[color] {print_balise_formatage_span_style("color", $color);} string_ET_appel_commande_simple {print_fin_b("span");}
+:COLOR parameter[color] {print_balise_formatage_span_style("color", $color);} string_ET_appel_commande_sans_BEGIN  {print_fin_b("span");}
 |TEXTCOLOR parameter[color] parameter[text] {print_balise_formatage_span_style("color", $color); print_string($text); print_fin_b("span");}
 ;
 
 parameter
 :OPEN_BRACE WORD[param] CLOSE_BRACE {$$=$param;}
 ;
-
 
 formatage_texte_sans_param
 	:TEXTIT {$$="em";}

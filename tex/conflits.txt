@@ -1,0 +1,5 @@
+conflit reduction/empilement *7 qui vient de    
+   10 string_ET_appel_commande_simple: string_ET_appel_commande_simple . string_OU_appel_commande_simple
+   22 formatage_texte_avec_param: COLOR parameter $@4 string_ET_appel_commande_simple .
+
+Pas génant car bison fait des emilements par défaut, qui est ceux qu'on veut (nous géne pas car l'empilements sont effacables)
