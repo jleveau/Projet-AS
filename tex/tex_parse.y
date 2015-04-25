@@ -74,7 +74,7 @@ appel_commande_sans_BEGIN
 
 formatage_texte
 : PARAGRAPH  {print_balise("b");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE  {print_fin_b("b");}  {print_balise("p");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("p");}
-|SECTION parameter_string[titre] { print_balise_section(1, $titre);} OPEN_BRACE subsections {printf("toto\n");} CLOSE_BRACE  {print_fin_b("section");}
+|SECTION parameter_string[titre] { print_balise_section(1, $titre);} {printf("ouverture section\n");} OPEN_BRACE subsections {printf("fermeture section\n");} CLOSE_BRACE  {print_fin_b("section");}
 ;
 
 texte_ou_vide
@@ -84,7 +84,7 @@ texte_ou_vide
 
 subsections
 : SUBSECTION parameter_word_or_string[titre] {print_balise_section(2, $titre);} OPEN_BRACE subsubsections CLOSE_BRACE {print_fin_b("section");} subsections
-| texte_ou_vide SUBSECTION parameter_word_or_string[titre] {print_balise_section(2, $titre);} OPEN_BRACE  subsubsections  {printf("coucou\n");} CLOSE_BRACE {print_fin_b("section");} subsections
+| texte_ou_vide SUBSECTION parameter_word_or_string[titre] {print_balise_section(2, $titre);} {printf("ouverture de subsubsection\n");} OPEN_BRACE  subsubsections  {printf("fermeture de subsubsection\n");} CLOSE_BRACE {print_fin_b("section");} subsections
 |
 ;
 
@@ -95,7 +95,7 @@ subsubsections
 ;
 
 subsubsection_ou_vide
-:SUBSUBSECTION parameter_word_or_string[titre] {printf("coucou\n");} {print_balise_section(3, $titre);} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("section");} subsubsections
+:SUBSUBSECTION parameter_word_or_string[titre] {printf("subsubsection\n");} {print_balise_section(3, $titre);} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("section");} subsubsections
 | {printf("coucouVide\n");}
 ;
 
@@ -131,7 +131,7 @@ void yyerror(const char *s){
 }
 
 void print_titre(char* titre){
-    fprintf(f_output, "<h1>%s</h1>", titre);
+    fprintf(f_output, "<h1 class=\"title\">%s</h1>", titre);
     }
 
 void print_balise_section(int niveau, char* titre){

@@ -69,7 +69,6 @@ FILE* create_html(char* titre){
    fprintf(f_output,"</div>");
    
    fprintf(f_output,"<div class=\" mainpanel\">");
-   fprintf(f_output,"<div class=\"contentpanel\"");
    
    
    
@@ -83,7 +82,6 @@ FILE* create_html(char* titre){
 }
 
 int fermer_html(FILE* fd){
-  fprintf(fd,"</div>");
   fprintf(fd,"</div>");
   fprintf(fd, "</body>");
   fprintf(fd, "</html>");
