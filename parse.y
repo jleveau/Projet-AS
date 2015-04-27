@@ -83,8 +83,8 @@ postfix_expression
 	| postfix_expression PTR_OP IDENTIFIER {$$=string_concat(3,$1,$2,$3);}
 	| postfix_expression INC_OP {$$=string_concat(2,$1,$2);}
 	| postfix_expression DEC_OP {$$=string_concat(2,$1,$2);}
-	| OPENING_PARENTHESIS type_name CLOSING_PARENTHESIS OPENING_BRACE  initializer_list CLOSING_BRACE {$$=string_concat(8,$1,$2,$3,print_debut_balise_block(),$4,$5,$6,print_fin_balise_block());}
-	| OPENING_PARENTHESIS type_name CLOSING_PARENTHESIS OPENING_BRACE  initializer_list COLON CLOSING_BRACE {$$=string_concat(9,$1,$2,$3,print_debut_balise_block(),$4,$5,$6,$7,print_fin_balise_block());}
+	| OPENING_PARENTHESIS type_name CLOSING_PARENTHESIS OPENING_BRACE  initializer_list CLOSING_BRACE {$$=string_concat(6,$1,$2,$3,$4,$5,$6);}
+	| OPENING_PARENTHESIS type_name CLOSING_PARENTHESIS OPENING_BRACE  initializer_list COLON CLOSING_BRACE {$$=string_concat(7,$1,$2,$3,$4,$5,$6,$7);}
 	;
 
 argument_expression_list
@@ -265,8 +265,8 @@ type_specifier
 	;
 
 struct_or_union_specifier
-	: struct_or_union OPENING_BRACE  struct_declaration_list CLOSING_BRACE  {$$=string_concat(6,$1,print_debut_balise_block(),$2,$3,$4,print_fin_balise_block());}
-	| struct_or_union IDENTIFIER OPENING_BRACE  struct_declaration_list CLOSING_BRACE {$$=string_concat(7,$1,$2,print_debut_balise_block(),$3,$4,$5,print_fin_balise_block());}
+	: struct_or_union OPENING_BRACE  struct_declaration_list CLOSING_BRACE  {$$=string_concat(4,$1,$2,$3,$4);}
+	| struct_or_union IDENTIFIER OPENING_BRACE  struct_declaration_list CLOSING_BRACE {$$=string_concat(5,$1,$2,$3,$4,$5);}
 	| struct_or_union IDENTIFIER {$$=string_concat(2,$1,$2);}
 	;
 
@@ -305,10 +305,10 @@ struct_declarator
 	;
 
 enum_specifier
-	: ENUM OPENING_BRACE enumerator_list CLOSING_BRACE {$$=string_concat(6,$1,print_debut_balise_block(),$2,$3,$4,print_fin_balise_block());}
-	| ENUM OPENING_BRACE enumerator_list COLON CLOSING_BRACE   {$$=string_concat(7,$1,print_debut_balise_block(),$2,$3,$4,$5,print_fin_balise_block());}
-	| ENUM IDENTIFIER OPENING_BRACE enumerator_list CLOSING_BRACE {$$=string_concat(7,$1,$2,print_debut_balise_block(),$3,$4,$5,print_fin_balise_block());} 
-	| ENUM IDENTIFIER OPENING_BRACE  enumerator_list COLON CLOSING_BRACE {$$=string_concat(8,$1,$2,print_debut_balise_block(),$3,$4,$5,$6,print_fin_balise_block());}
+	: ENUM OPENING_BRACE enumerator_list CLOSING_BRACE {$$=string_concat(4,$1,$2,$3,$4);}
+	| ENUM OPENING_BRACE enumerator_list COLON CLOSING_BRACE   {$$=string_concat(5,$1,$2,$3,$4,$5);}
+	| ENUM IDENTIFIER OPENING_BRACE enumerator_list CLOSING_BRACE {$$=string_concat(5,$1,$2,$3,$4,$5);} 
+	| ENUM IDENTIFIER OPENING_BRACE  enumerator_list COLON CLOSING_BRACE {$$=string_concat(6,$1,$2,$3,$4,$5,$6);}
 	| ENUM IDENTIFIER {$$=string_concat(2,$1,$2);}
 	;
 
@@ -435,8 +435,8 @@ direct_abstract_declarator
 	;
 
 initializer
-	: OPENING_BRACE initializer_list CLOSING_BRACE {$$=string_concat(5,print_debut_balise_block(),$1,$2,$3,print_fin_balise_block());}
-	| OPENING_BRACE initializer_list COLON CLOSING_BRACE {$$=string_concat(6,print_debut_balise_block(),$1,$2,$3,$4,print_fin_balise_block());}
+	: OPENING_BRACE initializer_list CLOSING_BRACE {$$=string_concat(3,$1,$2,$3);}
+	| OPENING_BRACE initializer_list COLON CLOSING_BRACE {$$=string_concat(4,$1,$2,$3,$4);}
 	| assignment_expression {$$=string_concat(1,$1);}
 	;
 
@@ -481,8 +481,8 @@ labeled_statement
 	;
 
 compound_statement
-	: OPENING_BRACE  CLOSING_BRACE {$$=string_concat(4,print_debut_balise_block(),$1,$2,print_fin_balise_block());}
-	| OPENING_BRACE block_item_list CLOSING_BRACE {$$=string_concat(5,print_debut_balise_block(),$1,$2,$3,print_fin_balise_block());}
+	: OPENING_BRACE  CLOSING_BRACE {$$=string_concat(2,$1,$2);}
+	| OPENING_BRACE block_item_list CLOSING_BRACE {$$=string_concat(3,$1,$2,$3);}
 	;
 
 block_item_list

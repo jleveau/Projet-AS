@@ -162,11 +162,11 @@ char* print_indent(char*);
 ";"					{yylval=string_concat(2,print_balise_span("vert",";"),strdup("<br \\>\n")); /* Il faut afficher l'indentation dans la yylval*/
 						print_indent(yylval); return SEMI_COLON; }
 						
-("{"|"<%")				 {indent=indent+2;new_block(NULL); yylval=strdup("<br \\>\n"); 
+("{"|"<%")				 {indent=indent+2;new_block(NULL); yylval=string_concat(2,print_debut_balise_block(),strdup("<br \\>\n")); 
 						print_indent(yylval);  return OPENING_BRACE; }
 						
-("}"|"%>")				{indent=indent-2; fin_block(); yylval=strdup("<br \\>\n"); 
-						print_indent(yylval); return CLOSING_BRACE; }
+("}"|"%>")				{indent=indent-2; yylval=string_concat(2,print_fin_balise_block(),strdup("<br \\>\n")); 
+						print_indent(yylval);  fin_block(); return CLOSING_BRACE; }
 
 
 ","					{yylval=strdup(yytext); return COLON; }

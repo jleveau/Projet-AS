@@ -1,6 +1,10 @@
 #include "html.h"
 
 void ajouter_attribut(balise b, char* nom, char* val){
+	if(strcmp(nom, "id")==0){
+		b->texte=string_concat(5,b->texte,strdup(nom),strdup("=\""),strdup(val),strdup("\""));	
+		return;
+	}
 	b->texte=string_concat(5,b->texte,strdup(nom),strdup("=\""),strdup(val),strdup("\" "));
 }
 
@@ -42,13 +46,6 @@ int anchor_balise(){
 	
 }
 
-//balise qu'il faut cliquer pour retourner à l'ancre
-//pour les balises
-/*void clique_anchor_balise(char* id ){
-	fprintf(f_output, "<a href=\"%s\">}</a>", id);
-}
-*/
-
 char* print_balise_parameter(char* param){
 	block top_block=(block)stack_top(block_stack);
 	char var_id[20];
@@ -85,7 +82,7 @@ char* print_balise_fonction(char* func)
 {
    function f=getFunction(func);
    balise b = print_debut_balise("a","fonction-activable");
-   char* texte1=string_concat(3,b->texte,strdup("/>"),strdup(func));
+   char* texte1=string_concat(3,b->texte,strdup(">"),strdup(func));
    balise b1 = print_debut_balise("span","fonction");
    if(f && f!=UNNAMED_FUNCTION){
    char *tee = print_function_html_char(f);
@@ -101,12 +98,8 @@ char* print_balise_fonction(char* func)
    free(b1);
    
     return txt;
-    
-    
 
 }
-
-
 
 char* print_balise_declaration(char* func){
 	balise b=print_debut_balise_id("a", "declaration");
@@ -122,14 +115,18 @@ char* print_balise_declaration(char* func){
 char* print_debut_balise_block(){
 	block top_block=(block)stack_top(block_stack);
 	balise b=print_debut_balise_id("div", top_block->id);
-	char* texte=string_concat(6,b->texte,strdup("><a name=\""),strdup(top_block->id),strdup("\">"),strdup(print_balise_span("vert","{")),strdup(" </a>"));
+	char anchor[80]; 
+	sprintf(anchor,"><a name=\"%s\">", top_block->id);
+	char* texte=string_concat(3,strdup(b->texte),strdup(anchor),strdup(print_balise_span("vert","{")));
 	free(b);
 	return texte;
 }
 
 char* print_fin_balise_block(){
 	block top_block=(block)stack_top(block_stack);
-	return string_concat(7,strdup("<a href=\"#%s\">"),print_balise_span("vert","}"),strdup("</a>"),strdup("</div> "),strdup("<a style=\"visibility:hidden;\" name=\""),strdup(top_block->id),strdup("\">{</a>"));
+	char aref[80]; 
+	sprintf(aref,"<a href=\"#%s\">",top_block->id);
+	return string_concat(4,strdup(aref),print_balise_span("vert","}"),strdup("</a>"),strdup("</div>"));
 }
 
 void push_to_html(char* texte){
