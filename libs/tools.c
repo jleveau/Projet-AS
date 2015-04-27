@@ -1,8 +1,8 @@
 #include "tools.h"
 
 /* prend le nombre de chaine en parametre nb_args, et 
- * retourn la concatenation des nb_args chaines 
- * exemple string_concat(3,"toto","tata","titi") retourne tototatatiti
+ * retourne la concatenation des nb_args chaines 
+ * exemple : string_concat(3,"toto","tata","titi") retourne tototatatiti (nice l'exemple)
  * La fonction detruit les chaine en parametre. Donc si besoin de passer des chaine litterales "quelquechose", utiliser strdup("quelquechose");
  * */
 
@@ -77,6 +77,7 @@ void new_function(char* nom, char* description, list arguments, int nb_param){
 	f->description=description;
 	f->arguments=arguments;
 	f->nb_arguments=nb_param;
+	f->id = func_id;
 	add_to_list(function_list,f);
 }
 
@@ -363,6 +364,7 @@ void name_function(char* type,char* nom,char* description){
 		f->nom=nom;
 		f->type=type;
 		f->description=description;
+		f->id =func_id;
 		return;
 	}
 }
@@ -372,13 +374,14 @@ void declared_function_balise(char* type,char* nom){
 
 char* print_function(function f){
 	char* str_func=string_concat(3,strdup(f->type),strdup(f->nom),strdup("("));
+	char* res = string_concat(2,strdup(f->type),strdup(f->nom));
 	cell l=f->arguments->first;
 	while (l){
 		str_func=string_concat(2,str_func,print_variable_html(l->elem));
 		l=l->next;
 	}
 	str_func=string_concat(2,str_func,strdup(")"));
-	return str_func;
+	return res;
 }
 
 void print_function_html(function f){

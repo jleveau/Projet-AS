@@ -79,14 +79,11 @@ char* print_balise_fonction(char* func){
 }
 */
 char* print_balise_fonction(char* func)
-{
+{	
    function f=getFunction(func);
-   fprintf(stderr,"|%s|",func);
-	char* concat =string_concat_sans_espace(2,strdup("#"),strdup(top_block->id));
-	char aref[150];
-	sprintf(aref,"<a style=\"text_decoration:none;\" class =\"fin_block\"  value=\"%s\" href=\"#\"><i class=\"fa fa-caret-square-o-down\" href=\"#\"></i></a>",concat);
+   fprintf(stderr,"|%s=%s|",f,func);
    balise b = print_debut_balise("span","fonction-activable");
-   char* texte1=string_concat(4,strdup(aref),strdup(b->texte),strdup(">"),strdup(func));
+   char* texte1=string_concat(3,strdup(b->texte),strdup(">"),strdup(func));
    balise b1 = print_debut_balise("span","fonction");
    char* txt;
    if(f && f!=UNNAMED_FUNCTION){

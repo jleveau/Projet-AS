@@ -79,11 +79,11 @@ char* print_balise_fonction(char* func){
 }
 */
 char* print_balise_fonction(char* func)
-{
+{	
    function f=getFunction(func);
-   fprintf(stderr,"|%s|",func);
+   fprintf(stderr,"|%s=%s|",f->id,func);
    balise b = print_debut_balise("span","fonction-activable");
-   char* texte1=string_concat(3,b->texte,strdup(">"),strdup(func));
+   char* texte1=string_concat(3,strdup(b->texte),strdup(">"),strdup(func));
    balise b1 = print_debut_balise("span","fonction");
    char* txt;
    if(f && f!=UNNAMED_FUNCTION){
