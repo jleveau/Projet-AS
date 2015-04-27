@@ -25,7 +25,7 @@ void print_balise_decoration_span_style(char* style_type, char* style);
 %}
 			
 %token ENTETE_DOCUMENT TITLE MAKETITLE BEGIN_DOCUMENT END_DOCUMENT TEXT BEG WORD BACKSLASH SPACE CHAR
-%token BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR TAILLE NB ENUM ITEMIZE ITEM TABULAR EQUATION END
+%token BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR TAILLE NB ENUM BEGIN_ITEM TABULAR EQUATION END BEGIN_ITEMIZE  END_ITEMIZE  BEGIN_ENUMERATE  END_ENUMERATE
 %token  PARAGRAPH SECTION SUBSECTION SUBSUBSECTION 
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
 %token A_FAIRE
@@ -75,7 +75,14 @@ appel_commande_sans_BEGIN
 formatage_texte
 : PARAGRAPH  {print_balise("b");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE  {print_fin_b("b");}  {print_balise("p");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("p");}
 |SECTION parameter_string[titre] { print_balise_section(1, $titre);} {printf("ouverture section\n");} OPEN_BRACE subsections {printf("fermeture section\n");} CLOSE_BRACE  {print_fin_b("section");}
+|BEGIN_ITEMIZE {print_balise("ul");} item END_ITEMIZE {print_fin_b("ul");}
+|BEGIN_ENUMERATE {print_balise("ol");} item END_ENUMERATE {print_fin_b("ol");}      
 ;
+
+item
+: BEGIN_ITEM {print_balise("li");} string_OU_appel_commande_sans_BEGIN {print_fin_b("li");}
+|item  BEGIN_ITEM {print_balise("li");} string_OU_appel_commande_sans_BEGIN {print_fin_b("li");}      
+;       
 
 texte_ou_vide
 : combinaison_string_ET_appel_commande_sans_BEGIN
@@ -95,7 +102,7 @@ subsubsections
 ;
 
 subsubsection_ou_vide
-:SUBSUBSECTION parameter_word_or_string[titre] {printf("subsubsection\n");} {print_balise_section(3, $titre);} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("section");} subsubsections
+:SUBSUBSECTION parameter_word_or_string[titre] {printf("ouverture subsubsection\n");} {print_balise_section(3, $titre);} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("section");} subsubsections
 | {printf("coucouVide\n");}
 ;
 

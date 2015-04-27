@@ -133,6 +133,31 @@ void print_space();
    
   return TEXTCOLOR;
  }
+
+("\\begin{itemize}"|{TROUS}"\\begin{itemize}") {
+    return BEGIN_ITEMIZE;
+}
+
+("\\end{itemize}"|{TROUS}"\\end{itemize}") {
+
+    return END_ITEMIZE;
+}
+
+("\\begin{enumerate}"|{TROUS}"\\begin{enumerate}") {
+    return BEGIN_ENUMERATE;
+}
+
+("\\end{enumerate}"|{TROUS}"\\end{enumerate}") {
+
+    return END_ENUMERATE;
+}
+
+
+("\\item"|"&nbsp;\\item") {
+
+    return BEGIN_ITEM;
+}
+
 "pt"/"]" {yylval=yytext; return TAILLE;}
 
 {L}{A}* {yylval=strdup(yytext); return WORD;}
