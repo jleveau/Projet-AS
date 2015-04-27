@@ -2,7 +2,7 @@
 
 void ajouter_attribut(balise b, char* nom, char* val){
 	if(strcmp(nom, "id")==0){
-		b->texte=string_concat(5,b->texte,strdup(nom),strdup("=\""),strdup(val),strdup("\""));	
+		b->texte=string_concat_sans_espace(7,b->texte,strdup(" "),strdup(nom),strdup("=\""),strdup(val),strdup("\""),strdup(" "));	
 		return;
 	}
 	b->texte=string_concat(5,b->texte,strdup(nom),strdup("=\""),strdup(val),strdup("\" "));
@@ -115,18 +115,21 @@ char* print_balise_declaration(char* func){
 char* print_debut_balise_block(){
 	block top_block=(block)stack_top(block_stack);
 	balise b=print_debut_balise_id("div", top_block->id);
+
+
 	char anchor[80]; 
 	sprintf(anchor,"><a name=\"%s\">", top_block->id);
-	char* texte=string_concat(3,strdup(b->texte),strdup(anchor),strdup(print_balise_span("vert","{")));
+	char* texte=string_concat(3,strdup(print_balise_span("vert","{")),strdup(b->texte),strdup(anchor));
 	free(b);
 	return texte;
 }
 
 char* print_fin_balise_block(){
 	block top_block=(block)stack_top(block_stack);
-	char aref[80]; 
-	sprintf(aref,"<a href=\"#%s\">",top_block->id);
-	return string_concat(4,strdup(aref),print_balise_span("vert","}"),strdup("</a>"),strdup("</div>"));
+	char aref[80];
+	char* concat =string_concat_sans_espace(2,strdup("#"),strdup(top_block->id));
+	sprintf(aref,"<a class=\"fin_block\" value=\"%s\" href=\"#\">",concat);
+	return string_concat(4,strdup(aref),strdup("</div>"),print_balise_span("vert","}"),strdup("</a>"));
 }
 
 void push_to_html(char* texte){

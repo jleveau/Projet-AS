@@ -37,6 +37,37 @@ char* string_concat(int nb_args,...){
 	return s;
 }
 
+char* string_concat_sans_espace(int nb_args,...){
+	if (nb_args==0)
+		return NULL;
+	va_list ap; //création du pointeur
+    va_start(ap,nb_args); //initialisation sur le premier paramètre
+    int i=0;
+    size_t length=1;
+    char* s=NULL;
+    while (i<nb_args){
+		s=va_arg(ap,char*);
+		length+=strlen(s);	
+		i++;
+	}
+	s=malloc(length);  //On calcul la taille, puis on alloue (ça parait plus malin que de faire n fois un realloc)
+	va_start(ap,nb_args);
+	char* s2=va_arg(ap,char*);
+	strcpy(s,s2);
+	i=1;
+	free(s2);
+    while (i<nb_args){
+		s2=va_arg(ap,char*);
+		strcat(s,s2);
+		free(s2);
+		i++;
+	}
+	va_end(ap);
+	
+	return s;
+}
+
+
 /* ajoute une fonction dans la liste de fonctions,
  * la liste ne depend pas d'une pile car les fonctions sont accessibles partout dans le code*/
 

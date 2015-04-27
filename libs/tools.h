@@ -80,7 +80,7 @@ void declared_function_balise(char* type,char* nom);
 void destroy_variable(variable v);
 
 char* string_concat(int nb_args,...);
-
+char* string_concat_sans_espace(int nb_args,...);
 char* create_variable_id(variable v,int id);
 char* create_name_id(char* name);
 void print_variable_html(variable v);
