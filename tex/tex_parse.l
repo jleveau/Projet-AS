@@ -1,5 +1,7 @@
 %x NOM_TITLE
 %x PACKAGES_A_IGNORER
+%x TABULAR
+%x TABULAR_STRING
 
 L   [a-zA-Z_]
 A   [a-zA-Z_0-9]
@@ -7,6 +9,7 @@ MOT [a-zA-Z_][a-zA-Z_0-9]*
 TROUS [[:SPACE:]]*\n{0,1}[[:SPACE:]]*
 OPEN_SPACE [[:SPACE:]]*
 STRING_SANS_PONC [^\n\\\{\}\[\]]
+SPACE_OU_NEWLINE_INFINI [[:SPACE:]\n]*
 
 
 %{
@@ -26,9 +29,9 @@ void print_space();
 
 \n {fprintf(f_output, "&nbsp;"); /*si on est dans une balise ca affiche une espace, sinon, ca fait rien (c'est la bonne fonctionnement)*/}
 
-"[" {return OPEN_SQUARE;}
-"]" {return CLOSE_SQUARE;}
-"{" {return OPEN_BRACE;}
+<TABULAR,INITIAL>"[" {return OPEN_SQUARE;}
+<TABULAR,INITIAL>"]" {return CLOSE_SQUARE;}
+<TABULAR,INITIAL>"{" {return OPEN_BRACE;}
 "}" {return CLOSE_BRACE;}
 
 \n{OPEN_SPACE}\n {print_newline();}
@@ -134,33 +137,52 @@ void print_space();
   return TEXTCOLOR;
  }
 
-("\\begin{itemize}"|{TROUS}"\\begin{itemize}") {
+{TROUS}"\\begin"{TROUS}"{itemize}" {
     return BEGIN_ITEMIZE;
 }
 
-("\\end{itemize}"|{TROUS}"\\end{itemize}") {
+{SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{itemize}" {
 
     return END_ITEMIZE;
 }
 
-("\\begin{enumerate}"|{TROUS}"\\begin{enumerate}") {
+{TROUS}"\\begin"{TROUS}"{enumerate}" {
     return BEGIN_ENUMERATE;
 }
 
-("\\end{enumerate}"|{TROUS}"\\end{enumerate}") {
-
+{SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{enumerate}" {
     return END_ENUMERATE;
 }
 
-
-("\\item"|"&nbsp;\\item") {
-
+{TROUS}"\\item" {
     return BEGIN_ITEM;
+}
+
+
+{TROUS}"\\begin"{TROUS}"{tabular}" {
+    BEGIN TABULAR;
+    return BEGIN_TABULAR;
+}
+
+<TABULAR>\} {
+    BEGIN TABULAR_STRING;
+    return CLOSE_BRACE;
+}
+
+<TABULAR_STRING>(.*\n*)*/"\\end{tabular}" {
+  BEGIN INITIAL;
+  yylval=strdup(yytext);
+  return TAB_STRING;
+}
+
+{SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{tabular}" {
+   BEGIN INITIAL;
+    return END_TABULAR;
 }
 
 "pt"/"]" {yylval=yytext; return TAILLE;}
 
-{L}{A}* {yylval=strdup(yytext); return WORD;}
+<TABULAR,INITIAL>{L}{A}* {yylval=strdup(yytext); return WORD;}
 {STRING_SANS_PONC}* {yylval=strdup(yytext); return STRING;}
 
 \\. {

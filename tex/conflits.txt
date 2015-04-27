@@ -25,3 +25,7 @@ subsection syntax: \subsection{nom subsection}{contenu non vide}
 
 pour les sections on peut avoir de frères :)
 
+
+
+
+tabular[param]{liste_char}     [param] non nécessaire; {liste_char} nécessaire et liste_char ne peut pas être vide

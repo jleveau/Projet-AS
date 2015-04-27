@@ -5,6 +5,10 @@ counter-reset:h2 h3 h4;
 
 }
 
+table{
+	width: 50%;
+}
+
 .title
 {
 text-align:center;
