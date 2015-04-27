@@ -14,14 +14,12 @@ color:#6678ac;
 {
 
 }
-.fin_block
-{
-margin:0;
-}
+
 a
 {
 text-decoration:none;
 }
+
 .Code
 {
 font: normal normal 1em/1.2em monospace; margin:0; padding:0;vertical-align:top;margin-left: 10px;
