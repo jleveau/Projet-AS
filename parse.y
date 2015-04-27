@@ -360,9 +360,9 @@ direct_declarator
 	| direct_declarator LEFT_BRACKET type_qualifier_list assignment_expression RIGHT_BRACKET {$$=string_concat(5,$1,$2,$3,$4,$5);} 
 	| direct_declarator LEFT_BRACKET type_qualifier_list RIGHT_BRACKET {$$=string_concat(4,$1,$2,$3,$4);} 
 	| direct_declarator LEFT_BRACKET assignment_expression RIGHT_BRACKET {$$=string_concat(4,$1,$2,$3,$4);} 
-	| direct_declarator OPENING_PARENTHESIS parameter_type_list CLOSING_PARENTHESIS {$$=string_concat(4,print_balise_declaration($1),$2,$3,$4);} 
-	| direct_declarator OPENING_PARENTHESIS CLOSING_PARENTHESIS {$$=string_concat(3,print_balise_declaration($1),$2,$3);}
-	| direct_declarator OPENING_PARENTHESIS identifier_list CLOSING_PARENTHESIS {$$=string_concat(4,$1,$2,print_balise_declaration($3),$4);} 
+	| direct_declarator OPENING_PARENTHESIS parameter_type_list CLOSING_PARENTHESIS {func_id=strdup($1);$$=string_concat(4,print_balise_declaration($1),$2,$3,$4);} 
+	| direct_declarator OPENING_PARENTHESIS CLOSING_PARENTHESIS {func_id=strdup($1);fprintf(stderr,"%s\n",$1);$$=string_concat(3,print_balise_declaration($1),$2,$3);}
+	| direct_declarator OPENING_PARENTHESIS identifier_list CLOSING_PARENTHESIS {func_id=strdup($1);$$=string_concat(4,$1,$2,print_balise_declaration($3),$4);} 
 	;
 
 pointer

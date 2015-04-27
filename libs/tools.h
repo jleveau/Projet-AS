@@ -31,6 +31,7 @@ typedef struct variable_t {
 } *variable;
 
 typedef struct function_t {
+	char* id;
 	char* nom;
 	char* type;
 	char* description;
@@ -54,6 +55,7 @@ char* read_buffer;
 stack block_stack;
 
 int id_block;
+char* func_id;
 
 
 void  new_block();
@@ -83,8 +85,7 @@ char* string_concat(int nb_args,...);
 char* string_concat_sans_espace(int nb_args,...);
 char* create_variable_id(variable v,int id);
 char* create_name_id(char* name);
-void print_variable_html(variable v);
-char* print_variable_html_char(variable v);
+char* print_variable_html(variable v);
 void print_function_html(function f);
 char* print_function_html_char(function f);
 
@@ -93,7 +94,7 @@ void destroy_variable_list(list var_list);
 
 void print_variable(variable v);
 void print_variables();
-void print_function(function f);
+char* print_function(function f);
 void print_functions();
 
 #endif

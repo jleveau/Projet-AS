@@ -1,16 +1,22 @@
-
-
-int g(char a, int c){
-	a;
+int f(int a,int b)
+{
+return a;
+}
+int g(){
+int b;
 }
 
-
-int main(){
-	g('a',3);
-
-
-	g(3,3);
-
-int b=2344;
-	return 0;
+int main(char toto,int tata)
+{
+if(1==1)
+{
+if(toto){
+f(2,3);
+g();
+int b=3;
+}
+else{
+int a=42;
+}
+}
 }

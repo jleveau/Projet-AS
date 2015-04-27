@@ -152,8 +152,9 @@ function getFunction(char* name){
 	cell c=l->first;
 	while (c){
 		function f=(function)c->elem;
-		if (f->nom){
-			if (strcmp(f->nom,name)==0)
+		fprintf(stderr,"|%s|",f->id);
+		if (f->id){
+			if (strcmp(f->id,name)==0)
 				return f;
 		}
 		else{
@@ -223,6 +224,7 @@ void add_parameter(char* nom, char* type,char* description){
 	
 	if (list_empty(function_list)){
 		function f=malloc(sizeof(*f));
+		f->id=func_id;
 		f->nom=NULL;
 		f->type=NULL;
 		f->arguments=list_create();
@@ -337,6 +339,7 @@ bool list_empty(list l){
 void name_function(char* type,char* nom,char* description){
 	if (list_empty(function_list) ){
 		function f= malloc(sizeof(*f));
+		f->id=func_id;
 		f->arguments=list_create();   
 		f->nom=nom;
 		f->type=type;
@@ -347,6 +350,7 @@ void name_function(char* type,char* nom,char* description){
 	function f= (function)function_list->last->elem;
 	if (f->nom){
 		f=malloc(sizeof(*f));
+		f->id=func_id;
 		f->arguments=list_create();
 		f->nom=NULL;
 		add_to_list(function_list,f);	
@@ -366,15 +370,15 @@ void name_function(char* type,char* nom,char* description){
 void declared_function_balise(char* type,char* nom){
 }
 
-void print_function(function f){
-	printf("func : %s %s ( ",f->type,f->nom);
+char* print_function(function f){
+	char* str_func=string_concat(3,strdup(f->type),strdup(f->nom),strdup("("));
 	cell l=f->arguments->first;
 	while (l){
-		print_variable(l->elem);
-		printf(",");
+		str_func=string_concat(2,str_func,print_variable_html(l->elem));
 		l=l->next;
 	}
-	printf(") \n");
+	str_func=string_concat(2,str_func,strdup(")"));
+	return str_func;
 }
 
 void print_function_html(function f){
@@ -387,22 +391,6 @@ void print_function_html(function f){
    }
    fprintf(f_output,")");
 }
-char * print_function_html_char(function f){
-   fprintf(stderr,"je passe ici");
-   char* f_id=malloc(strlen(f->type)+strlen(f->nom)+8);
-char* liste;
-   cell l=f->arguments->first;
-   fprintf(stderr,"j'arrive devant le while");
-   while (l){
-      char* tmp = string_concat(2,print_variable_html_char(l->elem),",");
-     liste = string_concat(2,liste,tmp);
-      l=l->next;
-   }
-   char *txt = string_concat(3,f_id,liste,")");
-   return txt;
-}
-
-
 
 void print_functions(){
 	list l=function_list;
@@ -417,15 +405,9 @@ void print_variable(variable v){
 	printf("var : %s %s ",v->type, v->nom);
 }
 
-void print_variable_html(variable v){
-fprintf(f_output,"var : %s %s ",v->type,v->nom);
-
-}
-
-char* print_variable_html_char(variable v){
-   char* v_id = malloc(strlen(v->type)+strlen(v->nom)+20);
-   sprintf(v_id,"var : %s %s",v->type,v->nom);
-   return v_id;
+char* print_variable_html(variable v){
+   char* str_var=string_concat(3,strdup(v->type),strdup(v->nom),strdup(","));
+	return str_var;
 }
 
 

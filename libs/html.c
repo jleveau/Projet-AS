@@ -81,19 +81,20 @@ char* print_balise_fonction(char* func){
 char* print_balise_fonction(char* func)
 {
    function f=getFunction(func);
+   fprintf(stderr,"|%s|",func);
    balise b = print_debut_balise("a","fonction-activable");
    char* texte1=string_concat(3,b->texte,strdup(">"),strdup(func));
    balise b1 = print_debut_balise("span","fonction");
+   char* txt;
    if(f && f!=UNNAMED_FUNCTION){
-   char *tee = print_function_html_char(f);
-   fprintf(stderr,"teee :%s\n",tee);
+   txt = string_concat(6,texte1,b1->texte,strdup(">"),strdup(print_function(f)),strdup("</span>"),strdup("</a>"));
    }
    else
    {
-      fprintf(stderr,"coucou\n");}
-   
-   
-   char* txt = string_concat(6,texte1,b1->texte,strdup(">"),strdup("coucou"),strdup("</span>"),strdup("</a>"));
+	    txt = string_concat(6,texte1,b1->texte,strdup(">"),strdup("tata"),strdup("</span>"),strdup("</a>"));
+      fprintf(stderr,"coucou buggé\n");
+
+	}
    free(b);
    free(b1);
    
