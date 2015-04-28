@@ -29,16 +29,13 @@ void creer_cases(int nb_colonnes, char* str);
 %}
 			
 %token ENTETE_DOCUMENT TITLE MAKETITLE BEGIN_DOCUMENT END_DOCUMENT TEXT BEG WORD BACKSLASH SPACE CHAR TAB_STRING
-%token BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR TAILLE NB ENUM BEGIN_ITEM TABULAR EQUATION END BEGIN_ITEMIZE  END_ITEMIZE  BEGIN_ENUMERATE  END_ENUMERATE BEGIN_TABULAR END_TABULAR
+%token BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR TAILLE NB ENUM BEGIN_ITEM TABULAR EQUATION END BEGIN_ITEMIZE  END_ITEMIZE  BEGIN_ENUMERATE  END_ENUMERATE BEGIN_TABULAR END_TABULAR BEGIN_EQUATION END_EQUATION
 %token  PARAGRAPH SECTION SUBSECTION SUBSUBSECTION 
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
 %token A_FAIRE
 
 %left WORD CHAR SPACE STRING
 %left BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR
-%left CONFLIT1
-%left CONFLIT2
-%left EMPILE
 		       														
 %start start
 			
@@ -83,8 +80,12 @@ formatage_texte
 |BEGIN_ITEMIZE {print_balise("ul");} item END_ITEMIZE {print_fin_b("ul");}
 |BEGIN_ENUMERATE {print_balise("ol");} item END_ENUMERATE {print_fin_b("ol");}
 |BEGIN_TABULAR {print_balise("table");} option parameter_word_or_string[nbColonnesEtLignes] TAB_STRING[table_string] {creer_table(strlen($nbColonnesEtLignes), $table_string); }END_TABULAR {print_fin_b("table");/* param ne va pas être traité par nous alors on fait pour que si il est dans le fichier, ca passe */}
+|BEGIN_EQUATION equation END_EQUATION	
 ;
 
+equation
+:
+;
 
 item
 : BEGIN_ITEM {print_balise("li");} string_OU_appel_commande_sans_BEGIN {print_fin_b("li");}

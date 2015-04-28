@@ -2,6 +2,7 @@
 %x PACKAGES_A_IGNORER
 %x TABULAR
 %x TABULAR_STRING
+%x EQUATION
 
 L   [a-zA-Z_]
 A   [a-zA-Z_0-9]
@@ -142,7 +143,6 @@ void print_space();
 }
 
 {SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{itemize}" {
-
     return END_ITEMIZE;
 }
 
@@ -169,7 +169,6 @@ void print_space();
     return CLOSE_BRACE;
 }
 
-
 <TABULAR_STRING>(.*\n*)&/"\\end{tabular}" {
   BEGIN INITIAL;
   yylval=strdup(yytext);
@@ -188,7 +187,18 @@ void print_space();
     return END_TABULAR;
 }
 
-"pt"/"]" {yylval=yytext; return TAILLE;}
+{TROUS}"\\begin"{TROUS}"{equation}" {
+    BEGIN EQUATION;
+    return BEGIN_EQUATION;
+}
+
+<EQUATION>
+
+<EQUATION>{SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{equation}" {
+    return END_EQUATION;
+}
+
+"pt"/"]" {yylval=yytext; return TAILLE; /*on garde pour si on decide de refaire opt de paraghape à la fin*/}
 
 <TABULAR,INITIAL>{L}{A}* {yylval=strdup(yytext); return WORD;}
 {STRING_SANS_PONC}* {yylval=strdup(yytext); return STRING;}
