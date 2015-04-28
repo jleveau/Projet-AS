@@ -4,7 +4,7 @@
 %x TABULAR_STRING
 %x EQUATION
 
-L   [a-zA-Z_]
+L   [a-zA-Z]
 A   [a-zA-Z_0-9]
 NBR [[:digit:]]+
 MOT [a-zA-Z_][a-zA-Z_0-9]*
@@ -189,17 +189,51 @@ void print_space();
 }
 
 {TROUS}"\\begin"{TROUS}"{equation}" {
-    ECHO;
     BEGIN EQUATION;
     return BEGIN_EQUATION;
 }
 
-<EQUATION>{NBR} {
-    printf("toto");
+<EQUATION>{TROUS}{NBR}{TROUS} {
+
     yylval=strdup(yytext);
     return NBR_EQUATION;
  }
 
+<EQUATION>{TROUS}{L}{TROUS} {
+   yylval=strdup(yytext);
+   return VAR_EQUATION;
+}
+
+<EQUATION>{TROUS}"+"{TROUS} {
+  yylval=strdup(yytext);
+   return PLUS_EQUATION;
+}
+
+
+<EQUATION>{TROUS}"-"{TROUS} {
+  yylval=strdup(yytext);
+   return MINUS_EQUATION;
+}
+
+<EQUATION>{TROUS}"*"{TROUS} {
+  yylval=strdup(yytext);
+   return TIMES_EQUATION;
+}
+
+<EQUATION>{TROUS}"/"{TROUS} {
+  yylval=strdup(yytext);
+   return DIVIDE_EQUATION;
+}
+
+<EQUATION>{TROUS}"<"{TROUS} {
+  yylval=strdup(yytext);
+   return LESS_THAN_EQUATION;
+}
+
+<EQUATION>{TROUS}">"{TROUS} {
+  yylval=strdup(yytext);
+   return MORE_THAN_EQUATION;
+}
 
 <EQUATION>{SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{equation}" {
 	BEGIN INITIAL;

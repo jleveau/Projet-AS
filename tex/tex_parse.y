@@ -27,7 +27,7 @@ void creer_table(int nb_colonnes, char* str);
 void creer_cases(int nb_colonnes, char* str);
  void ajout_dans_file(stack pile_1, stack pile2, void* elem);
 void creer_balise_mathML();
-void print_nombre_equation(char* nbr);
+ void print_balise_equation(char* balise,char* nbr);
 %}
 			
 %token ENTETE_DOCUMENT TITLE MAKETITLE BEGIN_DOCUMENT END_DOCUMENT TEXT BEG WORD BACKSLASH SPACE CHAR TAB_STRING
@@ -35,7 +35,8 @@ void print_nombre_equation(char* nbr);
 %token  PARAGRAPH SECTION SUBSECTION SUBSUBSECTION 
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
 %token A_FAIRE
-%token NBR_EQUATION
+%token NBR_EQUATION VAR_EQUATION PLUS_EQUATION MINUS_EQUATION TIMES_EQUATION DIVIDE_EQUATION LESS_THAN_EQUATION MORE_THAN_EQUATION
+%token SOMME_EQUA BEGIN_ACCO_EQUATION END_ACCO_EQUATION
 %left WORD CHAR SPACE STRING
 %left BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR
 		       														
@@ -86,7 +87,24 @@ formatage_texte
 ;
 
 equation
-:NBR_EQUATION {print_nombre_equation($1);}
+:NBR_EQUATION {print_balise_equation("mn",$1);} equation
+|VAR_EQUATION {print_balise_equation("mi",$1);} equation
+|PLUS_EQUATION {print_balise_equation("mo","&plus;");} equation
+|MINUS_EQUATION {print_balise_equation("mo","&minus;");} equation
+|TIMES_EQUATION {print_balise_equation("mo","&times;");} equation
+|DIVIDE_EQUATION {print_balise_equation("mo","&divide;");} equation
+|LESS_THAN_EQUATION {print_balise_equation("mo","&lt;");} equation
+|MORE_THAN_EQUATION {print_balise_equation("mo","&gt;");} equation
+|equation_avec_acco 
+;
+
+equation_avec_acco
+:somme_equation
+;
+
+somme_equation
+:SOMME_EQUA BEGIN_ACCO_EQUATION END_ACCO_EQUATION equation
+|
 ;
 
 item
@@ -256,8 +274,8 @@ void creer_balise_mathML(){
     fprintf(f_output,"<math xmlns='http://www.w3.org/1998/Math/MathML' display='block'>");
 }
 
-void print_nombre_equation(char* nbr)
+void print_balise_equation(char*balise,char* nbr)
     {
-        fprintf(f_output,"<mn> %s </mn>",nbr);
+        fprintf(f_output,"<balise> %s </balise>",nbr);
 
     }
