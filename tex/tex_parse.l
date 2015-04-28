@@ -169,6 +169,14 @@ void print_space();
     return CLOSE_BRACE;
 }
 
+
+<TABULAR_STRING>(.*\n*)&/"\\end{tabular}" {
+  BEGIN INITIAL;
+  yylval=strdup(yytext);
+  yyerror("Les tables ne peuvent pas finir avec des &; On va vous laisser faire cette fois mais reviser votre tableau svp;");
+  return TAB_STRING;
+}
+
 <TABULAR_STRING>(.*\n*)*/"\\end{tabular}" {
   BEGIN INITIAL;
   yylval=strdup(yytext);

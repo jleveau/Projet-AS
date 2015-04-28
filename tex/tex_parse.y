@@ -25,7 +25,7 @@ void print_balise_decoration_span_style(char* style_type, char* style);
 void print_case(char* str);
 void creer_table(int nb_colonnes, char* str);
 void creer_cases(int nb_colonnes, char* str);
-
+ void ajout_dans_file(stack pile_1, stack pile2, void* elem);
 %}
 			
 %token ENTETE_DOCUMENT TITLE MAKETITLE BEGIN_DOCUMENT END_DOCUMENT TEXT BEG WORD BACKSLASH SPACE CHAR TAB_STRING
@@ -185,13 +185,26 @@ void print_case(char* str){
     print_fin_b("td");
 }
 
+/*pour ajouter dans  une "file" 
+-depile_et_empile entre les deux piles
+*/
+void ajout_dans_file(stack pile_1, stack pile_2, void* nouveau_fin_de_file){
+     while(!stack_empty(pile_1)){
+	 stack_push(pile_2, stack_top(pile_1));
+	 stack_pop(pile_1);
+     }
+	 stack_push(pile_1, nouveau_fin_de_file);
+      while(!stack_empty(pile_2)){
+	 stack_push(pile_1, stack_top(pile_2));
+	 stack_pop(pile_2);
+     }
+}
 
 
 void creer_cases(int nb_colonnes, char* str){
     int compter_colonnes;
     const char* case_delimeter = "&";
     char *token_Case;
-    
     token_Case = strtok(str, case_delimeter);
     //pour n'avoir pas à se demander s'il faut fermer la balise à la fin ou pas
     if(token_Case==NULL){
@@ -210,103 +223,29 @@ void creer_cases(int nb_colonnes, char* str){
         }
         token_Case = strtok(NULL, case_delimeter);
     }
+        if(compter_colonnes % nb_colonnes!=0){
+	    print_fin_b("tr");
+	}
 }
 
 void creer_table(int nb_colonnes, char* str){
     int compter_colonnes;
     const char* ligne_delimeter = "\\\\";
     char *token_Ligne;
-    
-    /*FAUT FAIRE UNE LISTE CHAINNE car strok de case remplace le pointeur de strok ligne...*/
+
+    /*file en utilisant deux piles (exo d'algo non nécessaire... pour s'amusser et pour embeter Julien :) )*/
+     stack file =stack_create();
+    stack pile2_pour_file =stack_create();
     
     token_Ligne = strtok(str, ligne_delimeter);
+       
     while( token_Ligne != NULL )
     {
-        creer_cases(nb_colonnes, token_Ligne);
-        token_Ligne = strtok(NULL, ligne_delimeter);
+	ajout_dans_file(file, pile2_pour_file, token_Ligne);  
+	token_Ligne = strtok(NULL, ligne_delimeter);
     }
-    if(compter_colonnes % nb_colonnes!=0){
-        print_fin_b("tr");
+    while(!stack_empty(file)){
+	creer_cases(nb_colonnes, stack_top(file));
+	stack_pop(file);
     }
 }
-
-/*
- int compter_colonnes;
- const char* case_delimeter = "&";
- const char* ligne_delimeter = "\\\\";
- char *token_Ligne;
- char *token_Case;
- 
- list rows=list_create();
- add_to_list(rows, token_Ligne);
- 
- token_Ligne = strtok(str, ligne_delimeter);
- while( token_Ligne != NULL )
- {
- compter_colonnes=0;
- token_Case = strtok(token_Ligne, case_delimeter);
- 
- while( token_Case != NULL )
- {
- if(compter_colonnes % nb_colonnes ==0){
- print_balise("tr");//ligne
- }
- print_case(token_Case);
- compter_colonnes++;
- if(compter_colonnes % nb_colonnes==0){
- print_fin_b("tr");
- }
- token_Case = strtok(NULL, case_delimeter);
- }
- //si pas à la fin de ligne
- if(compter_colonnes % nb_colonnes!=0){
- print_fin_b("tr");
- }
- token_Ligne = strtok(NULL, ligne_delimeter);
- }
- }
- 
- */
-
-    /*int compter_colonnes;
-    const char* case_delimeter = "&";
-    const char* ligne_delimeter = "\\\\";
-    char *token;
- 
-    token = strtok(str, case_delimeter);
-    //pour n'avoir pas à se demander s'il faut fermer la balise à la fin ou pas
-    if(token==NULL){
-        return;
-    }
-
-        while( token != NULL )
-    {
-        if(compter_colonnes % nb_colonnes ==0){
-            print_balise("tr");//ligne
-        }
-        if (strstr(token, "\\") != NULL) {
-            char* token2=strtok(token, ligne_delimeter);
-            print_case(token2);
-            if(compter_colonnes!=0){
-               print_fin_b("tr");
-            }
-            print_balise("tr");//ligne
-            token2=strtok(NULL, ligne_delimeter);
-            print_case(token2);
-            compter_colonnes=0;
-        }
-        else{
-            print_case(token);
-        }
-        compter_colonnes++;
-        if(compter_colonnes % nb_colonnes==0){
-            print_fin_b("tr");
-        }
-            
-        token = strtok(NULL, case_delimeter);
-    }
-    if(compter_colonnes % nb_colonnes!=0){
-        print_fin_b("tr");
-    }*/
-        
-
