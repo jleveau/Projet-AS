@@ -27,6 +27,7 @@ void creer_table(int nb_colonnes, char* str);
 void creer_cases(int nb_colonnes, char* str);
  void ajout_dans_file(stack pile_1, stack pile2, void* elem);
 void creer_balise_mathML();
+void print_nombre_equation(char* nbr);
 %}
 			
 %token ENTETE_DOCUMENT TITLE MAKETITLE BEGIN_DOCUMENT END_DOCUMENT TEXT BEG WORD BACKSLASH SPACE CHAR TAB_STRING
@@ -34,7 +35,7 @@ void creer_balise_mathML();
 %token  PARAGRAPH SECTION SUBSECTION SUBSUBSECTION 
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
 %token A_FAIRE
-
+%token NBR_EQUATION
 %left WORD CHAR SPACE STRING
 %left BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR
 		       														
@@ -85,7 +86,7 @@ formatage_texte
 ;
 
 equation
-:
+:NBR_EQUATION {print_nombre_equation($1);}
 ;
 
 item
@@ -254,3 +255,9 @@ void creer_table(int nb_colonnes, char* str){
 void creer_balise_mathML(){
     fprintf(f_output,"<math xmlns='http://www.w3.org/1998/Math/MathML' display='block'>");
 }
+
+void print_nombre_equation(char* nbr)
+    {
+        fprintf(f_output,"<mn> %s </mn>",nbr);
+
+    }

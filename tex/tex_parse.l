@@ -6,6 +6,7 @@
 
 L   [a-zA-Z_]
 A   [a-zA-Z_0-9]
+NBR [[:digit:]]+
 MOT [a-zA-Z_][a-zA-Z_0-9]*
 TROUS [[:SPACE:]]*\n{0,1}[[:SPACE:]]*
 OPEN_SPACE [[:SPACE:]]*
@@ -188,9 +189,16 @@ void print_space();
 }
 
 {TROUS}"\\begin"{TROUS}"{equation}" {
+    ECHO;
     BEGIN EQUATION;
     return BEGIN_EQUATION;
 }
+
+<EQUATION>{NBR} {
+    printf("toto");
+    yylval=strdup(yytext);
+    return NBR_EQUATION;
+ }
 
 
 <EQUATION>{SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{equation}" {
