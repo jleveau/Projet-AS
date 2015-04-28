@@ -26,6 +26,7 @@ void print_case(char* str);
 void creer_table(int nb_colonnes, char* str);
 void creer_cases(int nb_colonnes, char* str);
  void ajout_dans_file(stack pile_1, stack pile2, void* elem);
+void creer_balise_mathML();
 %}
 			
 %token ENTETE_DOCUMENT TITLE MAKETITLE BEGIN_DOCUMENT END_DOCUMENT TEXT BEG WORD BACKSLASH SPACE CHAR TAB_STRING
@@ -80,7 +81,7 @@ formatage_texte
 |BEGIN_ITEMIZE {print_balise("ul");} item END_ITEMIZE {print_fin_b("ul");}
 |BEGIN_ENUMERATE {print_balise("ol");} item END_ENUMERATE {print_fin_b("ol");}
 |BEGIN_TABULAR {print_balise("table");} option parameter_word_or_string[nbColonnesEtLignes] TAB_STRING[table_string] {creer_table(strlen($nbColonnesEtLignes), $table_string); }END_TABULAR {print_fin_b("table");/* param ne va pas être traité par nous alors on fait pour que si il est dans le fichier, ca passe */}
-|BEGIN_EQUATION equation END_EQUATION	
+|BEGIN_EQUATION {creer_balise_mathML();} equation END_EQUATION	{print_fin_b("math");}
 ;
 
 equation
@@ -249,4 +250,7 @@ void creer_table(int nb_colonnes, char* str){
 	creer_cases(nb_colonnes, stack_top(file));
 	stack_pop(file);
     }
+}
+void creer_balise_mathML(){
+    fprintf(f_output,"<math xmlns='http://www.w3.org/1998/Math/MathML' display='block'>");
 }

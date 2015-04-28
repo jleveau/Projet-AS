@@ -108,7 +108,7 @@ void source_js()
   fprintf(f_output,"     <script src=\"../js/custom.js\"></script>");
   fprintf(f_output," <script src=\"../js/dashboard.js\"></script>");
   fprintf(f_output,"<script src=\"../javascript.js\"></script>");
-   
+  fprintf(f_output,"<script src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"> </script>"); 
 
 }
 

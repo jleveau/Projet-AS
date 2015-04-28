@@ -192,9 +192,9 @@ void print_space();
     return BEGIN_EQUATION;
 }
 
-<EQUATION>
 
 <EQUATION>{SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{equation}" {
+	BEGIN INITIAL;
     return END_EQUATION;
 }
 
