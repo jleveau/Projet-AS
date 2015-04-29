@@ -58,7 +58,7 @@ Temporary Items
 test*.s*
 *.dSYM
 *.gz
-
+*.out
 *.html
 *.txt
 
@@ -72,4 +72,3 @@ lex.yy.c
 TAGS
 main
 capitaine
-a.out
