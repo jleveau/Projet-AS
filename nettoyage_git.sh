@@ -1,2 +1,1 @@
-
-rm -r main index.html parse.tab.h parse.tab.c parse.output lex.yy.c test.c.html bateau.c.html test2.c.html capitaine *~ *\# *.o
+rm -rf *~ *.o *.bak *.output libs/*~ libs/*.gch *\# *.html html/*.html log/*.txt parse.tab.h parse.tab.c lex.yy.c TAGS main capitaine
