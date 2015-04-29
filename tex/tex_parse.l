@@ -225,6 +225,12 @@ void print_space();
    return DIVIDE_EQUATION;
 }
 
+<EQUATION>{TROUS}"="{TROUS} {
+  yylval=strdup(yytext);
+   return EGAL_EQUATION;
+}
+
+
 <EQUATION>{TROUS}"<"{TROUS} {
   yylval=strdup(yytext);
    return LESS_THAN_EQUATION;
@@ -233,6 +239,30 @@ void print_space();
 <EQUATION>{TROUS}">"{TROUS} {
   yylval=strdup(yytext);
    return MORE_THAN_EQUATION;
+}
+
+<EQUATION>{TROUS}"{"{TROUS} {
+  yylval=strdup(yytext);
+  return BEGIN_ACCO_EQUATION;
+
+}
+
+<EQUATION>{TROUS}"}"{TROUS} {
+  yylval=strdup(yytext);
+  return END_ACCO_EQUATION;
+
+}
+
+<EQUATION>{TROUS}"^"{TROUS} {
+  yylval=strdup(yytext);
+  return CHAPEAU_EQUA;
+
+}
+
+<EQUATION>{TROUS}"\\sum_"{TROUS} {
+  yylval=strdup(yytext);
+  return SOMME_EQUA;
+
 }
 
 <EQUATION>{SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{equation}" {

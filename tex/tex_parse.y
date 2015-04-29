@@ -28,6 +28,8 @@ void creer_cases(int nb_colonnes, char* str);
  void ajout_dans_file(stack pile_1, stack pile2, void* elem);
 void creer_balise_mathML();
  void print_balise_equation(char* balise,char* nbr);
+void ecrire_debut_somme_equation();
+void ecrire_fin_somme_equation(char * val);
 %}
 			
 %token ENTETE_DOCUMENT TITLE MAKETITLE BEGIN_DOCUMENT END_DOCUMENT TEXT BEG WORD BACKSLASH SPACE CHAR TAB_STRING
@@ -35,8 +37,8 @@ void creer_balise_mathML();
 %token  PARAGRAPH SECTION SUBSECTION SUBSUBSECTION 
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
 %token A_FAIRE
-%token NBR_EQUATION VAR_EQUATION PLUS_EQUATION MINUS_EQUATION TIMES_EQUATION DIVIDE_EQUATION LESS_THAN_EQUATION MORE_THAN_EQUATION
-%token SOMME_EQUA BEGIN_ACCO_EQUATION END_ACCO_EQUATION
+%token NBR_EQUATION VAR_EQUATION PLUS_EQUATION MINUS_EQUATION TIMES_EQUATION DIVIDE_EQUATION LESS_THAN_EQUATION MORE_THAN_EQUATION EGAL_EQUATION
+%token SOMME_EQUA BEGIN_ACCO_EQUATION END_ACCO_EQUATION CHAPEAU_EQUA
 %left WORD CHAR SPACE STRING
 %left BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR
 		       														
@@ -95,6 +97,7 @@ equation
 |DIVIDE_EQUATION {print_balise_equation("mo","&divide;");} equation
 |LESS_THAN_EQUATION {print_balise_equation("mo","&lt;");} equation
 |MORE_THAN_EQUATION {print_balise_equation("mo","&gt;");} equation
+        |       EGAL_EQUATION {print_balise_equation("mo","=");} equation       
 |equation_avec_acco 
 ;
 
@@ -103,7 +106,7 @@ equation_avec_acco
 ;
 
 somme_equation
-:SOMME_EQUA BEGIN_ACCO_EQUATION END_ACCO_EQUATION equation
+:BEGIN_ACCO_EQUATION SOMME_EQUA BEGIN_ACCO_EQUATION {ecrire_debut_somme_equation();} equation[equa1] END_ACCO_EQUATION CHAPEAU_EQUA BEGIN_ACCO_EQUATION {fprintf(f_output,"</mrow>");} equation[equa2]  {ecrire_fin_somme_equation($equa2);} END_ACCO_EQUATION equation[equa3] END_ACCO_EQUATION equation
 |
 ;
 
@@ -278,4 +281,18 @@ void print_balise_equation(char*balise,char* nbr)
     {
         fprintf(f_output,"<balise> %s </balise>",nbr);
 
+    }
+
+void ecrire_debut_somme_equation()
+    {
+        fprintf(f_output,"<munderover>");
+        fprintf(f_output,"<mo>&sum;</mo>");
+        fprintf(f_output,"<mrow>");
+        
+    }
+
+void ecrire_fin_somme_equation(char * val)
+    {
+        fprintf(f_output,"</munderover>");
+        
     }
