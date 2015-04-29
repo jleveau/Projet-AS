@@ -193,81 +193,84 @@ void print_space();
     return BEGIN_EQUATION;
 }
 
-<EQUATION>{TROUS}{NBR}{TROUS} {
 
+<EQUATION>{TROUS}{NBR} {
     yylval=strdup(yytext);
     return NBR_EQUATION;
  }
 
-<EQUATION>{TROUS}{L}{TROUS} {
+<EQUATION>{TROUS}{L} {
    yylval=strdup(yytext);
    return VAR_EQUATION;
 }
 
-<EQUATION>{TROUS}"+"{TROUS} {
-  yylval=strdup(yytext);
+<EQUATION>{TROUS}"+" {
    return PLUS_EQUATION;
 }
 
 
-<EQUATION>{TROUS}"-"{TROUS} {
-  yylval=strdup(yytext);
+<EQUATION>{TROUS}"-" {
    return MINUS_EQUATION;
 }
 
-<EQUATION>{TROUS}"*"{TROUS} {
-  yylval=strdup(yytext);
+<EQUATION>{TROUS}"*" {
    return TIMES_EQUATION;
 }
 
-<EQUATION>{TROUS}"/"{TROUS} {
-  yylval=strdup(yytext);
+<EQUATION>{TROUS}"/" {
    return DIVIDE_EQUATION;
 }
 
-<EQUATION>{TROUS}"="{TROUS} {
-  yylval=strdup(yytext);
+<EQUATION>{TROUS}"=" {
    return EGAL_EQUATION;
 }
 
 
-<EQUATION>{TROUS}"<"{TROUS} {
-  yylval=strdup(yytext);
+<EQUATION>{TROUS}"<" {
    return LESS_THAN_EQUATION;
 }
 
-<EQUATION>{TROUS}">"{TROUS} {
-  yylval=strdup(yytext);
+<EQUATION>{TROUS}">" {
    return MORE_THAN_EQUATION;
 }
 
-<EQUATION>{TROUS}"{"{TROUS} {
-  yylval=strdup(yytext);
-  return BEGIN_ACCO_EQUATION;
+<EQUATION>{TROUS}"{" {
+  return OPEN_BRACE;
 
 }
 
-<EQUATION>{TROUS}"}"{TROUS} {
-  yylval=strdup(yytext);
-  return END_ACCO_EQUATION;
+<EQUATION>{TROUS}"}" {
+  return CLOSE_BRACE;
 
 }
 
-<EQUATION>{TROUS}"^"{TROUS} {
-  yylval=strdup(yytext);
+<EQUATION>{TROUS}"_" {
+   return SUBSCRIPT_EQUA;
+}
+
+<EQUATION>{TROUS}"^" {
   return CHAPEAU_EQUA;
 
 }
 
-<EQUATION>{TROUS}"\\sum_"{TROUS} {
-  yylval=strdup(yytext);
+<EQUATION>{TROUS}"\\sum_" {
   return SOMME_EQUA;
+
+}
+
+<EQUATION>{TROUS}"\\prod_" {
+  return PROD_EQUA;
 
 }
 
 <EQUATION>{SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{equation}" {
 	BEGIN INITIAL;
     return END_EQUATION;
+}
+
+<EQUATION>\n {
+ /* pour que ca plante; didn't bother creating NEWLINE cause it doesn't matter*/
+ return SPACE;
 }
 
 "pt"/"]" {yylval=yytext; return TAILLE; /*on garde pour si on decide de refaire opt de paraghape à la fin*/}

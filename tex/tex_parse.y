@@ -28,7 +28,7 @@ void creer_cases(int nb_colonnes, char* str);
  void ajout_dans_file(stack pile_1, stack pile2, void* elem);
 void creer_balise_mathML();
  void print_balise_equation(char* balise,char* nbr);
-void ecrire_debut_somme_equation();
+void ecrire_debut_somme_equation(char*);
 void ecrire_fin_somme_equation(char * val);
 %}
 			
@@ -37,8 +37,8 @@ void ecrire_fin_somme_equation(char * val);
 %token  PARAGRAPH SECTION SUBSECTION SUBSUBSECTION 
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
 %token A_FAIRE
-%token NBR_EQUATION VAR_EQUATION PLUS_EQUATION MINUS_EQUATION TIMES_EQUATION DIVIDE_EQUATION LESS_THAN_EQUATION MORE_THAN_EQUATION EGAL_EQUATION
-%token SOMME_EQUA BEGIN_ACCO_EQUATION END_ACCO_EQUATION CHAPEAU_EQUA
+%token NBR_EQUATION VAR_EQUATION PLUS_EQUATION MINUS_EQUATION TIMES_EQUATION DIVIDE_EQUATION LESS_THAN_EQUATION MORE_THAN_EQUATION EGAL_EQUATION 
+%token SOMME_EQUA CHAPEAU_EQUA PROD_EQUA SUBSCRIPT_EQUA
 %left WORD CHAR SPACE STRING
 %left BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR
 		       														
@@ -89,25 +89,32 @@ formatage_texte
 ;
 
 equation
-:NBR_EQUATION {print_balise_equation("mn",$1);} equation
-|VAR_EQUATION {print_balise_equation("mi",$1);} equation
+:NBR_EQUATION script_equa {print_balise_equation("mn",$1);} equation
+|VAR_EQUATION script_equa {print_balise_equation("mi",$1);} equation
 |PLUS_EQUATION {print_balise_equation("mo","&plus;");} equation
 |MINUS_EQUATION {print_balise_equation("mo","&minus;");} equation
 |TIMES_EQUATION {print_balise_equation("mo","&times;");} equation
 |DIVIDE_EQUATION {print_balise_equation("mo","&divide;");} equation
 |LESS_THAN_EQUATION {print_balise_equation("mo","&lt;");} equation
 |MORE_THAN_EQUATION {print_balise_equation("mo","&gt;");} equation
-        |       EGAL_EQUATION {print_balise_equation("mo","=");} equation       
-|equation_avec_acco 
+|EGAL_EQUATION {print_balise_equation("mo","=");} equation       
+|OPEN_BRACE equation_avec_accolade[symbol] OPEN_BRACE {ecrire_debut_somme_equation($symbol);} equation[equa1] CLOSE_BRACE CHAPEAU_EQUA OPEN_BRACE {fprintf(f_output,"</mrow>");} equation[equa2]  {ecrire_fin_somme_equation($equa2);} CLOSE_BRACE equation[equa3] CLOSE_BRACE equation
+|	
 ;
 
-equation_avec_acco
-:somme_equation
+script_equa
+: script_noms[nom] OPEN_BRACE {print_balise($nom);}  equation CLOSE_BRACE {print_fin_b($nom);}
+|	
 ;
 
-somme_equation
-:BEGIN_ACCO_EQUATION SOMME_EQUA BEGIN_ACCO_EQUATION {ecrire_debut_somme_equation();} equation[equa1] END_ACCO_EQUATION CHAPEAU_EQUA BEGIN_ACCO_EQUATION {fprintf(f_output,"</mrow>");} equation[equa2]  {ecrire_fin_somme_equation($equa2);} END_ACCO_EQUATION equation[equa3] END_ACCO_EQUATION equation
-|
+script_noms
+: SUBSCRIPT_EQUA {yylval="msub";}
+| CHAPEAU_EQUA {yylval="msup";}
+;
+
+equation_avec_accolade
+:SOMME_EQUA {$$="&sum;";}
+|PROD_EQUA {$$="&prod;";}
 ;
 
 item
@@ -272,6 +279,8 @@ void creer_table(int nb_colonnes, char* str){
 	creer_cases(nb_colonnes, stack_top(file));
 	stack_pop(file);
     }
+    stack_destroy(file);
+    stack_destroy(pile2_pour_file);
 }
 void creer_balise_mathML(){
     fprintf(f_output,"<math xmlns='http://www.w3.org/1998/Math/MathML' display='block'>");
@@ -283,10 +292,10 @@ void print_balise_equation(char*balise,char* nbr)
 
     }
 
-void ecrire_debut_somme_equation()
+void ecrire_debut_somme_equation(char * symbol)
     {
         fprintf(f_output,"<munderover>");
-        fprintf(f_output,"<mo>&sum;</mo>");
+        fprintf(f_output,"<mo>%s</mo>", symbol);
         fprintf(f_output,"<mrow>");
         
     }
