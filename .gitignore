@@ -50,7 +50,7 @@ Temporary Items
 *.o
 *.bak
 *.output
-*.gch 
+*.gch
 *\#
 *.aux
 *.log
