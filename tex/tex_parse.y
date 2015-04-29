@@ -89,8 +89,10 @@ formatage_texte
 ;
 
 equation
-:NBR_EQUATION script_equa {print_balise_equation("mn",$1);} equation
-|VAR_EQUATION script_equa {print_balise_equation("mi",$1);} equation
+:NBR_EQUATION[valeur] script_noms[nom] OPEN_BRACE {print_balise($nom); print_balise_equation("mi", $valeur); print_balise("mi"); /*si pas cette balise supplémentire, tous les symboles d'equation s'empile*/} equation {print_fin_b("mi"); print_fin_b($nom); } CLOSE_BRACE equation
+|NBR_EQUATION {print_balise_equation("mn",$1);} equation
+|VAR_EQUATION[valeur] script_noms[nom] OPEN_BRACE {print_balise($nom); print_balise_equation("mi", $valeur); print_balise("mi");} equation {print_fin_b("mi"); print_fin_b($nom); } CLOSE_BRACE equation
+|VAR_EQUATION {print_balise_equation("mi",$1);} equation
 |PLUS_EQUATION {print_balise_equation("mo","&plus;");} equation
 |MINUS_EQUATION {print_balise_equation("mo","&minus;");} equation
 |TIMES_EQUATION {print_balise_equation("mo","&times;");} equation
@@ -102,14 +104,9 @@ equation
 |	
 ;
 
-script_equa
-: script_noms[nom] OPEN_BRACE {print_balise($nom);}  equation CLOSE_BRACE {print_fin_b($nom);}
-|	
-;
-
 script_noms
-: SUBSCRIPT_EQUA {yylval="msub";}
-| CHAPEAU_EQUA {yylval="msup";}
+: SUBSCRIPT_EQUA {$$="msub";}
+| CHAPEAU_EQUA {$$="msup";}
 ;
 
 equation_avec_accolade
@@ -288,7 +285,10 @@ void creer_balise_mathML(){
 
 void print_balise_equation(char*balise,char* nbr)
     {
-        fprintf(f_output,"<balise> %s </balise>",nbr);
+        if(strcmp==0){
+            balise="balise";
+        }
+        fprintf(f_output,"<%s> %s </%s>",balise, nbr, balise);
 
     }
 
