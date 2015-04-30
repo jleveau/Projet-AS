@@ -9,11 +9,12 @@
 typedef struct balise* balise;
 
 
-struct balise{
-   char* nom;
-   char* class;
-   int id; //pour les blocs 
-   char* texte;
+struct balise
+{
+    char* nom;
+    char* class;
+    int id; //pour les blocs
+    char* texte;
 };
 
 FILE* f_output;

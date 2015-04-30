@@ -26,7 +26,7 @@ void ecriture_fichier(char* directory)
     int retic;
     int retih;
     retic = regcomp(&regexc, "[[:alnum:]].c", 0);
-    retih = regcomp(&regexh, "[[:alnum:]].h",0);
+    retih = regcomp(&regexh, "[[:alnum:]].h", 0);
 
     struct dirent *lecture;
     DIR *rep ;
@@ -173,7 +173,6 @@ void source_js()
     fprintf(f_output, "<script src=\"../js/dashboard.js\"></script>\n");
     fprintf(f_output, "<script src=\"../javascript.js\"></script>\n");
 }
-
 
 int fermer_html(FILE* fd)
 {

@@ -17,7 +17,7 @@ int main(int argc, char** argv)
     int retic;
     int retih;
     retic = regcomp(&regexc, "[[:alnum:]].c", 0);
-    retih = regcomp(&regexh, "[[:alnum:]].h",0);
+    retih = regcomp(&regexh, "[[:alnum:]].h", 0);
 
     if(argc != 2)
     {

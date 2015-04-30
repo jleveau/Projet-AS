@@ -201,7 +201,7 @@ variable getVariable(char* name)
     while (c)
     {
         variable v=(variable)c->elem;
-        fprintf(stderr," v->nom %s  name : %s \n", v->nom,name);
+        fprintf(stderr,"v->nom %s  name : %s\n", v->nom,name);
         if (strcmp(v->nom,name)==0)
         {
             return v;
@@ -425,6 +425,7 @@ void name_function(char* type,char* nom,char* description)
 
 void declared_function_balise(char* type,char* nom)
 {
+
 }
 
 char* print_function(function f)
@@ -485,7 +486,7 @@ void print_variables()
         printf("variable stack empty\n");
         return;
     }
-    printf("block : %s === \n ",b->id);
+    printf("block : %s ===\n",b->id);
     list l=b->variables;
 
     if (!list_empty(l))

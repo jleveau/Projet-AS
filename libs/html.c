@@ -15,7 +15,7 @@ void print_fin_balise(struct balise* b)
     char* nom=malloc(4+strlen(b->nom));
     strcpy(nom,"</");
     strcat(nom,b->nom);
-    b->texte=string_concat(3,b->texte,nom,strdup(">"));
+    b->texte=string_concat(3,b->texte,nom,strdup(">\n"));
 }
 
 balise creer_balise(char* nom,char* class)
@@ -58,7 +58,7 @@ char* print_balise_parameter(char* param)
     char var_id[20];
     sprintf(var_id, "block%d%s", id_block,param);
     balise b=print_debut_balise_id("span", "parameter");
-    char* texte=string_concat(6,b->texte,strdup("value=\""),strdup(var_id),strdup("\">"),param,strdup("</span>"));
+    char* texte=string_concat(6,b->texte,strdup("value=\""),strdup(var_id),strdup("\">"),param,strdup("</span>\n"));
     free(b);
     return texte;
 }
@@ -70,7 +70,7 @@ char* print_balise_variable(char* var)
     strcpy(var_id,top_block->id);
     strcat(var_id,var);
     balise b=print_debut_balise_id("span", "variable");
-    char* texte=string_concat(6,b->texte,strdup("value=\""),var_id,strdup("\">"),var,strdup("</span>"));
+    char* texte=string_concat(6,b->texte,strdup("value=\""),var_id,strdup("\">"),var,strdup("</span>\n"));
     free(b);
     return texte;
 }
@@ -97,11 +97,11 @@ char* print_balise_fonction(char* func)
     char* txt;
     if(f && f!=UNNAMED_FUNCTION)
     {
-        txt = string_concat(6,texte1,b1->texte,strdup(">"),strdup(print_function(f)),strdup("</span>"),strdup("</a>"));
+        txt = string_concat(6,texte1,b1->texte,strdup(">"),strdup(print_function(f)),strdup("</span>"),strdup("</a>\n"));
     }
     else
     {
-        txt = string_concat(6,texte1,b1->texte,strdup(">"),strdup("tata"),strdup("</span>"),strdup("</span>"));
+        txt = string_concat(6,texte1,b1->texte,strdup(">"),strdup("tata"),strdup("</span>"),strdup("</span>\n"));
         fprintf(stderr,"coucou buggé\n");
 
     }
@@ -118,7 +118,7 @@ char* print_balise_declaration(char* func)
     ajouter_attribut(b,"href","#");
     ajouter_attribut(b,"class","declaration-activable");
 
-    char* texte=string_concat_sans_espace(6,b->texte,strdup("value=\""),strdup(func),strdup("\">"),func,strdup("</span>"));
+    char* texte=string_concat_sans_espace(6,b->texte,strdup("value=\""),strdup(func),strdup("\">"),func,strdup("</span>\n"));
     free(b);
     return texte;
 }
@@ -133,7 +133,7 @@ char* print_debut_balise_block()
     sprintf(anchor,"><span name=\"%s\">", top_block->id);
     char* concat =string_concat_sans_espace(2,strdup("#"),strdup(top_block->id));
     char aref[150];
-    sprintf(aref,"<a style=\"text_decoration:none;\" class =\"fin_block\"  value=\"%s\" href=\"#\"><i class=\"fa fa-caret-square-o-down\" href=\"#\"></i></a>",concat);
+    sprintf(aref,"<a style=\"text_decoration:none;\" class =\"fin_block\"  value=\"%s\" href=\"#\"><i class=\"fa fa-caret-square-o-down\" href=\"#\"></i></a>\n",concat);
     char* texte=string_concat(4,strdup(print_balise_span("vert","{")),strdup(aref),strdup(b->texte),strdup(anchor));
     free(b);
     return texte;
@@ -145,7 +145,7 @@ char* print_fin_balise_block()
     char aref[80];
     char* concat =string_concat_sans_espace(2,strdup("#"),strdup(top_block->id));
     sprintf(aref,"<span  value=\"%s\">",concat);
-    return string_concat(4,strdup(aref),strdup("</div>"),print_balise_span("vert","}"),strdup("</span>"));
+    return string_concat(4,strdup(aref),strdup("</div>"),print_balise_span("vert","}"),strdup("</span>\n"));
 }
 
 void push_to_html(char* texte)

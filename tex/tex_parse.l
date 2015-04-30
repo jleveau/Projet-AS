@@ -13,12 +13,11 @@ OPEN_SPACE [[:SPACE:]]*
 STRING_SANS_PONC [^\n\\\{\}\[\]]
 SPACE_OU_NEWLINE_INFINI [[:SPACE:]\n]*
 
-
 %{
-/*		!{L}{A}* {return yytext;} 	car il me semble que chaque commande doit être traité séparamment*/	
+/* !{L}{A}*                 {return yytext;} 	car il me semble que chaque commande doit être traité séparamment */
 #ifndef YYSTYPE
-# define YYSTYPE char*
-#endif	
+#define YYSTYPE char*
+#endif
 #include "tex_parse.tab.h"
 #include <stdio.h>
 #include <string.h>
@@ -27,117 +26,114 @@ SPACE_OU_NEWLINE_INFINI [[:SPACE:]\n]*
 void print_newline();
 void print_space();
 %}
+
 %%
 
 \n {fprintf(f_output, "&nbsp;"); /*si on est dans une balise ca affiche une espace, sinon, ca fait rien (c'est la bonne fonctionnement)*/}
 
-<TABULAR,INITIAL>"[" {return OPEN_SQUARE;}
-<TABULAR,INITIAL>"]" {return CLOSE_SQUARE;}
-<TABULAR,INITIAL>"{" {return OPEN_BRACE;}
-"}" {return CLOSE_BRACE;}
+<TABULAR,INITIAL>"["    {return OPEN_SQUARE;}
+<TABULAR,INITIAL>"]"    {return CLOSE_SQUARE;}
+<TABULAR,INITIAL>"{"    {return OPEN_BRACE;}
+"}"                     {return CLOSE_BRACE;}
 
-\n{OPEN_SPACE}\n {print_newline();}
+\n{OPEN_SPACE}\n        {print_newline();}
 
 \\\\ |
-"\newline" {
-  print_newline();
+"\newline"  {
+    print_newline();
 }
 
 "\\documentclass"{TROUS}"{"{MOT}"}" {
-  /* pour simplifier, pour l'instant on va supposer que c'est toujours un article */
-  BEGIN PACKAGES_A_IGNORER;
-  return ENTETE_DOCUMENT;
+    /* pour simplifier, pour l'instant on va supposer que c'est toujours un article */
+    BEGIN PACKAGES_A_IGNORER;
+    return ENTETE_DOCUMENT;
 }
 
 <PACKAGES_A_IGNORER,INITIAL>
 "\\title"{TROUS}"{" {
-  BEGIN NOM_TITLE;
+    BEGIN NOM_TITLE;
 }
 
 <PACKAGES_A_IGNORER,INITIAL>
 "\\begin"{TROUS}"{document}" {
-  BEGIN INITIAL;
-  return BEGIN_DOCUMENT;
- }
-
+    BEGIN INITIAL;
+    return BEGIN_DOCUMENT;
+}
 
 <PACKAGES_A_IGNORER>. ;
 <PACKAGES_A_IGNORER>\n ;
 
 <NOM_TITLE>\} {
-  /*ferme le titre après que le string du titre est lu et envoyé*/ 
-  BEGIN INITIAL;
+    /*ferme le titre après que le string du titre est lu et envoyé*/
+    BEGIN INITIAL;
 }
 
 <NOM_TITLE>{MOT}*/\} {
-  /*cherche string du titre*/
-  yylval=strdup(yytext);
-  return TITLE;  
-  ;
+    /*cherche string du titre*/
+    yylval=strdup(yytext);
+    return TITLE;
 }
 
-"\\maketitle" { 
-  return MAKETITLE;
+"\\maketitle" {
+    return MAKETITLE;
 }
 
-"\\end"{TROUS}"{document}" { 
-  return END_DOCUMENT;
- }
+"\\end"{TROUS}"{document}" {
+    return END_DOCUMENT;
+}
 
 "\\begin" {
-  return BEG;
- }
+    return BEG;
+}
 
-"\\end" { 
-  return END;
- }
+"\\end" {
+    return END;
+}
 
-"\\it" { 
-  return IT;
- }
+"\\it" {
+    return IT;
+}
 
 "\\bf" {
-  return BF;
- }
+    return BF;
+}
 
 
 "\\texttt" {
-  return TEXTTT;
- }
+    return TEXTTT;
+}
 
-"\\textit" { 
-  return TEXTIT;
- }
+"\\textit" {
+    return TEXTIT;
+}
 
 "\\underline" {
-
-  return UNDERLINE;
- }
+    return UNDERLINE;
+}
 
 "\\section" {
-  return SECTION;
- }
+    return SECTION;
+}
 
 "\\subsection" {
-  return SUBSECTION;
- }
+    return SUBSECTION;
+}
 
 "\\subsubsection" {
-  return SUBSUBSECTION;
- }
+    return SUBSUBSECTION;
+}
 
 "\\paragraph" {
-  return PARAGRAPH;
- }
+    return PARAGRAPH;
+}
 
-"\\color" {  
-  return COLOR;
- }
+"\\color" {
+    return COLOR;
+}
 
 "\\textcolor" {
-   
-  return TEXTCOLOR;
- }
+    return TEXTCOLOR;
+}
 
 {TROUS}"\\begin"{TROUS}"{itemize}" {
     return BEGIN_ITEMIZE;
@@ -171,20 +167,20 @@ void print_space();
 }
 
 <TABULAR_STRING>(.*\n*)&/"\\end{tabular}" {
-  BEGIN INITIAL;
-  yylval=strdup(yytext);
-  yyerror("Les tables ne peuvent pas finir avec des &; On va vous laisser faire cette fois mais reviser votre tableau svp;");
-  return TAB_STRING;
+    BEGIN INITIAL;
+    yylval=strdup(yytext);
+    yyerror("Les tables ne peuvent pas finir avec des &; On va vous laisser faire cette fois mais reviser votre tableau svp;");
+    return TAB_STRING;
 }
 
 <TABULAR_STRING>(.*\n*)*/"\\end{tabular}" {
-  BEGIN INITIAL;
-  yylval=strdup(yytext);
-  return TAB_STRING;
+    BEGIN INITIAL;
+    yylval=strdup(yytext);
+    return TAB_STRING;
 }
 
 {SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{tabular}" {
-   BEGIN INITIAL;
+    BEGIN INITIAL;
     return END_TABULAR;
 }
 
@@ -193,103 +189,111 @@ void print_space();
     return BEGIN_EQUATION;
 }
 
-
 <EQUATION>{TROUS}{NBR} {
     yylval=strdup(yytext);
     return NBR_EQUATION;
- }
+}
 
 <EQUATION>{TROUS}{L} {
-   yylval=strdup(yytext);
-   return VAR_EQUATION;
+    yylval=strdup(yytext);
+    return VAR_EQUATION;
 }
 
 <EQUATION>{TROUS}"+" {
-   return PLUS_EQUATION;
+    return PLUS_EQUATION;
 }
 
-
 <EQUATION>{TROUS}"-" {
-   return MINUS_EQUATION;
+    return MINUS_EQUATION;
 }
 
 <EQUATION>{TROUS}"*" {
-   return TIMES_EQUATION;
+    return TIMES_EQUATION;
 }
 
 <EQUATION>{TROUS}"/" {
-   return DIVIDE_EQUATION;
+    return DIVIDE_EQUATION;
 }
 
 <EQUATION>{TROUS}"=" {
-   return EGAL_EQUATION;
+    return EGAL_EQUATION;
 }
 
-
 <EQUATION>{TROUS}"<" {
-   return LESS_THAN_EQUATION;
+    return LESS_THAN_EQUATION;
 }
 
 <EQUATION>{TROUS}">" {
-   return MORE_THAN_EQUATION;
+    return MORE_THAN_EQUATION;
 }
 
 <EQUATION>{TROUS}"{" {
-  return OPEN_BRACE;
-
+    return OPEN_BRACE;
 }
 
 <EQUATION>{TROUS}"}" {
-  return CLOSE_BRACE;
-
+    return CLOSE_BRACE;
 }
 
 <EQUATION>{TROUS}"_" {
-   return SUBSCRIPT_EQUA;
+    return SUBSCRIPT_EQUA;
 }
 
 <EQUATION>{TROUS}"^" {
-  return CHAPEAU_EQUA;
-
+    return CHAPEAU_EQUA;
 }
 
 <EQUATION>{TROUS}"\\sum_" {
-  return SOMME_EQUA;
-
+return SOMME_EQUA;
 }
 
 <EQUATION>{TROUS}"\\prod_" {
-  return PROD_EQUA;
-
+    return PROD_EQUA;
 }
 
 <EQUATION>{SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{equation}" {
-	BEGIN INITIAL;
+    BEGIN INITIAL;
     return END_EQUATION;
 }
 
 <EQUATION>\n {
- /* pour que ca plante; didn't bother creating NEWLINE cause it doesn't matter*/
- return SPACE;
+    /* pour que ca plante; didn't bother creating NEWLINE cause it doesn't matter */
+    return SPACE;
 }
 
-"pt"/"]" {yylval=yytext; return TAILLE; /*on garde pour si on decide de refaire opt de paraghape à la fin*/}
+"pt"/"]" {
+    yylval=yytext;
+    return TAILLE; /*on garde pour si on decide de refaire opt de paraghape à la fin */
+}
 
-<TABULAR,INITIAL>{L}{A}* {yylval=strdup(yytext); return WORD;}
-{STRING_SANS_PONC}* {yylval=strdup(yytext); return STRING;}
+<TABULAR,INITIAL>{L}{A}* {
+    yylval=strdup(yytext);
+    return WORD;
+}
+
+{STRING_SANS_PONC}* {
+    yylval=strdup(yytext);
+    return STRING;
+}
 
 \\. {
-  yylval=strdup(yytext+1);
-  return CHAR;
+    yylval=strdup(yytext+1);
+    return CHAR;
 }
-. {yylval=strdup(yytext); return CHAR;}
+
+.   {
+    yylval=strdup(yytext);
+    return CHAR;
+}
 
 %%
 
-void print_newline(){
+void print_newline()
+{
     fprintf(f_output, "</br>");
 }
 
- void print_space(){
+void print_space()
+{
     fprintf(f_output, "&nbsp;");
 }
