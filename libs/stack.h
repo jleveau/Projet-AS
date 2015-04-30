@@ -1,6 +1,6 @@
 /* Header file for the stack abstract data type (stack.h) */
 #ifndef STACK_H
-#define STACK_H 
+#define STACK_H
 
 struct stack_t;
 
@@ -25,7 +25,5 @@ extern void * stack_top(stack s);
 /* pop an element off of the stack.
    The stack must not be empty (as reported by stack_empty()) */
 extern void stack_pop(stack s);
-
-
 
 #endif

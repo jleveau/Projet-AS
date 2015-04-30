@@ -13,52 +13,52 @@ char* tableau_fichier[20];
 
 int main(int argc, char** argv)
 {
+    regex_t regexc, regexh;
+    int retic;
+    int retih;
+    retic = regcomp(&regexc, "[[:alnum:]].c", 0);
+    retih = regcomp(&regexh, "[[:alnum:]].h",0);
 
-	regex_t regexc,regexh;
-	int retic;
-	int retih;
-	retic = regcomp(&regexc, "[[:alnum:]].c", 0);
-	retih = regcomp(&regexh,"[[:alnum:]].h",0);
+    if(argc != 2)
+    {
+        fprintf(stderr, "capitaine : nombre d'arguments invalide : %d\n", argc);
+        return EXIT_FAILURE;
+    }
+    struct dirent *lecture;
+    DIR *rep ;
 
+    rep = opendir(argv[1]);
 
-	if (argc!=2){
-		fprintf(stderr,"capitaine : nombre d'arguments invalide : %d \n",argc);
-		return EXIT_FAILURE;
-	}
-	struct dirent *lecture;
-	DIR *rep ;
+    char buf[1024];
+    getcwd(buf, sizeof(buf));
 
-	rep = opendir(argv[1]);
+    while((lecture = readdir(rep)))
+    {
+        //Si c'est un '.' ou '..' alors on ne fait rien
+        if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, ".."));
+        else
+        {
+            retic = regexec(&regexc, lecture->d_name, 0, NULL, 0);
+            retih = regexec(&regexh, lecture->d_name, 0, NULL, 0);
+            if(retic == REG_NOMATCH && retih == REG_NOMATCH);
+            else
+            {
+                char* path = malloc((strlen(argv[1]) + strlen(lecture->d_name) + 2) * sizeof(char));
+                strcpy(path, argv[1]);
+                strcat(path, lecture->d_name);
 
-	char buf[1024];
-	getcwd(buf,sizeof(buf));
+                strcpy(path, argv[1]);
+                strcat(path, lecture->d_name);
+                if(fork() == 0)
+                {
+                    execl("./capitaine", "capitaine", path, buf, lecture->d_name, (char*)NULL);
+                    fprintf(stderr, "exec error \n");
+                    return EXIT_FAILURE;
+                }
+            }
+        }
+    }
 
-	while ((lecture = readdir(rep))) {
-     //Si c'est un '.' ou '..' alors on ne fait rien
-     if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, "..")){
-     }
-     else{
-		 retic = regexec(&regexc, lecture->d_name, 0, NULL, 0);
-         retih = regexec(&regexh,lecture->d_name,0,NULL,0);
-		 if(retic == REG_NOMATCH && retih == REG_NOMATCH){}
-		 else
-		 {
-			 char* path=malloc((strlen(argv[1])+strlen(lecture->d_name)+2)*sizeof(char));
-			 strcpy(path,argv[1]);
-			 strcat(path,lecture->d_name);
-			  
-			 strcpy(path,argv[1]);
-			 strcat(path,lecture->d_name);
-			 if (fork()==0){
-				execl("./capitaine","capitaine",path,buf,lecture->d_name,(char*)NULL);
-				fprintf(stderr,"exec error \n");
-				return EXIT_FAILURE;
-			}
-		}
-	}
-	
-  }
-  while(wait(NULL)>0);
-   return 0;
-   
+    while(wait(NULL) > 0);
+    return 0;
 }

@@ -1,22 +1,26 @@
-int f(int a,int b)
+int f(int a, int b)
 {
-return a;
-}
-int g(){
-int b;
+    return a;
 }
 
-int main(char toto,int tata)
+int g()
 {
-if(1==1)
+    int b;
+}
+
+int main(char toto, int tata)
 {
-if(toto){
-f(2,3);
-g();
-int b=3;
-}
-else{
-int a=42;
-}
-}
+    if(1 == 1)
+    {
+        if(toto)
+        {
+            f(2, 3);
+            g();
+            int b = 3;
+        }
+        else
+        {
+            int a = 42;
+        }
+    }
 }

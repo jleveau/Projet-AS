@@ -12,51 +12,52 @@
 #include "html.h"
 #include <stdarg.h>
 
+typedef struct cell_t
+{
+    void* elem;
+    struct cell_t* next;
+} *cell;
 
-typedef struct cell_t{
-	void* elem;
-	struct cell_t* next;
-}*cell;
-
-typedef struct list_t {
-	cell last;
-	cell first;
+typedef struct list_t
+{
+    cell last;
+    cell first;
 } *list;
 
-typedef struct variable_t {
-	char* nom;
-	char* type;
-	char* description;
-	char* id;
+typedef struct variable_t
+{
+    char* nom;
+    char* type;
+    char* description;
+    char* id;
 } *variable;
 
-typedef struct function_t {
-	char* id;
-	char* nom;
-	char* type;
-	char* description;
-	list arguments;
-	int nb_arguments;
+typedef struct function_t
+{
+    char* id;
+    char* nom;
+    char* type;
+    char* description;
+    list arguments;
+    int nb_arguments;
 } *function;
 
-typedef struct block_t{
-	char* id;
-	list variables;
-} * block;
+typedef struct block_t
+{
+    char* id;
+    list variables;
+} *block;
 
 function UNNAMED_FUNCTION;
-
 
 char* read_buffer;
 
 /* Englobe les piles de déclaration (variables, et typedef) */
 
-
 stack block_stack;
 
 int id_block;
 char* func_id;
-
 
 void  new_block();
 void fin_block();
