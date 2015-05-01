@@ -1,14 +1,14 @@
 body
 {
-    font-family: Verdana, sans-serif;
+	font-family: Verdana, sans-serif;
 }
 
 .header
 {
-    font-size: 20px;
-    font-family: Courier New;
-    text-align: center;
-    color: #6678ac;
+	font-size: 20px;
+	font-family: Courier New;
+	text-align: center;
+	color: #6678ac;
 }
 
 .bordure
@@ -18,107 +18,107 @@ body
 
 .fin_block
 {
-    margin: 0;
+	margin: 0;
 }
 
 a
 {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 .Code
 {
-    font: normal normal 1em/1.2em monospace;
-    margin: 0;
-    padding: 0;
-    vertical-align: top;
-    margin-left: 10px;
+	font: normal normal 1em/1.2em monospace;
+	margin: 0;
+	padding: 0;
+	vertical-align: top;
+	margin-left: 10px;
 }
 
 .type_specifier
 {
-    color: #993333;
+	color: #993333;
 }
 
 .jump_statement
 {
-    color : red;
-    font-weight: bold;
+	color : red;
+	font-weight: bold;
 }
 
 .jaune
 {
-    color: #b1b100;
+	color: #b1b100;
 }
 
 .comment
 {
-    color: #808080;
-    font-style: italic;
+	color: #808080;
+	font-style: italic;
 }
 
 .vert
 {
-    color: #339933;
+	color: #339933;
 }
 
 .nombre
 {
-    color: #0705e5;
+	color: #0705e5;
 }
 
 .string
 {
-    color: #f73c22;
+	color: #f73c22;
 }
 
 .numerotation
 {
-    color: #5c5a5a;
-    margin-right: 5px;
+	color: #5c5a5a;
+	margin-right: 5px;
 }
 
 .indent
 {
-    margin-left: 20px;
+	margin-left: 20px;
 }
 
 .fonction
 {
-    position: absolute;
-    margin-top: 23px;
-    margin-left: -35px;
-    background-color: #f7f7f7;
-    padding: 15px;
-    border-radius: 3px;
-    box-shadow: 0 0 2px rgba(0, 0, 0, .5);
-    transform: scale(0) rotate(-13deg);
-    transition: all .25s;
-    opacity: 0;
+	position: absolute;
+	margin-top: 23px;
+	margin-left: -35px;
+	background-color: #f7f7f7;
+	padding: 15px;
+	border-radius: 3px;
+	box-shadow: 0 0 2px rgba(0, 0, 0, .5);
+	transform: scale(0) rotate(-13deg);
+	transition: all .25s;
+	opacity: 0;
 }
 
 .fonction-activable:hover .fonction,.fonction-activable:focus .fonction
 {
-    transform: scale(1) rotate(0);
-    opacity: 1;
+	transform: scale(1) rotate(0);
+	opacity: 1;
 }
 
 .variable
 {
-    position: absolute;
-    margin-top: 23px;
-    margin-left: -35px;
-    background-color: #f7f7f7;
-    padding: 15px;
-    border-radius: 3px;
-    box-shadow: 0 0 2px rgba(0,0,0,.5);
-    transform: scale(0) rotate(-13deg);
-    transition: all .25s;
-    opacity: 0;
+	position: absolute;
+	margin-top: 23px;
+	margin-left: -35px;
+	background-color: #f7f7f7;
+	padding: 15px;
+	border-radius: 3px;
+	box-shadow: 0 0 2px rgba(0,0,0,.5);
+	transform: scale(0) rotate(-13deg);
+	transition: all .25s;
+	opacity: 0;
 }
 
 .variable-activable:hover .variable,.variable-activable:focus .variable
 {
-    transform: scale(1) rotate(0);
-    opacity: 1;
+	transform: scale(1) rotate(0);
+	opacity: 1;
 }

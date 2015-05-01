@@ -14,7 +14,7 @@ STRING_SANS_PONC [^\n\\\{\}\[\]]
 SPACE_OU_NEWLINE_INFINI [[:SPACE:]\n]*
 
 %{
-/* !{L}{A}*                 {return yytext;} 	car il me semble que chaque commande doit être traité séparamment */
+/* !{L}{A}*				 {return yytext;} 	car il me semble que chaque commande doit être traité séparamment */
 #ifndef YYSTYPE
 #define YYSTYPE char*
 #endif
@@ -39,208 +39,208 @@ void print_space();
 \n{OPEN_SPACE}\n        {print_newline();}
 
 \\\\ |
-"\newline"  {
-    print_newline();
+"\newline" {
+	print_newline();
 }
 
 "\\documentclass"{TROUS}"{"{MOT}"}" {
-    /* pour simplifier, pour l'instant on va supposer que c'est toujours un article */
-    BEGIN PACKAGES_A_IGNORER;
-    return ENTETE_DOCUMENT;
+	/* pour simplifier, pour l'instant on va supposer que c'est toujours un article */
+	BEGIN PACKAGES_A_IGNORER;
+	return ENTETE_DOCUMENT;
 }
 
 <PACKAGES_A_IGNORER,INITIAL>
 "\\title"{TROUS}"{" {
-    BEGIN NOM_TITLE;
+	BEGIN NOM_TITLE;
 }
 
 <PACKAGES_A_IGNORER,INITIAL>
 "\\begin"{TROUS}"{document}" {
-    BEGIN INITIAL;
-    return BEGIN_DOCUMENT;
+	BEGIN INITIAL;
+	return BEGIN_DOCUMENT;
 }
 
 <PACKAGES_A_IGNORER>. ;
 <PACKAGES_A_IGNORER>\n ;
 
 <NOM_TITLE>\} {
-    /*ferme le titre après que le string du titre est lu et envoyé*/
-    BEGIN INITIAL;
+	/*ferme le titre après que le string du titre est lu et envoyé*/
+	BEGIN INITIAL;
 }
 
 <NOM_TITLE>{MOT}*/\} {
-    /*cherche string du titre*/
-    yylval=strdup(yytext);
-    return TITLE;
+	/*cherche string du titre*/
+	yylval=strdup(yytext);
+	return TITLE;
 }
 
 "\\maketitle" {
-    return MAKETITLE;
+	return MAKETITLE;
 }
 
 "\\end"{TROUS}"{document}" {
-    return END_DOCUMENT;
+	return END_DOCUMENT;
 }
 
 "\\begin" {
-    return BEG;
+	return BEG;
 }
 
 "\\end" {
-    return END;
+	return END;
 }
 
 "\\it" {
-    return IT;
+	return IT;
 }
 
 "\\bf" {
-    return BF;
+	return BF;
 }
 
 
 "\\texttt" {
-    return TEXTTT;
+	return TEXTTT;
 }
 
 "\\textit" {
-    return TEXTIT;
+	return TEXTIT;
 }
 
 "\\underline" {
-    return UNDERLINE;
+	return UNDERLINE;
 }
 
 "\\section" {
-    return SECTION;
+	return SECTION;
 }
 
 "\\subsection" {
-    return SUBSECTION;
+	return SUBSECTION;
 }
 
 "\\subsubsection" {
-    return SUBSUBSECTION;
+	return SUBSUBSECTION;
 }
 
 "\\paragraph" {
-    return PARAGRAPH;
+	return PARAGRAPH;
 }
 
 "\\color" {
-    return COLOR;
+	return COLOR;
 }
 
 "\\textcolor" {
-    return TEXTCOLOR;
+	return TEXTCOLOR;
 }
 
 {TROUS}"\\begin"{TROUS}"{itemize}" {
-    return BEGIN_ITEMIZE;
+	return BEGIN_ITEMIZE;
 }
 
 {SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{itemize}" {
-    return END_ITEMIZE;
+	return END_ITEMIZE;
 }
 
 {TROUS}"\\begin"{TROUS}"{enumerate}" {
-    return BEGIN_ENUMERATE;
+	return BEGIN_ENUMERATE;
 }
 
 {SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{enumerate}" {
-    return END_ENUMERATE;
+	return END_ENUMERATE;
 }
 
 {TROUS}"\\item" {
-    return BEGIN_ITEM;
+	return BEGIN_ITEM;
 }
 
 
 {TROUS}"\\begin"{TROUS}"{tabular}" {
-    BEGIN TABULAR;
-    return BEGIN_TABULAR;
+	BEGIN TABULAR;
+	return BEGIN_TABULAR;
 }
 
 <TABULAR>\} {
-    BEGIN TABULAR_STRING;
-    return CLOSE_BRACE;
+	BEGIN TABULAR_STRING;
+	return CLOSE_BRACE;
 }
 
 <TABULAR_STRING>(.*\n*)&/"\\end{tabular}" {
-    BEGIN INITIAL;
-    yylval=strdup(yytext);
-    yyerror("Les tables ne peuvent pas finir avec des &; On va vous laisser faire cette fois mais reviser votre tableau svp;");
-    return TAB_STRING;
+	BEGIN INITIAL;
+	yylval=strdup(yytext);
+	yyerror("Les tables ne peuvent pas finir avec des &; On va vous laisser faire cette fois mais reviser votre tableau svp;");
+	return TAB_STRING;
 }
 
 <TABULAR_STRING>(.*\n*)*/"\\end{tabular}" {
-    BEGIN INITIAL;
-    yylval=strdup(yytext);
-    return TAB_STRING;
+	BEGIN INITIAL;
+	yylval=strdup(yytext);
+	return TAB_STRING;
 }
 
 {SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{tabular}" {
-    BEGIN INITIAL;
-    return END_TABULAR;
+	BEGIN INITIAL;
+	return END_TABULAR;
 }
 
 {TROUS}"\\begin"{TROUS}"{equation}" {
-    BEGIN EQUATION;
-    return BEGIN_EQUATION;
+	BEGIN EQUATION;
+	return BEGIN_EQUATION;
 }
 
 <EQUATION>{TROUS}{NBR} {
-    yylval=strdup(yytext);
-    return NBR_EQUATION;
+	yylval=strdup(yytext);
+	return NBR_EQUATION;
 }
 
 <EQUATION>{TROUS}{L} {
-    yylval=strdup(yytext);
-    return VAR_EQUATION;
+	yylval=strdup(yytext);
+	return VAR_EQUATION;
 }
 
 <EQUATION>{TROUS}"+" {
-    return PLUS_EQUATION;
+	return PLUS_EQUATION;
 }
 
 <EQUATION>{TROUS}"-" {
-    return MINUS_EQUATION;
+	return MINUS_EQUATION;
 }
 
 <EQUATION>{TROUS}"*" {
-    return TIMES_EQUATION;
+	return TIMES_EQUATION;
 }
 
 <EQUATION>{TROUS}"/" {
-    return DIVIDE_EQUATION;
+	return DIVIDE_EQUATION;
 }
 
 <EQUATION>{TROUS}"=" {
-    return EGAL_EQUATION;
+	return EGAL_EQUATION;
 }
 
 <EQUATION>{TROUS}"<" {
-    return LESS_THAN_EQUATION;
+	return LESS_THAN_EQUATION;
 }
 
 <EQUATION>{TROUS}">" {
-    return MORE_THAN_EQUATION;
+	return MORE_THAN_EQUATION;
 }
 
 <EQUATION>{TROUS}"{" {
-    return OPEN_BRACE;
+	return OPEN_BRACE;
 }
 
 <EQUATION>{TROUS}"}" {
-    return CLOSE_BRACE;
+	return CLOSE_BRACE;
 }
 
 <EQUATION>{TROUS}"_" {
-    return SUBSCRIPT_EQUA;
+	return SUBSCRIPT_EQUA;
 }
 
 <EQUATION>{TROUS}"^" {
-    return CHAPEAU_EQUA;
+	return CHAPEAU_EQUA;
 }
 
 <EQUATION>{TROUS}"\\sum_" {
@@ -248,52 +248,52 @@ return SOMME_EQUA;
 }
 
 <EQUATION>{TROUS}"\\prod_" {
-    return PROD_EQUA;
+	return PROD_EQUA;
 }
 
 <EQUATION>{SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{equation}" {
-    BEGIN INITIAL;
-    return END_EQUATION;
+	BEGIN INITIAL;
+	return END_EQUATION;
 }
 
 <EQUATION>\n {
-    /* pour que ca plante; didn't bother creating NEWLINE cause it doesn't matter */
-    return SPACE;
+	/* pour que ca plante; didn't bother creating NEWLINE cause it doesn't matter */
+	return SPACE;
 }
 
 "pt"/"]" {
-    yylval=yytext;
-    return TAILLE; /*on garde pour si on decide de refaire opt de paraghape à la fin */
+	yylval=yytext;
+	return TAILLE; /*on garde pour si on decide de refaire opt de paraghape à la fin */
 }
 
 <TABULAR,INITIAL>{L}{A}* {
-    yylval=strdup(yytext);
-    return WORD;
+	yylval=strdup(yytext);
+	return WORD;
 }
 
 {STRING_SANS_PONC}* {
-    yylval=strdup(yytext);
-    return STRING;
+	yylval=strdup(yytext);
+	return STRING;
 }
 
 \\. {
-    yylval=strdup(yytext+1);
-    return CHAR;
+	yylval=strdup(yytext+1);
+	return CHAR;
 }
 
 .   {
-    yylval=strdup(yytext);
-    return CHAR;
+	yylval=strdup(yytext);
+	return CHAR;
 }
 
 %%
 
 void print_newline()
 {
-    fprintf(f_output, "</br>");
+	fprintf(f_output, "</br>");
 }
 
 void print_space()
 {
-    fprintf(f_output, "&nbsp;");
+	fprintf(f_output, "&nbsp;");
 }

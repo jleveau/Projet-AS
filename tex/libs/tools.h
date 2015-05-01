@@ -14,37 +14,37 @@
 
 typedef struct cell_t
 {
-    void* elem;
-    struct cell_t* next;
+	void* elem;
+	struct cell_t* next;
 } *cell;
 
 typedef struct list_t
 {
-    cell last;
-    cell first;
+	cell last;
+	cell first;
 } *list;
 
 typedef struct variable_t
 {
-    char* nom;
-    char* type;
-    char* description;
-    char* id;
+	char* nom;
+	char* type;
+	char* description;
+	char* id;
 } *variable;
 
 typedef struct function_t
 {
-    char* nom;
-    char* type;
-    char* description;
-    list arguments;
-    int nb_arguments;
+	char* nom;
+	char* type;
+	char* description;
+	list arguments;
+	int nb_arguments;
 } *function;
 
 typedef struct block_t
 {
-    char* id;
-    list variables;
+	char* id;
+	list variables;
 } *block;
 
 function UNNAMED_FUNCTION;

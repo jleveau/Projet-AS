@@ -41,9 +41,9 @@ primary_expression
 	;
 
 constant
-	: I_CONSTANT            {$$ = string_concat(1, $1);}    /* includes character_constant */
+	: I_CONSTANT            {$$ = string_concat(1, $1);}	/* includes character_constant */
 	| F_CONSTANT            {$$ = string_concat(1, $1);}
-	| ENUMERATION_CONSTANT  {$$ = string_concat(1, $1);}    /* after it has been defined as such */
+	| ENUMERATION_CONSTANT  {$$ = string_concat(1, $1);}	/* after it has been defined as such */
 	;
 
 enumeration_constant    /* before it has been defined as such */
@@ -57,7 +57,7 @@ string
 
 generic_selection
 	: GENERIC OPENING_PARENTHESIS assignment_expression COLON generic_assoc_list CLOSING_PARENTHESIS    {$$ = string_concat(6, $1, $2, $3, $4, $5, $6);}
-    ;
+	;
 
 generic_assoc_list
 	: generic_association                           {$$ = string_concat(1, $1);}
@@ -78,8 +78,8 @@ postfix_expression
 	| postfix_expression PTR_OP IDENTIFIER                          {$$ = string_concat(3, $1, $2, $3);}
 	| postfix_expression INC_OP                                     {$$ = string_concat(2, $1, $2);}
 	| postfix_expression DEC_OP                                     {$$ = string_concat(2, $1, $2);}
-	| OPENING_PARENTHESIS type_name CLOSING_PARENTHESIS OPENING_BRACE  initializer_list CLOSING_BRACE       {$$ = string_concat(6, $1, $2, $3, $4, $5, $6);}
-	| OPENING_PARENTHESIS type_name CLOSING_PARENTHESIS OPENING_BRACE  initializer_list COLON CLOSING_BRACE {$$ = string_concat(7, $1, $2, $3, $4, $5, $6, $7);}
+	| OPENING_PARENTHESIS type_name CLOSING_PARENTHESIS OPENING_BRACE initializer_list CLOSING_BRACE        {$$ = string_concat(6, $1, $2, $3, $4, $5, $6);}
+	| OPENING_PARENTHESIS type_name CLOSING_PARENTHESIS OPENING_BRACE initializer_list COLON CLOSING_BRACE  {$$ = string_concat(7, $1, $2, $3, $4, $5, $6, $7);}
 	;
 
 argument_expression_list
@@ -199,17 +199,17 @@ expression
 	;
 
 constant_expression
-	: conditional_expression    {$$ = string_concat(1, $1);}    /* with constraints */
+	: conditional_expression    {$$ = string_concat(1, $1);}	/* with constraints */
 	;
 
 declaration
 	: declaration_specifiers SEMI_COLON                         {$$ = string_concat(2, $1, $2); /*variables*/}
-	| declaration_specifiers init_declarator_list SEMI_COLON    {create_variable(strdup($2), strdup($1), strdup("description")); $$ = string_concat(3, $1, print_balise_variable($2), $3);}
+	| declaration_specifiers init_declarator_list SEMI_COLON	{create_variable(strdup($2), strdup($1), strdup("description")); $$ = string_concat(3, $1, print_balise_variable($2), $3);}
 	| static_assert_declaration                                 {$$ = string_concat(1, $1);}
 	;
 
 declaration_specifiers
-	: storage_class_specifier declaration_specifiers    {$$ = string_concat(2, $1, $2);}    /* ajouter_typedef($2); */
+	: storage_class_specifier declaration_specifiers    {$$ = string_concat(2, $1, $2);}	/* ajouter_typedef($2); */
 	| storage_class_specifier                           {$$ = string_concat(1, $1);}
 	| type_specifier declaration_specifiers             {$$ = string_concat(2, $1, $2);}
 	| type_specifier                                    {$$ = string_concat(1, $1);}
@@ -232,7 +232,7 @@ init_declarator
 	;
 
 storage_class_specifier
-	: TYPEDEF       {$$ = string_concat(1, $1);}    /* identifiers must be flagged as TYPEDEF_NAME */
+	: TYPEDEF       {$$ = string_concat(1, $1);}	/* identifiers must be flagged as TYPEDEF_NAME */
 	| EXTERN        {$$ = string_concat(1, $1);}
 	| STATIC        {$$ = string_concat(1, $1);}
 	| THREAD_LOCAL  {$$ = string_concat(1, $1);}
@@ -252,7 +252,7 @@ type_specifier
 	| UNSIGNED                  {$$ = string_concat(1, $1);}
 	| BOOL                      {$$ = string_concat(1, $1);}
 	| COMPLEX                   {$$ = string_concat(1, $1);}
-	| IMAGINARY	                {$$ = string_concat(1, $1);}   /* non-mandated extension */
+	| IMAGINARY                 {$$ = string_concat(1, $1);}   /* non-mandated extension */
 	| atomic_type_specifier     {$$ = string_concat(1, $1);}
 	| struct_or_union_specifier {$$ = string_concat(1, $1);}
 	| enum_specifier            {$$ = string_concat(1, $1);}
@@ -276,7 +276,7 @@ struct_declaration_list
 	;
 
 struct_declaration
-	: specifier_qualifier_list SEMI_COLON                           {$$ = string_concat(2, $1, $2);}    /* for anonymous struct/union */
+	: specifier_qualifier_list SEMI_COLON                           {$$ = string_concat(2, $1, $2);}	/* for anonymous struct/union */
 	| specifier_qualifier_list struct_declarator_list SEMI_COLON    {$$ = string_concat(3, $1, $2, $3);}
 	| static_assert_declaration                                     {$$ = string_concat(1, $1);}
 	;
@@ -304,7 +304,7 @@ enum_specifier
 	| ENUM OPENING_BRACE enumerator_list COLON CLOSING_BRACE                {$$ = string_concat(5, $1, $2, $3, $4, $5);}
 	| ENUM IDENTIFIER OPENING_BRACE enumerator_list CLOSING_BRACE           {$$ = string_concat(5, $1, $2, $3, $4, $5);}
 	| ENUM IDENTIFIER OPENING_BRACE  enumerator_list COLON CLOSING_BRACE    {$$ = string_concat(6, $1, $2, $3, $4, $5, $6);}
-	| ENUM IDENTIFIER {$$=string_concat(2,$1,$2);}
+	| ENUM IDENTIFIER                                                       {$$=string_concat(2,$1,$2);}
 	;
 
 enumerator_list
@@ -344,7 +344,7 @@ declarator
 	;
 
 direct_declarator
-	: IDENTIFIER {$$=string_concat(1,$1);}
+	: IDENTIFIER                                                                                    {$$=string_concat(1,$1);}
 	| OPENING_PARENTHESIS declarator CLOSING_PARENTHESIS                                            {$$ = string_concat(3, $1, $2, $3);}
 	| direct_declarator LEFT_BRACKET RIGHT_BRACKET                                                  {$$ = string_concat(3, $1, $2, $3);}
 	| direct_declarator LEFT_BRACKET STAR RIGHT_BRACKET                                             {$$ = string_concat(4, $1, $2, $3, $4);}
@@ -371,7 +371,6 @@ type_qualifier_list
 	: type_qualifier                        {$$ = string_concat(1, $1);}
 	| type_qualifier_list type_qualifier    {$$ = string_concat(2, $1, $2);}
 	;
-
 
 parameter_type_list
 	: parameter_list COLON ELLIPSIS {$$ = string_concat(3, $1, $2, $3);}
@@ -463,7 +462,7 @@ static_assert_declaration
 statement
 	: labeled_statement     {$$ = string_concat(1, $1);}
 	| compound_statement    {$$ = string_concat(1, $1);}
-    | expression_statement  {$$ = string_concat(1, $1);}
+	| expression_statement  {$$ = string_concat(1, $1);}
 	| selection_statement   {$$ = string_concat(1, $1);}
 	| iteration_statement   {$$ = string_concat(1, $1);}
 	| jump_statement        {$$ = string_concat(1, $1);}
@@ -476,7 +475,7 @@ labeled_statement
 	;
 
 compound_statement
-	: OPENING_BRACE  CLOSING_BRACE                  {$$ = string_concat(2, $1, $2);}
+	: OPENING_BRACE CLOSING_BRACE                   {$$ = string_concat(2, $1, $2);}
 	| OPENING_BRACE block_item_list CLOSING_BRACE   {$$ = string_concat(3, $1, $2, $3);}
 	;
 
@@ -524,8 +523,8 @@ translation_unit
 	;
 
 external_declaration
-	:  function_definition  {$$ = string_concat(1, $1); push_to_html($$); free($$);}
-	|  declaration          {$$ = string_concat(1, $1); push_to_html($$); free($$);}
+	: function_definition   {$$ = string_concat(1, $1); push_to_html($$); free($$);}
+	| declaration           {$$ = string_concat(1, $1); push_to_html($$); free($$);}
 	;
 
 function_definition
