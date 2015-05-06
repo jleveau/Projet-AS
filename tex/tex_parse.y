@@ -1,8 +1,3 @@
-/*
-contenus=n'importe quoi
-text=que de tu texte
-*/
-
 %{
 #ifndef YYSTYPE
 # define YYSTYPE char*
@@ -14,6 +9,7 @@ text=que de tu texte
 void yyerror(const char *s);
 int yylex(void);
 extern YYSTYPE yylval;
+toc Toc;
 
 /* à ajouter dans le fichier html pour tex */
 void print_titre(char*);
@@ -30,15 +26,12 @@ void creer_balise_mathML(char* display);
 void print_balise_equation(char* balise,char* nbr);
 void ecrire_debut_somme_equation(char*);
 void ecrire_fin_somme_equation(char * val);
+void initialiser_toc();
 void insert_into_toc(int, char*);
-
-//Liste toc=list_create();
-
-
-
+ 
 %}
 
-%token ENTETE_DOCUMENT TITLE MAKETITLE BEGIN_DOCUMENT END_DOCUMENT TEXT BEG WORD BACKSLASH SPACE CHAR TAB_STRING
+%token ENTETE_DOCUMENT TOC_COMMANDE TITLE MAKETITLE BEGIN_DOCUMENT END_DOCUMENT TEXT BEG WORD BACKSLASH SPACE CHAR TAB_STRING
 %token BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR TAILLE NB ENUM BEGIN_ITEM TABULAR EQUATION END BEGIN_ITEMIZE  END_ITEMIZE  BEGIN_ENUMERATE  END_ENUMERATE BEGIN_TABULAR END_TABULAR BEGIN_EQUATION END_EQUATION BEGIN_EQUATION_DOLLAR END_EQUATION_DOLLAR
 %token  PARAGRAPH SECTION SUBSECTION SUBSUBSECTION
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
@@ -53,9 +46,14 @@ void insert_into_toc(int, char*);
 %%
 
 start
-	: ENTETE_DOCUMENT structure {/* contenu peut être vide*/}
+        : ENTETE_DOCUMENT toc[t] {initialiser_toc();} structure {if(strcmp("true", $t)==0) {print_toc(Toc);} toc_destroy(Toc);/* contenu peut être vide*/}
 	| {/*latex peut pas compiler un truc vide mais nous on veut le faire pour les tests								A ENLEVER */}
 	;
+
+toc
+        : {$$="false";}
+        | TOC_COMMANDE	{$$="true";} 
+        ;
 
 structure
 	: TITLE[h1] {print_titre($h1);} BEGIN_DOCUMENT contenus MAKETITLE contenus END_DOCUMENT
@@ -87,7 +85,7 @@ appel_commande_sans_BEGIN
 
 formatage_texte
 	: PARAGRAPH  {print_balise("b");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE  {print_fin_b("b");}  {print_balise("p");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("p");}
-	| 	SECTION parameter_string[titre] { print_balise_section(1, $titre); insert_into_toc(1, $titre);}  OPEN_BRACE subsections CLOSE_BRACE  {print_fin_b("section");}
+	| 	SECTION parameter_string[titre] {print_balise_section(1, $titre);}  OPEN_BRACE subsections CLOSE_BRACE  {print_fin_b("section");}
 	| BEGIN_ITEMIZE {print_balise("ul");} item END_ITEMIZE {print_fin_b("ul");}
 	| BEGIN_ENUMERATE {print_balise("ol");} item END_ENUMERATE {print_fin_b("ol");}
 	| BEGIN_TABULAR {print_balise("table");} option parameter_word_or_string[nbColonnesEtLignes] TAB_STRING[table_string] {creer_table(strlen($nbColonnesEtLignes), $table_string); }END_TABULAR {print_fin_b("table");/* param ne va pas être traité par nous alors on fait pour que si il est dans le fichier, ca passe */}
@@ -186,13 +184,20 @@ void yyerror(const char *s)
 	fprintf(stderr,"%s\n",s);
 }
 
+
+void initialiser_toc(){
+     Toc=toc_create();
+    }
+
 void print_titre(char* titre)
 {
 	fprintf(f_output, "<h1 class=\"title\">%s</h1>", titre);
 }
 
+//imprime la balise section et l'ajout dans toc
 void print_balise_section(int niveau, char* titre)
 {
+        add_to_toc(Toc, niveau, titre);
 	print_balise("section");
 	fprintf(f_output, "<h%d>%s</h%d>", niveau+1, titre, niveau+1);
 }
@@ -259,7 +264,7 @@ void creer_cases(int nb_colonnes, char* str)
 	{
 		return;
 	}
-
+	
 	while( token_Case != NULL )
 	{
 		if(compter_colonnes % nb_colonnes ==0)
@@ -313,6 +318,7 @@ void creer_balise_mathML(char* display)
 
 void print_balise_equation(char*balise,char* nbr)
 {
+    
 	if(strcmp==0)
 	{
 		balise="balise";
@@ -330,8 +336,4 @@ void ecrire_debut_somme_equation(char * symbol)
 void ecrire_fin_somme_equation(char * val)
 {
 	fprintf(f_output,"</munderover>");
-}
-
-void insert_into_toc(int section_hauteur, char* titre){
-    //à faire
 }

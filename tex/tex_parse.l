@@ -14,7 +14,6 @@ STRING_SANS_PONC [^\$\n\\\{\}\[\]]
 SPACE_OU_NEWLINE_INFINI [[:SPACE:]\n]*
 
 %{
-/* !{L}{A}*				 {return yytext;} 	car il me semble que chaque commande doit être traité séparamment */
 #ifndef YYSTYPE
 #define YYSTYPE char*
 #endif
@@ -43,6 +42,9 @@ void print_space();
 	print_newline();
 }
 
+<PACKAGES_A_IGNORER>{SPACE_OU_NEWLINE_INFINI}\\tableofcontents {
+        return TOC_COMMANDE;
+}
 
 {TROUS}\$	{
         BEGIN EQUATION;

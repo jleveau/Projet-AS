@@ -12,6 +12,29 @@
 #include "html.h"
 #include <stdarg.h>
 
+/*pour le table de matières*/
+typedef struct toc_cell_t
+{
+	int profondeur;
+	int* numero_section;
+	char* titre;
+	struct toc_cell_t* next;
+} *toc_cell;
+
+typedef struct toc_t
+{
+	toc_cell last;
+	toc_cell first;
+} *toc;
+
+void add_to_toc(toc l, int profondeur,  char* titre);
+toc toc_create();
+void toc_destroy(toc l);
+bool toc_empty(toc l);
+void print_toc(toc);
+void toc_pop(toc);
+/*fin toc*/
+
 typedef struct cell_t
 {
 	void* elem;
