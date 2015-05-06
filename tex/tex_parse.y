@@ -10,6 +10,7 @@ void yyerror(const char *s);
 int yylex(void);
 extern YYSTYPE yylval;
 toc Toc;
+char* toc_affiche;
 
 /* à ajouter dans le fichier html pour tex */
 void print_titre(char*);
@@ -46,29 +47,30 @@ void insert_into_toc(int, char*);
 %%
 
 start
-        : ENTETE_DOCUMENT toc[t] {initialiser_toc();} structure {if(strcmp("true", $t)==0) {print_toc(Toc);} toc_destroy(Toc);/* contenu peut être vide*/}
+    : ENTETE_DOCUMENT {initialiser_toc();} structure {/* contenu peut être vide*/}
 	| {/*latex peut pas compiler un truc vide mais nous on veut le faire pour les tests								A ENLEVER */}
 	;
 
-toc
-        : {$$="false";}
-        | TOC_COMMANDE	{$$="true";} 
-        ;
-
 structure
-	: TITLE[h1] {print_titre($h1);} BEGIN_DOCUMENT contenus MAKETITLE contenus END_DOCUMENT
-	| BEGIN_DOCUMENT TITLE[h1] {print_titre($h1);} contenus MAKETITLE contenus END_DOCUMENT
+    : TITLE[h1] {print_titre($h1);} toc BEGIN_DOCUMENT contenus MAKETITLE contenus END_DOCUMENT {if(toc_affiche) {print_toc(Toc);} toc_destroy(Toc);}
+    | BEGIN_DOCUMENT toc TITLE[h1] {print_titre($h1);} contenus MAKETITLE contenus END_DOCUMENT {if(toc_affiche) {print_toc(Toc);} toc_destroy(Toc);}
 	|
 	;
 
+
+toc
+    : {}
+    | TOC_COMMANDE	{toc_affiche="vrai";  /* ROHAN: balise avec placeholder pour le toc */}
+    ;
+
 contenus
 	: combinaison_string_ET_appel_commande_sans_BEGIN {/* contenus string_OU_appel_commande_sans_BEGIN	{OU car ca revient tout seul}*/}
-	|
 	;
 
 combinaison_string_ET_appel_commande_sans_BEGIN
 	: combinaison_string_ET_appel_commande_sans_BEGIN string_OU_appel_commande_sans_BEGIN {/*ET pour que l'interieur des commandes ex {ggg} peuuvent être un mélange de commandes et strings */}
 	| string_OU_appel_commande_sans_BEGIN
+    | toc
 	;
 
 string_OU_appel_commande_sans_BEGIN
@@ -139,7 +141,6 @@ subsections
 subsubsections
 	: SUBSUBSECTION parameter_string[titre] {print_balise_section(3, $titre);} OPEN_BRACE subsubsections CLOSE_BRACE {print_fin_b("section");}
 	| texte_ou_vide {/*bloque ici*/} subsubsection_ou_vide
-	|
 	;
 
 subsubsection_ou_vide
@@ -187,7 +188,8 @@ void yyerror(const char *s)
 
 void initialiser_toc(){
      Toc=toc_create();
-    }
+     toc_affiche=NULL;
+}
 
 void print_titre(char* titre)
 {

@@ -42,7 +42,8 @@ void print_space();
 	print_newline();
 }
 
-<PACKAGES_A_IGNORER>{SPACE_OU_NEWLINE_INFINI}\\tableofcontents {
+{SPACE_OU_NEWLINE_INFINI}\\tableofcontents {
+	ECHO;
         return TOC_COMMANDE;
 }
 
