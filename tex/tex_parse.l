@@ -10,7 +10,7 @@ NBR [[:digit:]]+
 MOT [a-zA-Z_][a-zA-Z_0-9]*
 TROUS [[:SPACE:]]*\n{0,1}[[:SPACE:]]*
 OPEN_SPACE [[:SPACE:]]*
-STRING_SANS_PONC [^\n\\\{\}\[\]]
+STRING_SANS_PONC [^\$\n\\\{\}\[\]]
 SPACE_OU_NEWLINE_INFINI [[:SPACE:]\n]*
 
 %{
@@ -41,6 +41,12 @@ void print_space();
 \\\\ |
 "\newline" {
 	print_newline();
+}
+
+
+{TROUS}\$	{
+        BEGIN EQUATION;
+	return BEGIN_EQUATION_DOLLAR;
 }
 
 "\\documentclass"{TROUS}"{"{MOT}"}" {
@@ -254,6 +260,11 @@ return SOMME_EQUA;
 <EQUATION>{SPACE_OU_NEWLINE_INFINI}"\\end"{TROUS}"{equation}" {
 	BEGIN INITIAL;
 	return END_EQUATION;
+}
+
+<EQUATION>{SPACE_OU_NEWLINE_INFINI}${TROUS} {
+	BEGIN INITIAL;
+	return END_EQUATION_DOLLAR;
 }
 
 <EQUATION>\n {

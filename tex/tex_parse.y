@@ -26,14 +26,20 @@ void print_case(char* str);
 void creer_table(int nb_colonnes, char* str);
 void creer_cases(int nb_colonnes, char* str);
 void ajout_dans_file(stack pile_1, stack pile2, void* elem);
-void creer_balise_mathML();
+void creer_balise_mathML(char* display);
 void print_balise_equation(char* balise,char* nbr);
 void ecrire_debut_somme_equation(char*);
 void ecrire_fin_somme_equation(char * val);
+void insert_into_toc(int, char*);
+
+//Liste toc=list_create();
+
+
+
 %}
 
 %token ENTETE_DOCUMENT TITLE MAKETITLE BEGIN_DOCUMENT END_DOCUMENT TEXT BEG WORD BACKSLASH SPACE CHAR TAB_STRING
-%token BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR TAILLE NB ENUM BEGIN_ITEM TABULAR EQUATION END BEGIN_ITEMIZE  END_ITEMIZE  BEGIN_ENUMERATE  END_ENUMERATE BEGIN_TABULAR END_TABULAR BEGIN_EQUATION END_EQUATION
+%token BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR TAILLE NB ENUM BEGIN_ITEM TABULAR EQUATION END BEGIN_ITEMIZE  END_ITEMIZE  BEGIN_ENUMERATE  END_ENUMERATE BEGIN_TABULAR END_TABULAR BEGIN_EQUATION END_EQUATION BEGIN_EQUATION_DOLLAR END_EQUATION_DOLLAR
 %token  PARAGRAPH SECTION SUBSECTION SUBSUBSECTION
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
 %token A_FAIRE
@@ -81,12 +87,14 @@ appel_commande_sans_BEGIN
 
 formatage_texte
 	: PARAGRAPH  {print_balise("b");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE  {print_fin_b("b");}  {print_balise("p");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("p");}
-	| SECTION parameter_string[titre] { print_balise_section(1, $titre);}  OPEN_BRACE subsections CLOSE_BRACE  {print_fin_b("section");}
+	| 	SECTION parameter_string[titre] { print_balise_section(1, $titre); insert_into_toc(1, $titre);}  OPEN_BRACE subsections CLOSE_BRACE  {print_fin_b("section");}
 	| BEGIN_ITEMIZE {print_balise("ul");} item END_ITEMIZE {print_fin_b("ul");}
 	| BEGIN_ENUMERATE {print_balise("ol");} item END_ENUMERATE {print_fin_b("ol");}
 	| BEGIN_TABULAR {print_balise("table");} option parameter_word_or_string[nbColonnesEtLignes] TAB_STRING[table_string] {creer_table(strlen($nbColonnesEtLignes), $table_string); }END_TABULAR {print_fin_b("table");/* param ne va pas être traité par nous alors on fait pour que si il est dans le fichier, ca passe */}
-	| BEGIN_EQUATION {creer_balise_mathML();} equation END_EQUATION	{print_fin_b("math");}
+	| BEGIN_EQUATION {creer_balise_mathML("block");} equation END_EQUATION	{print_fin_b("math");}
+	| BEGIN_EQUATION_DOLLAR {creer_balise_mathML("inline");} equation END_EQUATION_DOLLAR {print_fin_b("math");} 
 	;
+
 
 equation
 	: NBR_EQUATION[valeur] script_noms[nom] OPEN_BRACE {print_balise($nom); print_balise_equation("mi", $valeur); print_balise("mi"); /*si pas cette balise supplémentire, tous les symboles d'equation s'empile*/} equation {print_fin_b("mi"); print_fin_b($nom); } CLOSE_BRACE equation
@@ -298,9 +306,9 @@ void creer_table(int nb_colonnes, char* str)
 	stack_destroy(pile2_pour_file);
 }
 
-void creer_balise_mathML()
+void creer_balise_mathML(char* display)
 {
-	fprintf(f_output,"<math xmlns='http://www.w3.org/1998/Math/MathML' display='block'>");
+    fprintf(f_output,"<math xmlns='http://www.w3.org/1998/Math/MathML' display='%s'>", display);
 }
 
 void print_balise_equation(char*balise,char* nbr)
@@ -322,4 +330,8 @@ void ecrire_debut_somme_equation(char * symbol)
 void ecrire_fin_somme_equation(char * val)
 {
 	fprintf(f_output,"</munderover>");
+}
+
+void insert_into_toc(int section_hauteur, char* titre){
+    //à faire
 }
