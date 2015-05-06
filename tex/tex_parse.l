@@ -43,7 +43,6 @@ void print_space();
 }
 
 {SPACE_OU_NEWLINE_INFINI}\\tableofcontents {
-	ECHO;
         return TOC_COMMANDE;
 }
 

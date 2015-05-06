@@ -1,5 +1,6 @@
 #include "tools.h"
 
+int test=1000000000;
 /* prend le nombre de chaine en parametre nb_args, et
  * retourn la concatenation des nb_args chaines
  * exemple string_concat(3,"toto","tata","titi") retourne tototatatiti
@@ -15,7 +16,13 @@ void add_to_toc(toc l, int profondeur,  char* titre)
   new->titre=titre;
   new->next=NULL;
   new->profondeur=profondeur;
-  new->numero_section=malloc(sizeof(*new->numero_section)*profondeur);
+        int i;
+    for (i=0; i<3; i++){
+        new->numero_section[i]=0;
+    }
+ // new->numero_section=malloc(sizeof(*new->numero_section)*profondeur);
+
+    
   if (toc_empty(l))
     {
       //premier section du toc:
@@ -24,26 +31,27 @@ void add_to_toc(toc l, int profondeur,  char* titre)
       l->last=new;
       return;
     }
-   
-  //le numero section d'ancien section détermine le numéro de section de nouveau section de toc	
-  int i;
-  for(i=0; i<profondeur-1; i++){
-    new->numero_section[i]=l->last->numero_section[i];
-  }
-  printf("PR: %d OLD:%d \n", profondeur, l->last->profondeur );
-  if(l->last->profondeur<=profondeur){
-    printf("hello\n");
-    new->numero_section[profondeur-1]++;
-  }
-  else{
-    new->numero_section[profondeur-1]=1;
-  }
+
+  //le numero section d'ancien section détermine le numéro de section de nouveau section de toc
+    switch (profondeur) {
+        case 1:
+            new->numero_section[0]=l->last->numero_section[0]+1;
+            break;
+        case 2:
+            new->numero_section[0]=l->last->numero_section[0];
+            new->numero_section[1]=l->last->numero_section[1]+1;
+            break;
+        case 3:
+            new->numero_section[0]=l->last->numero_section[0];
+            new->numero_section[1]=l->last->numero_section[1];
+            new->numero_section[2]=l->last->numero_section[2]+1;
+            break;
+        default:
+            break;
+    }
+
   l->last->next=new;
   l->last=new;
-  for(i=0; i<profondeur-1; i++){
-    printf("%d", new->numero_section[i]);
-  }
-  printf("\n");
 }
 
 toc toc_create(){

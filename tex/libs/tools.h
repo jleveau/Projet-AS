@@ -16,7 +16,7 @@
 typedef struct toc_cell_t
 {
 	int profondeur;
-	int* numero_section;
+	int numero_section[3];
 	char* titre;
 	struct toc_cell_t* next;
 } *toc_cell;
