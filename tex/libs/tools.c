@@ -1,6 +1,5 @@
 #include "tools.h"
 
-int test=1000000000;
 /* prend le nombre de chaine en parametre nb_args, et
  * retourn la concatenation des nb_args chaines
  * exemple string_concat(3,"toto","tata","titi") retourne tototatatiti
