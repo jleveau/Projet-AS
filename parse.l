@@ -186,7 +186,7 @@ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' ma
 "~"                                 {yylval = strdup(yytext); return TILD;}
 "-"                                 {yylval = print_balise_span("vert", "-"); return MINUS;}
 "+"                                 {yylval = print_balise_span("vert", "+"); return PLUS;}
-"*"                                 {yylval = print_balise_span("vert", "*"); return STAR;}
+"*"                                 {yylval = strdup("*"); return STAR;}
 "/"                                 {yylval = strdup(yytext); return SLASH;}
 "%"                                 {yylval = strdup(yytext); return PERCENT;}
 "<"                                 {yylval = strdup(yytext); return INFERIOR;}
@@ -225,10 +225,12 @@ alors c'est un identifier
 
 static int check_type(void)
 {
+
+	if (typedef_exist(yytext)){
+		return TYPEDEF_NAME;
+	}
 	switch(sym_type(yytext))
 	{
-		case TYPEDEF_NAME:				/* previously defined */
-			return TYPEDEF_NAME;
 		case ENUMERATION_CONSTANT:		/* previously defined */
 			return ENUMERATION_CONSTANT;
 		default:						  /* includes undefined */

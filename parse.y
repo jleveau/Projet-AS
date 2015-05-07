@@ -25,8 +25,8 @@ void yyerror(const char *);  /* prints grammar violation message */
 %token	CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
 
 %token	ALIGNAS ALIGNOF ATOMIC GENERIC NORETURN STATIC_ASSERT THREAD_LOCAL
-%token  SEMI_COLON OPENING_BRACE CLOSING_BRACE COLON EQUAL OPENING_PARENTHESIS CLOSING_PARENTHESIS  LEFT_BRACKET RIGHT_BRACKET TILD AMPERSAND EXCLAMATION_POINT
-%token  DOT MINUS PLUS STAR SLASH PERCENT INFERIOR SUPERIOR EXPONENT PIPE INTERROGATION_POINT TWO_DOT
+%token  STAR SEMI_COLON OPENING_BRACE CLOSING_BRACE COLON EQUAL OPENING_PARENTHESIS CLOSING_PARENTHESIS  LEFT_BRACKET RIGHT_BRACKET TILD AMPERSAND EXCLAMATION_POINT
+%token  DOT MINUS PLUS  SLASH PERCENT INFERIOR SUPERIOR EXPONENT PIPE INTERROGATION_POINT TWO_DOT
 
 %start translation_unit
 
@@ -203,13 +203,13 @@ constant_expression
 	;
 
 declaration
-	: declaration_specifiers SEMI_COLON                         {$$ = string_concat(2, $1, $2); /*variables*/}
-	| declaration_specifiers init_declarator_list SEMI_COLON	{create_variable(strdup($2), strdup($1), strdup("description")); $$ = string_concat(3, $1, print_balise_variable($2), $3);}
+	: declaration_specifiers SEMI_COLON                         {$$ = string_concat(2, $1, $2);}
+	| declaration_specifiers init_declarator_list SEMI_COLON	{add_typedef(strdup($2));create_variable(strdup($2), strdup($1), strdup("description")); $$ = string_concat(3, $1, print_balise_variable($2), $3); }
 	| static_assert_declaration                                 {$$ = string_concat(1, $1);}
 	;
 
 declaration_specifiers
-	: storage_class_specifier declaration_specifiers    {$$ = string_concat(2, $1, $2);}	/* ajouter_typedef($2); */
+	: storage_class_specifier declaration_specifiers    {$$ = string_concat(2, $1, $2);}
 	| storage_class_specifier                           {$$ = string_concat(1, $1);}
 	| type_specifier declaration_specifiers             {$$ = string_concat(2, $1, $2);}
 	| type_specifier                                    {$$ = string_concat(1, $1);}
@@ -232,7 +232,7 @@ init_declarator
 	;
 
 storage_class_specifier
-	: TYPEDEF       {$$ = string_concat(1, $1);}	/* identifiers must be flagged as TYPEDEF_NAME */
+	: TYPEDEF       {$$ = string_concat(1, $1); typedef_read=true;}	/* identifiers must be flagged as TYPEDEF_NAME */
 	| EXTERN        {$$ = string_concat(1, $1);}
 	| STATIC        {$$ = string_concat(1, $1);}
 	| THREAD_LOCAL  {$$ = string_concat(1, $1);}
@@ -261,8 +261,8 @@ type_specifier
 
 struct_or_union_specifier
 	: struct_or_union OPENING_BRACE  struct_declaration_list CLOSING_BRACE              {$$ = string_concat(4, $1, $2, $3, $4);}
-	| struct_or_union IDENTIFIER OPENING_BRACE  struct_declaration_list CLOSING_BRACE   {$$ = string_concat(5, $1, $2, $3, $4, $5);}
-	| struct_or_union IDENTIFIER                                                        {$$ = string_concat(2, $1, $2);}
+	| struct_or_union IDENTIFIER OPENING_BRACE  struct_declaration_list CLOSING_BRACE   {$$ = string_concat(5, $1, print_balise_declaration_struct($2), $3, $4, $5);}
+	| struct_or_union IDENTIFIER                                                        {$$ = string_concat(2, $1, print_balise_call_struct($2));}
 	;
 
 struct_or_union
@@ -356,7 +356,7 @@ direct_declarator
 	| direct_declarator LEFT_BRACKET type_qualifier_list RIGHT_BRACKET                              {$$ = string_concat(4, $1, $2, $3, $4);}
 	| direct_declarator LEFT_BRACKET assignment_expression RIGHT_BRACKET                            {$$ = string_concat(4, $1, $2, $3, $4);}
 	| direct_declarator OPENING_PARENTHESIS parameter_type_list CLOSING_PARENTHESIS                 {func_id = strdup($1); $$ = string_concat(4, print_balise_declaration($1), $2, $3, $4);}
-	| direct_declarator OPENING_PARENTHESIS CLOSING_PARENTHESIS                 {func_id=strdup($1); fprintf(stderr, "%s\n", $1); $$ = string_concat(3, print_balise_declaration($1), $2, $3);}
+	| direct_declarator OPENING_PARENTHESIS CLOSING_PARENTHESIS                 {func_id=strdup($1); $$ = string_concat(3, print_balise_declaration($1), $2, $3);}
 	| direct_declarator OPENING_PARENTHESIS identifier_list CLOSING_PARENTHESIS {func_id=strdup($1); $$ = string_concat(4, $1, $2, print_balise_declaration($3), $4);}
 	;
 

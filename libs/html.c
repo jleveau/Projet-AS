@@ -52,6 +52,22 @@ int anchor_balise()
 
 }
 
+char* print_balise_declaration_struct(char* param){
+	balise b=print_debut_balise_id("span", "struct_declaration");
+	char* texte=string_concat_sans_espace(6,b->texte,strdup("value=\""),strdup(param),strdup("\">"),param,strdup("</span>\n"));
+	free(b);
+	return texte;
+}
+
+char* print_balise_call_struct(char* param){
+	balise b=print_debut_balise_id("span", "struct_call");
+	char* texte=string_concat_sans_espace(6,b->texte,strdup("value=\""),strdup(param),strdup("\">"),param,strdup("</span>\n"));
+	free(b);
+	return texte;
+}
+
+
+
 char* print_balise_parameter(char* param)
 {
 	block top_block=(block)stack_top(block_stack);
@@ -87,8 +103,8 @@ char* print_balise_fonction(char* func){
 */
 char* print_balise_fonction(char* func)
 {
+	fprintf(stderr,"func : |%s| \n",func); 
 	function f=getFunction(func);
-	fprintf(stderr,"|%s=%s|",f->id,func);
 	balise b = print_debut_balise("a","fonction-activable");
 	char* hashtag = string_concat_sans_espace(2,strdup("#"),strdup(func));
 	ajouter_attribut(b,"href",hashtag);
@@ -97,11 +113,11 @@ char* print_balise_fonction(char* func)
 	char* txt;
 	if(f && f!=UNNAMED_FUNCTION)
 	{
-		txt = string_concat(6,texte1,b1->texte,strdup(">"),strdup(print_function(f)),strdup("</span>"),strdup("</a>\n"));
+		txt = string_concat(5,texte1,b1->texte,strdup(">"),strdup(print_function(f)),strdup("</a>\n"));
 	}
 	else
 	{
-		txt = string_concat(6,texte1,b1->texte,strdup(">"),strdup("tata"),strdup("</span>"),strdup("</span>\n"));
+		txt = string_concat(5,texte1,b1->texte,strdup(">"),strdup("tata"),strdup("</span>\n"));
 		fprintf(stderr,"coucou buggé\n");
 
 	}

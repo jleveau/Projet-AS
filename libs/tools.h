@@ -51,6 +51,7 @@ typedef struct block_t
 function UNNAMED_FUNCTION;
 
 char* read_buffer;
+bool typedef_read;
 
 /* Englobe les piles de déclaration (variables, et typedef) */
 
@@ -64,6 +65,7 @@ void fin_block();
 
 list function_list;
 list parameter_list;
+list typedef_list;
 stack typedef_stack;
 
 variable getVariable(char* name);

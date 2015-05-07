@@ -145,7 +145,7 @@ FILE* create_html(char* titre, char* dir)
 	fprintf(f_output, "</div>\n");
 
 	fprintf(f_output, "<div class=\" mainpanel\">\n");
-	fprintf(f_output, "<div class=\"contentpanel\"\n");
+	fprintf(f_output, "<div class=\"contentpanel\"> \n");
 
 	fprintf(f_output, "<div class=\"bordure\">\n");
 	fprintf(f_output, "<div class=\"Code\">\n");
@@ -191,6 +191,7 @@ void init_structures()
 	function_list = list_create();
 	block_stack = stack_create();
 	parameter_list = list_create();
+	typedef_list=list_create();
 	id_block = 0;
 	new_block(NULL);
 }

@@ -165,6 +165,13 @@ void destroy_variable(variable v)
 	free(v->description);
 }
 
+void add_typedef(char* param){
+	printf("add_typedef %s \n",param);
+	if (typedef_read)
+		add_to_list(typedef_list,param);
+	typedef_read=false;
+}
+
 /* Retourne la fonction dont le nom est passé en parametre, NULL si elle n'existe pas */
 function getFunction(char* name)
 {
@@ -175,7 +182,6 @@ function getFunction(char* name)
 	while (c)
 	{
 		function f=(function)c->elem;
-		fprintf(stderr,"|%s|",f->id);
 		if (f->id)
 		{
 			if (strcmp(f->id,name)==0)
@@ -201,7 +207,6 @@ variable getVariable(char* name)
 	while (c)
 	{
 		variable v=(variable)c->elem;
-		fprintf(stderr,"v->nom %s  name : %s\n", v->nom,name);
 		if (strcmp(v->nom,name)==0)
 		{
 			return v;
@@ -216,7 +221,7 @@ variable getVariable(char* name)
  * */
 char* create_variable_id(variable v,int id)
 {
-	char str_id[20];
+	char str_id[50];
 	sprintf(str_id,"%d%s",id,v->nom);
 	return strdup(str_id);
 }
@@ -241,7 +246,9 @@ variable create_variable(char* nom,char* type, char* description)
 	block b=(block)stack_top(block_stack);
 
 	v->id=create_variable_id(v,id_block-1);
+	
 	add_to_list(b->variables,v);
+
 	return v;
 }
 
@@ -312,6 +319,20 @@ void print_list(list l)
 		}
 	}
 	printf("======== ========\n");
+}
+
+bool typedef_exist(char* name){
+	fprintf(stderr,"param : |%s|",name);
+	cell c=typedef_list->first;
+	if (list_empty(typedef_list))
+		return false;
+	while(c){
+		fprintf(stderr,"val : |%s|",(char*)c->elem);
+		if (strcmp(name, c->elem)==0)
+			return true;
+		c=c->next;
+	}
+	return false;
 }
 
 list list_concat(list l1,list l2)
