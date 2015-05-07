@@ -41,6 +41,8 @@ FILE* create_html(char* titre)
 	fprintf(f_output,"$(\".fin_block\").click(function(){\n");
 	fprintf(f_output,"$(id).slideToggle(\"slow\");});});</script>\n");
 
+
+
 	fprintf(f_output, "</head>\n");									// </HEADER>
 
 	//body
@@ -77,6 +79,9 @@ FILE* create_html(char* titre)
 int fermer_html(FILE* fd)
 {
 	fprintf(fd, "</div>\n");
+				fprintf(f_output,"<script> var TOC = document.getElementById(\"TableOfContents\").innerHTML;\n");
+    fprintf(f_output,"document.getElementById(\"toc-devant\").innerHTML = TOC;\n");
+	fprintf(f_output,"</script>\n");
 	fprintf(fd, "</body>\n");
 	fprintf(fd, "</html>\n");
 	return(fclose(fd)); //close avec flush
@@ -102,6 +107,7 @@ void source_js()
 	fprintf(f_output, "<script src=\"../js/dashboard.js\"></script>\n");
 	fprintf(f_output, "<script src=\"../javascript.js\"></script>\n");
 	fprintf(f_output, "<script src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>\n");
+
 }
 
 int main(int argc,char** argv)

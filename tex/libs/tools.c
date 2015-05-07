@@ -85,6 +85,7 @@ bool toc_empty(toc l){
 
 void print_toc(toc Toc){
   int nombreSecs=1;
+  fprintf(f_output,"<div id=\"TableOfContents\" style=display:none;>");
   fprintf(f_output, "<h1>Contents</h1>");
   if (!Toc)
     {
@@ -124,6 +125,7 @@ void print_toc(toc Toc){
 	    c=c->next;
 	}
     }
+fprintf(f_output,"</div>");
 }
 
 

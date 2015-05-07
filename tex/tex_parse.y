@@ -63,7 +63,7 @@ toc_OR_vide
 
 
 toc
-    : TOC_COMMANDE	{toc_affiche="vrai";  /* ROHAN: balise avec placeholder pour le toc */}
+    : TOC_COMMANDE	{toc_affiche="vrai"; fprintf(f_output,"<div id=\"toc-devant\"></div>"); /* ROHAN: balise avec placeholder pour le toc */}
     ;
 
 contenus
