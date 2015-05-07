@@ -65,12 +65,12 @@ toc
 
 contenus
 	: combinaison_string_ET_appel_commande_sans_BEGIN {/* contenus string_OU_appel_commande_sans_BEGIN	{OU car ca revient tout seul}*/}
+    |
 	;
 
 combinaison_string_ET_appel_commande_sans_BEGIN
 	: combinaison_string_ET_appel_commande_sans_BEGIN string_OU_appel_commande_sans_BEGIN {/*ET pour que l'interieur des commandes ex {ggg} peuuvent être un mélange de commandes et strings */}
 	| string_OU_appel_commande_sans_BEGIN
-    | toc
 	;
 
 string_OU_appel_commande_sans_BEGIN
@@ -141,6 +141,7 @@ subsections
 subsubsections
 	: SUBSUBSECTION parameter_string[titre] {print_balise_section(3, $titre);} OPEN_BRACE subsubsections CLOSE_BRACE {print_fin_b("section");}
 	| texte_ou_vide {/*bloque ici*/} subsubsection_ou_vide
+    |
 	;
 
 subsubsection_ou_vide
