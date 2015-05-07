@@ -48,19 +48,22 @@ void insert_into_toc(int, char*);
 
 start
     : ENTETE_DOCUMENT {initialiser_toc();} structure {/* contenu peut être vide*/}
-	| {/*latex peut pas compiler un truc vide mais nous on veut le faire pour les tests								A ENLEVER */}
 	;
 
 structure
-    : TITLE[h1] {print_titre($h1);} toc BEGIN_DOCUMENT contenus MAKETITLE contenus END_DOCUMENT {if(toc_affiche) {print_toc(Toc);} toc_destroy(Toc);}
-    | BEGIN_DOCUMENT toc TITLE[h1] {print_titre($h1);} contenus MAKETITLE contenus END_DOCUMENT {if(toc_affiche) {print_toc(Toc);} toc_destroy(Toc);}
+    : TITLE[h1] {print_titre($h1);} toc_OR_vide BEGIN_DOCUMENT contenus MAKETITLE contenus END_DOCUMENT {if(toc_affiche) {print_toc(Toc);} toc_destroy(Toc);}
+    | BEGIN_DOCUMENT toc_OR_vide TITLE[h1] {print_titre($h1);} contenus MAKETITLE contenus END_DOCUMENT {if(toc_affiche) {print_toc(Toc);} toc_destroy(Toc);}
 	|
 	;
 
+toc_OR_vide
+    :
+    | toc
+    ;
+
 
 toc
-    : {}
-    | TOC_COMMANDE	{toc_affiche="vrai";  /* ROHAN: balise avec placeholder pour le toc */}
+    : TOC_COMMANDE	{toc_affiche="vrai";  /* ROHAN: balise avec placeholder pour le toc */}
     ;
 
 contenus
@@ -83,6 +86,7 @@ appel_commande_sans_BEGIN
 	: formatage_texte
 	| decoration_texte_sans_param[style]  OPEN_BRACE {print_balise($style);} combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b($style);}
 	| decoration_texte_avec_param
+    | toc
 	;
 
 formatage_texte
@@ -92,7 +96,7 @@ formatage_texte
 	| BEGIN_ENUMERATE {print_balise("ol");} item END_ENUMERATE {print_fin_b("ol");}
 	| BEGIN_TABULAR {print_balise("table");} option parameter_word_or_string[nbColonnesEtLignes] TAB_STRING[table_string] {creer_table(strlen($nbColonnesEtLignes), $table_string); }END_TABULAR {print_fin_b("table");/* param ne va pas être traité par nous alors on fait pour que si il est dans le fichier, ca passe */}
 	| BEGIN_EQUATION {creer_balise_mathML("block");} equation END_EQUATION	{print_fin_b("math");}
-	| BEGIN_EQUATION_DOLLAR {creer_balise_mathML("inline");} equation END_EQUATION_DOLLAR {print_fin_b("math");} 
+	| BEGIN_EQUATION_DOLLAR {creer_balise_mathML("inline");} equation END_EQUATION_DOLLAR {print_fin_b("math");}
 	;
 
 

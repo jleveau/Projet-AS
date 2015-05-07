@@ -42,7 +42,7 @@ void print_space();
 	print_newline();
 }
 
-{SPACE_OU_NEWLINE_INFINI}\\tableofcontents {
+<TABULAR,INITIAL>{SPACE_OU_NEWLINE_INFINI}\\tableofcontents {
         return TOC_COMMANDE;
 }
 
