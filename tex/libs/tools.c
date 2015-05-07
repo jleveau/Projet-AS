@@ -10,6 +10,7 @@
 /*pour le table de matières*/
 void add_to_toc(toc l, int profondeur,  char* titre)
 {
+  l->nbSecs++;
   toc_cell new=malloc(sizeof(*new));
   new->titre=malloc(sizeof(new->titre));
   new->titre=titre;
@@ -57,6 +58,7 @@ toc toc_create(){
   toc l=malloc(sizeof(*l));
   l->last=NULL;
   l->first=NULL;
+  l->nbSecs=0;
   return l;
 }
 
@@ -76,11 +78,13 @@ void toc_destroy(toc l){
       free(l);
     }
 }
+
 bool toc_empty(toc l){
   return !l->last;
 }
 
 void print_toc(toc Toc){
+  int nombreSecs=1;
   fprintf(f_output, "<h1>Contents</h1>");
   if (!Toc)
     {
@@ -94,10 +98,6 @@ void print_toc(toc Toc){
 	{
 	  fprintf(f_output, "<h5>");
 	  int i;
-	  /*  for(i=0; i<c->profondeur*5; i++){
-	      fprintf(f_output, "&nbsp;");
-	      }*/
-	    
 
 	  if(c->profondeur==1)
 	    fprintf(f_output, "<b>");
@@ -117,10 +117,11 @@ void print_toc(toc Toc){
 	  }
 	  
 	  char* bold_fin="";
-	  if(c->profondeur==1)
-	    bold_fin="</b>";
-	  fprintf(f_output, " %s</h5>%s<br>", c->titre, bold_fin);      
-	  c=c->next;
+        if(c->profondeur==1){
+            bold_fin="</b>";
+        }
+        fprintf(f_output, " <a href=\"#secID%d\">%s</a></h5>%s<br>", nombreSecs++, c->titre, bold_fin);
+	    c=c->next;
 	}
     }
 }

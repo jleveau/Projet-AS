@@ -23,6 +23,7 @@ typedef struct toc_cell_t
 
 typedef struct toc_t
 {
+    int nbSecs;
 	toc_cell last;
 	toc_cell first;
 } *toc;

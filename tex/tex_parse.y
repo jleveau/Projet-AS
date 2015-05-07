@@ -199,9 +199,9 @@ void print_titre(char* titre)
 //imprime la balise section et l'ajout dans toc
 void print_balise_section(int niveau, char* titre)
 {
-        add_to_toc(Toc, niveau, titre);
+    add_to_toc(Toc, niveau, titre);
 	print_balise("section");
-	fprintf(f_output, "<h%d>%s</h%d>", niveau+1, titre, niveau+1);
+	fprintf(f_output, "<h%d id=\"secID%d\">%s</h%d>", niveau+1, Toc->nbSecs,    titre, niveau+1);
 }
 
 void print_balise(char* style)
