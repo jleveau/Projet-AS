@@ -24,6 +24,9 @@ int nb_ligne;
 
 char* print_balise_fonction(char* func);
 char* print_balise_variable(char* var);
+char* print_balise_declaration_typedef(char* param);
+char* print_balise_call_typedef(char* param);
+
 
 char* print_balise_span(char* type, char* param);
 char* print_balise_declaration(char* func);

@@ -165,11 +165,15 @@ void destroy_variable(variable v)
 	free(v->description);
 }
 
-void add_typedef(char* param){
-	printf("add_typedef %s \n",param);
-	if (typedef_read)
+char* add_typedef(char* param){
+	printf("add_typedef |%s| \n",param);
+	if (typedef_read){
 		add_to_list(typedef_list,param);
+		typedef_read=false;
+		return print_balise_declaration_typedef(param);
+	}
 	typedef_read=false;
+	return param;
 }
 
 /* Retourne la fonction dont le nom est passé en parametre, NULL si elle n'existe pas */
@@ -323,9 +327,11 @@ void print_list(list l)
 
 bool typedef_exist(char* name){
 	cell c=typedef_list->first;
-	if (list_empty(typedef_list))
+	if (list_empty(typedef_list)){
 		return false;
+	}
 	while(c){
+		char* elem=(char*)c->elem;
 		if (strcmp(name, c->elem)==0)
 			return true;
 		c=c->next;
@@ -396,7 +402,6 @@ void block_destroy(block b)
 void fin_block()
 {
 	block b=(block)stack_top(block_stack);
-	print_variables();
 	stack_pop(block_stack);
 	block_destroy(b);
 }

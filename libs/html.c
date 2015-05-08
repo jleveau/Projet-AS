@@ -72,6 +72,20 @@ int anchor_balise()
 
 }
 
+char* print_balise_declaration_typedef(char* param){
+	balise b=print_debut_balise_id("span", "typedef_declaration");
+	char* texte=string_concat_sans_espace(6,b->texte,strdup("value=\""),strdup(param),strdup("\">"),strdup(param),strdup("</span>\n"));
+	free(b);
+	return texte;
+}
+
+char* print_balise_call_typedef(char* param){
+	balise b=print_debut_balise_id("span", "typedef_call");
+	char* texte=string_concat_sans_espace(6,b->texte,strdup("value=\""),strdup(param),strdup("\">"),strdup(param),strdup("</span>\n"));
+	free(b);
+	return texte;
+}
+
 char* print_balise_declaration_struct(char* param){
 	balise b=print_debut_balise_id("span", "struct_declaration");
 	char* texte=string_concat_sans_espace(6,b->texte,strdup("value=\""),strdup(param),strdup("\">"),param,strdup("</span>\n"));

@@ -204,7 +204,15 @@ constant_expression
 
 declaration
 	: declaration_specifiers SEMI_COLON                         {$$ = string_concat(2, $1, $2);}
-	| declaration_specifiers init_declarator_list SEMI_COLON	{add_typedef(strdup($2)); create_variable(strdup($2), strdup($1), strdup("description")); $$ = string_concat(3, $1, print_balise_variable($2), $3); }
+	| declaration_specifiers init_declarator_list SEMI_COLON	{if (typedef_read){
+																	$$ = string_concat(3, $1, add_typedef(strdup($2)), $3);
+																	}
+																else {
+																	create_variable(strdup($2), strdup($1), strdup("description"));
+																	$$ = string_concat(3, $1, print_balise_variable($2), $3);
+																	}
+																}
+																		
 	| static_assert_declaration                                 {$$ = string_concat(1, $1);}
 	;
 

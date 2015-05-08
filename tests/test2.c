@@ -1,27 +1,17 @@
-int f(int a, int b)
-{ a = a+1;
-	a++;
-    return a;
+struct ptr{
+	int i;
+};
+typedef struct ptr p;
+
+int g(int a, char* b){
+	char* f;
 }
 
-int g()
-{
-    int b;
-}
-
-int main(char toto, int tata)
-{
-    if(1 == 1)
-    {
-        if(toto)
-        {
-            f(2, 3);
-            g();
-            int b = 3;
-        }
-        else
-        {
-            int a = 42;
-        }
-    }
+int main(){
+	int a;
+	p b;
+	b->i=4;
+	a=4;
+	b=6;
+	g(a,b);
 }

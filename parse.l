@@ -225,8 +225,8 @@ alors c'est un identifier
 
 static int check_type(void)
 {
-
-	if (typedef_exist(yytext)){
+*	if (typedef_exist(yytext)){
+		yylval=print_balise_call_typedef(yytext);
 		return TYPEDEF_NAME;
 	}
 	switch(sym_type(yytext))
