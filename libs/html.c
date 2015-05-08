@@ -91,7 +91,8 @@ char* print_balise_call_struct(char* param){
 char* print_balise_parameter(char* param)
 {
 	block top_block=(block)stack_top(block_stack);
-	char var_id[20];
+	char var_id[50];
+	
 	sprintf(var_id, "block%d%s", id_block,param);
 	balise b=print_debut_balise("span", "parameter");
 	char* texte=string_concat_sans_espace(6,b->texte,strdup("id=\""),strdup(param),strdup("\">"),param,strdup("</span>\n"));
@@ -152,7 +153,6 @@ char* print_balise_fonction(char* func){
 */
 char* print_balise_fonction(char* func)
 {
-	//fprintf(stderr,"func : |%s| \n",func); 
 	function f=getFunction(func);
 	balise b = print_debut_balise("a","fonction-activable");
 	char* hashtag = string_concat_sans_espace(2,strdup("#"),strdup(func));
@@ -172,7 +172,6 @@ char* print_balise_fonction(char* func)
 	}
 	free(b);
 	free(b1);
-
 	return txt;
 
 }
@@ -197,7 +196,7 @@ char* print_debut_balise_block()
 	char anchor[80];
 	sprintf(anchor,"><span name=\"%s\">", top_block->id);
 	char* concat =string_concat_sans_espace(2,strdup("#"),strdup(top_block->id));
-	char aref[150];
+	char aref[256];
 	sprintf(aref,"<a style=\"text_decoration:none;\" class =\"fin_block\"  value=\"%s\" href=\"#\"><i class=\"fa fa-caret-square-o-down\" href=\"#\"></i></a>\n",concat);
 	char* texte=string_concat(4,strdup(print_balise_span("vert","{")),strdup(aref),strdup(b->texte),strdup(anchor));
 	free(b);
