@@ -107,22 +107,22 @@ char* print_balise_variable(char* var)
 	strcpy(var_id,top_block->id);
 	strcat(var_id,var);
 		char* hashtag = string_concat_sans_espace(2,strdup("#"),strdup(var));
-		char *var_id_point = string_concat_sans_espace(2,strdup("."),strdup(var_id));
+		char *var_id_point = string_concat_sans_espace(2,strdup("."),strdup(var));
 	balise b=print_debut_balise_id("a",hashtag);
 	ajouter_attribut_sans_espace(b,"class","variable-activable");
 	ajouter_attribut_sans_espace(b,"name",var_id);
 
 	ajouter_attribut(b,"href",hashtag);
-	char* texte0 = malloc(strlen(var_id)+strlen(var_id)+30);
+	//char* texte0 = malloc(strlen(var_id)+strlen(var_id_point)+strlen("span class=\"")+strlen("\" id=\"")+3+strlen("</span>"));
 		balise b1 = print_debut_balise("span","variable");
-	strcat(texte0,"<span class=\"");
+	/*strcat(texte0,"<span class=\"");
 	strcat(texte0,var_id);
 	strcat(texte0,"\" id=\"");
 	strcat(texte0,var_id_point);
 	strcat(texte0,"\">");
 	strcat(texte0,var);
-	strcat(texte0,"</span>");
-	char* texte1=string_concat(5,b->texte,strdup("value=\""),var_id,strdup("\">"),strdup(texte0));
+	strcat(texte0,"</span>");*/
+	char* texte1=string_concat(5,b->texte,strdup("value=\""),strdup(var_id),strdup("\">"),strdup(var_id));
 	char* txt;
 	if(v)
 	{
@@ -133,6 +133,7 @@ else
 	txt = string_concat(5,strdup(texte1),strdup(b1->texte),strdup(">"),strdup("tata"),strdup("</span>\n"));
 		fprintf(stderr,"coucou buggé\n");
 }
+	//free(texte0);
 	free(b);
 	free(b1);
 	return txt;
