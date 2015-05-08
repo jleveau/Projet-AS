@@ -16,13 +16,15 @@
 typedef struct toc_cell_t
 {
 	int profondeur;
-	int numero_section[3];
+	int numero_section[3]; //parti, chapitre, 3 niveau de sections
 	char* titre;
 	struct toc_cell_t* next;
 } *toc_cell;
 
 typedef struct toc_t
 {
+    int nbParts;
+    int nbChaps;
     int nbSecs;
 	toc_cell last;
 	toc_cell first;

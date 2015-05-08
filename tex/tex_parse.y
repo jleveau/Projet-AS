@@ -29,12 +29,14 @@ void ecrire_debut_somme_equation(char*);
 void ecrire_fin_somme_equation(char * val);
 void initialiser_toc();
 void insert_into_toc(int, char*);
+void print_balise_parti(char* titre);
+void print_balise_chapitre(char* titre);
  
 %}
 
 %token ENTETE_DOCUMENT TOC_COMMANDE TITLE MAKETITLE BEGIN_DOCUMENT END_DOCUMENT TEXT BEG WORD BACKSLASH SPACE CHAR TAB_STRING
 %token BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR TAILLE NB ENUM BEGIN_ITEM TABULAR EQUATION END BEGIN_ITEMIZE  END_ITEMIZE  BEGIN_ENUMERATE  END_ENUMERATE BEGIN_TABULAR END_TABULAR BEGIN_EQUATION END_EQUATION BEGIN_EQUATION_DOLLAR END_EQUATION_DOLLAR
-%token  PARAGRAPH SECTION SUBSECTION SUBSUBSECTION
+%token  PART CHAPTER PARAGRAPH SECTION SUBSECTION SUBSUBSECTION
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
 %token A_FAIRE
 %token NBR_EQUATION VAR_EQUATION PLUS_EQUATION MINUS_EQUATION TIMES_EQUATION DIVIDE_EQUATION LESS_THAN_EQUATION MORE_THAN_EQUATION EGAL_EQUATION
@@ -90,8 +92,10 @@ appel_commande_sans_BEGIN
 	;
 
 formatage_texte
-	: PARAGRAPH  {print_balise("b");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE  {print_fin_b("b");}  {print_balise("p");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("p");}
-	| 	SECTION parameter_string[titre] {print_balise_section(1, $titre);}  OPEN_BRACE subsections CLOSE_BRACE  {print_fin_b("section");}
+    : PART parameter_string[titre] {print_balise_parti($titre); /*parti et chapitre n'englobe rien*/}
+    | CHAPTER parameter_string[titre] {print_balise_chapitre($titre); /*parti et chapitre n'englobe rien*/}
+    | PARAGRAPH  {print_balise("b");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE  {print_fin_b("b");}  {print_balise("p");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("p");}
+	| SECTION parameter_string[titre] {print_balise_section(3, $titre);}  OPEN_BRACE subsections CLOSE_BRACE  {print_fin_b("section");}
 	| BEGIN_ITEMIZE {print_balise("ul");} item END_ITEMIZE {print_fin_b("ul");}
 	| BEGIN_ENUMERATE {print_balise("ol");} item END_ENUMERATE {print_fin_b("ol");}
 	| BEGIN_TABULAR {print_balise("table");} option parameter_word_or_string[nbColonnesEtLignes] TAB_STRING[table_string] {creer_table(strlen($nbColonnesEtLignes), $table_string); }END_TABULAR {print_fin_b("table");/* param ne va pas être traité par nous alors on fait pour que si il est dans le fichier, ca passe */}
@@ -137,19 +141,19 @@ texte_ou_vide
 
 
 subsections
-	: SUBSECTION parameter_word_or_string[titre] {print_balise_section(2, $titre);} OPEN_BRACE subsubsections CLOSE_BRACE {print_fin_b("section");} subsections
-	| texte_ou_vide SUBSECTION parameter_word_or_string[titre] {print_balise_section(2, $titre);}  OPEN_BRACE  subsubsections  CLOSE_BRACE {print_fin_b("section");} subsections
+	: SUBSECTION parameter_word_or_string[titre] {print_balise_section(4, $titre);} OPEN_BRACE subsubsections CLOSE_BRACE {print_fin_b("section");} subsections
+	| texte_ou_vide SUBSECTION parameter_word_or_string[titre] {print_balise_section(4, $titre);}  OPEN_BRACE  subsubsections  CLOSE_BRACE {print_fin_b("section");} subsections
 	|
 	;
 
 subsubsections
-	: SUBSUBSECTION parameter_string[titre] {print_balise_section(3, $titre);} OPEN_BRACE subsubsections CLOSE_BRACE {print_fin_b("section");}
+	: SUBSUBSECTION parameter_string[titre] {print_balise_section(5, $titre);} OPEN_BRACE subsubsections CLOSE_BRACE {print_fin_b("section");}
 	| texte_ou_vide {/*bloque ici*/} subsubsection_ou_vide
     |
 	;
 
 subsubsection_ou_vide
-	: SUBSUBSECTION parameter_word_or_string[titre] {print_balise_section(3, $titre);} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("section");} subsubsections
+	: SUBSUBSECTION parameter_word_or_string[titre] {print_balise_section(5, $titre);} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("section");} subsubsections
 	|
 	;
 
@@ -174,7 +178,7 @@ parameter_word
 	;
 
 parameter_string
-	: OPEN_BRACE STRING[param] CLOSE_BRACE {$$=$param;}
+: OPEN_BRACE STRING[param] CLOSE_BRACE {$$=$param;}
 	;
 
 decoration_texte_sans_param
@@ -199,6 +203,20 @@ void initialiser_toc(){
 void print_titre(char* titre)
 {
 	fprintf(f_output, "<h1 class=\"title\">%s</h1>", titre);
+}
+
+//imprime la balise parti et l'ajout dans toc
+void print_balise_parti(char* titre)
+{
+    add_to_toc(Toc, 0, titre);
+    fprintf(f_output, "<h1 class=\"parti\" id=\"partID%d\"> Parti %d </br> %s</h1>", Toc->nbParts, Toc->nbParts, titre);
+}
+
+//imprime la balise chapitre et l'ajout dans toc
+void print_balise_chapitre(char* titre)
+{
+    add_to_toc(Toc, 1, titre);
+    fprintf(f_output, "<h1 class=\"chapitre\" id=\"chapID%d\"> Chapitre %d </br> %s</h1>", Toc->nbChaps, Toc->nbChaps, titre);
 }
 
 //imprime la balise section et l'ajout dans toc

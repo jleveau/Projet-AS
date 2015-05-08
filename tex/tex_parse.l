@@ -119,6 +119,14 @@ void print_space();
 	return UNDERLINE;
 }
 
+"\\part" {
+	return PART;
+}
+
+"\\chapter" {
+	return CHAPTER;
+}
+
 "\\section" {
 	return SECTION;
 }
