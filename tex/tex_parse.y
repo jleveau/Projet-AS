@@ -92,8 +92,9 @@ appel_commande_sans_BEGIN
 	;
 
 formatage_texte
-    : PART parameter_string[titre] {print_balise_parti($titre); /*parti et chapitre n'englobe rien*/}
-    | CHAPTER parameter_string[titre] {print_balise_chapitre($titre); /*parti et chapitre n'englobe rien*/}
+    : PART parameter_word_or_string[titre] {print_balise_parti($titre); /*parti et chapitre n'englobe rien*/}
+    | CHAPTER parameter_word_or_string[titre] {print_balise_chapitre($titre); /*parti et chapitre n'englobe rien*/}
+    | SECTION parameter_word_or_string[titre] {print_balise_section(3, $titre); /*parti et chapitre n'englobe rien*/}
     | PARAGRAPH  {print_balise("b");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE  {print_fin_b("b");}  {print_balise("p");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("p");}
 	| SECTION parameter_string[titre] {print_balise_section(3, $titre);}  OPEN_BRACE subsections CLOSE_BRACE  {print_fin_b("section");}
 	| BEGIN_ITEMIZE {print_balise("ul");} item END_ITEMIZE {print_fin_b("ul");}
@@ -147,7 +148,7 @@ subsections
 	;
 
 subsubsections
-	: SUBSUBSECTION parameter_string[titre] {print_balise_section(5, $titre);} OPEN_BRACE subsubsections CLOSE_BRACE {print_fin_b("section");}
+	: SUBSUBSECTION parameter_word_or_string[titre] {print_balise_section(5, $titre);} OPEN_BRACE subsubsections CLOSE_BRACE {print_fin_b("section");}
 	| texte_ou_vide {/*bloque ici*/} subsubsection_ou_vide
     |
 	;
@@ -224,7 +225,18 @@ void print_balise_section(int niveau, char* titre)
 {
     add_to_toc(Toc, niveau, titre);
 	print_balise("section");
-	fprintf(f_output, "<h%d id=\"secID%d\">%s</h%d>", niveau+1, Toc->nbSecs,    titre, niveau+1);
+    char num_sec[80];
+    //subsubsections n'affiche pas de numéro et ils sont d'une taille plus petite que les autres
+    if(niveau!=5){
+    sprintf(num_sec, "%d", Toc->nbChaps);
+    int i;
+    for(i=0; i<niveau-2; i++){
+        sprintf(num_sec, "%s.%d", num_sec, Toc->last->numero_section[i]);
+        }
+    	fprintf(f_output, "<h%d id=\"secID%d\">%s %s</h%d>", niveau-1, Toc->nbSecs, num_sec, titre, niveau-1);
+    }
+    else
+        fprintf(f_output, "<h%d id=\"secID%d\">%s</h%d>", niveau, Toc->nbSecs, titre, niveau);
 }
 
 void print_balise(char* style)

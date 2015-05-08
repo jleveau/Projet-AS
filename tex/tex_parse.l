@@ -76,7 +76,7 @@ void print_space();
 	BEGIN INITIAL;
 }
 
-<NOM_TITLE>{MOT}*/\} {
+<NOM_TITLE>{STRING_SANS_PONC}*/\} {
 	/*cherche string du titre*/
 	yylval=strdup(yytext);
 	return TITLE;

@@ -118,14 +118,34 @@ void print_toc(toc Toc){
                     break;
                 }
             }
-            fprintf(f_output, "<%s %s>", taille_titre, class);
-            int i;
             
-            if(c->profondeur==1)
-                fprintf(f_output, "<b>");
+            //choses supplémentaires pour chaque niveau ex section en gras
+            char buff[10];
+            switch (c->profondeur){
+                case 0: {
+                    sprintf(buff, "%d", nombreParti+1);
+                    break;
+                }
+                case 1: {
+                    sprintf(buff, "%d", nombreChap+1);
+                    break;
+                }
+                case 2: {
+                    sprintf(buff, "<b>");
+                    break;
+                }
+                default: {
+                    sprintf(buff, "");
+                    break;
+                }
+            }
+            fprintf(f_output, "<%s %s> %s", taille_titre, class, buff);
+
+            int i;
             for(i=2; i<5*c->profondeur-1; i++){
                 fprintf(f_output, "&nbsp;");
             }
+            
             //on n'écrit pas le numéro de parti; on va le traiter ailleurs
             for(i=0; i<c->profondeur-2; i++){
                 switch (c->profondeur){
