@@ -118,10 +118,14 @@ FILE* create_html(char* titre, char* dir)
 	fprintf(f_output, "$(\".fin_block\").click(function(){\n");
 	fprintf(f_output, "$(id).slideToggle(\"slow\");});});</script>\n");
 
-	fprintf(f_output, "<script>var color='';$(document).ready(function(){\n");
+	fprintf(f_output, "<script>$(document).ready(function(){\n");
 	fprintf(f_output, "$('.variable-activable').hover(function(){\n");
-	fprintf(f_output, "color = $(this).children().attr('id');\n");
-	fprintf(f_output, "$(color).css(\"color\",\"red\");});});</script>\n");
+	fprintf(f_output, "var color = $(this).children().attr('id');\n");
+	fprintf(f_output, "$(color).css(\"background-color\",\"#CBCACA\")");
+	fprintf(f_output, "}, function() {\n");
+	fprintf(f_output, "var color = $(this).children().attr('id');\n");
+	fprintf(f_output, "$(color).css(\"background-color\",\"\")");
+	fprintf(f_output, "});});</script>");
 
 
 	fprintf(f_output, "</head>\n");								// </HEADER>
