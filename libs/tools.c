@@ -128,7 +128,7 @@ void destroy_function_list()
 				function f=(function)c->elem;
 				free(f->nom);
 				free(f->type);
-				free(f->description);
+				//free(f->description);
 				destroy_variable_list(f->arguments);
 				free(f);
 				free(c);
@@ -221,9 +221,9 @@ variable getVariable(char* name)
  * */
 char* create_variable_id(variable v,int id)
 {
-	char str_id[50];
+	char* str_id=malloc(strlen(v->nom)+100);
 	sprintf(str_id,"%d%s",id,v->nom);
-	return strdup(str_id);
+	return str_id;
 }
 
 char* create_name_id(char* name)
@@ -322,12 +322,10 @@ void print_list(list l)
 }
 
 bool typedef_exist(char* name){
-	fprintf(stderr,"param : |%s|",name);
 	cell c=typedef_list->first;
 	if (list_empty(typedef_list))
 		return false;
 	while(c){
-		fprintf(stderr,"val : |%s|",(char*)c->elem);
 		if (strcmp(name, c->elem)==0)
 			return true;
 		c=c->next;

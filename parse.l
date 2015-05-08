@@ -62,7 +62,6 @@ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' ma
 
 %%
 
-"#".*                               {/*On efface les include et tous ce qui est apres*/}
 "auto"                              {yylval = print_balise_span("type_specifier", "auto"); return AUTO;}
 "case"                              {yylval = print_balise_span("jaune","case"); return CASE;}
 "struct"                            {yylval = print_balise_span("type_specifier", "struct"); return STRUCT;}
@@ -150,6 +149,9 @@ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' ma
 ">="                                {yylval = strdup(yytext); return GE_OP;}
 "=="                                {yylval = strdup(yytext); return EQ_OP;}
 "!="                                {yylval = strdup(yytext); return NE_OP;}
+
+
+"#".*                               {/*On efface les include et tous ce qui est apres*/}
 
 ";"                                 {
 										yylval = string_concat(2, print_balise_span("vert", ";"), strdup("<br \\>\n"));    /* Il faut afficher l'indentation dans la yylval */

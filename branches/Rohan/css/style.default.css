@@ -14,6 +14,11 @@ body {
    /*color: #636e7b;*/
    color: #262626;
 }
+a:hover
+{
+text-decoration:none;
+}
+
 
 body.notfound,
 body.signin {
@@ -25,7 +30,6 @@ input,select,textarea {
 	color: #636e7b;
 }
 
-a:focus, a:active { outline: none; }
 
 h1,h2,h3,h4,h5 {
    font-family: 'LatoRegular', 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, sans-serif;
@@ -2442,7 +2446,7 @@ div.error label.error:before {
 .notfoundpanel .form-control {
    width: 250px;
    float: left;
-}*/
+}
 
 /* search results */
 .nav-sr li {

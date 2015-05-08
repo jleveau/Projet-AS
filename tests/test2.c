@@ -1,3 +1,5 @@
+#define TRUE 1 
+
 int f(int a, int b)
 { a = a+1;
 	a++;
@@ -11,7 +13,7 @@ int g()
 
 int main(char toto, int tata)
 {
-    if(1 == 1)
+    if(TRUE)
     {
         if(toto)
         {

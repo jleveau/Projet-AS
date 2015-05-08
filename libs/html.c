@@ -91,10 +91,11 @@ char* print_balise_call_struct(char* param){
 char* print_balise_parameter(char* param)
 {
 	block top_block=(block)stack_top(block_stack);
-	char var_id[20];
+	char var_id[50];
+	
 	sprintf(var_id, "block%d%s", id_block,param);
 	balise b=print_debut_balise("span", "parameter");
-	char* texte=string_concat(6,b->texte,strdup("value=\""),strdup(var_id),strdup("\">"),param,strdup("</span>\n"));
+	char* texte=string_concat_sans_espace(6,b->texte,strdup("id=\""),strdup(param),strdup("\">"),param,strdup("</span>\n"));
 	free(b);
 	return texte;
 }
@@ -107,13 +108,13 @@ char* print_balise_variable(char* var)
 	strcpy(var_id,top_block->id);
 	strcat(var_id,var);
 		char* hashtag = string_concat_sans_espace(2,strdup("#"),strdup(var));
-		char *var_id_point = string_concat_sans_espace(2,strdup("."),strdup(var));
+		char *var_id_point = string_concat_sans_espace(2,strdup("."),strdup(var_id));
 	balise b=print_debut_balise_id("a",hashtag);
 	ajouter_attribut_sans_espace(b,"class","variable-activable");
 	ajouter_attribut_sans_espace(b,"name",var_id);
 
 	ajouter_attribut(b,"href",hashtag);
-	//char* texte0 = malloc(strlen(var_id)+strlen(var_id_point)+strlen("span class=\"")+strlen("\" id=\"")+3+strlen("</span>"));
+	//char* texte0 = malloc(strlen(var_id)+strlen(var_id_point)+strlen(var)+28);
 		balise b1 = print_debut_balise("span","variable");
 	/*strcat(texte0,"<span class=\"");
 	strcat(texte0,var_id);
@@ -122,7 +123,8 @@ char* print_balise_variable(char* var)
 	strcat(texte0,"\">");
 	strcat(texte0,var);
 	strcat(texte0,"</span>");*/
-	char* texte1=string_concat(5,b->texte,strdup("value=\""),strdup(var_id),strdup("\">"),strdup(var_id));
+	char* texte0 = string_concat_sans_espace(7,strdup("<span class=\""),strdup(var_id),strdup("\" id=\""),strdup(var_id_point),strdup("\">"),strdup(var),strdup("</span>"));
+	char* texte1=string_concat(5,b->texte,strdup("value=\""),strdup(var_id),strdup("\">"),strdup(texte0));
 	char* txt;
 	if(v)
 	{
@@ -151,7 +153,6 @@ char* print_balise_fonction(char* func){
 */
 char* print_balise_fonction(char* func)
 {
-	//fprintf(stderr,"func : |%s| \n",func); 
 	function f=getFunction(func);
 	balise b = print_debut_balise("a","fonction-activable");
 	char* hashtag = string_concat_sans_espace(2,strdup("#"),strdup(func));
@@ -171,7 +172,6 @@ char* print_balise_fonction(char* func)
 	}
 	free(b);
 	free(b1);
-
 	return txt;
 
 }
@@ -196,7 +196,7 @@ char* print_debut_balise_block()
 	char anchor[80];
 	sprintf(anchor,"><span name=\"%s\">", top_block->id);
 	char* concat =string_concat_sans_espace(2,strdup("#"),strdup(top_block->id));
-	char aref[150];
+	char aref[256];
 	sprintf(aref,"<a style=\"text_decoration:none;\" class =\"fin_block\"  value=\"%s\" href=\"#\"><i class=\"fa fa-caret-square-o-down\" href=\"#\"></i></a>\n",concat);
 	char* texte=string_concat(4,strdup(print_balise_span("vert","{")),strdup(aref),strdup(b->texte),strdup(anchor));
 	free(b);

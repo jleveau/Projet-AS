@@ -1,0 +1,105 @@
+\documentclass{report}
+\usepackage{mathtools}
+\usepackage{color}
+\usepackage[utf8]{inputenc} 
+\title{Projet d’Analyse Syntaxique
+Université de Bordeaux, année 2014–2015
+L3 Informatique et Math-Info.}
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Modalités}{
+Projet d’Analyse Syntaxique
+Université de Bordeaux, année 2014–2015
+L3 Informatique et Math-Info.
+1 Modalités
+Ce projet est à réaliser par groupes de 3 ou 4 étudiant(e)s. Chaque membre doit contribuer
+de façon significative au
+travail de programmation
+, avoir connaissance des options choisies, des
+difficultés rencontrées, et des solutions retenues. Il/Elle exposera sa contribution individuellement
+lors d’une soutenance de 25mn (soutenances prévues la semaine du 11 mai).
+Contrairement à d’autres projets (comme celui d’informatique théorique 2 ce semestre), on ne
+fournit pas de code de départ. Le projet sera commencé en TD. Il laisse d’autre part beaucoup
+d’options et de liberté à chaque groupe. Une partie est imposée, mais vous pourrez ajouter vos
+propres extensions si le temps vous le permet.
+La notation tiendra compte du degré de réalisation du sujet, de la qualité du code (portabilité,
+lisibilité, documentation), du jeu de tests présenté, et de la qualité du rapport et de la soutenance.
+Les notes peuvent varier à l’intérieur d’un groupe en cas de travail trop inégal.
+En plus du code source (avec jeux de tests), on demande un rapport court présentant le travail
+réalisé, illustré par des exemples, exposant les problèmes rencontrés et les choix effectués. Idéalement,
+le rapport sera présenté au format
+html
+, et généré partiellement par votre logiciel. Le projet doit
+être transmis à
+aspp3@labri.fr
+, avec comme sujet
+[Projet ASPP3] Nom1 Nom2 Nom3 Nom4
+.
+Le mail devra contenir une archive au format .tar.gz. Cette archive une fois décompressée contiendra
+un répertoire nommé Nom1-Nom2-Nom3-Nom4, qui lui-même contiendra les sources et le rapport.
+Enfin, vous devez utiliser un système de gestion de projets, comme subversion (savanne au CREMI)
+ou git.
+Date
+stricte
+de remise du projet, code et rapport : 10 mai 2015, 12h00
+}
+\section{Objectif et Description}
+{
+Ce projet consiste à réaliser un logiciel permettant :
+— de vérifier la syntaxe et certains points sémantique de programmes,
+— de produire une documentation de ces programmes et de présenter les programmes et la documentation comme un document html (à la manière de Doxygen).
+On ne demande bien sûr pas un logiciel aussi abouti que
+Doxygen
+. Par ailleurs, le projet permettra
+d’avoir un document principal LATEX, ce qui n’est pas le fonctionnement de
+Doxygen.
+Ultimement, le programme développé devrait permettre de présenter le rapport du projet lui-
+même. Le format des documents produits sera du HTML5 et il sera fait appel à plusieurs technologies
+entourant ce type de document, comme CSS, Javascript (et des bibliothèques telles que jQuery),
+MathML etc... Le  rojet doit être écrit en langage C, en utilisant flex et bison.
+
+
+
+Le logiciel que vous écrirez prend en entrée un programme à documenter. Ce programme à
+documenter est composé de plusieurs fichiers :
+—
+un fichier L
+A
+T
+E
+X optionnel, permettant de décrire et d’organiser la documentation.
+—
+des sources écrits dans le langage à analyser. Ces sources pourront contenir des commentaires
+pour guider le système de documentation (à nouveau, comme le permet le logiciel
+Doxygen
+).
+Dans ce projet, les sources à analyser seront eux-mêmes écrits dans les langages de développement :
+C
+, et si le temps vous le permet,
+flex
+,
+bison
+et
+JavaScript
+. De cette façon, il sera possible d’écrire
+le rapport en utilisant le logiciel développé dans le projet.
+Le projet se déroulera en plusieurs étapes.
+—
+Il s’agira dans un premier temps d’utiliser une grammaire du C pour transformer le code
+C en document HTML. On ne demande pas d’écrire la grammaire. On peut utiliser pour
+bison la grammaire C11 de
+http://www.quut.com/c/ANSI-C-grammar-y.html
+par exemple.
+Un source flex est aussi disponible depuis la même page.
+Le code devra être bien présenté, c’est-à-dire, proprement indenté et coloré. La présentation du
+code doit permettre de facilement le parcourir et l’appréhender. Cela passe par l’implémentation
+d’un certaines fonctionnalités, comme faire apparaître en surbrillance toutes les occurrences
+d’une variable lorsque le pointeur de la souris passe sur son nom et pouvoir rejoindre l’endroit
+du code où elle est déclarée lorsque l’on clique dessus.
+Ces fonctionnalités sont décrites en Section
+
+
+}
+
+\end{document}

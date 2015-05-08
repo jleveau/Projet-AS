@@ -124,3 +124,8 @@ a
 	opacity: 1;
 }
 
+a:link
+{
+text-decoration:none;
+}
+
