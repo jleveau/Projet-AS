@@ -31,11 +31,12 @@ void initialiser_toc();
 void insert_into_toc(int, char*);
 void print_balise_parti(char* titre);
 void print_balise_chapitre(char* titre);
+void print_balise_image(char* image);
  
 %}
 
 %token ENTETE_DOCUMENT TOC_COMMANDE TITLE MAKETITLE BEGIN_DOCUMENT END_DOCUMENT TEXT BEG WORD BACKSLASH SPACE CHAR TAB_STRING
-%token BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR TAILLE NB ENUM BEGIN_ITEM TABULAR EQUATION END BEGIN_ITEMIZE  END_ITEMIZE  BEGIN_ENUMERATE  END_ENUMERATE BEGIN_TABULAR END_TABULAR BEGIN_EQUATION END_EQUATION BEGIN_EQUATION_DOLLAR END_EQUATION_DOLLAR
+%token BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR IMAGE TAILLE NB ENUM BEGIN_ITEM TABULAR EQUATION END BEGIN_ITEMIZE  END_ITEMIZE  BEGIN_ENUMERATE  END_ENUMERATE BEGIN_TABULAR END_TABULAR BEGIN_EQUATION END_EQUATION BEGIN_EQUATION_DOLLAR END_EQUATION_DOLLAR
 %token  PART CHAPTER PARAGRAPH SECTION SUBSECTION SUBSUBSECTION
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
 %token A_FAIRE
@@ -89,6 +90,7 @@ appel_commande_sans_BEGIN
 	| decoration_texte_sans_param[style]  OPEN_BRACE {print_balise($style);} combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b($style);}
 	| decoration_texte_avec_param
     | toc
+| IMAGE option parameter_word_or_string[img] {print_balise_image($img);}
 	;
 
 formatage_texte
@@ -159,7 +161,7 @@ subsubsection_ou_vide
 	;
 
 decoration_texte_avec_param
-	: COLOR parameter_word[color] {print_balise_decoration_span_style("color", $color);} combinaison_string_ET_appel_commande_sans_BEGIN {print_fin_b("span");}
+: COLOR parameter_word[color] {print_balise_decoration_span_style("color", $color);} combinaison_string_ET_appel_commande_sans_BEGIN {print_fin_b("span");}
 	| TEXTCOLOR parameter_word[color] parameter_word[text] {print_balise_decoration_span_style("color", $color); print_word_or_char($text); print_fin_b("span");}
 	;
 
@@ -247,6 +249,10 @@ void print_balise(char* style)
 		style="span style= \"text-decoration:underline\"";
 	}
 	fprintf(f_output, "<%s>", style);
+}
+
+void print_balise_image(char* image){
+    fprintf(f_output, "<img src=\"%s\" alt=\"%s\">", image, image);
 }
 
 void print_balise_decoration_span_style(char* style_type, char* style)

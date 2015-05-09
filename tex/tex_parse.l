@@ -151,6 +151,10 @@ void print_space();
 	return TEXTCOLOR;
 }
 
+{TROUS}"\\includegraphics" {
+	return IMAGE;
+}
+
 {TROUS}"\\begin"{TROUS}"{itemize}" {
 	return BEGIN_ITEMIZE;
 }
