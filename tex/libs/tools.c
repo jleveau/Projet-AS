@@ -67,6 +67,8 @@ toc toc_create(){
     l->last=NULL;
     l->first=NULL;
     l->nbSecs=0;
+    l->nbChaps=0;
+    l->nbParts=0;
     return l;
 }
 
