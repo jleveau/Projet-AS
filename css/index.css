@@ -1,7 +1,9 @@
 body
 {
 	font-family: Verdana, sans-serif;
-}
+	counter-reset:br;
+	counter-increment:br;
+	}
 
 .header
 {
@@ -128,4 +130,15 @@ a:link
 {
 text-decoration:none;
 }
+
+
+
+
+.line:after
+{
+content:counter(br)". ";
+counter-increment:br;
+
+}
+
 

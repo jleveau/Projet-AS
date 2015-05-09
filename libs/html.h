@@ -31,6 +31,7 @@ char* print_balise_call_typedef(char* param);
 char* print_balise_span(char* type, char* param);
 char* print_balise_declaration(char* func);
 balise creer_balise_block(char* block_nameID);
+balise print_debut_balise_name(char *nom, char* name);
 char* print_debut_balise_block();
 char* print_fin_balise_block();
 void push_to_html(char* texte);

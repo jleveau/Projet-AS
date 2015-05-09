@@ -497,7 +497,7 @@ void print_variable(variable v)
 
 char* print_variable_html(variable v)
 {
-	char* str_var=string_concat(3,strdup(v->type),strdup(v->nom),strdup(","));
+	char* str_var=string_concat(2,strdup(v->type),strdup(v->nom));
 	return str_var;
 }
 

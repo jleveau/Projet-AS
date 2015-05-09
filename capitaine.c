@@ -43,9 +43,8 @@ void ecriture_fichier(char* directory)
 		if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, ".."));
 		else
 		{
-			retih = regexec(&regexh, lecture->d_name, 0, NULL, 0);
-			if(retih == REG_NOMATCH);
-			else
+			retic = regexec(&regexc, lecture->d_name, 0, NULL, 0);
+			if(retic == 0)
 			{
 				fprintf(f_output, "<li><a href=\"%s.html\"><i class=\"fa fa-caret-right\"></i>%s</a></li>\n", lecture->d_name,lecture->d_name);
 			}
@@ -68,9 +67,8 @@ void ecriture_fichier(char* directory)
 		if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, ".."));
 		else
 		{
-			retic = regexec(&regexc, lecture->d_name, 0, NULL, 0);
-			if(retic == REG_NOMATCH);
-			else
+			retih = regexec(&regexh, lecture->d_name, 0, NULL, 0);
+			if(retih == 0)
 			{
 				fprintf(f_output, "<li><a href=\"%s.html\"><i class=\"fa fa-caret-right\"></i>%s</a></li>\n", lecture->d_name,lecture->d_name);
 			}
@@ -236,6 +234,7 @@ int main(int argc, char** argv)
 	create_html(argv[3], argv[2]);
 	init_structures();
 	nb_ligne = 1;
+	fprintf(f_output,"1. ");
 	yyparse();
 	fin_block(NULL);
 	print_variables();

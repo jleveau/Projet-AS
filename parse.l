@@ -154,7 +154,7 @@ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' ma
 "#".*                               {/*On efface les include et tous ce qui est apres*/}
 
 ";"                                 {
-										yylval = string_concat(2, print_balise_span("vert", ";"), strdup("<br \\>\n"));    /* Il faut afficher l'indentation dans la yylval */
+										yylval = string_concat(2, print_balise_span("vert", ";"), strdup("<span class=\"line\"><br \\></span>\n"));    /* Il faut afficher l'indentation dans la yylval */
 										print_indent(yylval);
 										return SEMI_COLON;
 									}
@@ -162,14 +162,14 @@ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' ma
 ("{"|"<%")                          {
 										indent = indent + 2;
 										new_block(NULL);
-										yylval = string_concat(2, print_debut_balise_block(), strdup("<br \\>\n"));
+										yylval = string_concat(2, print_debut_balise_block(), strdup("<span class=\"line\"></span>\n"));
 										print_indent(yylval);
 										return OPENING_BRACE;
 									}
 
 ("}"|"%>")                          {
 										indent = indent - 2;
-										yylval = string_concat(2, print_fin_balise_block(), strdup("<br \\>\n"));
+										yylval = string_concat(2, print_fin_balise_block(), strdup("<span class=\"line\"><br \\></span>\n"));
 										print_indent(yylval);
 										fin_block();
 										return CLOSING_BRACE;
@@ -203,7 +203,7 @@ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' ma
 
 "//"                                {fprintf(f_output, "<span class=\"comment\">//"); BEGIN(COMMENT);}
 <COMMENT>\n                         {
-										fprintf(f_output, "</span><br \\>\n");
+										fprintf(f_output, "</span><span class=\"line\"><br \\></span>\n");
 										int i = 0;
 										while(i < indent)
 										{
