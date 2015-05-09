@@ -90,7 +90,7 @@ FILE* create_html(char* titre, char* dir)
 
 	char* fin = ".html";
 
-	char* path = malloc(strlen(dir) + strlen(titre) + strlen(fin) + strlen("/html/")+1);
+	char* path = malloc(strlen(dir) + strlen(titre) + strlen(fin) + strlen("/html/")+5);
 	strcpy(path, dir);
 	strcat(path, "/html/");
 	strcat(path, titre);
