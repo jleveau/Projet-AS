@@ -235,7 +235,7 @@ init_declarator_list
 	;
 
 init_declarator
-	: declarator EQUAL initializer  {$$ = string_concat(3, $1, $2, $3);}
+	: declarator EQUAL initializer  {$$ = string_concat_sans_espace(3, $1, $2, $3);}
 	| declarator                    {$$ = string_concat(1, $1);}
 	;
 

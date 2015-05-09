@@ -13,13 +13,21 @@
 
 /*
  */
-FILE* create_html(char* titre)
+FILE* create_html(char* titre,char* dir)
 {
 	char* fichier_css = "index.css";
 	//ancien
 	//char* fichier_css="../css/index.css";
+	char* fin = ".html";
 
-	f_output=fopen("index.html","w+");
+	char* path = malloc(strlen(dir) + strlen(titre) + strlen(fin) + strlen("/html/")+5);
+	strcpy(path, dir);
+	strcat(path, "/html/");
+	strcat(path, titre);
+	strcat(path, fin);
+	f_output = fopen(path, "w+");
+
+	free(path);
 
 	//header
 	fprintf(f_output, "<!doctype html>\n");
@@ -115,7 +123,7 @@ int main(int argc,char** argv)
 	int fd=open(argv[1], O_RDONLY);
 	dup2(fd, 0);
 
-	create_html("test");
+	create_html(argv[3],argv[2]);
 	//assert(argc==2 && "invalide number of argument");
 
 	yyparse(); // On parse l'entree (une seule fois)
