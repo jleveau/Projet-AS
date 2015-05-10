@@ -12,8 +12,8 @@ table
 
 body
 {
-	line-height: 1;
-	text-align: center;
+	line-height: 1.9;
+	font-family: myFont;
 }
 
 h1
@@ -54,6 +54,7 @@ h1
 	width:150px;
 	text-align: left;
 }
+
 a:link {
     text-decoration: none;
     color:black;
@@ -83,9 +84,36 @@ a:active {
 	text-align:left;
 	line-height: 1;
 }
-
+#partID1
+{
+	text-align:center;
+}
+#partID2
+{
+	text-align:center;
+}
+#partID3
+{
+	text-align:center;
+}
 ul
 {
  padding: 1px;
 }
-
+@font-face
+{
+	font-family: myFont;
+	src: url(cmunbx.woff);
+}
+p
+{
+	margin-left: 50px;
+	margin-right: 50px;
+	text-indent: 50px;
+	font-size: 20px;
+}
+p::first-letter
+{
+	font-size:200%;
+	font-weight: bold;
+}
