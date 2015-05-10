@@ -32,12 +32,20 @@ typedef struct variable_t
 	char* id;
 } *variable;
 
+typedef struct doc_t
+{
+	char* brief;
+	char* description_detaille;
+	char* return_type;
+	list params;
+}*doc;
+
 typedef struct function_t
 {
 	char* id;
 	char* nom;
 	char* type;
-	char* description;
+	doc documentation;
 	list arguments;
 	int nb_arguments;
 } *function;
@@ -47,18 +55,6 @@ typedef struct block_t
 	char* id;
 	list variables;
 } *block;
-
-char* brief, description_detaille, return_type;
-list params;
-
-
-typedef struct doc_t
-{
-	char* brief;
-	char* description_detaille;
-	char* return_type;
-	list params;
-}*doc;
 
 doc documentation_pour_fonction;
 doc doc_create();

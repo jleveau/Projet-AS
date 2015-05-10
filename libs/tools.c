@@ -76,11 +76,11 @@ char* string_concat_sans_espace(int nb_args,...)
 /* ajoute une fonction dans la liste de fonctions,
  * la liste ne depend pas d'une pile car les fonctions sont accessibles partout dans le code*/
 
-void new_function(char* nom, char* description, list arguments, int nb_param)
+void new_function(char* nom, doc d, list arguments, int nb_param)
 {
 	function f=malloc(sizeof(*f));
 	f->nom=nom;
-	f->description=description;
+	f->documentation=d;
 	f->arguments=arguments;
 	f->nb_arguments=nb_param;
 	f->id = func_id;
@@ -462,6 +462,14 @@ fprintf(stderr, "description: %s\n", documentation_pour_fonction->description_de
 
 fprintf(stderr, "return type: %s\n", documentation_pour_fonction->return_type);
 
+
+	cell c=documentation_pour_fonction->params->first;
+	while (c)
+	{
+		fprintf(stderr, "param: %s\n", (char*)c->elem);
+		c=c->next;
+	}
+
 	if (list_empty(function_list) )
 	{
 		function f= malloc(sizeof(*f));
@@ -469,7 +477,7 @@ fprintf(stderr, "return type: %s\n", documentation_pour_fonction->return_type);
 		f->arguments=list_create();
 		f->nom=nom;
 		f->type=type;
-		f->description="description";//à change!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		f->documentation=d;
 		add_to_list(function_list,f);
 		return;
 	}
@@ -490,7 +498,7 @@ fprintf(stderr, "return type: %s\n", documentation_pour_fonction->return_type);
 	{
 		f->nom=nom;
 		f->type=type;
-		f->description="description";//à changer!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		f->documentation=d;
 		f->id =func_id;
 		return;
 	}
@@ -598,7 +606,7 @@ doc doc_clear(doc d){
 	d->description_detaille=strdup("");
 	d->return_type=strdup("");
 	//efface contenu liste:
-	/*if (!list_empty(d->params))
+	if (!list_empty(d->params))
 		{
 			cell c=d->params->first;
 			while (c)
@@ -607,7 +615,9 @@ doc doc_clear(doc d){
 				free(c);
 				c=next;
 			}
-		}*/
+		}
+	d->params->first=NULL;
+	d->params->last=NULL;
 	return d;
 }
 

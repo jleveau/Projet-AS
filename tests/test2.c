@@ -29,6 +29,15 @@ int g(int a, char* b){
 	char* f;
 }
 
+
+/*!\param UN \param DEUX \return \brief this is a brief test
+* test continues
+* and more 
+*
+* description 
+* 
+* \param TROIS
+*/
 int k(){
 	int a;
 	p b;
@@ -38,7 +47,7 @@ int k(){
 	g(a,b);
 }
 
-//* \return int \brief test2
+//* \return int \brief test2 \param un param \param deux params
 int main(char toto, int tata)
 {
     if(TRUE)

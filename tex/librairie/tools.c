@@ -186,7 +186,7 @@ void print_toc(toc Toc){
         }
     }
     fprintf(f_output,"</div>");
-    fprintf(f_output,"<div class=\"Corps\"> ")
+    fprintf(f_output,"<div class=\"Corps\"> ");
 }
 
 

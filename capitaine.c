@@ -239,10 +239,6 @@ void init_structures()
 	new_block(NULL);
 
 	/*pour le doc*/
-	brief=""; 
-	//description_detaille=""; 
-	//return_type="";
-	list params=list_create();
 	documentation_pour_fonction=doc_create();
 
 }

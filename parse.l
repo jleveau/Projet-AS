@@ -77,6 +77,8 @@ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' ma
 %x BEGIN_RETURN_COMMENT_MULT_LIGNE
 %x RETURN_COMMENT_MULT_LIGNE
 %x RETURN_COMMENT_SMPL_LIGNE
+%x PARAM_COMMENT_SMPL_LIGNE
+%x PARAM_COMMENT_MULT_LIGNE
 
 %%
 
@@ -216,7 +218,7 @@ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' ma
 "?"                                 {yylval = print_balise_span("vert", "?"); return INTERROGATION_POINT;}
 
 "/*!"                         {BEGIN(COMMENT_MULT_LIGNE); /*multiligne commentaires qui peuvent prendre la commande \brief*/}
-<COMMENT_MULT_LIGNE,RETURN_COMMENT_MULT_LIGNE>\\brief {
+<COMMENT_MULT_LIGNE,RETURN_COMMENT_MULT_LIGNE,PARAM_COMMENT_MULT_LIGNE>\\brief {
 	BEGIN(BRIEF_COMMENT_MULT_LIGNE);
 }
 
@@ -232,35 +234,44 @@ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' ma
 	documentation_pour_fonction=doc_ajout_detaille(documentation_pour_fonction, strdup(yytext));
 }
 
-<BRIEF_COMMENT_MULT_LIGNE,DOC_DESCRIPTION,DETAILLE_JAVADOC,RETURN_COMMENT_MULT_LIGNE,BRIEF_JAVADOC>\* {
+<BRIEF_COMMENT_MULT_LIGNE,DOC_DESCRIPTION,DETAILLE_JAVADOC,RETURN_COMMENT_MULT_LIGNE,BRIEF_JAVADOC,PARAM_COMMENT_MULT_LIGNE>\* {
 	/*pour que les etoiles au debut ne font rien*/
 }
-<BRIEF_COMMENT_MULT_LIGNE,DOC_DESCRIPTION,RETURN_COMMENT_MULT_LIGNE,BRIEF_JAVADOC>\n {
+<BRIEF_COMMENT_MULT_LIGNE,DOC_DESCRIPTION,RETURN_COMMENT_MULT_LIGNE,BRIEF_JAVADOC,PARAM_COMMENT_MULT_LIGNE>\n {
 	/*pour que les \n singuliers ne font rien*/
 }
 
 <BRIEF_COMMENT_MULT_LIGNE>\n\*\n\* {
-	ECHO;ECHO;ECHO;
-	//fprintf(stderr, "TEST\n");
 	BEGIN(DOC_DESCRIPTION);
 }
-<COMMENT_MULT_LIGNE,BRIEF_COMMENT_MULT_LIGNE,DOC_DESCRIPTION>\\return {
+<COMMENT_MULT_LIGNE,BRIEF_COMMENT_MULT_LIGNE,DOC_DESCRIPTION,PARAM_COMMENT_MULT_LIGNE>\\return {
 	BEGIN(RETURN_COMMENT_MULT_LIGNE);
 }
 <RETURN_COMMENT_MULT_LIGNE>[^\*\n\\]* {
 	documentation_pour_fonction=doc_ajout_return_type(documentation_pour_fonction, strdup(yytext));
 }
 
-<COMMENT_MULT_LIGNE,BRIEF_COMMENT_MULT_LIGNE,DOC_DESCRIPTION,DETAILLE_JAVADOC,BRIEF_JAVADOC>"*/" {
+<COMMENT_MULT_LIGNE,BRIEF_COMMENT_MULT_LIGNE,DOC_DESCRIPTION,PARAM_COMMENT_MULT_LIGNE>\\param {
+	BEGIN(PARAM_COMMENT_MULT_LIGNE);
+}
+<PARAM_COMMENT_MULT_LIGNE>[^\*\n\\]* {
+	documentation_pour_fonction=doc_ajout_param(documentation_pour_fonction, strdup(yytext));
+}
+
+<COMMENT_MULT_LIGNE,BRIEF_COMMENT_MULT_LIGNE,DOC_DESCRIPTION,DETAILLE_JAVADOC,BRIEF_JAVADOC,PARAM_COMMENT_MULT_LIGNE>"*/" {
 	BEGIN(INITIAL);
 }
 
 "//*" {BEGIN(COMMENT_SMPL_LIGNE);}
-<COMMENT_SMPL_LIGNE,RETURN_COMMENT_SMPL_LIGNE>\\brief {
+<COMMENT_SMPL_LIGNE,RETURN_COMMENT_SMPL_LIGNE,PARAM_COMMENT_SMPL_LIGNE>\\brief {
 	BEGIN(BRIEF_COMMENT_SMPL_LIGNE);
 }
-<COMMENT_SMPL_LIGNE,BRIEF_COMMENT_SMPL_LIGNE>\\return {
+<COMMENT_SMPL_LIGNE,BRIEF_COMMENT_SMPL_LIGNE,PARAM_COMMENT_SMPL_LIGNE>\\return {
 	BEGIN(RETURN_COMMENT_SMPL_LIGNE);
+}
+<COMMENT_SMPL_LIGNE,BRIEF_COMMENT_SMPL_LIGNE,RETURN_COMMENT_SMPL_LIGNE,PARAM_COMMENT_SMPL_LIGNE>\\param {
+	//si déjà dans param ca va commencer de nouveau
+	BEGIN(PARAM_COMMENT_SMPL_LIGNE);
 }
 <COMMENT_SMPL_LIGNE>.      {
 	/*on n'affiche pas les commentaires*/
@@ -269,9 +280,14 @@ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' ma
 	documentation_pour_fonction->brief=strdup(yytext);
 }
 <RETURN_COMMENT_SMPL_LIGNE>[^\n\\]* {
-	documentation_pour_fonction->return_type=strdup(yytext);
+	documentation_pour_fonction=doc_ajout_return_type(documentation_pour_fonction, strdup(yytext));
 }
-<BRIEF_COMMENT_SMPL_LIGNE,COMMENT_SMPL_LIGNE,RETURN_COMMENT_SMPL_LIGNE>\n      {
+
+<PARAM_COMMENT_SMPL_LIGNE>[^\n\\]* {
+	documentation_pour_fonction=doc_ajout_param(documentation_pour_fonction, strdup(yytext));
+}
+
+<BRIEF_COMMENT_SMPL_LIGNE,COMMENT_SMPL_LIGNE,RETURN_COMMENT_SMPL_LIGNE,PARAM_COMMENT_SMPL_LIGNE>\n      {
 	BEGIN(INITIAL);
 }
 
