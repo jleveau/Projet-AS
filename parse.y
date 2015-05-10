@@ -401,7 +401,8 @@ parameter_list
 	;
 
 parameter_declaration
-	: declaration_specifiers declarator             {add_parameter(strdup($2), strdup($1), strdup("descri")); $$ = string_concat(2, $1, print_balise_parameter($2));}
+	: declaration_specifiers declarator             {variable param=add_parameter(strdup($2), strdup($1), strdup("descri")); 
+													$$ = string_concat(2, $1, print_balise_parameter(param));}
 	| declaration_specifiers abstract_declarator    {$$ = string_concat(2, $1, $2);}
 	| declaration_specifiers                        {$$ = string_concat(1, $1);}
 	;
@@ -547,7 +548,7 @@ external_declaration
 
 function_definition
 	: declaration_specifiers declarator declaration_list compound_statement {$$ = string_concat(4, $1, $2, $3, $4);}
-	| declaration_specifiers declarator compound_statement                  {name_function(strdup($1), strdup($2), documentation_pour_fonction); $$ = string_concat(3, $1, $2, $3);}
+	| declaration_specifiers declarator compound_statement                  {fprintf(stderr, "name_function %s\n\n", documentation_pour_fonction->brief); name_function(strdup($1), strdup($2), documentation_pour_fonction); $$ = string_concat(3, $1, $2, $3); documentation_pour_fonction=doc_clear(documentation_pour_fonction);}
 	;
 
 declaration_list

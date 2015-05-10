@@ -93,7 +93,7 @@ variable getVariable(char* name);
 function getFunction(char* name);
 
 void create_variable(list list_var,char* type, char* description);
-void add_parameter(char* nom, char* type,char* description);
+variable add_parameter(char* nom, char* type,char* description);
 void name_function(char* type,char* nom, doc d);
 
 void add_to_list(list l,void* elem);
