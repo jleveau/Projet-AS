@@ -47,7 +47,7 @@ constant
 	;
 
 enumeration_constant    /* before it has been defined as such */
-	: IDENTIFIER        {add_to_list(enum_list,$1);$$ = string_concat(1, $1);}
+	: IDENTIFIER        {fprintf(stderr,"declar : %s \n",$1);add_to_list(enum_list,strdup($1));$$ = string_concat(1, $1);}
 	;
 
 string

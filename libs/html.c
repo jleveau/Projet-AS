@@ -130,10 +130,16 @@ char* print_balise_variable(char* var)
 	token=strtok(var, "=");
 	
 	variable v=getVariable(token);
-	block top_block=(block)stack_top(block_stack);
-	char* var_id=malloc(strlen(token)+strlen(top_block->id)+1);
-	strcpy(var_id,top_block->id);
-	strcat(var_id,token);
+	char* var_id;
+	if (!v->id){
+		block top_block=(block)stack_top(block_stack);
+		char* var_id=malloc(strlen(token)+strlen(top_block->id)+1);
+		strcpy(var_id,top_block->id);
+		strcat(var_id,token);
+	}
+	else {
+		var_id=v->id;
+	}
 	char* hashtag = string_concat_sans_espace(2,strdup("#"),strdup(var_id));
 	char *var_id_point = string_concat_sans_espace(2,strdup("."),strdup(var_id));
 	balise b=print_debut_balise_id("a",hashtag);

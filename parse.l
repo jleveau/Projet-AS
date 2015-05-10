@@ -267,6 +267,7 @@ static int check_type(void)
 		return TYPEDEF_NAME;
 	}
 	if (enum_exist(yytext)){
+		fprintf(stderr,"enum constr");
 		return ENUMERATION_CONSTANT;
 	}
 	switch(sym_type(yytext))
