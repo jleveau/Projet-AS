@@ -48,6 +48,23 @@ typedef struct block_t
 	list variables;
 } *block;
 
+char* brief, description_detaille, return_type;
+list params;
+
+/*
+typedef struct doc_t
+{
+	char* brief;
+	char* description_detaille;
+	char* return_type;
+	list params;
+}*doc;
+
+doc documentation_pour_fonction;
+doc create_doc();
+doc clear_doc(doc d);
+*/
+
 function UNNAMED_FUNCTION;
 
 char* read_buffer;

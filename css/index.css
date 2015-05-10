@@ -1,10 +1,21 @@
 body
 {
-	font-family: Verdana, sans-serif;
 	counter-reset:br;
 	counter-increment:br;
-	}
+}
 
+@font-face {
+    font-family: myFirstFont;
+    src: url(cmunbi.woff);
+}
+
+#tex body{
+font-family : myFirstFont;
+
+}
+#tex .title{
+font-family: myFirstFont;
+}
 .header
 {
 	font-size: 20px;
@@ -131,14 +142,55 @@ a:link
 text-decoration:none;
 }
 
-
-
-
 .line:after
 {
 content:counter(br)". ";
 counter-increment:br;
-
 }
 
+/* unvisited link */
+a.LinkParti:link {
+    color: black;
+}
 
+/* visited link */
+a.LinkParti:visited {
+    color: black;
+}
+
+/* mouse over link */
+a.LinkParti:hover {
+    background-color:#F2EEEE;
+    color: black;
+}
+/* unvisited link */
+a.LinkChap:link {
+    color: black;
+}
+
+/* visited link */
+a.LinkChap:visited {
+    color: black;
+}
+
+/* mouse over link */
+a.LinkChap:hover {
+    background-color:#F2EEEE;
+    color: black;
+}
+
+/* unvisited link */
+a.LinkSecs:link {
+    color: black;
+}
+
+/* visited link */
+a.LinkSecs:visited {
+    color: black;
+}
+
+/* mouse over link */
+a.LinkSecs:hover {
+    background-color : #F2EEEE;
+    color: black;
+}

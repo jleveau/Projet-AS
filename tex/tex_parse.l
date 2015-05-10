@@ -71,6 +71,11 @@ void print_space();
 <PACKAGES_A_IGNORER>. ;
 <PACKAGES_A_IGNORER>\n ;
 
+"\\text\\" {
+	yylval=strdup("\\");
+	return CHAR;
+}
+
 <NOM_TITLE>\} {
 	/*ferme le titre après que le string du titre est lu et envoyé*/
 	BEGIN INITIAL;

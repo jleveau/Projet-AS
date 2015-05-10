@@ -1,3 +1,4 @@
+\select@language {french}
 \contentsline {part}{I\hspace {1em}Introduction}{2}
 \contentsline {part}{II\hspace {1em}Projet}{3}
 \contentsline {paragraph}{bleu}{4}
@@ -5,5 +6,19 @@
 \contentsline {chapter}{\numberline {2}Objectifs Atteints}{6}
 \contentsline {chapter}{\numberline {3}Présentation du code C}{7}
 \contentsline {chapter}{\numberline {4}Présentation de la documentation}{8}
-\contentsline {chapter}{\numberline {5}Avis Personnel}{9}
-\contentsline {part}{III\hspace {1em}Conclusion}{10}
+\contentsline {section}{\numberline {4.1}Grammaire}{8}
+\contentsline {section}{\numberline {4.2}Commandes simples}{9}
+\contentsline {subsubsection}{Formatage texte}{9}
+\contentsline {section}{\numberline {4.3}Structure de grammaire}{9}
+\contentsline {section}{\numberline {4.4}Paragraphes, environnement, commandes et caractères spéciaux}{10}
+\contentsline {paragraph}{Paragraphes}{10}
+\contentsline {section}{\numberline {4.5}Commandes de présentation}{10}
+\contentsline {section}{\numberline {4.6}Environements de base}{10}
+\contentsline {section}{\numberline {4.7}Un mécanisme de sections}{10}
+\contentsline {section}{\numberline {4.8}Fomules mathématiques}{10}
+\contentsline {section}{\numberline {4.9}Documentation directement dans le code c}{10}
+\contentsline {subsection}{\numberline {4.9.1}Implémentation}{10}
+\contentsline {subsubsection}{}{10}
+\contentsline {subsection}{\numberline {4.9.2}Présentation dans le html}{10}
+\contentsline {chapter}{\numberline {5}Avis Personnel}{11}
+\contentsline {part}{III\hspace {1em}Conclusion}{12}
