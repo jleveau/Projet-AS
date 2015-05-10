@@ -91,7 +91,6 @@ appel_commande
 	| decoration_texte_avec_param
     | toc
     | IMAGE option parameter_word_or_string[img] {print_balise_image($img);}
-| URL OPEN_BRACE WORD CLOSE_BRACE {print_balise_lien($3);}
 	;
 
 formatage_texte
@@ -164,6 +163,7 @@ subsubsection_ou_vide
 decoration_texte_avec_param
 : COLOR parameter_word[color] {print_balise_decoration_span_style("color", $color);} combinaison_string_ET_appel_commande {print_fin_b("span");}
 	| TEXTCOLOR parameter_word[color] parameter_word[text] {print_balise_decoration_span_style("color", $color); print_word_or_char($text); print_fin_b("span");}
+| URL OPEN_BRACE WORD CLOSE_BRACE {print_balise_lien($3);}
 	;
 
 option
@@ -273,7 +273,7 @@ void print_word_or_char(char* word_or_char)
 
 void print_balise_lien(char *link)
 {
-    fprintf(f_output,"<a href=\"%\">%s</a>",link,link);
+    fprintf(f_output,"<a href=\"%s\">%s</a>",link,link);
 }
 
 void print_case(char* str)
