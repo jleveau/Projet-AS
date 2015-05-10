@@ -239,21 +239,40 @@ char* create_name_id(char* name)
 	return id;
 }
 
-/* cree une variable et l'ajoute dans la liste au sommet de la pile */
+/* cree une variable pour chaque element de list_var
+ *  et l'ajoute dans la liste au sommet de la pile */
 
-variable create_variable(char* nom,char* type, char* description)
+void create_variable(list list_var,char* type, char* description)
 {
-	variable v=malloc(sizeof(*v));
-	v->nom=nom;
-	v->type=type;
-	v->description=description;
-	block b=(block)stack_top(block_stack);
+	if (!list_empty(list_var)){
+		cell c=list_var->first;
+		while(c){
+			variable v=malloc(sizeof(*v));
+			v->nom=(void*)c->elem;
+			v->type=type;
+			v->description=description;
+			block b=(block)stack_top(block_stack);
 
-	v->id=create_variable_id(v,id_block-1);
+			v->id=create_variable_id(v,id_block-1);
+			
+			add_to_list(b->variables,v);
+			c=c->next;
+		}
+	}
+}
+
+list parse_variables(char* texte){
+	list var_list=list_create();
 	
-	add_to_list(b->variables,v);
-
-	return v;
+	char* token = strtok(texte, ",");
+   
+   /* walk through other tokens */
+   while( token != NULL ) 
+   {
+	   add_to_list(var_list,token);
+       token = strtok(NULL, strdup(","));
+   }
+   return var_list;
 }
 
 void add_parameter(char* nom, char* type,char* description)

@@ -71,8 +71,7 @@ stack typedef_stack;
 variable getVariable(char* name);
 function getFunction(char* name);
 
-variable create_variable(char* nom,char* type, char* description);
-
+void create_variable(list list_var,char* type, char* description);
 void add_parameter(char* nom, char* type,char* description);
 void name_function(char* type,char* nom,char* description);
 
@@ -83,7 +82,7 @@ bool list_empty(list l);
 
 void declared_function_balise(char* type,char* nom);
 void destroy_variable(variable v);
-
+list parse_variables(char* texte);
 char* string_concat(int nb_args,...);
 char* string_concat_sans_espace(int nb_args,...);
 char* create_variable_id(variable v,int id);
