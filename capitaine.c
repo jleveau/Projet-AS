@@ -235,6 +235,14 @@ void init_structures()
 	id_block = 0;
 	nb_ligne = 1;
 	new_block(NULL);
+
+	/*pour le doc*/
+	brief=""; 
+	//description_detaille=""; 
+	//return_type="";
+	list params=list_create();
+	documentation_pour_fonction=doc_create();
+
 }
 
 void create_log(char* name)

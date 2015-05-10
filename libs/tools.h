@@ -51,7 +51,7 @@ typedef struct block_t
 char* brief, description_detaille, return_type;
 list params;
 
-/*
+
 typedef struct doc_t
 {
 	char* brief;
@@ -61,9 +61,11 @@ typedef struct doc_t
 }*doc;
 
 doc documentation_pour_fonction;
-doc create_doc();
-doc clear_doc(doc d);
-*/
+doc doc_create();
+doc doc_clear(doc d);
+void doc_destroy(doc d);
+
+
 
 function UNNAMED_FUNCTION;
 
@@ -92,7 +94,7 @@ function getFunction(char* name);
 
 void create_variable(list list_var,char* type, char* description);
 void add_parameter(char* nom, char* type,char* description);
-void name_function(char* type,char* nom,char* description);
+void name_function(char* type,char* nom, doc d);
 
 void add_to_list(list l,void* elem);
 list list_create();
