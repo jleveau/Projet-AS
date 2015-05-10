@@ -1,3 +1,4 @@
+#!/bin/bash
 rm parse.tab.c parse.tab.h main
 
 

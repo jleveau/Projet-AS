@@ -13,13 +13,15 @@ char* tableau_fichier[20];
 
 int main(int argc, char** argv)
 {
-	regex_t regexc, regexh,regextex;
+	regex_t regexc, regexh,regextex,regexjpg;
 	int retic;
 	int retih;
 	int retitex;
-	retic = regcomp(&regexc, "[[:alnum:]].c", 0);
-	retih = regcomp(&regexh, "[[:alnum:]].h", 0);
-	retitex =  regcomp(&regextex, "[[:alnum:]].tex", 0);
+	int retijpg;
+	retic = regcomp(&regexc, "[[:alnum:]].c$", 0);
+	retih = regcomp(&regexh, "[[:alnum:]].h$", 0);
+	retitex =  regcomp(&regextex, "[[:alnum:]].tex$", 0);
+	retijpg = regcomp(&regexjpg, "[[:alnum:]].jpg$", 0);
 	if(argc != 2)
 	{
 		fprintf(stderr, "capitaine : nombre d'arguments invalide : %d\n", argc);
@@ -42,6 +44,7 @@ int main(int argc, char** argv)
 			retic = regexec(&regexc, lecture->d_name, 0, NULL, 0);
 			retih = regexec(&regexh, lecture->d_name, 0, NULL, 0);
 			retitex = regexec(&regextex, lecture->d_name, 0, NULL, 0);
+			retijpg = regexec(&regexjpg, lecture->d_name, 0, NULL, 0);
 			if( retitex == 0){
 				char* path = malloc((strlen(argv[1]) + strlen(lecture->d_name) + 2) * sizeof(char));
 				strcpy(path, argv[1]);
@@ -58,6 +61,9 @@ int main(int argc, char** argv)
 			}
 			else if (! (retic == REG_NOMATCH && retih == REG_NOMATCH))
 			{
+				if(!(retijpg == REG_NOMATCH));
+				else
+				{
 				char* path = malloc((strlen(argv[1]) + strlen(lecture->d_name) + 2) * sizeof(char));
 				strcpy(path, argv[1]);
 				strcat(path, lecture->d_name);
@@ -70,6 +76,7 @@ int main(int argc, char** argv)
 					fprintf(stderr, "exec error \n");
 					return EXIT_FAILURE;
 				}
+			}
 			}
 		}
 	}

@@ -213,7 +213,7 @@ char* print_debut_balise_block()
 	sprintf(anchor,"><span name=\"%s\">", top_block->id);
 	char* concat =string_concat_sans_espace(2,strdup("#"),strdup(top_block->id));
 	char aref[256];
-	sprintf(aref,"<a style=\"text_decoration:none;\" class =\"fin_block\"  value=\"%s\" href=\"#\"><i class=\"fa fa-caret-square-o-down\" href=\"#\"></i></a><br \\>\n",concat);
+	sprintf(aref,"<a style=\"text_decoration:none;\" class =\"fin_block\"  value=\"%s\" href=\"javascript:void(0)\"><i class=\"fa fa-caret-square-o-down\" href=\"#\"></i></a><br \\>\n",concat);
 	char* texte=string_concat(4,strdup(print_balise_span("vert","{")),strdup(aref),strdup(b->texte),strdup(anchor));
 	free(b);
 	return texte;

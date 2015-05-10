@@ -22,12 +22,15 @@ dans la barre de menu les fichiers qui sont dans ce dossier.
 
 void ecriture_fichier(char* directory)
 {
-	regex_t regexc, regexh;
+	regex_t regexc, regexh, regextex,regexjpg;
 	int retic;
 	int retih;
-	retic = regcomp(&regexc, "[[:alnum:]].c", 0);
-	retih = regcomp(&regexh, "[[:alnum:]].h", 0);
-
+	int retitex;
+	int retijpg;
+	retic = regcomp(&regexc, "[[:alnum:]].c$", 0);
+	retih = regcomp(&regexh, "[[:alnum:]].h$", 0);
+	retitex = regcomp(&regextex, "[[:alnum:]].tex$", 0);
+	retijpg = regcomp(&regexjpg, "[[:alnum:]].jpg$", 0);
 	struct dirent *lecture;
 	DIR *rep ;
 
@@ -43,14 +46,13 @@ void ecriture_fichier(char* directory)
 		if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, ".."));
 		else
 		{
-			retic = regexec(&regexc, lecture->d_name, 0, NULL, 0);
-			if(retic == 0)
+			retih = regexec(&regexh, lecture->d_name, 0, NULL, 0);
+			if(retih == 0 )
 			{
 				fprintf(f_output, "<li><a href=\"%s.html\"><i class=\"fa fa-caret-right\"></i>%s</a></li>\n", lecture->d_name,lecture->d_name);
 			}
 		}
 	}
-
 	fprintf(f_output, "</ul>\n");
 	fprintf(f_output, "</li>\n");
 
@@ -67,8 +69,35 @@ void ecriture_fichier(char* directory)
 		if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, ".."));
 		else
 		{
-			retih = regexec(&regexh, lecture->d_name, 0, NULL, 0);
-			if(retih == 0)
+			retic = regexec(&regexc, lecture->d_name, 0, NULL, 0);
+			retijpg = regexec(&regexjpg, lecture->d_name, 0, NULL, 0);
+			if(retic == 0)
+			{
+				if(!(retijpg == REG_NOMATCH));
+				else
+				fprintf(f_output, "<li><a href=\"%s.html\"><i class=\"fa fa-caret-right\"></i>%s</a></li>\n", lecture->d_name,lecture->d_name);
+			}
+		}
+	}
+
+	fprintf(f_output, "</ul>\n");
+	fprintf(f_output, "</li>\n");
+
+	fprintf(f_output, "<li class=\"nav-parent\">\n");
+	fprintf(f_output, "<a href=\"#\"><i class=\"fa fa-plus\"></i><span>Tex File</span></a>\n");
+	fprintf(f_output, "<ul class=\"children\">\n");
+
+	free(rep);
+	rep = opendir(directory);
+
+	while((lecture = readdir(rep)))
+	{
+		//Si c'est un '.' ou '..' alors on ne fait rien
+		if(!strcmp(lecture->d_name, ".") || !strcmp(lecture->d_name, ".."));
+		else
+		{
+			retitex = regexec(&regextex, lecture->d_name, 0, NULL, 0);
+			if(retitex == 0)
 			{
 				fprintf(f_output, "<li><a href=\"%s.html\"><i class=\"fa fa-caret-right\"></i>%s</a></li>\n", lecture->d_name,lecture->d_name);
 			}
@@ -80,6 +109,7 @@ void ecriture_fichier(char* directory)
 	free(rep);
 	regfree(&regexc);
 	regfree(&regexh);
+	regfree(&regextex);
 }
 
 FILE* create_html(char* titre, char* dir)
@@ -185,6 +215,8 @@ void source_js()
 int fermer_html(FILE* fd)
 {
 	fprintf(fd, "</div>\n");
+	fprintf(f_output,"<script> var TOC = document.getElementById(\"TableOfContents\").innerHTML;\n");
+fprintf(f_output,"document.getElementById(\"toc-devant\").innerHTML = TOC;\n");
 	fprintf(fd, "</div>\n");
 	fprintf(fd, "</div>\n");
 	source_js();

@@ -20,7 +20,7 @@ SPACE_OU_NEWLINE_INFINI [[:SPACE:]\n]*
 #include "tex_parse.tab.h"
 #include <stdio.h>
 #include <string.h>
-#include "libs/html.h"
+#include "librairie/html.h"
 
 void print_newline();
 void print_space();

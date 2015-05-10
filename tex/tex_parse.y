@@ -4,7 +4,7 @@
 #endif
 #include <stdio.h>
 #include <stdlib.h>
-#include "libs/html.h"
+#include "librairie/html.h"
 #include <ctype.h>
 void yyerror(const char *s);
 int yylex(void);
@@ -50,12 +50,12 @@ void print_balise_image(char* image);
 %%
 
 start
-    : ENTETE_DOCUMENT {initialiser_toc();} structure {/* contenu peut être vide*/}
+    : ENTETE_DOCUMENT {initialiser_toc();} structure {printf("toc:%s\n",toc_affiche);if(toc_affiche) {print_toc(Toc);printf("print-toc");} toc_destroy(Toc);}
 	;
 
 structure
-    : TITLE[h1] {print_titre($h1);} toc_OR_vide BEGIN_DOCUMENT contenus MAKETITLE contenus END_DOCUMENT {if(toc_affiche) {print_toc(Toc);} toc_destroy(Toc);}
-    | BEGIN_DOCUMENT toc_OR_vide TITLE[h1] {print_titre($h1);} contenus MAKETITLE contenus END_DOCUMENT {if(toc_affiche) {print_toc(Toc);} toc_destroy(Toc);}
+    : TITLE[h1] {print_titre($h1);} toc_OR_vide BEGIN_DOCUMENT contenus MAKETITLE contenus END_DOCUMENT
+    | BEGIN_DOCUMENT toc_OR_vide TITLE[h1] {print_titre($h1);} contenus MAKETITLE contenus END_DOCUMENT
 	|
 	;
 
@@ -66,7 +66,7 @@ toc_OR_vide
 
 
 toc
-    : TOC_COMMANDE	{toc_affiche="vrai"; fprintf(f_output,"<div id=\"toc-devant\"></div>"); /* ROHAN: balise avec placeholder pour le toc */}
+    : TOC_COMMANDE	{toc_affiche="vrai";printf("toc-commande:%s\n",toc_affiche); fprintf(f_output,"<div id=\"toc-devant\"></div>");printf("après creation div\n"); }
     ;
 
 contenus
