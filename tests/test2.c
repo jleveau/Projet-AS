@@ -1,6 +1,4 @@
 #define TRUE 1 
-
-
 enum {LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE};
 
 enum jour j1 = LUNDI;
@@ -8,8 +6,11 @@ enum jour j1 = LUNDI;
 struct ptr{
 	int i;
 };
+
+
 typedef struct ptr p;
 
+//* \brief single line description; does not require a full stop \return int
 int f(int a, int b)
 { 
 	a ++;a ++;
@@ -27,11 +28,26 @@ int f(int a, int b)
     return v;
 }
 
+/** javadoc brief. This second part is the
+* detailled 
+*
+* description
+*/
+int g(int a, char* b){
+	char* f;
+
 int g(){
 	int j,i;
 	 f(i,j);
 }
 
+
+/*!\return \brief this is a brief test
+* test continues
+* and more 
+*
+* description
+*/
 int k(){
 	int a;
 	p b;
@@ -83,6 +99,7 @@ int k(){
 	g(a,b);
 }
 
+//* \return int \brief test2
 int main(char toto, int tata)
 {
     if(TRUE)

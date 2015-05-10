@@ -71,8 +71,12 @@ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' ma
 %x DOC_DESCRIPTION
 %x BRIEF
 %x BRIEF_JAVADOC
+%x DETAILLE_JAVADOC
 %x BRIEF_COMMENT_SMPL_LIGNE
 %x BRIEF_COMMENT_MULT_LIGNE
+%x BEGIN_RETURN_COMMENT_MULT_LIGNE
+%x RETURN_COMMENT_MULT_LIGNE
+%x RETURN_COMMENT_SMPL_LIGNE
 
 %%
 
@@ -212,25 +216,75 @@ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' ma
 "?"                                 {yylval = print_balise_span("vert", "?"); return INTERROGATION_POINT;}
 
 "/*!"                         {BEGIN(COMMENT_MULT_LIGNE); /*multiligne commentaires qui peuvent prendre la commande \brief*/}
-<COMMENT_MULT_LIGNE>\\brief {BEGIN(BRIEF_COMMENT_MULT_LIGNE);}
-<COMMENT_MULT_LIGNE>.      {/*on n'affiche pas les commentaires*/}
-<BRIEF_COMMENT_MULT_LIGNE>[^\*\n]* {doc_ajout_brief(documentation_pour_fonction, strdup(yytext));}
-<BRIEF_COMMENT_MULT_LIGNE>\* {/*pour que les etoiles au debut ne font rien*/}
-<BRIEF_COMMENT_MULT_LIGNE>\n {/*pour que les \n singuliers ne font rien*/}
-<BRIEF_COMMENT_MULT_LIGNE>\n\*\n\* {BEGIN(DOC_DESCRIPTION);}
-<COMMENT_MULT_LIGNE,BRIEF_COMMENT_MULT_LIGNE,DOC_DESCRIPTION,BRIEF_JAVADOC>"*/" {BEGIN(INITIAL);}
+<COMMENT_MULT_LIGNE,RETURN_COMMENT_MULT_LIGNE>\\brief {
+	BEGIN(BRIEF_COMMENT_MULT_LIGNE);
+}
+
+<COMMENT_MULT_LIGNE>.  {
+	/*on n'affiche pas les commentaires*/
+}
+
+<BRIEF_COMMENT_MULT_LIGNE>[^\*\n\\]* {
+	documentation_pour_fonction=doc_ajout_brief(documentation_pour_fonction, strdup(yytext));
+}
+
+<DOC_DESCRIPTION>[^\*\n\\]* {
+	documentation_pour_fonction=doc_ajout_detaille(documentation_pour_fonction, strdup(yytext));
+}
+
+<BRIEF_COMMENT_MULT_LIGNE,DOC_DESCRIPTION,DETAILLE_JAVADOC,RETURN_COMMENT_MULT_LIGNE,BRIEF_JAVADOC>\* {
+	/*pour que les etoiles au debut ne font rien*/
+}
+<BRIEF_COMMENT_MULT_LIGNE,DOC_DESCRIPTION,RETURN_COMMENT_MULT_LIGNE,BRIEF_JAVADOC>\n {
+	/*pour que les \n singuliers ne font rien*/
+}
+
+<BRIEF_COMMENT_MULT_LIGNE>\n\*\n\* {
+	ECHO;ECHO;ECHO;
+	//fprintf(stderr, "TEST\n");
+	BEGIN(DOC_DESCRIPTION);
+}
+<COMMENT_MULT_LIGNE,BRIEF_COMMENT_MULT_LIGNE,DOC_DESCRIPTION>\\return {
+	BEGIN(RETURN_COMMENT_MULT_LIGNE);
+}
+<RETURN_COMMENT_MULT_LIGNE>[^\*\n\\]* {
+	documentation_pour_fonction=doc_ajout_return_type(documentation_pour_fonction, strdup(yytext));
+}
+
+<COMMENT_MULT_LIGNE,BRIEF_COMMENT_MULT_LIGNE,DOC_DESCRIPTION,DETAILLE_JAVADOC,BRIEF_JAVADOC>"*/" {
+	BEGIN(INITIAL);
+}
 
 "//*" {BEGIN(COMMENT_SMPL_LIGNE);}
-<COMMENT_SMPL_LIGNE>\\brief {BEGIN(BRIEF_COMMENT_SMPL_LIGNE);}
-<COMMENT_SMPL_LIGNE>.      {/*on n'affiche pas les commentaires*/}
-<BRIEF_COMMENT_SMPL_LIGNE>[^\n]* {brief=strdup(yytext);}
-<BRIEF_COMMENT_SMPL_LIGNE,COMMENT_SMPL_LIGNE>\n      {BEGIN(INITIAL);}
+<COMMENT_SMPL_LIGNE,RETURN_COMMENT_SMPL_LIGNE>\\brief {
+	BEGIN(BRIEF_COMMENT_SMPL_LIGNE);
+}
+<COMMENT_SMPL_LIGNE,BRIEF_COMMENT_SMPL_LIGNE>\\return {
+	BEGIN(RETURN_COMMENT_SMPL_LIGNE);
+}
+<COMMENT_SMPL_LIGNE>.      {
+	/*on n'affiche pas les commentaires*/
+}
+<BRIEF_COMMENT_SMPL_LIGNE>[^\n\\]* {
+	documentation_pour_fonction->brief=strdup(yytext);
+}
+<RETURN_COMMENT_SMPL_LIGNE>[^\n\\]* {
+	documentation_pour_fonction->return_type=strdup(yytext);
+}
+<BRIEF_COMMENT_SMPL_LIGNE,COMMENT_SMPL_LIGNE,RETURN_COMMENT_SMPL_LIGNE>\n      {
+	BEGIN(INITIAL);
+}
 
 "/**" {BEGIN BRIEF_JAVADOC;}
-<BRIEF_JAVADOC>[^\.\*\n]* {brief=string_concat(2, brief, strdup(yytext));}
-<BRIEF_JAVADOC>\* {/*pour que les etoiles au debut ne font rien*/}
-<BRIEF_JAVADOC>\n {/*pour que les \n singuliers ne font rien*/}
-<BRIEF_JAVADOC>\. {BEGIN(DOC_DESCRIPTION);}
+<BRIEF_JAVADOC>[^\.\*\n\\]* {
+	documentation_pour_fonction=doc_ajout_brief(documentation_pour_fonction, strdup(yytext));
+	}
+<BRIEF_JAVADOC>\. {
+	BEGIN(DETAILLE_JAVADOC);
+}
+<DETAILLE_JAVADOC>[^\*\n\\]* {
+	documentation_pour_fonction=doc_ajout_detaille(documentation_pour_fonction, strdup(yytext));
+}
 
 "/*"                                {fprintf(f_output, "<span class=\"comment\">/*"); BEGIN(COMMENT);}
 <COMMENT>.                          {fprintf(f_output, "%c", yytext[0]);}
