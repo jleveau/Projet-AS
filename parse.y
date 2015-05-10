@@ -401,7 +401,8 @@ parameter_list
 	;
 
 parameter_declaration
-	: declaration_specifiers declarator             {add_parameter(strdup($2), strdup($1), strdup("descri")); $$ = string_concat(2, $1, print_balise_parameter($2));}
+	: declaration_specifiers declarator             {variable param=add_parameter(strdup($2), strdup($1), strdup("descri")); 
+													$$ = string_concat(2, $1, print_balise_parameter(param));}
 	| declaration_specifiers abstract_declarator    {$$ = string_concat(2, $1, $2);}
 	| declaration_specifiers                        {$$ = string_concat(1, $1);}
 	;

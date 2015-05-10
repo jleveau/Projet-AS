@@ -150,9 +150,6 @@ FILE* create_html(char* titre, char* dir)
 	fprintf(f_output, "$('.variable-activable').hover(function(){\n");
 	fprintf(f_output, "var color = $(this).children().attr('id');\n");
 	
-	
-	
-	
 	fprintf(f_output, "$(color).css(\"background-color\",\"#CBCACA\")");
 	fprintf(f_output, "}, function() {\n");
 	fprintf(f_output, "var color = $(this).children().attr('id');\n");
@@ -160,7 +157,6 @@ FILE* create_html(char* titre, char* dir)
 	fprintf(f_output, "});});</script>");
 	fprintf(f_output,"<script> var TOC = document.getElementById(\"TableOfContents\").innerHTML;\n");
 	fprintf(f_output,"document.getElementById(\"toc-devant\").innerHTML = TOC;</script>\n");
-
 
 	fprintf(f_output, "</head>\n");								// </HEADER>
 

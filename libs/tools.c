@@ -274,7 +274,7 @@ list parse_variables(char* texte){
    return var_list;
 }
 
-void add_parameter(char* nom, char* type,char* description)
+variable add_parameter(char* nom, char* type,char* description)
 {
 	variable v=malloc(sizeof(*v));
 	v->nom=nom;
@@ -305,6 +305,7 @@ void add_parameter(char* nom, char* type,char* description)
 		add_to_list(function_list,f);
 		add_to_list(f->arguments,v);
 	}
+	return v;
 }
 
 void add_to_list(list l,void* elem)

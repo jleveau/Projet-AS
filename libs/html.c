@@ -89,7 +89,7 @@ char* print_balise_declaration_typedef(char* param){
 char* print_balise_call_typedef(char* param){
 	balise b=print_debut_balise_id("span", "typedef_call");
     char* hashtag = string_concat_sans_espace(2,strdup("#"),strdup(param));
-	char* texte=string_concat_sans_espace(9,b->texte,strdup("value=\""),strdup(param),strdup("\""),strdup("href=\""),strdup(hastag),strdup("\">"),strdup(param),strdup("</span>\n"));
+	char* texte=string_concat_sans_espace(9,b->texte,strdup("value=\""),strdup(param),strdup("\""),strdup("href=\""),strdup(hashtag),strdup("\">"),strdup(param),strdup("</span>\n"));
 	free(b);
 	return texte;
 }
@@ -110,16 +110,14 @@ char* print_balise_call_struct(char* param){
 
 
 
-char* print_balise_parameter(char* param)
+char* print_balise_parameter(variable param)
 {
 	block top_block=(block)stack_top(block_stack);
-	char var_id[50];
-	
-	sprintf(var_id, "block%d%s", id_block,param);
-	balise b0= print_debut_balise_name("span",var_id);
+
+	balise b0= print_debut_balise_name("span",param->id);
 	ajouter_attribut_sans_espace(b0,"class","variable-activable");
 	balise b=print_debut_balise("span", "parameter");
-	char* texte=string_concat_sans_espace(9,b0->texte,strdup(">"),b->texte,strdup("id=\""),strdup(var_id),strdup("\">"),param,strdup("</span>"),strdup("</span>\n"));
+	char* texte=string_concat_sans_espace(9,b0->texte,strdup(">"),b->texte,strdup("id=\""),strdup(param->id),strdup("\">"),strdup(param->nom),strdup("</span>"),strdup("</span>\n"));
 	free(b);
 	return texte;
 }
