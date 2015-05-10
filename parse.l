@@ -21,6 +21,8 @@ SP  (u8|u|U|L)
 ES  (\\(['"4\?\\abfnrtv]|[0-7]{1,3}|x[a-fA-F0-9]+))
 WS  [ \t\v\n\f]
 
+TROUS [[:SPACE:]]*\n{0,1}[[:SPACE:]]*
+
 %{
 #ifndef YYSTYPE
 #define YYSTYPE char*
@@ -59,6 +61,13 @@ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' ma
 %option noyywrap
 %x COMMENT
 %x STRING
+%x COMMENT_MULT_LIGNE
+%x COMMENT_SMPL_LIGNE
+%x DOC_DESCRIPTION
+%x BRIEF
+%x BRIEF_JAVADOC
+%x BRIEF_COMMENT_SMPL_LIGNE
+%x BRIEF_COMMENT_MULT_LIGNE
 
 %%
 
@@ -196,6 +205,27 @@ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' ma
 "^"                                 {yylval = strdup(yytext); return EXPONENT;}
 "|"                                 {yylval = strdup(yytext); return PIPE;}
 "?"                                 {yylval = print_balise_span("vert", "?"); return INTERROGATION_POINT;}
+
+"/*!"                         {BEGIN(COMMENT_MULT_LIGNE); /*multiligne commentaires qui peuvent prendre la commande \brief*/}
+<COMMENT_MULT_LIGNE>\\brief {BEGIN(BRIEF_COMMENT_MULT_LIGNE);}
+<COMMENT_MULT_LIGNE>.      {/*on n'affiche pas les commentaires*/}
+<BRIEF_COMMENT_MULT_LIGNE>[^\*\n]* {brief=string_concat(2, brief, strdup(yytext));}
+<BRIEF_COMMENT_MULT_LIGNE>\* {/*pour que les etoiles au debut ne font rien*/}
+<BRIEF_COMMENT_MULT_LIGNE>\n {/*pour que les \n singuliers ne font rien*/}
+<BRIEF_COMMENT_MULT_LIGNE>\n\*\n\* {BEGIN(DOC_DESCRIPTION);}
+<COMMENT_MULT_LIGNE,BRIEF_COMMENT_MULT_LIGNE,DOC_DESCRIPTION,BRIEF_JAVADOC>"*/" {BEGIN(INITIAL);}
+
+"//*" {BEGIN(COMMENT_SMPL_LIGNE);}
+<COMMENT_SMPL_LIGNE>\\brief {BEGIN(BRIEF_COMMENT_SMPL_LIGNE);}
+<COMMENT_SMPL_LIGNE>.      {/*on n'affiche pas les commentaires*/}
+<BRIEF_COMMENT_SMPL_LIGNE>[^\n]* {brief=strdup(yytext);}
+<BRIEF_COMMENT_SMPL_LIGNE,COMMENT_SMPL_LIGNE>\n      {BEGIN(INITIAL);}
+
+"/**" {BEGIN BRIEF_JAVADOC;}
+<BRIEF_JAVADOC>[^\.\*\n]* {brief=string_concat(2, brief, strdup(yytext));}
+<BRIEF_JAVADOC>\* {/*pour que les etoiles au debut ne font rien*/}
+<BRIEF_JAVADOC>\n {/*pour que les \n singuliers ne font rien*/}
+<BRIEF_JAVADOC>\. {BEGIN(DOC_DESCRIPTION);}
 
 "/*"                                {fprintf(f_output, "<span class=\"comment\">/*"); BEGIN(COMMENT);}
 <COMMENT>.                          {fprintf(f_output, "%c", yytext[0]);}

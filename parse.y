@@ -537,7 +537,7 @@ external_declaration
 
 function_definition
 	: declaration_specifiers declarator declaration_list compound_statement {$$ = string_concat(4, $1, $2, $3, $4);}
-	| declaration_specifiers declarator compound_statement                  {name_function(strdup($1), strdup($2), strdup("description")); $$ = string_concat(3, $1, $2, $3);}
+	| declaration_specifiers declarator compound_statement                  {name_function(strdup($1), strdup($2), strdup(brief)); $$ = string_concat(3, $1, $2, $3);}
 	;
 
 declaration_list
