@@ -83,6 +83,8 @@ void fin_block();
 list function_list;
 list parameter_list;
 list typedef_list;
+list enum_list;
+
 stack typedef_stack;
 
 variable getVariable(char* name);

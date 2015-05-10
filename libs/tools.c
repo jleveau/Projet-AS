@@ -166,7 +166,6 @@ void destroy_variable(variable v)
 }
 
 char* add_typedef(char* param){
-	printf("add_typedef |%s| \n",param);
 	if (typedef_read){
 		add_to_list(typedef_list,param);
 		typedef_read=false;
@@ -347,6 +346,20 @@ void print_list(list l)
 bool typedef_exist(char* name){
 	cell c=typedef_list->first;
 	if (list_empty(typedef_list)){
+		return false;
+	}
+	while(c){
+		char* elem=(char*)c->elem;
+		if (strcmp(name, c->elem)==0)
+			return true;
+		c=c->next;
+	}
+	return false;
+}
+
+bool enum_exist(char* name){
+	cell c=typedef_list->first;
+	if (list_empty(enum_list)){
 		return false;
 	}
 	while(c){

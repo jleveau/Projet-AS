@@ -233,6 +233,7 @@ void init_structures()
 	parameter_list = list_create();
 	typedef_list=list_create();
 	id_block = 0;
+	nb_ligne = 1;
 	new_block(NULL);
 }
 
@@ -265,7 +266,6 @@ int main(int argc, char** argv)
 
 	create_html(argv[3], argv[2]);
 	init_structures();
-	nb_ligne = 1;
 	fprintf(f_output,"1. ");
 	yyparse();
 	fin_block(NULL);

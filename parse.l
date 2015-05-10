@@ -261,10 +261,11 @@ static int check_type(void)
 		yylval=print_balise_call_typedef(yytext);
 		return TYPEDEF_NAME;
 	}
+	if (enum_exist(yytext)){
+		return ENUMERATION_CONSTANT;
+	}
 	switch(sym_type(yytext))
 	{
-		case ENUMERATION_CONSTANT:		/* previously defined */
-			return ENUMERATION_CONSTANT;
 		default:						  /* includes undefined */
 			return IDENTIFIER;
 	}
