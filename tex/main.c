@@ -153,7 +153,7 @@ FILE* create_html(char* titre, char* dir)
 
 	//body
 	fprintf(f_output, "<body id=\"tex\">\n");
-	fprintf(f_output, "<div class=\"leftpanel sticky-leftpanel\">\n");
+	fprintf(f_output, "<div class=\"panneau-gauche\">\n");
 	fprintf(f_output, "<div class=\"logopanel\">\n");
 	fprintf(f_output, "<h1><span>[</span> Projet <span>]</span></h1>\n");
 	fprintf(f_output, "</div>\n");

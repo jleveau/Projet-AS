@@ -1,4 +1,7 @@
 #define TRUE 1 
+enum {LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE};
+
+enum jour j1 = LUNDI;
 
 struct ptr{
 	int i;
@@ -9,53 +12,20 @@ typedef struct ptr p;
 
 //* \brief single line description; does not require a full stop \return int
 int f(int a, int b)
-{ a = a+1;
-	a++;
-	a = a+1;
-	a++;
-	a = a+1;
-	a++;
-	a = a+1;
-	a++;
-	a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;a = a+1;
-	a++;
-    return a;
+{ 
+	a ++;a ++;
+	
+	b+=a;
+	while(b){
+		a++;
+		b--;
+		if (a){
+			if (a){
+				a=5;
+			}
+		}
+	}
+    return v;
 }
 
 /** javadoc brief. This second part is the
@@ -65,6 +35,10 @@ int f(int a, int b)
 */
 int g(int a, char* b){
 	char* f;
+
+int g(){
+	int j,i;
+	 f(i,j);
 }
 
 
@@ -75,6 +49,48 @@ int g(int a, char* b){
 * description
 */
 int k(){
+	int a;
+	p b;
+	b->i=4;
+	a=4;
+	b=6;
+	g(a,b);
+	int a;
+	p b;
+	b->i=4;
+	a=4;
+	b=6;
+	g(a,b);
+	int a;
+	p b;
+	b->i=4;
+	a=4;
+	b=6;
+	g(a,b);
+	int a;
+	p b;
+	b->i=4;
+	a=4;
+	b=6;
+	g(a,b);
+	int a;
+	p b;
+	b->i=4;
+	a=4;
+	b=6;
+	g(a,b);
+	int a;
+	p b;
+	b->i=4;
+	a=4;
+	b=6;
+	g(a,b);
+	int a;
+	p b;
+	b->i=4;
+	a=4;
+	b=6;
+	g(a,b);
 	int a;
 	p b;
 	b->i=4;
@@ -97,6 +113,7 @@ int main(char toto, int tata)
         else
         {
             int a = 42;
+            a=46;
         }
     }
 }

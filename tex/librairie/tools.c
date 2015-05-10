@@ -125,11 +125,11 @@ void print_toc(toc Toc){
             char buff[10];
             switch (c->profondeur){
                 case 0: {
-                    sprintf(buff, "%d", nombreParti+1);
+                    sprintf(buff, "%d.", nombreParti+1);
                     break;
                 }
                 case 1: {
-                    sprintf(buff, "%d", nombreChap+1);
+                    sprintf(buff, "%d.", nombreChap+1);
                     break;
                 }
                 case 2: {
@@ -186,6 +186,7 @@ void print_toc(toc Toc){
         }
     }
     fprintf(f_output,"</div>");
+    fprintf(f_output,"<div class=\"Corps\"> ")
 }
 
 

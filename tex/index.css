@@ -3,13 +3,117 @@ table
 	width: 50%;
 }
 
-.parti, .parti a:link, .parti a:visited{
-	color: #006699;
-} 	
 
 .title
 {
 	text-align: center;
-	line-height:1.5;	
+	line-height:1.5;
 }
 
+body
+{
+	line-height: 1.9;
+	font-family: myFont;
+}
+
+h1
+{
+	text-align: left;
+}
+
+.LinkChap
+{
+	text-indent: 5px;
+}
+.LinkSecs
+{
+	text-indent: 15px;
+}
+
+#toc-devant
+{
+	line-height: 0.1;
+	font-size: 20px;
+	text-align: left;
+}
+.bordure
+{
+	margin-left: 160px;
+	border-left-style: solid;
+	border-left-color: #626262;
+	border-left-width: 1px;
+}
+.Code
+{
+	margin-left: 10px;
+}
+.leftpanel
+{
+	
+	float:left;
+	width:150px;
+	text-align: left;
+}
+
+a:link {
+    text-decoration: none;
+    color:black;
+}
+
+a:visited {
+    text-decoration: none;
+    color:black;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active {
+    text-decoration: underline;
+    color:black;
+}
+
+#Codes{
+	text-align:center;
+	line-height: 2;
+}
+
+#TableOfContents
+{
+	text-align:left;
+	line-height: 1;
+}
+#partID1
+{
+	text-align:center;
+}
+#partID2
+{
+	text-align:center;
+}
+#partID3
+{
+	text-align:center;
+}
+ul
+{
+ padding: 1px;
+}
+@font-face
+{
+	font-family: myFont;
+	src: url(cmunbx.woff);
+}
+p
+{
+	margin-left: 50px;
+	margin-right: 50px;
+	text-indent: 50px;
+	font-size: 20px;
+}
+p::first-letter
+{
+	font-size:200%;
+	font-weight: bold;
+}

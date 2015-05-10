@@ -225,7 +225,7 @@ variable getVariable(char* name)
 char* create_variable_id(variable v,int id)
 {
 	char* str_id=malloc(strlen(v->nom)+100);
-	sprintf(str_id,"%d%s",id,v->nom);
+	sprintf(str_id,"%d-%s",id,v->nom);
 	return str_id;
 }
 
@@ -358,10 +358,9 @@ bool typedef_exist(char* name){
 }
 
 bool enum_exist(char* name){
-	cell c=typedef_list->first;
-	if (list_empty(enum_list)){
+	cell c=enum_list->first;
+	if (list_empty(enum_list))
 		return false;
-	}
 	while(c){
 		char* elem=(char*)c->elem;
 		if (strcmp(name, c->elem)==0)
@@ -484,7 +483,6 @@ fprintf(stderr, "return type: %s\n", documentation_pour_fonction->return_type);
 		f->id =func_id;
 		return;
 	}
-	//documentation_pour_fonction=doc_clear(documentation_pour_fonction);
 }
 
 void declared_function_balise(char* type,char* nom)

@@ -1,3 +1,21 @@
+//* \brief single line description; does not require a full stop \return int
+
+/** javadoc brief. This second part is the
+* detailled 
+*
+* description
+*/
+
+
+/*!\return \brief this is a brief test
+* test continues
+* and more 
+*
+* description
+*/
+
+
+//* \return int \brief test2
 
 /*!\brief this is a brief test
 * test continues
