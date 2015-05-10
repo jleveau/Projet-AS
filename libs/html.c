@@ -162,7 +162,6 @@ char* print_balise_variable(char* var)
 			fprintf(stderr,"coucou buggé\n");
 	}
 	char* end=strchr(texte, '=');
-	fprintf(stderr,"end : %s \n ", texte);
 	if (end)
 		txt=string_concat(2,strdup(txt),strdup(end));
 	//free(texte0);

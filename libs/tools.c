@@ -363,8 +363,6 @@ bool enum_exist(char* name){
 		return false;
 	while(c){
 		char* elem=(char*)c->elem;
-			fprintf(stderr,"elem : %s \n",(char*)c->elem);
-
 		if (strcmp(name, c->elem)==0)
 			return true;
 		c=c->next;
