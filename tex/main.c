@@ -128,10 +128,7 @@ FILE* create_html(char* titre, char* dir)
 	fprintf(f_output, "<head>\n");								//<HEADER>
 	fprintf(f_output, "<meta charset=\"utf-8\">\n");
 	fprintf(f_output, "<title>%s</title>\n", titre);
-	fprintf(f_output, "<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/index.css\">\n");
-	fprintf(f_output, "<link href=\"../branches/Rohan/css/style.default.css\" rel=\"stylesheet\">\n");
-	fprintf(f_output, "<link href=\"../branches/Rohan/css/jquery.datatables.css\" rel=\"stylesheet\">\n");
-	fprintf(f_output, "<link href=\"../branches/Rohan/css/font.helvetica-neue.css\" rel=\"stylesheet\">\n");
+	fprintf(f_output, "<link rel=\"stylesheet\" type=\"text/css\" href=\"../tex/index.css\">\n");
 	fprintf(f_output, "<link rel=\"stylesheet\" href=\"http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css\">\n");
 	fprintf(f_output, "<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js\"></script>\n");
 
