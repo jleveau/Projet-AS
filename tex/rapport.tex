@@ -12,7 +12,7 @@
 \chapter{Présentation du Projet}
 \chapter{Objectifs Atteints}
 \chapter{Présentation du code C}{
-\paragraph{}{Nous utilisons deux parseurs pour notre projet, un utilisant la grammaire \textbf{C-11} donnée dans le sujet, et le second une grammaire LaTeX que nous avons écrite.
+\paragraph{toto}{Nous utilisons deux parseurs pour notre projet, un utilisant la grammaire \textbf{C-11} donnée dans le sujet, et le second une grammaire LaTeX que nous avons écrite.
 	Les sources doivent être placées dans un dossier source. Suivant leurs extensions elles seront exécutées par :
 	\begin{itemize}
 	\item capitaine.c pour les fichiers .c et .h
@@ -21,7 +21,7 @@
 	Les fichiers HTML générés sont ensuite écrits dans le dossier HTML.
 }
 \section{Analyseur C}{
-\paragraph{}{
+\paragraph{toto}{
 	l'analyseur est ecrit en C, avec bison et flex à partir des sources disponibles sur : \url{http://www.quut.com/c/ANSI-C-grammar-y.html}
 	Nous avons choisi de remonter l'entrée lue dans le bison et à la fin de certaines règles on ajoute les balises HTML permettant d'identifier les différents éléments.
 	De cette façon chaque règle bison retourne la concaténation des composant de la règle : \$\$ = Concaténation (\$1 , \$2 ... \$n)
@@ -30,32 +30,32 @@ Afin de structurer notre code, les fonctions C ont été écrite dans des fichie
 	}
 	}
 	\section{Lex}{
-	\paragraph{}{
+	\paragraph{toto}{
 		Le fichier lex contiennent les même règles que celles définies dans le fichier fourni. Des tokens ont cependant été ajoutés pour tous les caractères (parentheses, crochets ...) afin 
 		que le bison puisse ne manipuler que des char*. Le contenu de l'entrée est placé dans yylval, les mots clés, ou caracteres speciaux ("(", ';') sont également entourés d'une balise
 		afin de les colorier. Afin de pouvoir gerer la memoire utilisée pour les chaines de caractères, et en raison du grand nombre de concatenation, les char* sont déclarés dynamiquement.
 		}
 		\subsection{Traitement des IDs}{	
-	\paragraph{}{
+	\paragraph{toto}{
 	Afin de differencier un identifier, enum et typdefname, nous utilisons des listes, qui contiennent le nom des typedef/enums declarés. Lorsque qu'un ID est lu, il est alors comparén à
 			 la liste, s'il n'est pas dedans il est alors consideré comme un IDENTIFIER.
 			 }
 		}
 		\subsection{Blocs de variables}{
-		\paragraph{}{
+		\paragraph{toto}{
 		La portée des variables est gérée en utilisant une pile, contenant les listes de variables pour un block donné. L'ouverture et la fermeture d'un block est determinée par la lecture d'une accolade ouvrante ou fermante. les fonctions new block() et fin block() sont donc utilisées dans le lexer, les balises et l'enregistrement des variables sont gérés dans le bison. Lorsque l'on empile une nouvelle liste, on concatene actuellement en haut de la pile à la nouvelle liste. Ceci permet de gerer des blocs imbriqués.En assurant qu'un bloc de plus haut niveau contient les variable d'en dessous.
 L'id des bloc est également utilisé pour écrire des balises autour des accolades d'un bloc de variables et permettent de déplier ou replier les lignes de code du bloc
 			}
 			}
 		\subsection{Indentation et numérotation}{
-		\paragraph{}{
+		\paragraph{toto}{
 			L'indentation du code est faite dans le flex, et indentera le fichier en entré. Comme la totalité du texte qui sera en sorti doit être stocké dans yylval puis envoyé dans le bison
 			nous devons associer les espaces et retour a la ligne à un token lu qui sera analysé par le bison. Nous avons donc choisi que les retours a la ligne et l'indentation seraient 
 			déclenchés par la lecture d'un point virgule ou d'une accolade. Les balises br utilisées pour le retour a la ligne sont également utilisé par le CSS pour calculer et afficher la numérotation des lignes.
 			}
 		}
 		\section{Bison}{
-		\paragraph{}{
+		\paragraph{toto}{
 		 Le parser bison manipule des chaines de caractere. Notre programme fait remonter le texte lu par le .lex, et ajoute des balises lorsque des réductions. Cette façon de faire demande de 
 		 faire passer dans la variable \$ \$ la concatenation des \$1 ,\$2 ... Nous avons donc ecrit une fonction prenant un nombre variable de paramètre, et retournant la concatenation de toutes
 		 les chaines passées en paramètre. Les chaines passées sont liberées de la mémoire, ce qui demande donc que toutes les entrées aient été allouées dynamiquement.
@@ -63,7 +63,7 @@ L'id des bloc est également utilisé pour écrire des balises autour des accola
 		 Le texte est ecrit dans le html une fois qu'une regle "declaration" ou "function definition" est reduite.
 			}
 			\subsection{Variables et fonctions}{
-			\paragraph{}{
+			\paragraph{toto}{
 			Les variables et fonctions sont stockées dans des struct, contenant un nom, un type, une description et un id utilisé pour les balises. Les fonctions possedent également une liste 
 			de variables correspondant aux parametres. L'id d'une variable est de la forme<numero du block>-<nom de la variable>.
 			Ces structures sont utilisées pour faire les info-bulles lorsque l'on passe la souris sur une variable ou fonction, et à faire la surbrillance des variables.
@@ -76,7 +76,7 @@ L'id des bloc est également utilisé pour écrire des balises autour des accola
 			une fonction est crée, qui contiendra alors le parametre lu. Les informations supplementaires de la fonction seront alors ajoutées lorsque function definition sera reduit.
 			}
 			\subsubsection{Ecriture des balises}{
-			\paragraph{}{
+			\paragraph{toto}{
 			Pour ecrire les balises, lors de la concatenation des information : \$ \$ = string concat(\$1,\$2,..), 
 			il nous suffit de placer les balises qui nous interessent : \$ \$ = \$1, print balise(\$2) ...
 			Les balises correspondant a une variable ou une fonction contiennent une ancre permettant de rejoindre sa declaration. Nous avons écrit des fonction qui utilisent les information
@@ -84,7 +84,7 @@ L'id des bloc est également utilisé pour écrire des balises autour des accola
 		}
 		}
 		\subsubsection{Typedef et enum}{
-		\paragraph{}{
+		\paragraph{toto}{
 			La déclaration d'un typedef, enum ou d'un struct est reperée dans parser. Des balises sont placées lors de la declaration d'un typedef ou d'un struct et lors de l'appel. Les balises 
 			sont differentes suivant qu'il s'agit d'un appel ou d'une déclaration. Mais nous n'avons pas écrit le code permettant de revenir sur la déclaration du type.
 			Les noms des types déclarés ainsi sont stockés dans des listes afin que le lexer puisse les traiter correctement.
@@ -95,7 +95,7 @@ L'id des bloc est également utilisé pour écrire des balises autour des accola
 			}
 			}
 \chapter{Présentation de la documentation}{
-\paragraph{}{Notre programme permet de passer en argument un fichier .tex optionnel qui va être parsé et présenté sur notre site comme de la documentation .
+\paragraph{toto}{Notre programme permet de passer en argument un fichier .tex optionnel qui va être parsé et présenté sur notre site comme de la documentation .
 A cette fin, une nouvelle grammaire et un parseur tex ont été conçu pour traiter cette possibilité. Nous aurions pu ajouter des nouvelles règles et patterns dans la grammaire et dans le parseur originaux avec un état spécial pour les fichiers .tex, cependant cette solution aurait eu comme contrainte que si l'on écrivait un fichier d'extension .c en  Latex, il était accepté par notre programme ce qui était contre nos attentes. Notre solution que nous avons choisi nous permet d'éviter cette éventualité. Le main dans la partie C traite et appelle le parseur (et en conséquence la grammaire) nécessaire selon l'extension du fichier passé en paramètre.
 
 La grammaire pour les fichiers .tex a été construite en implémentant progressivement les différentes parties.
@@ -104,7 +104,7 @@ En conséquence, il est possible d'utiliser n'importe quel .tex qui compile. De 
 }
 
 \section{Grammaire}{
-\paragraph{}{
+\paragraph{toto}{
 Après l'entête, la structure toc (pour la table des matières) est initialisée avec une variable qui est mise à jour si jamais la commande \textbackslash tableofcontents est appelée, n'importe où dans le fichier. A la fin du document, selon cette variable, la table des matières est imprimée avec la mise en place faite par javascript pour qu'il apparaisse dans l'endroit où il est appelé. L'entête est suivie par la structure, qui est constitué d'un titre, début et fin d'environnement avec un contenu d'environnement et un maketitle optionnel, n'importe où avant la fin d'environnement. La structure peut être vide afin de permettre  qu'un fichier avec seulement un entête puisse être parsé. 
 
 Les règles \textit{contenu} sont une combinaison de commandes possibles. Afin d'éviter des conflits,si un non-terminal est effaçable, la règle vide est déclarée à la hauteur (dans l'arbre de dérivation) niveau la plus haute possible. C'est particulièrement important pour les règles qui contiennent des non-terminaux qui sont récursifs.
@@ -118,7 +118,7 @@ Parmi les commandes, Il en existe deux types:
 \end{itemize}
 }
 \subsection{Commandes simples}:{
-\paragraph{}{
+\paragraph{toto}{
 Les commandes simples sont du type :
  \begin{itemize}
  \item Affichage de la table des matières
@@ -130,21 +130,21 @@ Les commandes simples nous obligent donc à différencier
  \textit{combinaison string et appel commande}.
 }
 \subsubsection{Structure du fichier}{
-\paragraph{}{
+\paragraph{toto}{
 La structure du fichier comprend tout ce qui est la répartition du texte en sections, parties etc. ainsi que les commandes spéciales qui ont un contenu différent de commandes simples et alors doivent être traités à part.
 Gèrent le contenu text, tabular, image etc du fichier.
 }
 }
 }
 \subsection{Structure de grammaire}
-\paragraph{}{
+\paragraph{toto}{
 formatage texte
   
 Ce chapitre va regarder les commandes qu'on a traité, dans l'ordre qu'ils étaient traités.
 }
 }
 \section{Paragraphes, environnement, commandes et caractères spéciaux}
-\paragraph{}{
+\paragraph{toto}{
 Notre grammaire permet n'importe quel environnement de passer par contre, les particularités de ces environnements n'ont pas été traités.
 }
 \paragraph{Paragraphes}{Un token 
