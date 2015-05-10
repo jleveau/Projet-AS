@@ -1,0 +1,15 @@
+
+/*!\brief this is a brief test
+* test continues
+* and more
+*/
+
+
+/** javadoc brief. This second part is the
+* detailled 
+* 
+* description
+*/
+
+//* \brief single line description; does not require a full stop
+

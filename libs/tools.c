@@ -446,7 +446,11 @@ bool list_empty(list l)
 void name_function(char* type,char* nom, doc d)
 {
 
-fprintf(stderr, "brief %s\n", documentation_pour_fonction->brief);
+fprintf(stderr, "brief: %s\n", documentation_pour_fonction->brief);
+
+fprintf(stderr, "description: %s\n", documentation_pour_fonction->description_detaille);
+
+fprintf(stderr, "return type: %s\n", documentation_pour_fonction->return_type);
 
 	if (list_empty(function_list) )
 	{
@@ -480,6 +484,7 @@ fprintf(stderr, "brief %s\n", documentation_pour_fonction->brief);
 		f->id =func_id;
 		return;
 	}
+	//documentation_pour_fonction=doc_clear(documentation_pour_fonction);
 }
 
 void declared_function_balise(char* type,char* nom)
@@ -568,20 +573,23 @@ void print_variables()
 /*pour le doc*/
 doc doc_create(){
 	doc d=malloc(sizeof(*d));
-	d->brief=NULL;
-	d->description_detaille=NULL;
-	d->return_type=NULL;
+	d->brief=malloc(sizeof(*d->brief));
+	d->description_detaille=malloc(sizeof(*d->description_detaille));
+	d->return_type=malloc(sizeof(*d->return_type));
+	d->brief="";
+	d->description_detaille="";
+	d->return_type="";
 	d->params=list_create();
 	return d;
 }
 
 /*efface le contenu du doc sans le detruire*/
 doc doc_clear(doc d){
-	d->brief=NULL;
-	d->description_detaille=NULL;
-	d->return_type=NULL;
+	d->brief=strdup("");
+	d->description_detaille=strdup("");
+	d->return_type=strdup("");
 	//efface contenu liste:
-	if (!list_empty(d->params))
+	/*if (!list_empty(d->params))
 		{
 			cell c=d->params->first;
 			while (c)
@@ -590,7 +598,7 @@ doc doc_clear(doc d){
 				free(c);
 				c=next;
 			}
-		}
+		}*/
 	return d;
 }
 
