@@ -137,7 +137,7 @@ void print_toc(toc Toc){
                     break;
                 }
                 default: {
-                    sprintf(buff, "");
+                    sprintf(buff, "%s","");
                     break;
                 }
             }

@@ -166,7 +166,6 @@ void destroy_variable(variable v)
 }
 
 char* add_typedef(char* param){
-	printf("add_typedef |%s| \n",param);
 	if (typedef_read){
 		add_to_list(typedef_list,param);
 		typedef_read=false;
@@ -226,7 +225,7 @@ variable getVariable(char* name)
 char* create_variable_id(variable v,int id)
 {
 	char* str_id=malloc(strlen(v->nom)+100);
-	sprintf(str_id,"%d%s",id,v->nom);
+	sprintf(str_id,"%d-%s",id,v->nom);
 	return str_id;
 }
 
@@ -239,21 +238,40 @@ char* create_name_id(char* name)
 	return id;
 }
 
-/* cree une variable et l'ajoute dans la liste au sommet de la pile */
+/* cree une variable pour chaque element de list_var
+ *  et l'ajoute dans la liste au sommet de la pile */
 
-variable create_variable(char* nom,char* type, char* description)
+void create_variable(list list_var,char* type, char* description)
 {
-	variable v=malloc(sizeof(*v));
-	v->nom=nom;
-	v->type=type;
-	v->description=description;
-	block b=(block)stack_top(block_stack);
+	if (!list_empty(list_var)){
+		cell c=list_var->first;
+		while(c){
+			variable v=malloc(sizeof(*v));
+			v->nom=(void*)c->elem;
+			v->type=type;
+			v->description=description;
+			block b=(block)stack_top(block_stack);
 
-	v->id=create_variable_id(v,id_block-1);
+			v->id=create_variable_id(v,id_block-1);
+			
+			add_to_list(b->variables,v);
+			c=c->next;
+		}
+	}
+}
+
+list parse_variables(char* texte){
+	list var_list=list_create();
 	
-	add_to_list(b->variables,v);
-
-	return v;
+	char* token = strtok(texte, ",");
+   
+   /* walk through other tokens */
+   while( token != NULL ) 
+   {
+	   add_to_list(var_list,token);
+       token = strtok(NULL, strdup(","));
+   }
+   return var_list;
 }
 
 void add_parameter(char* nom, char* type,char* description)
@@ -339,6 +357,19 @@ bool typedef_exist(char* name){
 	return false;
 }
 
+bool enum_exist(char* name){
+	cell c=enum_list->first;
+	if (list_empty(enum_list))
+		return false;
+	while(c){
+		char* elem=(char*)c->elem;
+		if (strcmp(name, c->elem)==0)
+			return true;
+		c=c->next;
+	}
+	return false;
+}
+
 list list_concat(list l1,list l2)
 {
 	list l=list_create();
@@ -411,8 +442,11 @@ bool list_empty(list l)
 	return !l->last;
 }
 
-void name_function(char* type,char* nom,char* description)
+void name_function(char* type,char* nom, doc d)
 {
+
+fprintf(stderr, "brief %s\n", documentation_pour_fonction->brief);
+
 	if (list_empty(function_list) )
 	{
 		function f= malloc(sizeof(*f));
@@ -420,7 +454,7 @@ void name_function(char* type,char* nom,char* description)
 		f->arguments=list_create();
 		f->nom=nom;
 		f->type=type;
-		f->description=description;
+		f->description="description";//à change!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		add_to_list(function_list,f);
 		return;
 	}
@@ -434,14 +468,14 @@ void name_function(char* type,char* nom,char* description)
 		add_to_list(function_list,f);
 		f->nom=nom;
 		f->type=type;
-		f->description=description;
+		//f->description=description;
 		return;
 	}
 	else
 	{
 		f->nom=nom;
 		f->type=type;
-		f->description=description;
+		f->description="description";//à changer!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		f->id =func_id;
 		return;
 	}
@@ -529,3 +563,38 @@ void print_variables()
 	}
 	printf("\n\n");
 }
+
+/*pour le doc*/
+doc doc_create(){
+	doc d=malloc(sizeof(*d));
+	d->brief=NULL;
+	d->description_detaille=NULL;
+	d->return_type=NULL;
+	d->params=list_create();
+	return d;
+}
+
+/*efface le contenu du doc sans le detruire*/
+doc doc_clear(doc d){
+	d->brief=NULL;
+	d->description_detaille=NULL;
+	d->return_type=NULL;
+	//efface contenu liste:
+	if (!list_empty(d->params))
+		{
+			cell c=d->params->first;
+			while (c)
+			{
+				cell next=c->next;
+				free(c);
+				c=next;
+			}
+		}
+	return d;
+}
+
+void doc_destroy(doc d){
+	list_destroy(d->params);
+	free(d);
+}
+

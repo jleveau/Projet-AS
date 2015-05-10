@@ -149,6 +149,10 @@ FILE* create_html(char* titre, char* dir)
 	fprintf(f_output, "<script>$(document).ready(function(){\n");
 	fprintf(f_output, "$('.variable-activable').hover(function(){\n");
 	fprintf(f_output, "var color = $(this).children().attr('id');\n");
+	
+	
+	
+	
 	fprintf(f_output, "$(color).css(\"background-color\",\"#CBCACA\")");
 	fprintf(f_output, "}, function() {\n");
 	fprintf(f_output, "var color = $(this).children().attr('id');\n");
@@ -232,8 +236,19 @@ void init_structures()
 	block_stack = stack_create();
 	parameter_list = list_create();
 	typedef_list=list_create();
+	enum_list=list_create();
+
 	id_block = 0;
+	nb_ligne = 1;
 	new_block(NULL);
+
+	/*pour le doc*/
+	brief=""; 
+	//description_detaille=""; 
+	//return_type="";
+	list params=list_create();
+	documentation_pour_fonction=doc_create();
+
 }
 
 void create_log(char* name)
@@ -265,7 +280,6 @@ int main(int argc, char** argv)
 
 	create_html(argv[3], argv[2]);
 	init_structures();
-	nb_ligne = 1;
 	fprintf(f_output,"1. ");
 	yyparse();
 	fin_block(NULL);

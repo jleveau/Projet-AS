@@ -47,7 +47,7 @@ constant
 	;
 
 enumeration_constant    /* before it has been defined as such */
-	: IDENTIFIER        {$$ = string_concat(1, $1);}
+	: IDENTIFIER        {add_to_list(enum_list,strdup($1));$$ = string_concat(1, $1);}
 	;
 
 string
@@ -208,9 +208,19 @@ declaration
 																	$$ = string_concat(3, $1, add_typedef(strdup($2)), $3);
 																	}
 																else {
-																	create_variable(strdup($2), strdup($1), strdup("description"));
-																	$$ = string_concat(3, $1, print_balise_variable($2), $3);
+																	list list_var=parse_variables($2);
+																	create_variable(list_var, strdup($1), strdup("description"));
+																	$$=$1;
+																	cell c=list_var->first;
+																	while(c){
+																		if (c->next)
+																			$$ = string_concat(3, $$, print_balise_variable((char*)c->elem),strdup(","));
+																		else 
+																			$$ = string_concat(2, $$, print_balise_variable((char*)c->elem));
+																		c=c->next;
 																	}
+																	$$ = string_concat(2,$$,$3);
+																}
 																}
 																		
 	| static_assert_declaration                                 {$$ = string_concat(1, $1);}
@@ -537,7 +547,7 @@ external_declaration
 
 function_definition
 	: declaration_specifiers declarator declaration_list compound_statement {$$ = string_concat(4, $1, $2, $3, $4);}
-	| declaration_specifiers declarator compound_statement                  {name_function(strdup($1), strdup($2), strdup(brief)); $$ = string_concat(3, $1, $2, $3);}
+	| declaration_specifiers declarator compound_statement                  {name_function(strdup($1), strdup($2), documentation_pour_fonction); $$ = string_concat(3, $1, $2, $3);}
 	;
 
 declaration_list
