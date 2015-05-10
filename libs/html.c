@@ -125,32 +125,40 @@ char* print_balise_parameter(char* param)
 
 char* print_balise_variable(char* var)
 {
-	variable v=getVariable(var);
+	char* texte=strdup(var);
+	char* token;
+	token=strtok(var, "=");
+	
+	variable v=getVariable(token);
 	block top_block=(block)stack_top(block_stack);
-	char* var_id=malloc(strlen(var)+strlen(top_block->id)+1);
+	char* var_id=malloc(strlen(token)+strlen(top_block->id)+1);
 	strcpy(var_id,top_block->id);
-	strcat(var_id,var);
-		char* hashtag = string_concat_sans_espace(2,strdup("#"),strdup(var_id));
-		char *var_id_point = string_concat_sans_espace(2,strdup("."),strdup(var_id));
+	strcat(var_id,token);
+	char* hashtag = string_concat_sans_espace(2,strdup("#"),strdup(var_id));
+	char *var_id_point = string_concat_sans_espace(2,strdup("."),strdup(var_id));
 	balise b=print_debut_balise_id("a",hashtag);
 	ajouter_attribut_sans_espace(b,"class","variable-activable");
 	ajouter_attribut_sans_espace(b,"name",var_id);
 
 	ajouter_attribut(b,"href",hashtag);
-	//char* texte0 = malloc(strlen(var_id)+strlen(var_id_point)+strlen(var)+28);
+	//char* texte0 = malloc(strlen(var_id)+strlen(var_id_point)+strlen(token)+28);
 		balise b1 = print_debut_balise("span","variable");
-	char* texte0 = string_concat_sans_espace(7,strdup("<span class=\""),strdup(var_id),strdup("\" id=\""),strdup(var_id_point),strdup("\">"),strdup(var),strdup("</span>"));
+	char* texte0 = string_concat_sans_espace(7,strdup("<span class=\""),strdup(var_id),strdup("\" id=\""),strdup(var_id_point),strdup("\">"),strdup(token),strdup("</span>"));
 	char* texte1=string_concat(5,b->texte,strdup("value=\""),strdup(var_id),strdup("\">"),strdup(texte0));
 	char* txt;
 	if(v)
 	{
 		txt = string_concat(5,strdup(texte1),strdup(b1->texte),strdup(">"),strdup(print_variable_html(v)),strdup("</a>\n"));
 	}
-else
-{
-	txt = string_concat(5,strdup(texte1),strdup(b1->texte),strdup(">"),strdup("tata"),strdup("</span>\n"));
-		fprintf(stderr,"coucou buggé\n");
-}
+	else
+	{
+		txt = string_concat(5,strdup(texte1),strdup(b1->texte),strdup(">"),strdup("tata"),strdup("</span>\n"));
+			fprintf(stderr,"coucou buggé\n");
+	}
+	char* end=strchr(texte, '=');
+	fprintf(stderr,"end : %s \n ", texte);
+	if (end)
+		txt=string_concat(2,strdup(txt),strdup(end));
 	//free(texte0);
 	free(b);
 	free(b1);

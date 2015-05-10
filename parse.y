@@ -208,9 +208,19 @@ declaration
 																	$$ = string_concat(3, $1, add_typedef(strdup($2)), $3);
 																	}
 																else {
-																	create_variable(strdup($2), strdup($1), strdup("description"));
-																	$$ = string_concat(3, $1, print_balise_variable($2), $3);
+																	list list_var=parse_variables($2);
+																	create_variable(list_var, strdup($1), strdup("description"));
+																	$$=$1;
+																	cell c=list_var->first;
+																	while(c){
+																		if (c->next)
+																			$$ = string_concat(3, $$, print_balise_variable((char*)c->elem),strdup(","));
+																		else 
+																			$$ = string_concat(2, $$, print_balise_variable((char*)c->elem));
+																		c=c->next;
 																	}
+																	$$ = string_concat(2,$$,$3);
+																}
 																}
 																		
 	| static_assert_declaration                                 {$$ = string_concat(1, $1);}
