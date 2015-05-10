@@ -1,5 +1,6 @@
 \documentclass{report}
 \usepackage{mathtools}
+\usepackage[francais]{babel}
 \usepackage{color}
 \title{Projet d’Analyse Syntaxique Université de Bordeaux, année 2014–2015 L3 Informatique et Math-Info.}
 \begin{document}
@@ -13,6 +14,49 @@
 \chapter{Objectifs Atteints}
 \chapter{Présentation du code C}
 \chapter{Présentation de la documentation}
+Notre programme permet de passer en argument un fichier .tex optionnel qui va être parsé et présenté sur notre site comme de la documentation .
+Pour achever à cette fin une nouvelle grammaire et parseur uniquement pour le fichier .tex a été concué pour traiter cet possibilité. On aurait pu ajouter des nouvelles règles et patterns dans la grammaire et parseur originale avec un etat spécial pour les fichiers .tex par contre cette solution aurait permis le passage d'un fichier du format Latex avec une extension .c pour passer et être affiché comme un fichier .tex et inversement. Notre solution préférentielle permet d'éviter cette éventualité. Le main dans la partie c traite et appel le parseur (et en conséquence la grammaire) nécessaire selon l'extension du fichier passé en paramètre.
+
+La grammaire pour les fichiers .tex a été construit en incrémentant progressivement les partis analysés.
+Ca veut dire, qu'on a commencé avec une grammaire qui permettait de parser les fichier .tex le plus basiques (avec une definition de documentation et un begin et end document) et on a construit sur ca. Notre grammaire ignore le type de document précisé dans l'entete (\textbackslash documentclass{type de document}) ainsi que tous qui est entre l'entête et le titre/début du document parce que ceci peut être des usepackage et creation de commandes etc qu'on  ne traite pas.
+En conséquence, c'est possible d'utiliser n'importe quel .tex qui passe pour de vrai. Par contre, à cause de celui-ci il y aura des .tex qui peuvent passer chez nous avec notre parseur et grammaire mais qui ne devraient pas passer normalement dans latex.
+
+\section{Grammaire}
+Après l'entête, la structure toc pour le tableau de matières est initialisé avec un variable qui est mise à jour si jamais la commande \textbackslash tableofcontents est appelé, n'importe où dans le fichier. A la fin du document, selon cette variable, le tableau de matières est imprimé avec la mise en place fait par javascript pour qu'il apparaisse dans l'endroit où il était appelé, autant de fois qu'il était appelé.  L'entête est suivi par la structure, qui consiste d'un titre,  debut et fin d'environnement avec un contenu d'environnement et un maketitle optionnel, n'importe où avant la fin d'environnement. La structure peut être vide afin de permettre pour qu'un fichier avec seulement l'entête passe. 
+
+Les règles \textit{contenu} est une combinaison de commandes possibles et des strings ou vide. Afin d'éviter des conflits à cause de plusieurs non-terminaux effaçables, si un non-terminal est effaçable, la règle vide est déclaré au niveau le plus haut possible. Ceci est particulièrement important pour les règles qui contient des non-terminaux qui ont des règles récursives.
+
+ La combinaison de commandes mentionné au-dessus est récursive gauche pour pouvoir générer un contenu d'un nombre illimité de strings et/ou des commandes. Un string peut être un token STRING ou WORD. Les deux ont des priorités différents dans le parseur à cause de certain paramètres et options qui ont besoin de prendre qu'un mot en paramètre et en conséquence, cette règles peut être un ou l'autre.
+
+Parmi les commandes, Il existe deux types de commandes: des commandes simples, qui peuvent être suivi ou qui ont dans leur bloc de commande que des strings; et les commandes qui peuvent englober n'importe quelle commande ou string qui peut être dans le non-terminal contenu.
+
+\section{Commandes simples}
+Les commandes simples sont du type appel à l'affichage du tableau de matières, du formatage du texte (sections, chapitres etc.) et de la décoration du texte (couleur, gras etc.).
+C'est à cause de ce type de commandes qu'on a besoin de différentier string_OU_appel_commande et combinaison_string_ET_appel_commande comme déjà mentionné.
+
+\subsubsection{Formatage texte}
+Le formatage texte comprends tous qui est la répartition du texte en sections, partis etc. ainsi que les commandes spéciales qui ont un contenu différent de commandes simples et alors doivent être traités à part.
+Gèrent le contenu text, tabular, image etc du fichier.
+
+\section{Structure de grammaire}
+formatage_texte
+  
+Ce chapitre va regarder les commandes qu'on a traité, dans l'ordre qu'ils étaient traités.
+\section{Paragraphes, environnement, commandes et caractères spéciaux}
+Notre grammaire permet n'importe quel environnement de passer par contre, les particularités de ces environnements n'ont pas été traités.
+\paragraph{Paragraphes} Un token 
+Les caractères spéciaux sont traités par le parseur.
+\section{Commandes de présentation}
+\section{Environements de base}
+\section{Un mécanisme de sections}
+\section{Fomules mathématiques}
+\section{Documentation directement dans le code c}
+\subsection{Implémentation}
+\subsubsection{} struct fonction etc.
+\textbackslash brief pour /*! /** //* et description détaillé pour /*! /**
+\textbackslash params
+\textbackslash  return
+\subsection{Présentation dans le html} ...
 \chapter{Avis Personnel}
 \part{Conclusion}
 \end{document}
