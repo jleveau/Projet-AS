@@ -411,8 +411,11 @@ bool list_empty(list l)
 	return !l->last;
 }
 
-void name_function(char* type,char* nom,char* description)
+void name_function(char* type,char* nom, doc d)
 {
+
+fprintf(stderr, "brief %s\n", documentation_pour_fonction->brief);
+
 	if (list_empty(function_list) )
 	{
 		function f= malloc(sizeof(*f));
@@ -420,7 +423,7 @@ void name_function(char* type,char* nom,char* description)
 		f->arguments=list_create();
 		f->nom=nom;
 		f->type=type;
-		f->description=description;
+		f->description="description";//à change!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		add_to_list(function_list,f);
 		return;
 	}
@@ -434,14 +437,14 @@ void name_function(char* type,char* nom,char* description)
 		add_to_list(function_list,f);
 		f->nom=nom;
 		f->type=type;
-		f->description=description;
+		//f->description=description;
 		return;
 	}
 	else
 	{
 		f->nom=nom;
 		f->type=type;
-		f->description=description;
+		f->description="description";//à changer!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		f->id =func_id;
 		return;
 	}
@@ -529,3 +532,38 @@ void print_variables()
 	}
 	printf("\n\n");
 }
+
+/*pour le doc*/
+doc doc_create(){
+	doc d=malloc(sizeof(*d));
+	d->brief=NULL;
+	d->description_detaille=NULL;
+	d->return_type=NULL;
+	d->params=list_create();
+	return d;
+}
+
+/*efface le contenu du doc sans le detruire*/
+doc doc_clear(doc d){
+	d->brief=NULL;
+	d->description_detaille=NULL;
+	d->return_type=NULL;
+	//efface contenu liste:
+	if (!list_empty(d->params))
+		{
+			cell c=d->params->first;
+			while (c)
+			{
+				cell next=c->next;
+				free(c);
+				c=next;
+			}
+		}
+	return d;
+}
+
+void doc_destroy(doc d){
+	list_destroy(d->params);
+	free(d);
+}
+

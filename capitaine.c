@@ -234,6 +234,14 @@ void init_structures()
 	typedef_list=list_create();
 	id_block = 0;
 	new_block(NULL);
+
+	/*pour le doc*/
+	brief=""; 
+	//description_detaille=""; 
+	//return_type="";
+	list params=list_create();
+	documentation_pour_fonction=doc_create();
+
 }
 
 void create_log(char* name)

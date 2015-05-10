@@ -41,6 +41,11 @@ static int check_type(void);
 
 char* print_indent(char*);
 
+doc doc_ajout_brief(doc d, char* texte);
+doc doc_ajout_detaille(doc d, char* texte);
+doc doc_ajout_return_type(doc d, char* texte);
+doc doc_ajout_param(doc d, char* texte);
+
 //"return"              {yylval = strdup(yytext); return(RETURN);}
 //";"                   {yylval = strdup(yytext); return ';';}
 
@@ -209,7 +214,7 @@ Lorsque l'on veut implementer return, il faut aussi implementer ';' et le '}' ma
 "/*!"                         {BEGIN(COMMENT_MULT_LIGNE); /*multiligne commentaires qui peuvent prendre la commande \brief*/}
 <COMMENT_MULT_LIGNE>\\brief {BEGIN(BRIEF_COMMENT_MULT_LIGNE);}
 <COMMENT_MULT_LIGNE>.      {/*on n'affiche pas les commentaires*/}
-<BRIEF_COMMENT_MULT_LIGNE>[^\*\n]* {brief=string_concat(2, brief, strdup(yytext));}
+<BRIEF_COMMENT_MULT_LIGNE>[^\*\n]* {doc_ajout_brief(documentation_pour_fonction, strdup(yytext));}
 <BRIEF_COMMENT_MULT_LIGNE>\* {/*pour que les etoiles au debut ne font rien*/}
 <BRIEF_COMMENT_MULT_LIGNE>\n {/*pour que les \n singuliers ne font rien*/}
 <BRIEF_COMMENT_MULT_LIGNE>\n\*\n\* {BEGIN(DOC_DESCRIPTION);}
@@ -279,3 +284,25 @@ char* print_indent(char* text){
 	}
 	return yylval;
 }
+
+doc doc_ajout_brief(doc d, char* texte){
+	d->brief=string_concat(2, d->brief, texte);
+	return d;		
+}
+
+doc doc_ajout_detaille(doc d, char* texte){
+	d->description_detaille=string_concat(2, d->description_detaille, texte);
+	return d;		
+}
+
+doc doc_ajout_return_type(doc d, char* texte){
+	d->return_type=texte;
+	return d;		
+}
+
+doc doc_ajout_param(doc d, char* texte){
+	add_to_list(d->params, texte);
+	return d;	
+}
+
+
