@@ -209,8 +209,11 @@ variable getVariable(char* name)
 	cell c=l->first;
 	while (c)
 	{
+		char* token1=strtok(name, "-");
 		variable v=(variable)c->elem;
-		if (strcmp(v->nom,name)==0)
+		
+		char* token2=strtok(v->nom, "-");		
+		if (strcmp(token1,token2)==0)
 		{
 			return v;
 		}
@@ -254,7 +257,14 @@ void create_variable(list list_var,char* type, char* description)
 
 			v->id=create_variable_id(v,id_block-1);
 			
-			add_to_list(b->variables,v);
+			variable v2=getVariable(v->nom);
+			
+			if (v2){
+				fprintf(stderr,"v2->id : %s \n",v2->id);
+				v2->id=v->id;
+			}
+			else 
+				add_to_list(b->variables,v);
 			c=c->next;
 		}
 	}
