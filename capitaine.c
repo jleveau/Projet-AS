@@ -232,6 +232,8 @@ void init_structures()
 	block_stack = stack_create();
 	parameter_list = list_create();
 	typedef_list=list_create();
+	enum_list=list_create();
+
 	id_block = 0;
 	nb_ligne = 1;
 	new_block(NULL);
