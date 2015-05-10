@@ -43,7 +43,7 @@ void print_balise_image(char* image);
 %token NBR_EQUATION VAR_EQUATION PLUS_EQUATION MINUS_EQUATION TIMES_EQUATION DIVIDE_EQUATION LESS_THAN_EQUATION MORE_THAN_EQUATION EGAL_EQUATION
 %token SOMME_EQUA CHAPEAU_EQUA PROD_EQUA SUBSCRIPT_EQUA
 %left WORD CHAR SPACE STRING
-%left BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR
+%left BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR URL
 
 %start start
 
@@ -90,7 +90,8 @@ appel_commande
 	| decoration_texte_sans_param[style]  OPEN_BRACE {print_balise($style);} combinaison_string_ET_appel_commande CLOSE_BRACE {print_fin_b($style);}
 	| decoration_texte_avec_param
     | toc
-| IMAGE option parameter_word_or_string[img] {print_balise_image($img);}
+    | IMAGE option parameter_word_or_string[img] {print_balise_image($img);}
+| URL OPEN_BRACE WORD CLOSE_BRACE {print_balise_lien($3);}
 	;
 
 formatage_texte
@@ -268,6 +269,11 @@ void print_fin_b(char* balise)
 void print_word_or_char(char* word_or_char)
 {
 	fprintf(f_output, "%s", word_or_char);
+}
+
+void print_balise_lien(char *link)
+{
+    fprintf(f_output,"<a href=\"%\">%s</a>",link,link);
 }
 
 void print_case(char* str)
