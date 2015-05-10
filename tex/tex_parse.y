@@ -50,7 +50,7 @@ void print_balise_image(char* image);
 %%
 
 start
-    : ENTETE_DOCUMENT {initialiser_toc();} structure {printf("toc:%s\n",toc_affiche);if(toc_affiche) {print_toc(Toc);printf("print-toc");} toc_destroy(Toc);}
+    : ENTETE_DOCUMENT {initialiser_toc();} structure {if(toc_affiche) {print_toc(Toc);} toc_destroy(Toc);}
 	;
 
 structure
@@ -66,28 +66,28 @@ toc_OR_vide
 
 
 toc
-    : TOC_COMMANDE	{toc_affiche="vrai";printf("toc-commande:%s\n",toc_affiche); fprintf(f_output,"<div id=\"toc-devant\"></div>");printf("après creation div\n"); }
+    : TOC_COMMANDE	{toc_affiche="vrai"; fprintf(f_output,"<div id=\"toc-devant\"></div>"); }
     ;
 
 contenus
-	: combinaison_string_ET_appel_commande_sans_BEGIN {/* contenus string_OU_appel_commande_sans_BEGIN	{OU car ca revient tout seul}*/}
+	: combinaison_string_ET_appel_commande {/* contenus string_OU_appel_commande	{OU car ca revient tout seul}*/}
     |
 	;
 
-combinaison_string_ET_appel_commande_sans_BEGIN
-	: combinaison_string_ET_appel_commande_sans_BEGIN string_OU_appel_commande_sans_BEGIN {/*ET pour que l'interieur des commandes ex {ggg} peuuvent être un mélange de commandes et strings */}
-	| string_OU_appel_commande_sans_BEGIN
+combinaison_string_ET_appel_commande
+	: combinaison_string_ET_appel_commande string_OU_appel_commande {/*ET pour que l'interieur des commandes ex {ggg} peuuvent être un mélange de commandes et strings */}
+	| string_OU_appel_commande
 	;
 
-string_OU_appel_commande_sans_BEGIN
+string_OU_appel_commande
 	: STRING {print_word_or_char($1);}
 	| WORD {print_word_or_char($1);}
-	| appel_commande_sans_BEGIN
+	| appel_commande
 	;
 
-appel_commande_sans_BEGIN
+appel_commande
 	: formatage_texte
-	| decoration_texte_sans_param[style]  OPEN_BRACE {print_balise($style);} combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b($style);}
+	| decoration_texte_sans_param[style]  OPEN_BRACE {print_balise($style);} combinaison_string_ET_appel_commande CLOSE_BRACE {print_fin_b($style);}
 	| decoration_texte_avec_param
     | toc
 | IMAGE option parameter_word_or_string[img] {print_balise_image($img);}
@@ -97,7 +97,7 @@ formatage_texte
     : PART parameter_word_or_string[titre] {print_balise_parti($titre); /*parti et chapitre n'englobe rien*/}
     | CHAPTER parameter_word_or_string[titre] {print_balise_chapitre($titre); /*parti et chapitre n'englobe rien*/}
     | SECTION parameter_word_or_string[titre] {print_balise_section(3, $titre); /*parti et chapitre n'englobe rien*/}
-    | PARAGRAPH  {print_balise("b");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE  {print_fin_b("b");}  {print_balise("p");} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("p");}
+    | PARAGRAPH  {print_balise("b");} OPEN_BRACE combinaison_string_ET_appel_commande CLOSE_BRACE  {print_fin_b("b");}  {print_balise("p");} OPEN_BRACE combinaison_string_ET_appel_commande CLOSE_BRACE {print_fin_b("p");}
 	| SECTION parameter_string[titre] {print_balise_section(3, $titre);}  OPEN_BRACE subsections CLOSE_BRACE  {print_fin_b("section");}
 	| BEGIN_ITEMIZE {print_balise("ul");} item END_ITEMIZE {print_fin_b("ul");}
 	| BEGIN_ENUMERATE {print_balise("ol");} item END_ENUMERATE {print_fin_b("ol");}
@@ -134,12 +134,12 @@ equation_avec_accolade
 	;
 
 item
-	: BEGIN_ITEM {print_balise("li");} string_OU_appel_commande_sans_BEGIN {print_fin_b("li");}
-	| item  BEGIN_ITEM {print_balise("li");} string_OU_appel_commande_sans_BEGIN {print_fin_b("li");}
+	: BEGIN_ITEM {print_balise("li");} string_OU_appel_commande {print_fin_b("li");}
+	| item  BEGIN_ITEM {print_balise("li");} string_OU_appel_commande {print_fin_b("li");}
 	;
 
 texte_ou_vide
-	: combinaison_string_ET_appel_commande_sans_BEGIN
+	: combinaison_string_ET_appel_commande
 	;
 
 
@@ -156,12 +156,12 @@ subsubsections
 	;
 
 subsubsection_ou_vide
-	: SUBSUBSECTION parameter_word_or_string[titre] {print_balise_section(5, $titre);} OPEN_BRACE combinaison_string_ET_appel_commande_sans_BEGIN CLOSE_BRACE {print_fin_b("section");} subsubsections
+	: SUBSUBSECTION parameter_word_or_string[titre] {print_balise_section(5, $titre);} OPEN_BRACE combinaison_string_ET_appel_commande CLOSE_BRACE {print_fin_b("section");} subsubsections
 	|
 	;
 
 decoration_texte_avec_param
-: COLOR parameter_word[color] {print_balise_decoration_span_style("color", $color);} combinaison_string_ET_appel_commande_sans_BEGIN {print_fin_b("span");}
+: COLOR parameter_word[color] {print_balise_decoration_span_style("color", $color);} combinaison_string_ET_appel_commande {print_fin_b("span");}
 	| TEXTCOLOR parameter_word[color] parameter_word[text] {print_balise_decoration_span_style("color", $color); print_word_or_char($text); print_fin_b("span");}
 	;
 

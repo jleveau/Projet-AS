@@ -169,16 +169,16 @@ void print_toc(toc Toc){
             switch (c->profondeur){
                 case 0: {
                     //nombreSec est utilisé que pour les ancres alors le même pour les partis, chapitres etc
-                    fprintf(f_output, " <a href=\"#partID%d\">%s</a></%s><br>", ++nombreParti, c->titre, taille_titre);
+                    fprintf(f_output, " <a class=\"LinkParti\" href=\"#partID%d\">%s</a></%s><br>", ++nombreParti, c->titre, taille_titre);
                     break;
                 }
                 case 1: {
-                    fprintf(f_output, " <a href=\"#chapID%d\">%s</a></%s><br>", ++nombreChap, c->titre, taille_titre);
+                    fprintf(f_output, " <a class=\"LinkChap\" href=\"#chapID%d\">%s</a></%s><br>", ++nombreChap, c->titre, taille_titre);
                     break;
                 }
                 case 2: bold_fin="</b>";
                 default: {
-                    fprintf(f_output, " <a href=\"#secID%d\">%s</a></%s>%s<br>", ++nombreSecs, c->titre, taille_titre, bold_fin);
+                    fprintf(f_output, " <a class=\"LinkSecs\" href=\"#secID%d\">%s</a></%s>%s<br>", ++nombreSecs, c->titre, taille_titre, bold_fin);
                     break;
                 }
             }

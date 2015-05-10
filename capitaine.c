@@ -154,6 +154,8 @@ FILE* create_html(char* titre, char* dir)
 	fprintf(f_output, "var color = $(this).children().attr('id');\n");
 	fprintf(f_output, "$(color).css(\"background-color\",\"\")");
 	fprintf(f_output, "});});</script>");
+	fprintf(f_output,"<script> var TOC = document.getElementById(\"TableOfContents\").innerHTML;\n");
+	fprintf(f_output,"document.getElementById(\"toc-devant\").innerHTML = TOC;</script>\n");
 
 
 	fprintf(f_output, "</head>\n");								// </HEADER>
@@ -215,8 +217,6 @@ void source_js()
 int fermer_html(FILE* fd)
 {
 	fprintf(fd, "</div>\n");
-	fprintf(f_output,"<script> var TOC = document.getElementById(\"TableOfContents\").innerHTML;\n");
-fprintf(f_output,"document.getElementById(\"toc-devant\").innerHTML = TOC;\n");
 	fprintf(fd, "</div>\n");
 	fprintf(fd, "</div>\n");
 	source_js();

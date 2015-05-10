@@ -148,14 +148,14 @@ FILE* create_html(char* titre, char* dir)
 	fprintf(f_output, "$(color).css(\"background-color\",\"#CBCACA\")");
 	fprintf(f_output, "}, function() {\n");
 	fprintf(f_output, "var color = $(this).children().attr('id');\n");
-	fprintf(f_output, "$(color).css(\"background-color\",\"\")");
-	fprintf(f_output, "});});</script>");
+	fprintf(f_output, "$(color).css(\"background-color\",\"\")\n");
+	fprintf(f_output, "});});</script>\n");
 
 
 	fprintf(f_output, "</head>\n");								// </HEADER>
 
 	//body
-	fprintf(f_output, "<body>\n");
+	fprintf(f_output, "<body id=\"tex\">\n");
 	fprintf(f_output, "<div class=\"leftpanel sticky-leftpanel\">\n");
 	fprintf(f_output, "<div class=\"logopanel\">\n");
 	fprintf(f_output, "<h1><span>[</span> Projet <span>]</span></h1>\n");
@@ -206,13 +206,13 @@ void source_js()
 	fprintf(f_output, "<script src=\"../js/custom.js\"></script>\n");
 	fprintf(f_output, "<script src=\"../js/dashboard.js\"></script>\n");
 	fprintf(f_output, "<script src=\"../javascript.js\"></script>\n");
+	fprintf(f_output,"<script> var TOC = document.getElementById(\"TableOfContents\").innerHTML;\n");
+	fprintf(f_output,"document.getElementById(\"toc-devant\").innerHTML = TOC;</script>\n");
 }
 
 int fermer_html(FILE* fd)
 {
 	fprintf(fd, "</div>\n");
-	fprintf(fd,"<script> var TOC = document.getElementById(\"TableOfContents\").innerHTML;\n");
-	fprintf(fd,"document.getElementById(\"toc-devant\").innerHTML = TOC;\n</script>");
 	fprintf(fd, "</div>\n");
 	fprintf(fd, "</div>\n");
 	source_js();
