@@ -2,6 +2,7 @@
 \usepackage{mathtools}
 \usepackage[francais]{babel}
 \usepackage{color}
+\usepackage{hyperref}
 \title{Projet d’Analyse Syntaxique Université de Bordeaux, année 2014–2015 L3 Informatique et Math-Info.}
 \begin{document}
 \maketitle
@@ -10,28 +11,27 @@
 \part{Projet}
 \chapter{Présentation du Projet}
 \chapter{Objectifs Atteints}
-\chapter{Présentation du code C}
-\paragraph{}{Nous utilisons deux parseurs pour notre projet, un utilisant la grammaire C-11 donnée dans le sujet, et le second grammaire LaTeX que nous avons ecrit.
-	Les sources doivent etre placés dans un dossier source. Suivant leurs extensions ils seront executés par :
-	capitaine.c pour les fichiers .c et .h
-	timonier.c pour les fichiers .tex
-	Le html géneré est ensuite ecrit dans le dossier html.
+\chapter{Présentation du code C}{
+\paragraph{}{Nous utilisons deux parseurs pour notre projet, un utilisant la grammaire \textbf{C-11} donnée dans le sujet, et le second une grammaire LaTeX que nous avons écrite.
+	Les sources doivent être placées dans un dossier source. Suivant leurs extensions elles seront exécutées par :
+	\begin{itemize}
+	\item capitaine.c pour les fichiers .c et .h
+	\item timonier.c pour les fichiers .tex
+	\end{itemize}
+	Les fichiers HTML générés sont ensuite écrits dans le dossier HTML.
 }
 \section{Analyseur C}{
 \paragraph{}{
-	l'analyseur est ecrits en C, avec bison et flex à partir des sources disponnibles sur : http://www.quut.com/c/ANSI-C-grammar-y.html
-	Nous avons choisi de remonter l'entrée lue dans le bison, a la fin de certaines règles ajoute les balises html permettant d'identifier les differents elements.
-	De cette façon chaque regle bison retourne la concatenation des composant de la regle : \$\$ = Concatenation (\$1 , \$2 ... \$n)
-	Nous nous sommes rendu compte qu'il était préferable de proceder ainsi plutot que d'ecrire nos balise grâce au lex. Le lex ne sait pas où le bison en est dans son analyse,
-	cette methode n'est donc pas adaptés pour entrée complexes, comme une déclaration de fonction, car il devient alors compliqué de differencier le rôle des identifiants.
-	
-	Afin de structurer notre code, les fonctions C ont été ecrite dans des fichiers externes, dans le dossier libs. Les fichier html.c contient les fonctions permettant d'ecrire les
-	differentes balises html, et le fichier tools.c contient les structures de données utilisées.
+	l'analyseur est ecrit en C, avec bison et flex à partir des sources disponibles sur : \url{http://www.quut.com/c/ANSI-C-grammar-y.html}
+	Nous avons choisi de remonter l'entrée lue dans le bison et à la fin de certaines règles on ajoute les balises HTML permettant d'identifier les différents éléments.
+	De cette façon chaque règle bison retourne la concaténation des composant de la règle : \$\$ = Concaténation (\$1 , \$2 ... \$n)
+	Nous nous sommes rendu compte qu'il était préférable de procéder ainsi plutôt que d'écrire nos balise grâce au lex. Le lex ne sait pas où le bison en est dans son analyse,cette méthode n'est donc pas adaptés pour entrée complexes, comme une déclaration de fonction, car il devient alors compliqué de différencier le rôle des identifiants.
+Afin de structurer notre code, les fonctions C ont été écrite dans des fichiers externes (dans le dossier Libs). Le fichier html.c contient les fonctions permettant d'écrire les différentes balises HTML, et le fichier tools.c contient les structures de données utilisées.
 	}
 	}
 	\section{Lex}{
 	\paragraph{}{
-		Le fichier lex contienent les même règles que celles definies dans le fichier fourni. Des tokens ont cependant été ajoutés pour tous les caractères (parentheses, crochets ...) afin 
+		Le fichier lex contiennent les même règles que celles définies dans le fichier fourni. Des tokens ont cependant été ajoutés pour tous les caractères (parentheses, crochets ...) afin 
 		que le bison puisse ne manipuler que des char*. Le contenu de l'entrée est placé dans yylval, les mots clés, ou caracteres speciaux ("(", ';') sont également entourés d'une balise
 		afin de les colorier. Afin de pouvoir gerer la memoire utilisée pour les chaines de caractères, et en raison du grand nombre de concatenation, les char* sont déclarés dynamiquement.
 		}
@@ -93,7 +93,8 @@ L'id des bloc est également utilisé pour écrire des balises autour des accola
 			}
 			}
 			}
-\chapter{Présentation de la documentation}
+			}
+\chapter{Présentation de la documentation}{
 \paragraph{}{Notre programme permet de passer en argument un fichier .tex optionnel qui va être parsé et présenté sur notre site comme de la documentation .
 A cette fin, une nouvelle grammaire et un parseur tex ont été conçu pour traiter cette possibilité. Nous aurions pu ajouter des nouvelles règles et patterns dans la grammaire et dans le parseur originaux avec un état spécial pour les fichiers .tex, cependant cette solution aurait eu comme contrainte que si l'on écrivait un fichier d'extension .c en  Latex, il était accepté par notre programme ce qui était contre nos attentes. Notre solution que nous avons choisi nous permet d'éviter cette éventualité. Le main dans la partie C traite et appelle le parseur (et en conséquence la grammaire) nécessaire selon l'extension du fichier passé en paramètre.
 
@@ -146,19 +147,21 @@ Ce chapitre va regarder les commandes qu'on a traité, dans l'ordre qu'ils étai
 \paragraph{}{
 Notre grammaire permet n'importe quel environnement de passer par contre, les particularités de ces environnements n'ont pas été traités.
 }
-\paragraph{Paragraphes} Un token 
+\paragraph{Paragraphes}{Un token 
 Les caractères spéciaux sont traités par le parseur.
-\section{Commandes de présentation}
-\section{Environements de base}
-\section{Un mécanisme de sections}
-\section{Fomules mathématiques}
-\section{Documentation directement dans le code c}
-\subsection{Implémentation}
-\subsubsection{} struct fonction etc.
+}
+\section{Commandes de présentation}{}
+\section{Environnements de base}{}
+\section{Un mécanisme de sections}{}
+\section{Formules mathématiques}{}
+\section{Documentation directement dans le code c}{
+\subsection{Implémentation}{
+\subsubsection{titre}{ struct fonction etc.}}
 \textbackslash brief pour /*! /** //* et description détaillé pour /*! /**
 \textbackslash params
 \textbackslash  return
-\subsection{Présentation dans le html} ...
-\chapter{Avis Personnel}
-\part{Conclusion}
+\subsection{Présentation dans le HTML}{ ...}}
+}
+\chapter{Avis Personnel}{}
+\part{Conclusion}{}
 \end{document}
