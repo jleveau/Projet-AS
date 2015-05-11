@@ -12,7 +12,7 @@ MOT [a-zA-Z_][a-zA-Z_0-9]*
 TROUS [[:SPACE:]]*\n{0,1}[[:SPACE:]]*
 OPEN_SPACE [[:SPACE:]]*
 STRING_SANS_PONC [^\$\n\\\{\}\[\]]
-STRING_POUR_IMAGE [\\a-zA-Z_0-9\.]*
+STRING_POUR_IMAGE [//a-zA-Z_0-9\.]+
 SPACE_OU_NEWLINE_INFINI [[:SPACE:]\n]*
 
 %{

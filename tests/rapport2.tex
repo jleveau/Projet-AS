@@ -1,0 +1,153 @@
+\documentclass{report}
+\usepackage{mathtools}
+\usepackage[francais]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{array}
+\title{Projet d’Analyse Syntaxique Université de Bordeaux, année 2014–2015 L3 Informatique et Math-Info.}
+\begin{document}
+\maketitle
+\tableofcontents
+\part{Introduction}
+Notre projet consiste a réaliser un analyseur syntaxique, prenant des fichiers source en entrée, et retournant un fichier documentation en format html.
+
+Le programme peut également prendre des fichier .tex qui est alors analysé pour créer un fichier html respectant la forme du .tex.
+
+Le développement du projet à été réparti entre les membres du groupe, pour nous aider nous avons utilisé des outils comme Trello, permettant d'écrire des 
+
+post-it récapitulant le travail a faire, fait, et en cours. Ainsi que Git comme outil de gestion de version, avec un dépot sur Git-Hub : https://github.com/jleveau/Projet-AS
+
+Le projet est réalisé en C, lex/bison. et la page Web en HTML5/CSS3/JavaScript, nous avons également utilisé la bibliotheque javascript JQuery, et le framework bootstrap pour le CSS. La grammaire que nous utilisons pour l'analyseur C utilise la grammaire C11, et le lexer donnés dans le sujet du projet.
+\part{Projet}
+\chapter{Présentation du Projet}
+\chapter{Objectifs Atteints}
+\chapter{Présentation du code C}
+\section{Analyseur C}{
+Nous utilisons deux parseurs pour notre projet, un utilisant la grammaire \texttt{C-11} donnée dans le sujet, et le second une grammaire LaTeX que nous avons écrite.
+	Les sources doivent être placées dans un dossier source. Suivant leurs extensions elles seront exécutées par :
+	\begin{itemize}
+	\item capitaine.c pour les fichiers .c et .h
+	\item timonier.c pour les fichiers .tex
+	\end{itemize}
+\subsection{test}{
+	l'analyseur est ecrit en C, avec bison et flex à partir des sources disponibles sur : \url{http://www.quut.com/c/ANSI-C-grammar-y.html}
+	Nous avons choisi de remonter l'entrée lue dans le bison et à la fin de certaines règles on ajoute les balises HTML permettant d'identifier les différents éléments.
+	De cette façon chaque règle bison retourne la concaténation des composant de la règle : \$ \$ = Concaténation (\$1 , \$2 ... \$n)
+	Nous nous sommes rendu compte qu'il était préférable de procéder ainsi plutôt que d'écrire nos balise grâce au lex. Le lex ne sait pas où le bison en est dans son analyse,cette méthode n'est donc pas adaptés pour entrée complexes, comme une déclaration de fonction, car il devient alors compliqué de différencier le rôle des identifiants.
+Afin de structurer notre code, les fonctions C ont été écrite dans des fichiers externes (dans le dossier Libs). Le fichier html.c contient les fonctions permettant d'écrire les différentes balises HTML, et le fichier tools.c contient les structures de données utilisées.
+}
+}
+\section{Lex Lex}{
+		Le fichier lex contiennent les même règles que celles définies dans le fichier fourni. Des tokens ont cependant été ajoutés pour tous les caractères (parentheses, crochets ...) afin 
+		que le bison puisse ne manipuler que des char*. Le contenu de l'entrée est placé dans yylval, les mots clés, ou caracteres speciaux ("(", ';') sont également entourés d'une balise
+		afin de les colorier. Afin de pouvoir gerer la memoire utilisée pour les chaines de caractères, et en raison du grand nombre de concatenation, les char* sont déclarés dynamiquement.
+		\subsection{Traitement des IDs}{
+	Afin de differencier un identifier, enum et typdefname, nous utilisons des listes, qui contiennent le nom des typedef/enums declarés. Lorsque qu'un ID est lu, il est alors comparén à
+			 la liste, s'il n'est pas dedans il est alors consideré comme un IDENTIFIER
+}
+		\subsection{Blocs de variables}{
+		La portée des variables est gérée en utilisant une pile, contenant les listes de variables pour un block donné. L'ouverture et la fermeture d'un block est determinée par la lecture d'une accolade ouvrante ou fermante. les fonctions new block() et fin block() sont donc utilisées dans le lexer, les balises et l'enregistrement des variables sont gérés dans le bison. Lorsque l'on empile une nouvelle liste, on concatene actuellement en haut de la pile à la nouvelle liste. Ceci permet de gerer des blocs imbriqués.En assurant qu'un bloc de plus haut niveau contient les variable d'en dessous.
+L'id des bloc est également utilisé pour écrire des balises autour des accolades d'un bloc de variables et permettent de déplier ou replier les lignes de code du bloc
+}
+		\subsection{Indentation et numérotation}{
+			L'indentation du code est faite dans le flex, et indentera le fichier en entré. Comme la totalité du texte qui sera en sorti doit être stocké dans yylval puis envoyé dans le bison
+			nous devons associer les espaces et retour a la ligne à un token lu qui sera analysé par le bison. Nous avons donc choisi que les retours a la ligne et l'indentation seraient 
+			déclenchés par la lecture d'un point virgule ou d'une accolade. Les balises br utilisées pour le retour a la ligne sont également utilisé par le CSS pour calculer et afficher la numérotation des lignes.
+}
+}
+		\section{Bison Bison}{
+		 Le parser bison manipule des chaines de caractere. Notre programme fait remonter le texte lu par le .lex, et ajoute des balises lorsque des réductions. Cette façon de faire demande de 
+		 faire passer dans la variable \$ \$ la concatenation des \$1 ,\$2 ... Nous avons donc ecrit une fonction prenant un nombre variable de paramètre, et retournant la concatenation de toutes
+		 les chaines passées en paramètre. Les chaines passées sont liberées de la mémoire, ce qui demande donc que toutes les entrées aient été allouées dynamiquement.
+		 L'inconveniant de cette façon de faire est qu'elle demande de réaliser un grand nombre de concatenations.
+		 Le texte est ecrit dans le html une fois qu'une regle "declaration" ou "function definition" est reduite.
+			\subsection{Variables et fonctions}{
+			Les variables et fonctions sont stockées dans des struct, contenant un nom, un type, une description et un id utilisé pour les balises. Les fonctions possedent également une liste 
+			de variables correspondant aux parametres. L'id d'une variable est de la forme<numero du block>-<nom de la variable>.
+			Ces structures sont utilisées pour faire les info-bulles lorsque l'on passe la souris sur une variable ou fonction, et à faire la surbrillance des variables.
+			
+			La déclaration d'une variable est identifiée sur les regle bison de "declaration". Les balises sont placés de façon a gerer les declarations multiples : int a,b,c,d;
+			et les affectation : int a=4;
+			
+			Les fonction utilisent la regle : "function definition"
+			De plus lors de la lecture d'un direct declarator, il est possible de lire le parametre d'une fonction qui n'a pas encore été déclarée (on a pas encore lu l'accolade de fin). Dans ce cas
+			une fonction est crée, qui contiendra alors le parametre lu. Les informations supplementaires de la fonction seront alors ajoutées lorsque function definition sera reduit.
+			\subsubsection{Ecriture des balises}{
+			Pour ecrire les balises, lors de la concatenation des information : \$ \$ = string concat(\$1,\$2,..), 
+			il nous suffit de placer les balises qui nous interessent : \$ \$ = \$1, print balise(\$2) ...
+			Les balises correspondant a une variable ou une fonction contiennent une ancre permettant de rejoindre sa declaration. Nous avons écrit des fonction qui utilisent les information
+			contenues dans les struct de variable et de fonction pour construire les id des balises. 	
+		}
+		\subsubsection{Typedef et enum}{
+			La déclaration d'un typedef, enum ou d'un struct est reperée dans parser. Des balises sont placées lors de la declaration d'un typedef ou d'un struct et lors de l'appel. Les balises 
+			sont differentes suivant qu'il s'agit d'un appel ou d'une déclaration. Mais nous n'avons pas écrit le code permettant de revenir sur la déclaration du type.
+			Les noms des types déclarés ainsi sont stockés dans des listes afin que le lexer puisse les traiter correctement.
+				
+			}
+			}
+}
+\chapter{Présentation de la documentation}
+Notre programme permet de passer en argument un fichier .tex optionnel qui va être parsé et présenté sur notre site comme de la documentation .
+A cette fin, une nouvelle grammaire et un parseur tex ont été conçu pour traiter cette possibilité. Nous aurions pu ajouter des nouvelles règles et patterns dans la grammaire et dans le parseur originaux avec un état spécial pour les fichiers .tex, cependant cette solution aurait eu comme contrainte que si l'on écrivait un fichier d'extension .c en  Latex, il était accepté par notre programme ce qui était contre nos attentes. Notre solution que nous avons choisi nous permet d'éviter cette éventualité. Le main dans la partie C traite et appelle le parseur (et en conséquence la grammaire) nécessaire selon l'extension du fichier passé en paramètre.
+
+La grammaire pour les fichiers .tex a été construite en implémentant progressivement les différentes parties.
+Cela signifie que l'on a commencé avec une grammaire qui permettait de parser les fichier .tex les plus basiques (avec une définition de documentation et un begin et end document) et nous avons développé notre grammaire sur cette base. Elle ignore le type de document précisé dans l'entête (\textbackslash documentclass\{type de document\}) ainsi que tout ce qui est entre l'entête et le titre/début du document parce que cela peut être des usepackage et création de commandes, entre autres.(La création de commande n'a pas été traité)
+En conséquence, il est possible d'utiliser n'importe quel .tex qui compile. De plus, notre grammaire accepte des fichiers LaTex qui ne sont pas nécessairement de format standard par rapport à Latex.
+
+\section{Grammaire Grammaire}{
+Après l'entête, la structure toc (pour la table des matières) est initialisée avec une variable qui est mise à jour si jamais la commande \textbackslash tableofcontents est appelée, n'importe où dans le fichier. A la fin du document, selon cette variable, la table des matières est imprimée avec la mise en place faite par javascript pour qu'il apparaisse dans l'endroit où il est appelé. L'entête est suivie par la structure, qui est constitué d'un titre, début et fin d'environnement avec un contenu d'environnement et un maketitle optionnel, n'importe où avant la fin d'environnement. La structure peut être vide afin de permettre  qu'un fichier avec seulement un entête puisse être parsé. 
+
+Les règles \textit{contenu} sont une combinaison de commandes possibles. Afin d'éviter des conflits,si un non-terminal est effaçable, la règle vide est déclarée à la hauteur (dans l'arbre de dérivation) niveau la plus haute possible. C'est particulièrement important pour les règles qui contiennent des non-terminaux qui sont récursifs.
+
+ Les règles mentionnées ci-dessus sont récursives gauche pour pouvoir générer un contenu d'un nombre illimité de strings et/ou des commandes. Un string peut être un token STRING ou WORD. Les deux ont des priorités différentes dans le parseur à cause de certain paramètres et options qui ont besoin de ne prendre qu'un seul mot en paramètre et en conséquence, cette règle peut être l'un ou l'autre.
+
+Parmi les commandes, Il en existe deux types principales: 
+\begin{itemize}
+\item Les commandes simples, qui peuvent être suivies ou qui n'ont dans leur bloc de commandes que des strings 
+\item Les commandes \textit{complexes} que sont groupés par le non-terminal formatage; qui peuvent englober n'importe quel commande ou string présente dans la règle contenu.
+\end{itemize}
+\subsection{Commandes simples}{
+Les commandes simples sont du type :
+ \begin{itemize}
+ \item Affichage de la table des matières
+ \item Structure du fichier (sections,chapitre..)
+ \item Formatage du texte (coloration,mise en italique..)
+\end{itemize} 
+Les commandes simples nous obligent donc à différencier
+ \textit{string ou appel commande} et 
+ \textit{combinaison string et appel commande}.
+\subsection{Commandes complexes}{
+\begin{tabular}{llc} 
+Delimitation&Commandes denvironnement&Autres
+\end{tabular}
+}\subsubsection{Structure du fichier}{
+La structure du fichier comprend tout ce qui est la répartition du texte en sections, parties etc. ainsi que les commandes spéciales qui ont un contenu différent de commandes simples et alors doivent être traités à part.
+Gèrent le contenu text, tabular, image etc du fichier.
+}
+}
+\subsection{Structure de grammaire}{
+formatage texte
+  
+Ce chapitre va regarder les commandes qu'on a traité, dans l'ordre qu'ils étaient traités.
+}
+}
+\section{Paragraphes, environnement, commandes et caractères spéciaux}{
+Notre grammaire permet n'importe quel environnement de passer par contre, les particularités de ces environnements n'ont pas été traités.
+\subsection{Paragraphes}{rezareza}
+\subsection{Environnement}{reazraze}
+}
+\section{Commandes de présentation}{}
+\section{Environnements de base}{}
+\section{Un mécanisme de sections}{}
+\section{Formules mathématiques}{}
+\section{Documentation directement dans le code c}{
+\subsection{Implémentation}{
+\subsubsection{titre}{ struct fonction etc.}}
+\textbackslash brief pour /*! /** //* et description détaillé pour /*! /**
+\textbackslash params
+\textbackslash  return
+\subsection{Présentation dans le HTML}{ ...}}
+\chapter{Avis Personnel}
+\part{Conclusion}
+\end{document}

@@ -92,7 +92,7 @@ appel_commande
 	| decoration_texte_sans_param[style]  OPEN_BRACE {print_balise($style);} combinaison_string_ET_appel_commande CLOSE_BRACE {print_fin_b($style);}
 	| decoration_texte_avec_param
    	| toc
-	|URL OPEN_BRACE STRING[url] CLOSE_BRACE {print_balise_lien($url);}
+	| URL OPEN_BRACE STRING[url] CLOSE_BRACE {print_balise_lien($url);}
 	;
 
 formatage_texte
@@ -106,6 +106,7 @@ formatage_texte
 	| BEGIN_TABULAR {print_balise("table");} option parameter_word_or_string[nbColonnesEtLignes] TAB_STRING[table_string] {creer_table(strlen($nbColonnesEtLignes), $table_string); }END_TABULAR {print_fin_b("table");/* param ne va pas être traité par nous alors on fait pour que si il est dans le fichier, ca passe */}
 	| BEGIN_EQUATION {creer_balise_mathML("block");} equation END_EQUATION	{print_fin_b("math");}
 	| BEGIN_EQUATION_DOLLAR {creer_balise_mathML("inline");} equation END_EQUATION_DOLLAR {print_fin_b("math");}
+	| IMAGE OPEN_BRACE STRING[chemin] {print_balise_image($chemin);} CLOSE_BRACE
 	;
 
 
