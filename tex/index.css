@@ -114,15 +114,3 @@ ul.panneau-gauche
  padding: 6px;
 }
 
-p
-{
-	margin-left: 50px;
-	margin-right: 50px;
-	text-indent: 50px;
-	font-size: 20px;
-}
-p::first-letter
-{
-	font-size:200%;
-	font-weight: bold;
-}
