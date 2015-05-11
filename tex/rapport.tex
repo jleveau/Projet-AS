@@ -8,6 +8,15 @@
 \maketitle
 \tableofcontents
 \part{Introduction}
+\paragraph{toto}{
+	Notre projet consiste a réaliser un analyseur syntaxique, prenant des fichiers source en entrée, et retournant un fichier documentation en format html.
+	Le programme peut également prendre des fichier .tex qui est alors analysé pour créer un fichier html respectant la forme du .tex.
+	Le développement du projet à été réparti entre les membres du groupe, pour nous aider nous avons utilisé des outils comme Trello, permettant d'écrire des 
+	post-it récapitulant le travail a faire, fait, et en cours. Ainsi que Git comme outil de gestion de version, avec un dépot sur Git-Hub : https://github.com/jleveau/Projet-AS
+	Le projet est réalisé en C, lex/bison. et la page Web en HTML5/CSS3/JavaScript, nous avons également utilisé la bibliotheque javascript JQuery, et le framework bootstrap
+	pour le CSS.
+	La grammaire que nous utilisons pour l'analyseur C utilise la grammaire C11, et le lexer donnés dans le sujet du projet.
+}
 \part{Projet}
 \chapter{Présentation du Projet}
 \chapter{Objectifs Atteints}
@@ -43,7 +52,7 @@ Afin de structurer notre code, les fonctions C ont été écrite dans des fichie
 		}
 		\subsection{Blocs de variables}{
 		\paragraph{toto}{
-		La portée des variables est gérée en utilisant une pile, contenant les listes de variables pour un block donné. L'ouverture et la fermeture d'un block est determinée par la lecture d'une accolade ouvrante ou fermante. les fonctions new block() et fin block() sont donc utilisées dans le lexer, les balises et l'enregistrement des variables sont gérés dans le bison. Lorsque l'on empile une nouvelle liste, on concatene actuellement en haut de la pile à la nouvelle liste. Ceci permet de gerer des blocs imbriqués.En assurant qu'un bloc de plus haut niveau contient les variable d'en dessous.
+		La portée des variables est gérée en utilisant une pile, contenant les listes de variables pour un block donné. L'ouverture et la fermeture d'un block sont determinées par la lecture d'une accolade ouvrante ou fermante. les fonctions new block() et fin block() sont donc utilisées dans le lexer, les balises et l'enregistrement des variables sont gérés dans le bison. Lorsque l'on empile une nouvelle liste, on concatene actuellement en haut de la pile à la nouvelle liste. Ceci permet de gerer des blocs imbriqués.En assurant qu'un bloc de plus haut niveau contient les variable d'en dessous.
 L'id des bloc est également utilisé pour écrire des balises autour des accolades d'un bloc de variables et permettent de déplier ou replier les lignes de code du bloc
 			}
 			}
@@ -161,5 +170,11 @@ Les caractères spéciaux sont traités par le parseur.
 \textbackslash  return
 \subsection{Présentation dans le HTML}{ ...}}
 \chapter{Avis Personnel}
-\part{Conclusion}{}
+\part{Conclusion}{
+	Le programme réalisé permet donc d'analyser du code C et du LaTeX, et rempli la plupart des objectifs. Ce projet d'AS-PP3 est l'un des projets les plus volumineux qui nous a été 
+	demandé au cours notre formation, la répartission du travail, et la rigueur dans le développement ont donc été necesaires. Ceci à été facilité par la diversité des objectifs 
+	demandés, qui sont suffisamment distincts les uns des autres pour permettre une répartission facile du travail.
+	Les outils utilisés étant déjà maitrisés (C, HTML5 ...) l'essentiel du travail a donc pu porter sur le fonctionnement des grammaires. De plus nous avons eu a étudier une grammaire 
+	déjà faite avec l'analyseur C, et écrire notre propre grammaire pour la partie LaTeX. Nous permettant d'apprehender les differents aspect de l'analyse syntaxique. 
+}
 \end{document}
