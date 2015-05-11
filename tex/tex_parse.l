@@ -3,6 +3,7 @@
 %x TABULAR
 %x TABULAR_STRING
 %x EQUATION
+%x IMAGE_STRING
 
 L   [a-zA-Z]
 A   [a-zA-Z_0-9]
@@ -11,6 +12,7 @@ MOT [a-zA-Z_][a-zA-Z_0-9]*
 TROUS [[:SPACE:]]*\n{0,1}[[:SPACE:]]*
 OPEN_SPACE [[:SPACE:]]*
 STRING_SANS_PONC [^\$\n\\\{\}\[\]]
+STRING_POUR_IMAGE [\\a-zA-Z_0-9\.]*
 SPACE_OU_NEWLINE_INFINI [[:SPACE:]\n]*
 
 %{
@@ -32,7 +34,7 @@ void print_space();
 
 <TABULAR,INITIAL>"["    {return OPEN_SQUARE;}
 <TABULAR,INITIAL>"]"    {return CLOSE_SQUARE;}
-<TABULAR,INITIAL>"{"    {return OPEN_BRACE;}
+<TABULAR,INITIAL,IMAGE_STRING>"{"    {return OPEN_BRACE;}
 "}"                     {return CLOSE_BRACE;}
 
 \n{OPEN_SPACE}\n        {print_newline();}
@@ -161,7 +163,14 @@ void print_space();
 }
 
 {TROUS}"\\includegraphics" {
+	BEGIN(IMAGE_STRING);
 	return IMAGE;
+}
+
+<IMAGE_STRING>{STRING_POUR_IMAGE} {
+	yylval=strdup(yytext);
+	BEGIN(INITIAL);
+	return STRING;
 }
 
 {TROUS}"\\begin"{TROUS}"{itemize}" {
