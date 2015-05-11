@@ -140,53 +140,33 @@ text-decoration:none;
 
 .line:after
 {
+color:#706E6E;
 content:counter(br)". ";
 counter-increment:br;
 }
 
-/* unvisited link */
-a.LinkParti:link {
-    color: black;
+ul.params
+{
+color:#8E8888;
+font-size:13px;
 }
-
-/* visited link */
-a.LinkParti:visited {
-    color: black;
+.titre-params
+{
+color:#8E8888;
+font-size:13px;
 }
-
-/* mouse over link */
-a.LinkParti:hover {
-    background-color:#F2EEEE;
-    color: black;
+.brief
+{
+color:#8E8888;
+font-size:13px;
 }
-/* unvisited link */
-a.LinkChap:link {
-    color: black;
+.description_detaille
+{
+color:#8E8888;
+font-size:13px;
 }
-
-/* visited link */
-a.LinkChap:visited {
-    color: black;
-}
-
-/* mouse over link */
-a.LinkChap:hover {
-    background-color:#F2EEEE;
-    color: black;
-}
-
-/* unvisited link */
-a.LinkSecs:link {
-    color: black;
-}
-
-/* visited link */
-a.LinkSecs:visited {
-    color: black;
-}
-
-/* mouse over link */
-a.LinkSecs:hover {
-    background-color : #F2EEEE;
-    color: black;
+.return_type
+{
+color:#8E8888;
+font-size:13px;
 }

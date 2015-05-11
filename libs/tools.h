@@ -24,13 +24,6 @@ typedef struct list_t
 	cell first;
 } *list;
 
-typedef struct variable_t
-{
-	char* nom;
-	char* type;
-	char* description;
-	char* id;
-} *variable;
 
 typedef struct doc_t
 {
@@ -39,6 +32,14 @@ typedef struct doc_t
 	char* return_type;
 	list params;
 }*doc;
+
+typedef struct variable_t
+{
+	char* nom;
+	char* type;
+	doc documentation;
+	char* id;
+} *variable;
 
 typedef struct function_t
 {
@@ -60,6 +61,7 @@ doc documentation_pour_fonction;
 doc doc_create();
 doc doc_clear(doc d);
 void doc_destroy(doc d);
+char* doc_print(doc d);
 
 
 
@@ -88,8 +90,8 @@ stack typedef_stack;
 variable getVariable(char* name);
 function getFunction(char* name);
 
-void create_variable(list list_var,char* type, char* description);
-variable add_parameter(char* nom, char* type,char* description);
+void create_variable(list list_var,char* type, doc description);
+variable add_parameter(char* nom, char* type,doc description);
 void name_function(char* type,char* nom, doc d);
 
 void add_to_list(list l,void* elem);
@@ -115,5 +117,6 @@ void print_variable(variable v);
 void print_variables();
 char* print_function(function f);
 void print_functions();
+
 
 #endif

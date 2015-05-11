@@ -162,7 +162,7 @@ void destroy_variable(variable v)
 {
 	free(v->nom);
 	free(v->type);
-	free(v->description);
+	//free(v->documentation);
 }
 
 char* add_typedef(char* param){
@@ -244,7 +244,7 @@ char* create_name_id(char* name)
 /* cree une variable pour chaque element de list_var
  *  et l'ajoute dans la liste au sommet de la pile */
 
-void create_variable(list list_var,char* type, char* description)
+void create_variable(list list_var,char* type, doc description)
 {
 	if (!list_empty(list_var)){
 		cell c=list_var->first;
@@ -252,7 +252,7 @@ void create_variable(list list_var,char* type, char* description)
 			variable v=malloc(sizeof(*v));
 			v->nom=(void*)c->elem;
 			v->type=type;
-			v->description=description;
+			v->documentation=description;
 			block b=(block)stack_top(block_stack);
 
 			v->id=create_variable_id(v,id_block-1);
@@ -284,12 +284,12 @@ list parse_variables(char* texte){
    return var_list;
 }
 
-variable add_parameter(char* nom, char* type,char* description)
+variable add_parameter(char* nom, char* type,doc description)
 {
 	variable v=malloc(sizeof(*v));
 	v->nom=nom;
 	v->type=type;
-	v->description=description;
+	v->documentation=description;
 	v->id=create_variable_id(v,id_block);
 	add_to_list(parameter_list,v);
 
@@ -511,15 +511,7 @@ void declared_function_balise(char* type,char* nom)
 
 char* print_function(function f)
 {
-	char* str_func=string_concat(3,strdup(f->type),strdup(f->nom),strdup("("));
-	char* res = string_concat(2,strdup(f->type),strdup(f->nom));
-	cell l=f->arguments->first;
-	while (l)
-	{
-		str_func=string_concat(2,str_func,print_variable_html(l->elem));
-		l=l->next;
-	}
-	str_func=string_concat(2,str_func,strdup(")"));
+	char* res = string_concat(3,strdup(f->type),strdup(f->nom),strdup("<br>"));
 	return res;
 }
 
@@ -554,7 +546,7 @@ void print_variable(variable v)
 
 char* print_variable_html(variable v)
 {
-	char* str_var=string_concat(2,strdup(v->type),strdup(v->nom));
+	char* str_var=string_concat(3,strdup(v->type),strdup(v->nom),strdup("<br>"));
 	return str_var;
 }
 
@@ -625,4 +617,34 @@ void doc_destroy(doc d){
 	list_destroy(d->params);
 	free(d);
 }
+
+char* doc_print(doc d){
+char* res= strdup("<span class=\"commentaire-bulle\">");
+if(strcmp(d->brief, "")!=0 && d->brief)
+{
+	res = string_concat_sans_espace(4,strdup(res),strdup("<span class=\"brief\"><em>@brief:</em>"),strdup(d->brief),strdup("</span><br>"));
+}
+if(strcmp(d->description_detaille,"") != 0 && d->description_detaille)
+{
+	res = string_concat_sans_espace(4,strdup(res),strdup("<span class=\"description_detaille\"><em>@description_detaille:</em>"),strdup(d->description_detaille),strdup("</span><br>"));
+}
+	cell c=d->params->first;
+if(c){
+	res = string_concat_sans_espace(2,strdup(res),strdup("<span class=\"titre-params\"><em>@params:</em></span><ul class=\"params\">"));
+	while (c)
+	{
+		res =string_concat_sans_espace(4,strdup(res),strdup("<li>"),strdup(c->elem),strdup("</li>\n"));
+		c=c->next;
+	}
+	res = string_concat_sans_espace(2,strdup(res),strdup("</ul>"));
+}
+if((strcmp(d->return_type,"") != 0) && (strcmp(d->return_type," ") !=0) && d->return_type)
+{
+	res =string_concat_sans_espace(4,strdup(res),strdup("<span class=\"return_type\"><em>@return:</em>"),strdup(d->return_type),strdup("</span>"));
+}
+
+res = string_concat_sans_espace(2,res,strdup("</span>"));
+return res;
+}
+
 

@@ -214,7 +214,7 @@ void print_titre(char* titre)
 void print_balise_parti(char* titre)
 {
     add_to_toc(Toc, 0, titre);
-    fprintf(f_output, "<h1 class=\"parti\" id=\"partID%d\"> Parti %d </br> %s</h1>", Toc->nbParts, Toc->nbParts, titre);
+    fprintf(f_output, "<h1 class=\"parti\" id=\"partID%d\"> Partie %d </br> %s</h1>", Toc->nbParts, Toc->nbParts, titre);
 }
 
 //imprime la balise chapitre et l'ajout dans toc

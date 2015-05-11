@@ -272,7 +272,7 @@ int main(int argc, char** argv)
 
 	create_html(argv[3], argv[2]);
 	init_structures();
-	fprintf(f_output,"1. ");
+	fprintf(f_output,"<span style=\"color:#706E6E;\">1.</span> ");
 	yyparse();
 	fin_block(NULL);
 	print_variables();

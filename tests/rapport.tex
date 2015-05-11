@@ -21,50 +21,35 @@
 \paragraph{toto}{
 	Les fichiers HTML générés sont ensuite écrits dans le dossier HTML.
 	}
-\section{Analyseur C}{
-\paragraph{toto}{
+\section{Analyseur C}
+
 	l'analyseur est ecrit en C, avec bison et flex à partir des sources disponibles sur : \url{http://www.quut.com/c/ANSI-C-grammar-y.html}
 	Nous avons choisi de remonter l'entrée lue dans le bison et à la fin de certaines règles on ajoute les balises HTML permettant d'identifier les différents éléments.
 	De cette façon chaque règle bison retourne la concaténation des composant de la règle : \$ \$ = Concaténation (\$1 , \$2 ... \$n)
 	Nous nous sommes rendu compte qu'il était préférable de procéder ainsi plutôt que d'écrire nos balise grâce au lex. Le lex ne sait pas où le bison en est dans son analyse,cette méthode n'est donc pas adaptés pour entrée complexes, comme une déclaration de fonction, car il devient alors compliqué de différencier le rôle des identifiants.
 Afin de structurer notre code, les fonctions C ont été écrite dans des fichiers externes (dans le dossier Libs). Le fichier html.c contient les fonctions permettant d'écrire les différentes balises HTML, et le fichier tools.c contient les structures de données utilisées.
-}
-}
-\section{Lex}{
-\paragraph{toto}{
+
+\section{Lex}
 		Le fichier lex contiennent les même règles que celles définies dans le fichier fourni. Des tokens ont cependant été ajoutés pour tous les caractères (parentheses, crochets ...) afin 
 		que le bison puisse ne manipuler que des char*. Le contenu de l'entrée est placé dans yylval, les mots clés, ou caracteres speciaux ("(", ';') sont également entourés d'une balise
 		afin de les colorier. Afin de pouvoir gerer la memoire utilisée pour les chaines de caractères, et en raison du grand nombre de concatenation, les char* sont déclarés dynamiquement.
-		}
-		\subsection{Traitement des IDs}{	
-	\paragraph{toto}{
+		\subsection{Traitement des IDs}	
 	Afin de differencier un identifier, enum et typdefname, nous utilisons des listes, qui contiennent le nom des typedef/enums declarés. Lorsque qu'un ID est lu, il est alors comparén à
-			 la liste, s'il n'est pas dedans il est alors consideré comme un IDENTIFIER.
-			 }
-		}
-		\subsection{Blocs de variables}{
-		\paragraph{toto}{
+			 la liste, s'il n'est pas dedans il est alors consideré comme un IDENTIFIER
+		\subsection{Blocs de variables}
 		La portée des variables est gérée en utilisant une pile, contenant les listes de variables pour un block donné. L'ouverture et la fermeture d'un block est determinée par la lecture d'une accolade ouvrante ou fermante. les fonctions new block() et fin block() sont donc utilisées dans le lexer, les balises et l'enregistrement des variables sont gérés dans le bison. Lorsque l'on empile une nouvelle liste, on concatene actuellement en haut de la pile à la nouvelle liste. Ceci permet de gerer des blocs imbriqués.En assurant qu'un bloc de plus haut niveau contient les variable d'en dessous.
 L'id des bloc est également utilisé pour écrire des balises autour des accolades d'un bloc de variables et permettent de déplier ou replier les lignes de code du bloc
-			}
-			}
 		\subsection{Indentation et numérotation}{
-		\paragraph{toto}{
 			L'indentation du code est faite dans le flex, et indentera le fichier en entré. Comme la totalité du texte qui sera en sorti doit être stocké dans yylval puis envoyé dans le bison
 			nous devons associer les espaces et retour a la ligne à un token lu qui sera analysé par le bison. Nous avons donc choisi que les retours a la ligne et l'indentation seraient 
 			déclenchés par la lecture d'un point virgule ou d'une accolade. Les balises br utilisées pour le retour a la ligne sont également utilisé par le CSS pour calculer et afficher la numérotation des lignes.
-			}
-		}
-		\section{Bison}{
-		\paragraph{toto}{
+		\section{Bison}
 		 Le parser bison manipule des chaines de caractere. Notre programme fait remonter le texte lu par le .lex, et ajoute des balises lorsque des réductions. Cette façon de faire demande de 
 		 faire passer dans la variable \$ \$ la concatenation des \$1 ,\$2 ... Nous avons donc ecrit une fonction prenant un nombre variable de paramètre, et retournant la concatenation de toutes
 		 les chaines passées en paramètre. Les chaines passées sont liberées de la mémoire, ce qui demande donc que toutes les entrées aient été allouées dynamiquement.
 		 L'inconveniant de cette façon de faire est qu'elle demande de réaliser un grand nombre de concatenations.
 		 Le texte est ecrit dans le html une fois qu'une regle "declaration" ou "function definition" est reduite.
-			}
-			\subsection{Variables et fonctions}{
-			\paragraph{toto}{
+			\subsection{Variables et fonctions}{{
 			Les variables et fonctions sont stockées dans des struct, contenant un nom, un type, une description et un id utilisé pour les balises. Les fonctions possedent également une liste 
 			de variables correspondant aux parametres. L'id d'une variable est de la forme<numero du block>-<nom de la variable>.
 			Ces structures sont utilisées pour faire les info-bulles lorsque l'on passe la souris sur une variable ou fonction, et à faire la surbrillance des variables.
@@ -75,23 +60,17 @@ L'id des bloc est également utilisé pour écrire des balises autour des accola
 			Les fonction utilisent la regle : "function definition"
 			De plus lors de la lecture d'un direct declarator, il est possible de lire le parametre d'une fonction qui n'a pas encore été déclarée (on a pas encore lu l'accolade de fin). Dans ce cas
 			une fonction est crée, qui contiendra alors le parametre lu. Les informations supplementaires de la fonction seront alors ajoutées lorsque function definition sera reduit.
-			}
 			\subsubsection{Ecriture des balises}{
-			\paragraph{toto}{
 			Pour ecrire les balises, lors de la concatenation des information : \$ \$ = string concat(\$1,\$2,..), 
 			il nous suffit de placer les balises qui nous interessent : \$ \$ = \$1, print balise(\$2) ...
 			Les balises correspondant a une variable ou une fonction contiennent une ancre permettant de rejoindre sa declaration. Nous avons écrit des fonction qui utilisent les information
 			contenues dans les struct de variable et de fonction pour construire les id des balises. 	
 		}
-		}
 		\subsubsection{Typedef et enum}{
-		\paragraph{toto}{
 			La déclaration d'un typedef, enum ou d'un struct est reperée dans parser. Des balises sont placées lors de la declaration d'un typedef ou d'un struct et lors de l'appel. Les balises 
 			sont differentes suivant qu'il s'agit d'un appel ou d'une déclaration. Mais nous n'avons pas écrit le code permettant de revenir sur la déclaration du type.
 			Les noms des types déclarés ainsi sont stockés dans des listes afin que le lexer puisse les traiter correctement.
 				
-			}
-			}
 			}
 			}
 \chapter{Présentation de la documentation}

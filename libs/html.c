@@ -153,7 +153,7 @@ char* print_balise_variable(char* var)
 	char* txt;
 	if(v)
 	{
-		txt = string_concat(5,strdup(texte1),strdup(b1->texte),strdup(">"),strdup(print_variable_html(v)),strdup("</a>\n"));
+		txt = string_concat(6,strdup(texte1),strdup(b1->texte),strdup(">"),strdup(print_variable_html(v)),strdup(doc_print(v->documentation)),strdup("</a>\n"));
 	}
 	else
 	{
@@ -190,7 +190,7 @@ char* print_balise_fonction(char* func)
 	char* txt;
 	if(f && f!=UNNAMED_FUNCTION)
 	{
-		txt = string_concat(5,texte1,b1->texte,strdup(">"),strdup(print_function(f)),strdup("</a>\n"));
+		txt = string_concat(6,texte1,b1->texte,strdup(">"),strdup(print_function(f)),strdup(doc_print(f->documentation)),strdup("</a>\n"));
 	}
 	else
 	{

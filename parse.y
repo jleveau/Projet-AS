@@ -209,7 +209,7 @@ declaration
 																	}
 																else {
 																	list list_var=parse_variables($2);
-																	create_variable(list_var, strdup($1), strdup("description"));
+																	create_variable(list_var, strdup($1), documentation_pour_fonction);
 																	$$=$1;
 																	cell c=list_var->first;
 																	while(c){
@@ -401,7 +401,7 @@ parameter_list
 	;
 
 parameter_declaration
-	: declaration_specifiers declarator             {variable param=add_parameter(strdup($2), strdup($1), strdup("descri")); 
+	: declaration_specifiers declarator             {variable param=add_parameter(strdup($2), strdup($1),documentation_pour_fonction); 
 													$$ = string_concat(2, $1, print_balise_parameter(param));}
 	| declaration_specifiers abstract_declarator    {$$ = string_concat(2, $1, $2);}
 	| declaration_specifiers                        {$$ = string_concat(1, $1);}

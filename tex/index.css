@@ -59,6 +59,14 @@ h1
 	width:180px;
 	text-align: left;
 }
+.panneau-gauche ul
+{
+list-style-type: none;
+}
+.panneau-gauche li
+{
+list-style-type: none;
+}
 
 a:link {
     text-decoration: none;
