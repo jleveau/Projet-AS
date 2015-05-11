@@ -45,6 +45,7 @@ Toutes les commandes de bases demandées dans le sujet ont été implémenté.
 Nous avons rencontrés certains soucis d'implementation, notamment dans la partie C. En effet, nous ne savions pas s'il fallait prilivigier le code Flex ou la grammaire qui nous avaient été donné. Après plusieurs tentatives, nous avons cependant fini par trouver une façon qui nous a permis de continuer à travailler sur le projet efficacement.
 De plus, lors de la partie Tex, nous avons tout d'abord essayé de créer une grammaire  générique, c'est à dire qui pouvait traiter un très grand nombre de commandes et d'environnement, mais nous nous sommes vite aperçu que la teneur du sujet associé au temps imposé ne nous permettait pas de réaliser une telle grammaire.
 Nous avons décidé de créer une grammaire répondant exclusivement à nos besoins.
+Il peut de plus exister des problèmes de portabilité à cause de l'utilisation des VA_list dans la fonction string_concat. Nous avons constaté que sur une installation OSX, il était possible de rencontrer des problèmes.
 \section{Problèmes d'organisation}
 Une répartition trop compartimenté dès le début du projet nous a un peu fait défault par la suite. En effet, nous nous sommes vite rendu compte que nous avions besoin de travailler à plusieurs sur les mêmes notions pour être efficace et s'entraider dans la création des fonctions.
 \section{Conflits}
