@@ -260,7 +260,6 @@ void create_variable(list list_var,char* type, doc description)
 			variable v2=getVariable(v->nom);
 			
 			if (v2){
-				fprintf(stderr,"v2->id : %s \n",v2->id);
 				v2->id=v->id;
 			}
 			else 
