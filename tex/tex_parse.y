@@ -42,7 +42,7 @@ void print_balise_lien(char* link);
 %token OPEN_BRACE CLOSE_BRACE OPEN_SQUARE CLOSE_SQUARE OPEN_PARENTHESES CLOSE_PARENTHESES SUB
 %token A_FAIRE
 %token NBR_EQUATION VAR_EQUATION PLUS_EQUATION MINUS_EQUATION TIMES_EQUATION DIVIDE_EQUATION LESS_THAN_EQUATION MORE_THAN_EQUATION EGAL_EQUATION
-%token SOMME_EQUA CHAPEAU_EQUA PROD_EQUA SUBSCRIPT_EQUA
+%token SOMME_EQUA CHAPEAU_EQUA PROD_EQUA SUBSCRIPT_EQUA INFINI
 %left WORD CHAR SPACE STRING
 %left BF IT TEXTTT TEXTIT UNDERLINE COLOR TEXTCOLOR URL
 
@@ -121,6 +121,7 @@ equation
 	| DIVIDE_EQUATION {print_balise_equation("mo","&divide;");} equation
 	| LESS_THAN_EQUATION {print_balise_equation("mo","&lt;");} equation
 	| MORE_THAN_EQUATION {print_balise_equation("mo","&gt;");} equation
+	| INFINI {print_balise_equation("mi","&infin;");} equation
 	| EGAL_EQUATION {print_balise_equation("mo","=");} equation
 	| OPEN_BRACE equation_avec_accolade[symbol] OPEN_BRACE {ecrire_debut_somme_equation($symbol);} equation[equa1] CLOSE_BRACE CHAPEAU_EQUA OPEN_BRACE {fprintf(f_output,"</mrow>");} equation[equa2]  {ecrire_fin_somme_equation($equa2);} CLOSE_BRACE equation[equa3] CLOSE_BRACE equation
 	|

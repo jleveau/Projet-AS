@@ -100,7 +100,7 @@ void print_toc(toc Toc){
     char* class;
     char* taille_titre;
     fprintf(f_output,"<div id=\"TableOfContents\" style=display:none;>");
-    fprintf(f_output, "<h1>Contents</h1>");
+    fprintf(f_output, "<h1>Contents</h1><br>");
     if (!Toc)
     {
         return;

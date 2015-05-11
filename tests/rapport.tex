@@ -1,6 +1,5 @@
 \documentclass{report}
 \usepackage{mathtools}
-\usepackage[francais]{babel}
 \usepackage{color}
 \usepackage{hyperref}
 \title{Projet d’Analyse Syntaxique Université de Bordeaux, année 2014–2015 L3 Informatique et Math-Info.}
@@ -18,8 +17,29 @@ post-it récapitulant le travail a faire, fait, et en cours. Ainsi que Git comme
 
 Le projet est réalisé en C, lex/bison. et la page Web en HTML5/CSS3/JavaScript, nous avons également utilisé la bibliotheque javascript JQuery, et le framework bootstrap pour le CSS. La grammaire que nous utilisons pour l'analyseur C utilise la grammaire C11, et le lexer donnés dans le sujet du projet.
 \part{Projet}
-\chapter{Présentation du Projet}
 \chapter{Objectifs Atteints}
+\section{Partie C}
+Voici la liste des objectifs que nous avons atteint en C:
+\begin{itemize}
+\item Indentation / Coloration du code
+\item surbrillance des variables en fonction de leur portée + ancre
+\item affichage des prototypes des fonctions + ancre + commentaires
+\item gestion des types déclarés par le programmeur + ancre
+\item gestion des commentaires style Doxygen (brief, param ...)
+\end{itemize}
+\section{Partie LaTex}
+Voici la liste des objectifs que nous avons atteint en LaTex:
+\begin{itemize}
+\item Gestion de l'entête du fichier Tex ( begindocument,usepackage...)
+\item Structure du fichier (Partie,Chapitre,Section...)
+\item Création de la table des matières
+\item Formatage du texte (mise en italique, couleur..)
+\item Liste (numéroté ou non)
+\item Tableau
+\item Equation
+\end{itemize}
+Toutes les commandes de bases demandées dans le sujet ont été implémenté.
+
 \chapter{Présentation du code C}
 \section{Analyseur C}{
 Nous utilisons deux parseurs pour notre projet, un utilisant la grammaire \texttt{C-11} donnée dans le sujet, et le second une grammaire LaTeX que nous avons écrite.
@@ -135,13 +155,9 @@ Notre grammaire permet n'importe quel environnement de passer par contre, les pa
 \section{Environnements de base}{}
 \section{Un mécanisme de sections}{}
 \section{Formules mathématiques}{}
-\section{Documentation directement dans le code c}{
-\subsection{Implémentation}{
-\subsubsection{titre}{ struct fonction etc.}}
-\textbackslash brief pour /*! /** //* et description détaillé pour /*! /**
-\textbackslash params
-\textbackslash  return
-\subsection{Présentation dans le HTML}{ ...}}
-\chapter{Avis Personnel}
 \part{Conclusion}
+Le programme réalisé permet donc d'analyser du code C et du LaTeX, et rempli la plupart des objectifs. Ce projet d'ASPP3 est l'un des projets les plus volumineux qui nous a été demandé au cours de notre formation, la répartition du travail, et la rigueur dans le développement ont donc été necesaire. Ceci à été facilité par la diversité des objectifs demandés, qui sont suffisamment distincts les uns des autres pour permettre une répartition facile du travail. Les outils utilisés étant déjà maitrisés (C, HTML5 ...), l'essentiel du travail a donc pu porter sur le fonctionnement des grammaires. De plus nous avons eu a étudier une grammaire déjà faite avec l'analyseur C, et écrire notre propre grammaire pour la partie LaTeX. Nous permettant d'apprehender les differents aspect de l'analyse syntaxique. 
+\begin{equation}
+{\sum_{i=1 }^{n} Travail = \infty} 
+\end{equation}
 \end{document}

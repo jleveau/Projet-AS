@@ -37,7 +37,7 @@ h1
 
 #toc-devant
 {
-	line-height: 0.1;
+	line-height: 0.2;
 	font-size: 20px;
 	text-align: left;
 }
@@ -91,6 +91,14 @@ a:active {
 	text-align:center;
 	line-height: 2;
 }
+#chapID3
+{
+font-size:30px;
+}
+#chapID4
+{
+font-size:30px;
+}
 
 #TableOfContents
 {
@@ -108,9 +116,5 @@ a:active {
 #partID3
 {
 	text-align:center;
+	font-size:30px;
 }
-ul.panneau-gauche
-{
- padding: 6px;
-}
-

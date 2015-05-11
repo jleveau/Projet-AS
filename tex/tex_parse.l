@@ -281,6 +281,10 @@ void print_space();
 	return CHAPEAU_EQUA;
 }
 
+<EQUATION>{TROUS}"\\infty" {
+	return INFINI;
+}
+
 <EQUATION>{TROUS}"\\sum_" {
 return SOMME_EQUA;
 }
