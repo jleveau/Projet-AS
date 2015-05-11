@@ -118,3 +118,7 @@ font-size:30px;
 	text-align:center;
 	font-size:30px;
 }
+
+table, td, th {
+    border: 1px solid black;
+}

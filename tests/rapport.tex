@@ -56,7 +56,7 @@ Nous utilisons deux parseurs pour notre projet, un utilisant la grammaire \textt
 Afin de structurer notre code, les fonctions C ont été écrite dans des fichiers externes (dans le dossier Libs). Le fichier html.c contient les fonctions permettant d'écrire les différentes balises HTML, et le fichier tools.c contient les structures de données utilisées.
 }
 }
-\section{Lex Lex}{
+\section{Le lex}{
 		Le fichier lex contiennent les même règles que celles définies dans le fichier fourni. Des tokens ont cependant été ajoutés pour tous les caractères (parentheses, crochets ...) afin 
 		que le bison puisse ne manipuler que des char*. Le contenu de l'entrée est placé dans yylval, les mots clés, ou caracteres speciaux ("(", ';') sont également entourés d'une balise
 		afin de les colorier. Afin de pouvoir gerer la memoire utilisée pour les chaines de caractères, et en raison du grand nombre de concatenation, les char* sont déclarés dynamiquement.
@@ -74,7 +74,7 @@ L'id des bloc est également utilisé pour écrire des balises autour des accola
 			déclenchés par la lecture d'un point virgule ou d'une accolade. Les balises br utilisées pour le retour a la ligne sont également utilisé par le CSS pour calculer et afficher la numérotation des lignes.
 }
 }
-		\section{Bison Bison}{
+		\section{Le bison}{
 		 Le parser bison manipule des chaines de caractere. Notre programme fait remonter le texte lu par le .lex, et ajoute des balises lorsque des réductions. Cette façon de faire demande de 
 		 faire passer dans la variable \$ \$ la concatenation des \$1 ,\$2 ... Nous avons donc ecrit une fonction prenant un nombre variable de paramètre, et retournant la concatenation de toutes
 		 les chaines passées en paramètre. Les chaines passées sont liberées de la mémoire, ce qui demande donc que toutes les entrées aient été allouées dynamiquement.
@@ -139,11 +139,6 @@ Les commandes simples nous obligent donc à différencier
 La structure du fichier comprend tout ce qui est la répartition du texte en sections, parties etc. ainsi que les commandes spéciales qui ont un contenu différent de commandes simples et alors doivent être traités à part.
 Gèrent le contenu text, tabular, image etc du fichier.
 }
-}
-\subsection{Structure de grammaire}{
-formatage texte
-  
-Ce chapitre va regarder les commandes qu'on a traité, dans l'ordre qu'ils étaient traités.
 }
 }
 \section{Paragraphes, environnement, commandes et caractères spéciaux}{
