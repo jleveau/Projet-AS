@@ -1,26 +1,48 @@
 \documentclass{report}
 \usepackage{mathtools}
+\usepackage{graphicx}
 \usepackage{color}
-\title{titre}
+\title{Jeu de tests}
 \begin{document}
 \maketitle
 \tableofcontents
-\part{code c}
-\chapter{chapTest Debut}
-\section{section A}{eghzipeghez\underline{\color{red}tes}
-srzahporfhzafzhizafhoizhaoh o\subsection{gf r}{fyu g\subsubsection{tototototototo}{yhofie}
-} \subsection{test subsection}{fyu}}
-\part{tex g}
-\chapter{chapTest Debut 2}
-\section{section B}{rehuzir\subsection{rezarezarezarezarez}{reresqdfsqfds\color{red}qfdsqfdqsareza\subsubsection{rezareaz}{\paragraph{rte}{rearezar}}}}
+\part{Partie LaTex}
+\chapter{Paragraphes, environnement, commandes et caractères spéciaux}
+\paragraph{Paragraphes de test}{Contenu du paragraphe \\Retour à la ligne fait avec \textbackslash \textbackslash dans le paragraphe
+\\Voici une ligne avec 100 espaces entre ici                        et ici.}
+Um... qu'est ce que je dois faire avec tous ces symboles?? \[\$\{\}\&\]
 
-\section{section C}{inetrnrezja\subsection{rkezop}{erzeza}}
-\section{section D}{\paragraph{totototo}{rhezarz}\subsection{toteaz}{rza}}
+Du texte sans paragraphe ou chapitre etc.
+
+\chapter{Quelques commandes de présentation}
+\paragraph{Couleur and stuff}{\underline{Du souligné avec \texttt{du gras}}
+\paragraph{Colour game}{
+
+Lisez les mots que vous voyez \textcolor{blue}{green} black \textcolor{green}{yellow} \textcolor{yellow}{red} \color{red}le reste de cette phrase est rouge.}
+
+
+\chapter{Environnements de base}
+Allons compter!
+\begin{enumerate}
+\item un 
+\item deux
+\item DIX
+\end{enumerate}
+
+Regardez ces jolies symboles:
 \begin{itemize}
-	 \item toto
-
-	        \item tata    
+\item bit 
+\item different
 \end{itemize}
+
+\begin{tabular}{llc}
+Case 1,1&Case 1,2&Case 1,3&
+Case 2,1& &Case 2,3 avec Case 2,2 vide &
+Case 3,1&Case 3,2&Case 3,3
+\end{tabular}
+
+\chapter{Formules mathématiques}
+
 \begin{equation}
 3x+4^{4^{x*3+4/2 > 3}}
 {\sum_{i=1 }^{n} 2x+1} 
@@ -29,19 +51,12 @@ srzahporfhzafzhizafhoizhaoh o\subsection{gf r}{fyu g\subsubsection{totototototot
 3x+4x*3+4/2 > 3
 \end{equation}
 
+\chapter{Mécanisme de sections}
+\section{section A}{section \underline{\color{red}test}
+not underlined \subsection{subsec}{contenu\subsubsection{subsub}{contenu}
+} \subsection{test subsection}{contenu}}
+\section{section B}{rehuzir\subsection{subsec}{contenu \color{red}subsec\subsubsection{subsubsection}{\paragraph{paragraphe}{dans subsection}}}}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+\section{section C}{avant subsection\subsection{subsection}{1}}
 
 \end{document}
