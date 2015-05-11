@@ -548,7 +548,7 @@ external_declaration
 
 function_definition
 	: declaration_specifiers declarator declaration_list compound_statement {$$ = string_concat(4, $1, $2, $3, $4);}
-	| declaration_specifiers declarator compound_statement                  {fprintf(stderr, "name_function %s\n\n", documentation_pour_fonction->brief); name_function(strdup($1), strdup($2), documentation_pour_fonction); $$ = string_concat(3, $1, $2, $3); documentation_pour_fonction=doc_clear(documentation_pour_fonction);}
+	| declaration_specifiers declarator compound_statement                  {name_function(strdup($1), strdup($2), documentation_pour_fonction); $$ = string_concat(3, $1, $2, $3); documentation_pour_fonction=doc_clear(documentation_pour_fonction);}
 	;
 
 declaration_list

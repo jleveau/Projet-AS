@@ -263,12 +263,10 @@ int main(int argc, char** argv)
 	{
 		fprintf(stderr, "capitaine : nombre d'arguments invalide\n");
 	}
-	printf("%s %s %s\n", argv[1], argv[2], argv[3]);
 	int fd = open(argv[1], O_RDONLY);
 	create_log(argv[3]);
 	dup2(fd, 0);
 
-	printf("-----------------%s-------------------\n", argv[1]);
 
 	create_html(argv[3], argv[2]);
 	init_structures();
@@ -280,7 +278,7 @@ int main(int argc, char** argv)
 	stack_destroy(block_stack);
 	list_destroy(parameter_list);
 	destroy_function_list();
-	doc_destroy();
+	doc_destroy(documentation_pour_fonction);	
 
 	if(fermer_html(f_output))
 	{

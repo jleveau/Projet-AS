@@ -34,6 +34,7 @@ Voici la liste des objectifs que nous avons atteint en LaTex:
 \item Structure du fichier (Partie,Chapitre,Section...)
 \item Création de la table des matières
 \item Formatage du texte (mise en italique, couleur..)
+\item Lien
 \item Liste (numéroté ou non)
 \item Tableau
 \item Equation
@@ -46,6 +47,9 @@ De plus, lors de la partie Tex, nous avons tout d'abord essayé de créer une gr
 Nous avons décidé de créer une grammaire répondant exclusivement à nos besoins.
 \section{Problèmes d'organisation}
 Une répartition trop compartimenté dès le début du projet nous a un peu fait défault par la suite. En effet, nous nous sommes vite rendu compte que nous avions besoin de travailler à plusieurs sur les mêmes notions pour être efficace et s'entraider dans la création des fonctions.
+\section{Conflits}
+Nous avons toujours 11 conflits d'empilement/reduction qui ne sont cependant pas problématique puisque la règle fait toujours l'action que l'on veut. En effet, ces 11 conflits viennent du même état.
+Nous avons décidé de laisser ces conflits pour montrer une amélioration possible de notre grammaire.
 \chapter{Présentation du code C}
 \section{Analyseur C}{
 Nous utilisons deux parseurs pour notre projet, un utilisant la grammaire \texttt{C-11} donnée dans le sujet, et le second une grammaire LaTeX que nous avons écrite.
@@ -75,9 +79,7 @@ Afin de structurer notre code, les fonctions C ont été écrite dans des fichie
 L'id des bloc est également utilisé pour écrire des balises autour des accolades d'un bloc de variables et permettent de déplier ou replier les lignes de code du bloc
 }
 		\subsection{Indentation et numérotation}{
-			L'indentation du code est faite dans le flex, et indentera le fichier en entré. Comme la totalité du texte qui sera en sorti doit être stocké dans yylval puis envoyé dans le bison
-			nous devons associer les espaces et retour a la ligne à un token lu qui sera analysé par le bison. Nous avons donc choisi que les retours a la ligne et l'indentation seraient 
-			déclenchés par la lecture d'un point virgule ou d'une accolade. Les balises br utilisées pour le retour a la ligne sont également utilisé par le CSS pour calculer et afficher la numérotation des lignes.
+			L'indentation du code est faite dans le flex, et indentera le fichier en entré. Comme la totalité du texte qui sera en sorti doit être stocké dans yylval puis envoyé dans le bison nous devons associer les espaces et retour a la ligne à un token lu qui sera analysé par le bison. Nous avons donc choisi que les retours a la ligne et l'indentation seraient déclenchés par la lecture d'un point virgule ou d'une accolade. Les balises br utilisées pour le retour a la ligne sont également utilisé par le CSS pour calculer et afficher la numérotation des lignes.
 }
 }
 		\section{Le bison}{
@@ -118,7 +120,18 @@ A cette fin, une nouvelle grammaire et un parseur tex ont été conçu pour trai
 La grammaire pour les fichiers .tex a été construite en implémentant progressivement les différentes parties.
 Cela signifie que l'on a commencé avec une grammaire qui permettait de parser les fichier .tex les plus basiques (avec une définition de documentation et un begin et end document) et nous avons développé notre grammaire sur cette base. Elle ignore le type de document précisé dans l'entête (\textbackslash documentclass\{type de document\}) ainsi que tout ce qui est entre l'entête et le titre/début du document parce que cela peut être des usepackage et création de commandes, entre autres.(La création de commande n'a pas été traité)
 En conséquence, il est possible d'utiliser n'importe quel .tex qui compile. De plus, notre grammaire accepte des fichiers LaTex qui ne sont pas nécessairement de format standard par rapport à Latex.
+\section{Documentation et commentaires}{
+Les fichiers .c et .h passés en paramètre peuvent ou non avoir des commentaires. Pour présenter la documentation formellement, les commentaires de bases sont ignorés pour ne pas embrouiller le lecteur. Seulement les commentaires spéciaux devant des variables et des déclarations de fonctions sont traités. Ils sont affichés d'une manière dynamique(info boule) quand le lecteur survole la variable/fonction en question.
 
+Une structure doc a été conçue exprès pour la documentation des fonctions. Une variable globale de ce type est remplie dans le lex à chaque fois qu'un commentaire avec les pré-requis particulier est rencontrée. Ceci est étendue pour les variables pour éviter de créer une nouvelle structure quasiment identique. A chaque fois qu'une déclaration de variable ou de fonction est appelée, le contenu de cette variable globale est imprimé dans une info-bulle correspondante et vidé après chaque appel de déclaration.
+
+Il existe trois formats de commentaires possibles.
+\subsection{Commentaires sur une ligne}{Ce commentaire est de la forme \textbackslash \textbackslash * qui se termine à la fin de la ligne. Il peut accepter les commandes \textbackslash brief, \textbackslash param (autant de fois que nécessaire) et \textbackslash return dans n'importe quel ordre.}
+
+\subsection{Commentaires sur multiples lignes}{Ce commentaire accepte et traite les mêmes commandes que celui d'auparavant mais elle peut le faire sur des lignes multiples. Si jamais la commande brief est appelée et suivies par deux retours à la ligne, une description détaillée de la fonction est remplise. Souvent les gens aiment délimiter leurs commentaires par des étoiles alors les étoiles au début de ligne, et ailleurs sont ignorés. Elle est commencé par \textbackslash *! et termine avec *\textbackslash.}
+
+\subsection{Commentaires du style javadoc}{Ce commentaire est similaire à celui d'au dessus du niveau d'affichage par contre il n'accepte pas des commandes mentionnées auparavant. Ce commentaire javadoc commence (\textbackslash**) directement avec le brief qui se termine après le premier point et suivi par la description détaillée de la fonction.}
+}
 \section{La Grammaire}{
 Après l'entête, la structure toc (pour la table des matières) est initialisée avec une variable qui est mise à jour si jamais la commande \textbackslash tableofcontents est appelée, n'importe où dans le fichier. A la fin du document, selon cette variable, la table des matières est imprimée avec la mise en place faite par javascript pour qu'il apparaisse dans l'endroit où il est appelé. L'entête est suivie par la structure, qui est constitué d'un titre, début et fin d'environnement avec un contenu d'environnement et un maketitle optionnel, n'importe où avant la fin d'environnement. La structure peut être vide afin de permettre  qu'un fichier avec seulement un entête puisse être parsé. 
 
@@ -137,19 +150,34 @@ Les commandes simples sont du type :
  \item Affichage de la table des matières
  \item Structure du fichier (sections,chapitre..)
  \item Formatage du texte (coloration,mise en italique..)
-\end{itemize} 
+\end{itemize}
 Les commandes simples nous obligent donc à différencier
- \textit{string ou appel commande} et 
+ \textit{string ou appel commande} et
  \textit{combinaison string et appel commande}.
-\subsubsection{Structure du fichier}{
+ \subsubsection{Structure du fichier}{
 La structure du fichier comprend tout ce qui est la répartition du texte en sections, parties etc. ainsi que les commandes spéciales qui ont un contenu différent de commandes simples et alors doivent être traités à part.
-Gèrent le contenu text, tabular, image etc du fichier.
+Il s'agit de gérer la mise-en-forme de tabular etc ainsi que les formules mathématiques et les images. Les equations sont implémentées avec MathML, un type de balise spécial.
 }
 }
 }
-\section{Formules mathématiques}{}
+\section{Formules mathématiques}
+{
+\subsection{Commandes de bases }{
+\begin{itemize}
+\item opérations de base
+\item les opérations de comparaison
+\item des variables et des chiffres quelconques
+\end{itemize}
+}
+\subsection{Commandes avancées }{
+\begin{itemize}
+\item Somme et produits
+\item super/sub scripts
+\end{itemize}
+}
+}
 \part{Conclusion}
-Le programme réalisé permet donc d'analyser du code C et du LaTeX, et rempli la plupart des objectifs. Ce projet d'ASPP3 est l'un des projets les plus volumineux qui nous a été demandé au cours de notre formation, la répartition du travail, et la rigueur dans le développement ont donc été necesaire. Ceci à été facilité par la diversité des objectifs demandés, qui sont suffisamment distincts les uns des autres pour permettre une répartition facile du travail. Les outils utilisés étant déjà maitrisés (C, HTML5 ...), l'essentiel du travail a donc pu porter sur le fonctionnement des grammaires. De plus nous avons eu a étudier une grammaire déjà faite avec l'analyseur C, et écrire notre propre grammaire pour la partie LaTeX. Nous permettant d'apprehender les differents aspect de l'analyse syntaxique. 
+Le programme réalisé permet donc d'analyser du code C et du LaTeX, et rempli la plupart des objectifs. Ce projet d'ASPP3 est l'un des projets les plus volumineux qui nous a été demandé au cours de notre formation, la répartition du travail, et la rigueur dans le développement ont donc été necessaire. Ceci à été facilité par la diversité des objectifs demandés, qui sont suffisamment distincts les uns des autres pour permettre une répartition facile du travail. Les outils utilisés étant déjà maitrisés (C, HTML5 ...), l'essentiel du travail a donc pu porter sur le fonctionnement des grammaires. De plus nous avons eu a étudier une grammaire déjà faite avec l'analyseur C, et écrire notre propre grammaire pour la partie LaTeX. Nous permettant d'apprehender les differents aspect de l'analyse syntaxique. 
 \begin{equation}
 {\sum_{i=1 }^{n} Travail = \infty} 
 \end{equation}
