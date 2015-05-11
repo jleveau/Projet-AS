@@ -280,6 +280,7 @@ int main(int argc, char** argv)
 	stack_destroy(block_stack);
 	list_destroy(parameter_list);
 	destroy_function_list();
+	doc_destroy();
 
 	if(fermer_html(f_output))
 	{
