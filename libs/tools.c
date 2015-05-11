@@ -455,7 +455,7 @@ bool list_empty(list l)
 
 void name_function(char* type,char* nom, doc d)
 {
-
+/*
 fprintf(stderr, "brief: %s\n", documentation_pour_fonction->brief);
 
 fprintf(stderr, "description: %s\n", documentation_pour_fonction->description_detaille);
@@ -469,7 +469,7 @@ fprintf(stderr, "return type: %s\n", documentation_pour_fonction->return_type);
 		fprintf(stderr, "param: %s\n", (char*)c->elem);
 		c=c->next;
 	}
-
+*/
 	if (list_empty(function_list) )
 	{
 		function f= malloc(sizeof(*f));

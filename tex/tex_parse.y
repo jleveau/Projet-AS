@@ -32,6 +32,7 @@ void insert_into_toc(int, char*);
 void print_balise_parti(char* titre);
 void print_balise_chapitre(char* titre);
 void print_balise_image(char* image);
+void print_balise_lien(char* link);
  
 %}
 
@@ -82,6 +83,7 @@ combinaison_string_ET_appel_commande
 string_OU_appel_commande
 	: STRING {print_word_or_char($1);}
 	| WORD {print_word_or_char($1);}
+	|CHAR {print_word_or_char($1);}
 	| appel_commande
 	;
 
@@ -89,8 +91,8 @@ appel_commande
 	: formatage_texte
 	| decoration_texte_sans_param[style]  OPEN_BRACE {print_balise($style);} combinaison_string_ET_appel_commande CLOSE_BRACE {print_fin_b($style);}
 	| decoration_texte_avec_param
-    | toc
-    | IMAGE option parameter_word_or_string[img] {print_balise_image($img);}
+   	| toc
+	|URL OPEN_BRACE STRING[url] CLOSE_BRACE {print_balise_lien($url);}
 	;
 
 formatage_texte
@@ -163,7 +165,6 @@ subsubsection_ou_vide
 decoration_texte_avec_param
 : COLOR parameter_word[color] {print_balise_decoration_span_style("color", $color);} combinaison_string_ET_appel_commande {print_fin_b("span");}
 	| TEXTCOLOR parameter_word[color] parameter_word[text] {print_balise_decoration_span_style("color", $color); print_word_or_char($text); print_fin_b("span");}
-| URL OPEN_BRACE WORD CLOSE_BRACE {print_balise_lien($3);}
 	;
 
 option

@@ -71,7 +71,7 @@ void print_space();
 <PACKAGES_A_IGNORER>. ;
 <PACKAGES_A_IGNORER>\n ;
 
-"\\text\\" {
+"\\textbackslash" {
 	yylval=strdup("\\");
 	return CHAR;
 }
@@ -89,6 +89,10 @@ void print_space();
 
 "\\maketitle" {
 	return MAKETITLE;
+}
+
+"\\url" {
+	return URL;
 }
 
 "\\end"{TROUS}"{document}" {

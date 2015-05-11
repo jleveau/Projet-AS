@@ -3,6 +3,11 @@ table
 	width: 50%;
 }
 
+@font-face
+{
+	font-family: myFont;
+	src: url(cmunbx.woff);
+}
 
 .title
 {
@@ -38,7 +43,7 @@ h1
 }
 .bordure
 {
-	margin-left: 160px;
+	margin-left: 190px;
 	border-left-style: solid;
 	border-left-color: #626262;
 	border-left-width: 1px;
@@ -47,11 +52,11 @@ h1
 {
 	margin-left: 10px;
 }
-.leftpanel
+.panneau-gauche
 {
 	
 	float:left;
-	width:150px;
+	width:180px;
 	text-align: left;
 }
 
@@ -96,15 +101,11 @@ a:active {
 {
 	text-align:center;
 }
-ul
+ul.panneau-gauche
 {
- padding: 1px;
+ padding: 6px;
 }
-@font-face
-{
-	font-family: myFont;
-	src: url(cmunbx.woff);
-}
+
 p
 {
 	margin-left: 50px;
